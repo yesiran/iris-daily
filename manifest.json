@@ -8,5 +8,10 @@
   "task": "finance-daily",
   "date": "2026-06-10",
   "title": "思染跟踪金融日报"
+ },
+ {
+  "task": "ai-daily",
+  "date": "2026-06-10",
+  "title": "AI 行业日报"
  }
 ]
