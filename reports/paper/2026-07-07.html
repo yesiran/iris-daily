@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28156%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2211%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2210%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.20%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>你训的模型不是你部署的模型——MIPU 戳破训练曲线的海市蜃楼，把 LLM RL 的优化目标从训练引擎搬回真正上线的推理引擎</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-07</span></div>
+  <h1 class="doc">你训的模型不是你部署的模型——MIPU 戳破训练曲线的海市蜃楼，把 LLM RL 的优化目标从训练引擎搬回真正上线的推理引擎</h1>
+  <div class="dateline"><span>全文 <b>4,499</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">The Mirage of Optimizing Training Policies: Monotonic Inference Policies as the Real Objective for LLM Reinforcement Learning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2606.29526">https://arxiv.org/abs/2606.29526</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Jing Liang, Hongyao Tang, Yi Ma, Yancheng He, Weixun Wang, Xiaoyang Li, Ju Huang, Wenbo Su, Jinyi Liu, Yan Zheng, Jianye Hao, Bo Zheng</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">天津大学（郝建业/Yan Zheng 组，5人）× 阿里巴巴（Yancheng He/Weixun Wang/Wenbo Su/Bo Zheng 等，7人）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-06-28</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-07.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-07.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 2026-07-06 窗口 #1 · 105赞（第二名45的2.3倍，能力机理赛道断层第一）· 天大RL头部实验室×阿里ROLL框架作者群 · 项目页在线（未见GitHub代码，诚实标注）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, rl, post-training, training-inference-mismatch, systems, training-stability</span></div></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><ol class="ls"><li><strong>它把 LLM 强化学习的"优化目标"本身掀了个底朝天</strong>。过去一年全行业都在修"训练侧的策略怎么稳住"，这篇指出一个被所有人忽略的事实：<strong>你在训练引擎里优化的那个模型，和真正上线服务用户的那个模型，是两个不同的东西</strong>——它们共享同一份权重，但跑在两套程序里，算出来的概率不一样。训练侧越练越好，部署侧可能原地踏步甚至变差。这不是修补丁，是换目标：LLM RL 该优化的从来不是训练策略，是推理策略。"我们对模型的理解"往前挪了一步。</li><li><span class="lk">信号硬</span>HuggingFace Daily Papers 2026-07-06 窗口 <a class="src" href="https://huggingface.co/papers/2606.29526">#1、105 赞</a>——第二名（机器人部署 runtime，45 赞）的 2.3 倍，且前几名里唯一在能力机理赛道上的。作者是天津大学郝建业组（国内强化学习头部实验室，Hongyao Tang/Yan Zheng/Jinyi Liu 都是 RL 方向多年积累的研究者）× 阿里巴巴大模型 RL 团队（Weixun Wang/Wenbo Su/Bo Zheng 等，据署名与阿里开源 RL 训练框架 ROLL 的作者群高度重合）——问题直接来自生产级 RL 系统的一线。</li><li><strong>接上台账 RL 主线最缺的一块</strong>。台账讲过：奖励是意图的替身、会被钻空子（<a class="src" href="2026-06-27--verification-horizon.md">06-27 验证地平线</a>）；格式会被 RL 撑崩、能力完好却表达失灵（<a class="src" href="2026-06-29--tool-rl-collapse.md">06-29 工具RL崩溃</a>）；信任域该是弹簧不是墙（<a class="src" href="2026-06-11--drpo.md">06-11 DRPO</a>）。但"你优化的策略根本不是你部署的策略"这个<strong>系统层的地基裂缝</strong>没讲过。台账首篇"训练-推理不匹配"轴。</li><li><span class="lk">对京小贝是直接可操作的</span>"离线评测变好 ≠ 线上变好"这件产品人天天撞的事，这篇给出了它的结构性根因和工程解法（部署侧验收门+回滚）。见最后一节。</li><li><span class="lk">诚实交底</span>Semantic Scholar 引用 0（2026-06-28 发表，9 天，正常）；<a class="src" href="https://anitaleungxx.github.io/MIPU">项目页</a>在线但本次未找到 GitHub 代码仓库；实验限于 Qwen3-1.7B/4B 中等规模（作者自己承认）；主实验用 FP8 量化生成这个"高不匹配"设置放大了问题，常规精度下增益会小一些。今天（07-07）的 HF 榜单尚未发布，本篇取自最近完整窗口 07-06 的榜首。</li></ol><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是今天所有前沿实验室都在跑的那台机器：<strong>LLM 强化学习后训练系统</strong>。它有个几乎没人多想一眼的结构特征——<strong>双引擎</strong>。</p><p>为什么是双引擎？强化学习训模型分两步循环：先让模型<strong>生成</strong>一大批答案（叫 rollout，"把答案跑出来"），再根据答案的好坏<strong>更新</strong>模型权重。生成要快——所以用专门的推理引擎（vLLM、SGLang 这类，靠批量处理、算子优化、量化等各种捷径把出字速度压到极限）；更新要准——所以用专门的训练引擎（Megatron、FSDP 这类，高精度、能算梯度）。两套程序，共享同一份权重，轮流干活。这是工程上的最优解，全行业标配。</p><p>打个比方：一家餐厅有两个厨房。<strong>出餐厨房</strong>（推理引擎）负责给顾客做菜，为了快，火开最大、步骤能并就并；<strong>研发厨房</strong>（训练引擎）负责改进菜谱，慢工细活、每步用料都记录在案。两个厨房用的是<strong>同一本菜谱</strong>（同一份权重）——但做出来的菜，味道就是有一点点不一样。</p><h2 id="s4">2｜困境</h2><p>这"一点点不一样"不是比喻，是可测量的事实：<strong>同一条输出轨迹，推理引擎算出的概率和训练引擎算出的概率不相等，哪怕两边参数逐位同步</strong>。原因很朴素——两套程序的浮点运算顺序不同、精度不同、底层算子不同。就像两台不同牌子的计算器算同一长串乘除，四舍五入发生在不同的位置，最后尾数对不上。单看一个数差得极小，但语言模型的一句话是几百上千个字连乘出来的概率，微小的差每一步都在累积。</p><p>这就出事了。强化学习理论里有一条隐含前提：<strong>你用来生成数据的策略，就是你正在优化的策略</strong>（这叫 on-policy，"用自己刚写的答案学习自己"）。双引擎把这条前提悄悄打破了——数据是推理引擎里的策略（论文记作 μ）生成的，梯度却按训练引擎里的策略（记作 π）算。μ ≠ π，于是每一步训练都天然带着"用别人的作业改自己的错"的偏差（off-policy，"用不是自己当前水平写出来的数据学习"）。这个偏差不会消失、每步都在下毒，轻则训练抖，重则<strong>练着练着整个崩掉</strong>——奖励曲线断崖跳水，这是过去一年 LLM RL 从业者集体撞过的墙。</p><p>而且趋势在恶化：为了让生成更快，各家开始用 FP8 量化跑 rollout——FP8 是"8 位浮点数"，一个数只用 8 个比特（8 个 0/1 开关）来存，存得粗、算得快、省一半显存，代价是舍入误差更大。生成越加速，两个厨房的味道差越大。</p><h2 id="s5">3｜旧路</h2><p>过去一年，社区把这个问题当成"偏差要修正"来治，主要三条路：</p><ul class="ls"><li><span class="lk">TIS（截断重要性采样）</span>来自加州大学圣迭戈分校 Feng Yao 等人的工作《<a class="src" href="https://neurips.cc/virtual/2025/124259">On the Rollout-Training Mismatch in Modern RL Systems</a>》（NeurIPS 2025，前身是 2025 年 8 月那篇著名博客《你的高效 RL 框架偷偷给你上了 off-policy 训练》）。思路：既然数据是 μ 采的、梯度按 π 算，那就给每条样本乘一个"两边概率之比"的校正权重（这叫重要性采样——用一个分布采的数据去估另一个分布的账，乘个比价系数找平），比值太极端的截断掉以免方差爆炸。</li><li><span class="lk">MIS（掩码重要性采样）</span>更狠一点，把不匹配最严重的那些 token 直接从训练里剔除。</li><li><span class="lk">分析与基建派</span>《<a class="src" href="https://richardli.xyz/post/rl-collapse-part1/">When Speed Kills Stability</a>》（Jiacai Liu、Yingru Li 等，2025-09）把崩溃机理用数学工具拆开（偏差用总变差距离量、方差用卡方散度量）；还有人做确定性推理引擎、FP8 全栈对齐，从根上缩小两边差异。这些修正方法如今已经写进 <a class="src" href="https://verl.readthedocs.io/en/latest/algo/rollout_corr_math.html">verl 官方文档</a>，成了 RL 基建标配。</li></ul><p>这些路都有效，但它们全部共享同一个没被质疑的前提：<strong>把训练侧的目标修稳，就够了</strong>。</p><h2 id="s6">4｜转折</h2><p>本篇作者问了一个所有人都没问的问题：<strong>训练策略变好，推理策略一定跟着变好吗？</strong></p><p>答案是：不一定。论文把这件事钉成一句话——训练侧的性能提升（J(π_new) ≥ J(π_old)）<strong>推不出</strong>部署侧的性能提升（J(μ_new) ≥ J(μ_old)）。一次在训练引擎里完全有效的更新，同步到推理引擎之后，可能没兑现，甚至有害。</p><p>回到餐厅：你在研发厨房里改菜谱、试吃、确认更好吃了——但顾客吃到的<strong>永远是出餐厨房做的菜</strong>。菜谱的改动经过出餐厨房那套大火快炒的流程，可能根本做不出研发厨房的味道。你天天盯着的训练奖励曲线，是研发厨房的试吃记录；它一路上扬，而顾客那边可能无动于衷——<strong>这就是标题里的"海市蜃楼"（Mirage）</strong>。</p><p>所有旧路（TIS/MIS/学习率衰减）都是在把"研发厨房的试吃"做得更严谨，没有一条去验收"出餐厨房到底做出来什么"。论文把 J(μ_new) − J(μ_old) 这个真目标拆成三段：<strong>事前差距</strong>（这轮开始时两个厨房已有的味道差）＋<strong>训练侧提升</strong>（研发厨房的真实进步）＋<strong>事后差距</strong>（新菜谱同步过去后，出餐厨房兑现了多少）——旧方法只管中间一段，两头全裸奔。</p><h2 id="s7">5｜解法</h2><p>新目标有了名字：<strong>MIPI（Monotonic Inference Policy Improvement，推理策略单调改进）</strong>——RL 每一轮更新，要保证<strong>部署那侧的策略</strong>不变差、稳步变好。"单调"就是"只升不降"的意思。实现它的框架叫 <strong>MIPU（Monotonic Inference Policy Update）</strong>，两步，分别看住上面三段账：</p><p><strong>第一步：把更新锚到"实际采样的那个策略"上。</strong> 现行主流算法 GRPO（组相对策略优化，DeepSeek-R1 带火的方法：同一道题让模型生成一组答案，组内互相比较得出每个答案的相对好坏当奖励信号）有两处错位——它拿<strong>训练侧</strong>的概率比值和优势值去处理<strong>推理侧</strong>采来的数据。MIPU 把完整的"训练/采样概率比"拆成两截：[π_old/μ_old]（事前不匹配，截断在 2 倍以内当校正权重）×[π_new/π_old]（本次更新幅度，照常用 PPO 式裁剪）——校正的归校正、裁剪的归裁剪，优势值也统一按实际采样的 μ 算。这一步管住"事前差距+训练侧提升"两段账。</p><p><strong>第二步：给每次权重同步装一道"验收门"。</strong> 新权重从训练引擎同步到推理引擎后，先别急着用——用一个便宜的代理量（在新推理策略下采样，按"反向性能差恒等式"估计事后差距，记作 T̂_post）检验：<strong>这次同步后的部署策略，真的比训练侧承诺的更好吗？</strong> 通过验收（T̂_post 不低于容忍线 −c）才接受这版权重；不通过就<strong>回滚到上一个检查点</strong>，这轮更新作废重来。这一步管住"事后差距"那段账。</p><p>用软件工程的话说，第二步就是把<strong>灰度发布</strong>（新版本先小流量验证、不合格回滚，绝不因为"内部测试通过"就直接全量上线）<strong>内化进了训练循环本身</strong>——每一次权重同步都是一次小型发版，都要过部署侧验收。</p><h2 id="s8">6｜结局</h2><p>实验故意选"高不匹配"设置：Qwen3-1.7B 和 Qwen3-4B，生成侧用 FP8 量化（放大两个厨房的味道差），在五个数学竞赛基准（MATH-500/AIME24/AMC23/Minerva/OlympiadBench）上测 pass@1（第一次作答就答对的比例）。结果（<a class="src" href="https://arxiv.org/abs/2606.29526">论文 Table 1</a>）：</p><ul class="ls"><li><span class="lk">Qwen3-4B</span>GRPO 基线 64.42%（后期崩溃）、MIS 63.42%（崩溃）、学习率衰减 65.66%（崩溃）、<strong>MIPU 66.71% 且全程稳定</strong>。关键不是那两个点的差距，是曲线形状：所有基线都能爬到不错的中段成绩，然后在延长训练中断崖跳水；MIPU 一路稳。</li><li><span class="lk">Qwen3-1.7B</span>基线 50.86% → MIPU 53.97%，同样稳。</li></ul><p>三个反直觉副发现，一个比一个有意思：</p><ol class="ls"><li><strong>随机回滚对照实验</strong>（论文 Figure 4b）：有人会说"你第二步不就是少更新几次嘛"。作者做了对照——按<strong>随机</strong>方式回滚，哪怕拒绝得比 MIPU 更狠（67% 对 53.5%），照样崩溃。<strong>有效的是"部署侧验收信号"本身，不是"更新做得少"</strong>。门卫的价值在于他看得懂谁该拦，不在于他拦得多。</li><li><strong>两步缺一不可且分工明确</strong>（消融实验）：只用第一步，成绩小涨（65.36%）但迟早还是崩；只用第二步，不崩了但也不涨了（62.81%，光拦不改，停滞）。合体才有 66.71%——一个负责"把候选更新做好"，一个负责"把坏更新拦住"。</li><li><span class="lk">模型越小，裂缝越大</span>1.7B 的训练-推理概率分歧（用 K3-KL 散度量，KL 散度=衡量两个概率分布差多远的尺子，K3 是它的一种低方差估计法）系统性大于 4B，验收信号也更抖。<strong>不匹配的毒性与模型容量成反比</strong>——最需要这套保护的恰恰是小模型，而全行业蒸馏小模型上线的做法，正撞在枪口上。</li></ol><h2 id="s9">7｜内核</h2><p>带走一句话：<strong>优化目标必须钉在"真正交付出去的那个系统"上，而不是"你手里方便优化的那个替身"上。</strong></p><p>台账 <a class="src" href="2026-06-27--verification-horizon.md">06-27 验证地平线</a>讲的是"奖励只是人类意图的替身，越优化越分叉"；今天这篇是同一个哲学在系统层的镜像——<strong>训练策略只是部署策略的替身，越练分叉越深</strong>。一对完美对偶：一个说你的裁判不是真裁判，一个说你的选手不是真选手。台账那条越攒越深的暗线再添一块铁证：<strong>前沿的失败越来越少发生在能力本身，越来越多发生在能力外面那层接缝处</strong>——06-21 是思考与答案共用预算的接缝、06-29 是能力与格式的接缝、本篇是训练引擎与推理引擎的接缝。</p><h1 id="s10">来龙去脉（倒读 3 层）</h1><p><span class="lk">第一层（直接前作，2025 下半年）</span>这条线的起点是一篇博客——2025 年 8 月，UCSD 的 Feng Yao 等人发现"你的高效 RL 框架偷偷给你上了 off-policy 训练"：vLLM 采样概率与 FSDP 训练概率对不上，on-policy 的数学前提早就悄悄失效，并给出 TIS（截断重要性采样）修正，后成文 <a class="src" href="https://neurips.cc/virtual/2025/124259">On the Rollout-Training Mismatch in Modern RL Systems</a>（NeurIPS 2025）。一个月后《<a class="src" href="https://richardli.xyz/post/rl-collapse-part1/">When Speed Kills Stability</a>》把"为什么会崩"拆成偏差-方差的解析框架。此后一年，修正方法（TIS/MIS/序列级校正/几何平均拒绝采样）进入 <a class="src" href="https://verl.readthedocs.io/en/latest/algo/rollout_corr_math.html">verl 等框架文档</a>成为标配。<strong>共同姿势：承认裂缝、校正训练目标。</strong>本篇的批判：你们校正得再好，也只保证了"训练策略"变好——那不是上线的那个策略。</p><p><strong>第二层（裂缝的来源，2023–2025）</strong>：裂缝是"效率分家"的产物。vLLM（2023）为代表的推理引擎把生成吞吐做到极致，DeepSeek-R1（2025 初）带火 RLVR（可验证奖励的强化学习）让 rollout 需求暴涨，"生成用推理引擎、更新用训练引擎"成为唯一负担得起的架构；FP8 量化 rollout（FlashRL 等）再把速度榨一轮。<strong>每一步提速都在拉大两套数值世界的距离</strong>——裂缝不是谁的 bug，是整个行业用速度换出来的结构性代价。</p><p><strong>第三层（理论的根，2002–2015）</strong>：「单调策略改进」是强化学习最老的理想之一——Kakade &amp; Langford 2002 的保守策略迭代，到 <a class="src" href="https://arxiv.org/abs/1502.05477">TRPO</a>（Schulman 2015，"信任域策略优化"）给出"每步更新保证不变差"的经典理论，PPO/GRPO 都是它的后代。但那套理论有个当年天经地义、如今悄悄失效的假设：<strong>你优化的策略就是你部署的策略</strong>。LLM 双引擎时代打破了它。本篇做的事，本质上是把二十年前那条单调改进定理的主语，从"训练策略 π"换成"推理策略 μ"——老理论在新系统结构下重新扎根。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><span class="lk">模型进化逻辑上的一步</span>RL 后训练的瓶颈正在从算法侧滑向系统侧。双引擎是所有前沿实验室的标配，而这条数值裂缝随模型变大、量化变激进、硬件变异构只会越来越宽。这篇论文标出的方向是：<strong>谁能把"部署侧单调变好"工程化，谁的 RL 就能训得更深、更久、不崩</strong>。它也顺手解释了一个行业悬案：为什么各家 RL 曲线经常"看着好好的突然崩"——因为大家盯的那条曲线，量的本来就不是上线的那个模型。</p><p><span class="lk">落到京小贝，三个直接动作</span></p><ol class="ls"><li><strong>评测环境必须复刻线上 serving 栈</strong>。这篇论文在机理层告诉你："离线评测变好、线上没变好"可以不是玄学，而是<strong>评测跑的程序和线上跑的程序不是同一个</strong>——推理框架、量化档位、采样参数任何一处不同，你评的就不是你上线的那个东西。给京小贝的模型评测立一条硬规矩：评测配置=生产配置，逐项钉死。</li><li><strong>发版要有部署侧验收门+回滚，且验收信号要"看得懂"而不是"拦得多"</strong>。MIPU 第二步就是把灰度发布内化成机制：不因为"训练/离线指标好"就发版，发出去的那个制品单独验收，不合格回滚。随机回滚对照实验是给产品的加码提醒——<strong>保守本身不解决问题，带信息的验收才解决问题</strong>。灰度发布如果只看"放量比例"，不看"验收指标选得对不对"，等于随机回滚。</li><li><strong>把"推理栈变更"列入回归测试的触发器</strong>。同一个 checkpoint，供应商换 serving 后端、开 FP8、调批处理策略，行为都可能漂移（这与 <a class="src" href="2026-07-04--paw-program-as-weights.md">07-04 PAW</a>"行为冻结是金融合规刚需"是同一根神经）。提示词也一样：<strong>你的提示词是在某个特定推理配置下调优的</strong>，配置一换，最优提示词可能移动——提示词回归测试要绑定推理配置的版本号。</li></ol><h1 id="s12">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2606.29526">arXiv 2606.29526</a>（2026-06-28 提交，cs.LG）</li><li>HF Daily Papers：<a class="src" href="https://huggingface.co/papers/2606.29526">105 赞，2026-07-06 窗口 #1</a></li><li>项目页：<a class="src" href="https://anitaleungxx.github.io/MIPU">anitaleungxx.github.io/MIPU</a>（含方法分解与实验图，未见代码仓库）</li><li>直接前作：<a class="src" href="https://neurips.cc/virtual/2025/124259">On the Rollout-Training Mismatch in Modern RL Systems（TIS，NeurIPS 2025）</a>；<a class="src" href="https://richardli.xyz/post/rl-collapse-part1/">When Speed Kills Stability 系列（2025-09）</a>；<a class="src" href="https://verl.readthedocs.io/en/latest/algo/rollout_corr_math.html">verl 框架 rollout 校正数学文档</a></li><li>理论根：<a class="src" href="https://arxiv.org/abs/1502.05477">TRPO（Schulman et al., 2015）</a></li><li>早期引用：Semantic Scholar citationCount=0（发表 9 天，正常；本次 API 取证成功）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
