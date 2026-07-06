@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28357%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2247%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2216%22%20r%3D%2218%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2229%22%20r%3D%229%22%20fill%3D%22%23fff%22%20opacity%3D%220.30%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>记忆不是装上去的零件，是练出来的手艺——AutoMem 把"记忆管理"变成模型可训练的技能，32B 只靠练记忆追平 Claude Opus 4.5</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-06</span></div>
+  <h1 class="doc">记忆不是装上去的零件，是练出来的手艺——AutoMem 把"记忆管理"变成模型可训练的技能，32B 只靠练记忆追平 Claude Opus 4.5</h1>
+  <div class="dateline"><span>全文 <b>4,192</b> 字</span><span>约 <b>11</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">AutoMem: Automated Learning of Memory as a Cognitive Skill</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2607.01224">https://arxiv.org/abs/2607.01224</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Shengguang Wu, Hao Zhu, Yuhui Zhang, Xiaohan Wang, Serena Yeung-Levy</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">斯坦福大学（Serena Yeung-Levy 组）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-01</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-06.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-06.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 16赞（诚实标注：中游票数，靠机理新轴+血统+对思染直接同构选入）· Stanford · 项目页+GitHub 全开源（均验证在线）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, memory, agent, metamemory, self-improvement, continual-learning</span></div></div><div class="tools"><a class="btn hot" href="2026-07-06-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><ol class="ls"><li><strong>它给"记忆"这条能力轴开了第三阶段</strong>。台账里记忆轴走过两步：06-16 MRAgent 把检索改成重构（还是一种"架构"）、06-23 GateMem 发现记忆产品不带治理（还是在验"外挂"好不好）。今天这篇把问题整个换了个问法：记忆好不好，根本不是架构问题，是<strong>手艺问题</strong>——记什么、何时查、怎么组织，是一门可以练的技能，而且模型可以自己练。这是"模型能做的事"往前挪的一步：记忆管理第一次成为独立可训练、可度量的能力。</li><li><span class="lk">结果硬</span>一个 Qwen2.5-32B 开源模型，任务权重一字不动、只优化记忆，在三个长程游戏上成绩翻 2~4 倍，大幅超过同家族 72B 和 671B 的 DeepSeek-R1，追平 Claude Opus 4.5、逼近 Gemini 3.1 Pro Thinking（<a class="src" href="https://arxiv.org/abs/2607.01224">Table 1</a>）。"开源与前沿的差距，可以只靠练记忆补掉一大截"——这是能力前沿层面的陈述，不是刷分。</li><li><span class="lk">信号与诚实交底</span>斯坦福 Serena Yeung-Levy 组（Hao Zhu、Yuhui Zhang 等），<a class="src" href="https://autolearnmem.github.io/">项目页</a>与 <a class="src" href="https://github.com/autoLearnMem/AutoMem">GitHub</a> 全开源（本次均验证在线）。HF Daily Papers（07-03 窗口）16 赞，票数中游——当窗口更高票的 PAW（86，07-04 已讲）、AgenticSTS（51，测试床、样本量小到作者自己承认统计不显著）、EvoPolicyGym（43，纯 benchmark）、FlashMorph（41，注意力层选择的增量优化，该赛道台账已四篇）都不如它够格。Semantic Scholar 又遇限流 429 未取证（上线 5 天引用≈0 属正常）。</li><li><span class="lk">对思染几乎是量身命中</span>这篇论文研究的东西，就是你家里正在跑的东西——OpenClaw、Hermes、Claude Code 共用的文件式知识库，就是论文里的"file-system memory"；CLAUDE.md、MEMORY.md、index 规则就是论文里的"脚手架 scaffold"。论文告诉你这套东西哪里最容易坏、怎么让 AI 自己修（见最后一节）。</li></ol><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是一个 32B 的开源模型（Qwen2.5-32B-Instruct），被丢进游戏史上最残酷的长程环境之一：NetHack——一种字符画地牢探险游戏，一局要走一万到十万步，地图、怪物、道具每局重新随机生成，人类玩家平均要玩好几年才能入门。旁边站着一个问题：<strong>为什么人类玩家靠一张手绘地图、一页笔记就能推进，而模型带着 128K 上下文窗口，却活不过几百步？</strong></p><h2 id="s4">2｜困境</h2><p>模型的上下文窗口相当于人的"工作记忆"——脑子里同时能装的东西，容量是死的。长程任务的信息量远超这个容量：走到第 800 步时，第 50 步看到的那个楼梯位置早就被挤出去了。更要命的是<strong>记忆错误的后果是延迟爆发的</strong>：第 50 步忘了记一个坐标，第 800 步才表现为"迷路、把探过的地方重新探一遍"——中间隔了 750 步，人根本查不出是哪一步的哪个记忆决策坏了事。一局十万步的完整轨迹，人类审到死也审不完。</p><h2 id="s5">3｜旧路</h2><p>旧路有两条，各有死穴：</p><ul class="ls"><li><span class="lk">砸规模</span>换更大的模型、更长的上下文。实测打脸——同家族 72B 只拿到 27.3/5.0/0.3（三个游戏的进度分），滑动窗口版 32B（只带最近 16 步）是 19.55/2.5/0，NetHack 直接零分。<strong>规模买不来记性</strong>。</li><li><span class="lk">设计记忆架构</span>过去几年的外接记忆全是这个思路——RAG 外挂检索库（Lewis 2020）、MemGPT 学操作系统给记忆分页（2023）、Generative Agents 的时间戳记忆流（2023）、MemoryBank 的跨会话长期库……共同点：<strong>记忆机制是设计师定死的，模型只是这套机制的被动用户</strong>。机制再精巧，"什么值得记、何时该查、怎么组织"这些判断没人教过模型。</li></ul><p>台账内的两步也停在这条线上：06-16 MRAgent 把"先检索再推理"改成"边想边取"——更聪明的架构，但还是架构；06-23 GateMem 证明现成记忆产品"召回好"不等于"管得对"——量出了病，没给出练法。</p><h2 id="s6">4｜转折</h2><p>转折来自认知科学的一个词：<strong>metamemory（元记忆）</strong>——心理学家 Flavell 在 1979 年提出：人类记忆强，不是因为海马体（大脑里负责存记忆的零件）更大，而是因为掌握了一门<strong>手艺</strong>：知道什么值得记、何时去回忆、怎么组织笔记。这门手艺是练出来的，小孩子没有，成年人有，专家更强。而且人类还会把这门手艺用到身体外面——笔记、索引、文件夹（哲学上叫"延展心智"：外接工具是认知系统的一部分，不是附件）。</p><p>那么模型也一样：<strong>别再替它设计记忆机制了，把"管理记忆"本身变成它的可训练技能</strong>。具体做法只有一个关键动作：把文件系统操作（读、写、搜索、追加、建文件）升格为一等公民动作，跟游戏动作坐进<strong>同一个动作空间</strong>——同一次前向传播，既可以选"向北走"，也可以选"搜索我的地图文件"。这一步看着朴素，实际是全篇的地基：<strong>每一次记忆决策从此都是轨迹里一个可观察、可评审、可优化的行为</strong>，而不是藏在某个检索模块里的黑盒。</p><h2 id="s7">5｜解法</h2><p>内环是一个带文件夹的游戏智能体，每一步做两问：</p><ul class="ls"><li><span class="lk">LOG（记）</span>"刚发生的事，有什么值得记下来？"——决定要不要记、记到哪个文件、是追加还是改写。</li><li><span class="lk">PLAN（查）</span>"现在要行动了，我需要回忆什么？"——搜文件、读条目，然后出招。</li></ul><p>技能要变强，得沿两条轴练，AutoMem 各配一个自动化外环：</p><p><strong>外环一：改结构（练"场地"）。</strong> 让一个强模型（meta-LLM，用的是 Claude Opus 4.6）当<strong>带着完整执行日志的代码评审</strong>：通读整局几万步的轨迹+最终的记忆文件夹+智能体代码本身，诊断"是脚手架的哪里让记忆坏了事"，然后直接改代码——文件格式、提示词、动作词表。每次修改在固定随机种子上实测，成绩有涨才保留。2~5 轮就收敛。最漂亮的一个案例：NetHack 的地图原本是一个无限追加的 <code>dungeon_map.txt</code>，同一格地板被反复记了几千条，有用信息全被埋了；meta-LLM 看出来后，亲手把它改成<strong>按坐标去重</strong>的格式（同一格新观察覆盖旧条目），再加上从观察自动同步的背包/状态文件、预写好的策略卡——每步记忆增长从 138 字符降到 6 字符，<strong>砍掉 95%</strong>。</p><p><strong>外环二：练手感（练"人"）。</strong> 脚手架改到头，剩下的瓶颈是模型自己下判断的水平。这一环 meta-LLM（Claude Opus 4.7）换角色当<strong>训练工程师</strong>：从海量随机对局里，筛出模型<strong>自己做对的记忆决策</strong>当监督数据——注意，每一条训练样本都是模型自己的原话，meta-LLM 只做筛选、不代写（是过滤器不是老师）；而且数据怎么选、配比多少、LoRA（低秩适配，一种只训小补丁不动大模型的轻量微调法）超参怎么配，三件事捆在一起联合决策、按评测反馈迭代。训出来的是一个专职"记忆专家"：LoRA 补丁版只管记和查，<strong>打游戏的原模型一字不动</strong>——练记忆不冒搞坏任务能力的风险。</p><h2 id="s8">6｜结局</h2><p>进度分（0-100）三连跳，全程任务权重没动过：</p><div class="tablewrap"><table><thead><tr><th></th><th>Crafter</th><th>MiniHack</th><th>NetHack</th></tr></thead><tbody><tr><td>文件记忆 v0</td><td>25.0</td><td>7.5</td><td>0.42</td></tr><tr><td>+改结构</td><td>47.27（×1.89）</td><td>27.5（×3.67）</td><td>1.57（×3.74）</td></tr><tr><td>+练手感</td><td><strong>51.36</strong></td><td><strong>30.0</strong></td><td><strong>1.85</strong></td></tr><tr><td>Claude Opus 4.5</td><td>49.5</td><td>27.5</td><td>2.0</td></tr><tr><td>Gemini 3.1 Pro Thinking</td><td>55.0</td><td>27.5</td><td>2.6</td></tr><tr><td>DeepSeek-R1（671B）</td><td>36.4</td><td>25.0</td><td>1.4</td></tr><tr><td>Qwen2.5-72B（同家族两倍大）</td><td>27.3</td><td>5.0</td><td>0.3</td></tr></tbody></table></div><p>32B 练完记忆，两个游戏追平或反超 Claude Opus 4.5，逼近 Gemini 3.1 Pro Thinking；碾压同家族 72B 与 671B 的 DeepSeek-R1。诚实：Gemini-3-Pro（57.3/40.0/6.8）仍然明显领先，"追平前沿"是追平其中两家、不是登顶。</p><p>三个副发现比主结果更有意思：</p><ol class="ls"><li><span class="lk">只优化记忆，游戏打法也变好了</span>无效动作率（卡死原地+来回踱步）降 32~65%。优化器根本没碰任务策略——记忆理顺了，模型自然不再把探过的地方重新探一遍。这正是"记忆动作和任务动作同一个动作空间"的红利：轨迹评审能同时看见两边的病。</li><li><span class="lk">记忆操作本身变得又准又省</span>重复写入降 68~83%，搜了个空的比率降 13~50%，每步输入上下文缩 3~30%——外接记忆的本职（压缩模型需要盯着的信息）第一次被行为指标量出来。</li><li><strong>训过的记忆专家养成了"先查再写"的习惯</strong>：LOG 阶段每次搜索对应的写入量，三个游戏分别降 54%/72%/72%——先搜一下已有记录、再决定写不写，而不是闷头狂写。这个纪律原本是提示词里劝出来的，现在<strong>从模型自己的成功经验里被筛出来、固化进了权重</strong>。质性对比最直观：NetHack 里 v0 智能体几百步就死在经验等级 1，改完结构能活几千步到等级 2，练完手感活得更久、爬到等级 4。</li></ol><h2 id="s9">7｜内核</h2><p><strong>记忆不是装上去的零件，是练出来的手艺；而这门手艺可以由 AI 自己带练。</strong> 配方就一句话：长程能力的提升，可以分解为"轨迹级评审 + 定点修订"——十万步的完整轨迹人看不完，但够强的 meta-LLM 看得完，看得完就能当评审、当教练。作者在结论里明说：这个分解不止适用于记忆，任何智能体能力都可以这么练。</p><h1 id="s10">来龙去脉（倒读 3 层）</h1><p><span class="lk">根（记忆=设计出来的架构）</span>RAG（Lewis 2020，外挂检索库）→ MemGPT（2023，操作系统式分页）→ Generative Agents（2023，记忆流）→ MemoryBank/A-MEM（长期库/主动取舍）。共同前提：记忆机制由人设计，模型被动使用。台账 06-16 MRAgent（重构式检索）是这条线的最聪明形态，06-23 GateMem 则量出这条线的病：机制好≠管得对。</p><p><span class="lk">第一层（记忆操作变成动作/技能）</span>近两年一批工作把记忆操作升格为可学习的策略动作——MemAct（把上下文窗口本身当动作对象）、MemSkill（从失败案例里长出记忆技能库）、MeMo（专职记忆模型+冻结底座，架构上最接近本篇的"记忆专家"，但存的是静态文档知识不是管理决策）、MemLLM/Self-Notes（训练模型跟读写记忆模块交互）。同期另一条平行线是<strong>自动化智能体优化</strong>：ADAS 搜架构、AFlow 树搜索工作流、DSPy 编译提示链——台账 06-21 FAPO（Claude Code 当管线优化器）正坐这条线；两条线在记忆上的交点是 MemEvolve/EvolveMem（进化记忆架构/检索配置，但只做推理侧、信号来自单题日志）。</p><p><span class="lk">本篇（两轴合围+信号升维）</span>AutoMem 与前人的差异在覆盖面和信号——<strong>结构轴和参数轴一起练</strong>（前人通常只碰一边），且优化信号来自<strong>完整长程轨迹</strong>（最长十万步）而非单题失败日志；并把认知科学的元记忆（Flavell 1979 的"监控-控制"环）从解释性隐喻变成具体的优化目标。更早的思想根是"延展心智"（Clark &amp; Chalmers 1998）：笔记和文件夹本来就是认知系统的一部分——AutoMem 等于第一次让模型"认领"了它的外接文件夹，并为此接受训练。</p><p><span class="lk">与台账暗线的咬合</span></p><ul class="ls"><li>记忆轴三级跳：<strong>架构（06-16）→ 治理（06-23）→ 技能（今天）</strong>。</li><li>06-21 FAPO 一脉：meta-LLM 读轨迹、改脚手架，是"智能体优化智能体"家族；但 AutoMem 的外环二走得更远——meta-LLM 不止改代码，还<strong>编排训练本身</strong>（数据筛选+配比+超参联合决策），"训练流程被会优化的策略接管"这条线（06-11 DRPO→06-21 FAPO→06-25 HDS）又下一城。</li><li>07-01 Agents-A1 的"过程可以被记录→筛选→训进权重"，在这里有了函数级的实例：模型自己的好记忆决策，被筛出来固化成 LoRA 习惯（"先查再写"）——也呼应 07-04 PAW 的大主题：<strong>智能的价值正在从在线消耗转向离线固化</strong>，这次固化的不是任务能力，是一个习惯。</li><li>"结构化的更多才有用"（06-18/06-21/06-24/06-25/06-28 反复出现）：滑动窗口的"散装更多"输给结构化文件记忆；无限追加的地图文件是标准病灶，坐标去重一改，95% 的冗余消失。</li></ul><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><span class="lk">模型进化往哪挪了一步</span>能力前沿的争夺，正在从"模型本体"扩散到"模型外围那圈技能"——记忆、工具、验证，一个个从"人设计的固定机制"变成"可观察、可评审、可训练的技能"。今天这篇给出了目前最完整的配方：<strong>动作空间统一（让技能可观察）→ 轨迹级评审（让病灶可定位）→ 定点修订+经验筛选训练（让改进可固化）</strong>。32B 练记忆追平 Opus 4.5 说明：长程任务上，开源与前沿的差距有相当一部分不在脑子、在记性——而记性是可以便宜地练的。</p><p><span class="lk">对你家里那套系统（最直接的一条）</span>你的人生知识库 + OpenClaw/Hermes/Claude Code，就是论文里"file-system memory + scaffold"的活样本。四条可以直接搬：</p><ol class="ls"><li><strong>脚手架本身是最高杠杆</strong>（论文里只改结构就翻 2~3.7 倍）：CLAUDE.md、MEMORY.md、index/log 规则值得定期让强模型做"轨迹级评审"——把一周的 agent 使用日志喂给它，问"记忆结构哪里让检索失败了、哪个文件在无限膨胀"，实测有效才改（论文的门控：固定场景先跑一遍再收）。</li><li><span class="lk">警惕无限追加文件</span>论文的标准病灶就是 append-only 的地图文件。你的 log.md、ledger 这类只增不减的文件，该有"按 key 去重/定期压缩"的机制，否则有用信息迟早被自己的历史埋掉。</li><li><span class="lk">"先查再写"是值得固化的纪律</span>论文里模型练成的习惯（写之前先搜已有记录），正是知识库协作规则里"存记忆前先查重"那条——现在有了定量证据：这个习惯让写入量降五到七成、还提升任务成绩。</li><li><span class="lk">给记忆装行为仪表盘</span>别只看"agent 任务做没做成"，学论文量三个记忆行为指标——重复写入率、搜空率、每步上下文大小。记忆系统的病，在这三个数上先冒头。</li></ol><p><span class="lk">对京小贝</span></p><ol class="ls"><li><strong>用户记忆别当"采购一个记忆组件"来做，当"训练一门技能"来做</strong>：每轮交互两问——"这轮有什么值得写进用户档案"（LOG）、"回答前该调出用户的什么"（PLAN），这两问的质量可以用行为指标度量、可以用真实对话轨迹评审迭代，完全不用换底座模型。</li><li><span class="lk">成本故事</span>长程/多轮场景下"32B+好记忆 &gt; 72B"意味着——预算优先投记忆脚手架和记忆行为的评审迭代，不是更大的基座。</li><li><span class="lk">隔离训练的思路可以抄</span>练记忆专家时冻结任务模型（LoRA 专家只管记和查），对应到产品：优化用户档案管理时别动答题链路，两条能力分开训分开验（06-29 工具 RL 崩溃的教训在这里被架构性规避了）。</li></ol><p><span class="lk">提示词一条</span>给任何长任务 agent 的系统提示里植入论文的两问循环——每步先"值得记什么"再"需要回忆什么"，并明确"写入前先搜索已有记录"。这是被训练验证过的记忆纪律，纯提示词就能白嫖一部分。</p><p><span class="lk">诚实交底</span>记忆是单局的（每局文件夹清零，跨局持久记忆是未来工作）；只在游戏环境验证（作者选 BALROG 恰因程序化生成让背题失效、逼出真记忆能力）；三个游戏各练各的脚手架和专家，能不能共用一套还未知；评测 10 个种子（BALROG 默认配置）；meta-LLM 用的是 Claude Opus 4.6/4.7——这套自动化的天花板系于评审模型的水平，"AI 自己带练"目前仍要一个前沿模型当教练。</p><h1 id="s12">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2607.01224">https://arxiv.org/abs/2607.01224</a> （2026-07-01，全文 HTML 已读）</li><li>项目页：<a class="src" href="https://autolearnmem.github.io/">https://autolearnmem.github.io/</a> （已验证在线）</li><li>代码：<a class="src" href="https://github.com/autoLearnMem/AutoMem">https://github.com/autoLearnMem/AutoMem</a> （已验证在线）</li><li>HF Daily Papers（07-03 窗口，16赞）：<a class="src" href="https://huggingface.co/papers/2607.01224">https://huggingface.co/papers/2607.01224</a></li><li>BALROG 基准（评测环境与前沿模型分数来源）：Paglieri et al. 2024，<a class="src" href="https://arxiv.org/abs/2411.13543">https://arxiv.org/abs/2411.13543</a></li><li>元记忆概念根：Flavell 1979（metacognition）；Clark &amp; Chalmers 1998（The Extended Mind）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>

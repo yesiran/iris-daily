@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AutoMem: 记忆作为可训练的认知技能 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.07.06</span></div>
+  <div class="bar"></div>
+  <h1>AutoMem: 记忆作为可训练的认知技能</h1>
+  <p class="meta"><b>5</b> 条主线 · <b>20</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">核心理念 (Metamemory)</div><ul><li><div class="n2" style="--c:#E63312">记忆是手艺而非零件</div></li><li><div class="n2" style="--c:#E63312">延展心智：文件系统作为外接工具</div></li><li><div class="n2" style="--c:#E63312">管理记忆是独立且可训练的技能</div></li></ul></li><li><div class="n1" style="--c:#10395E">核心架构 (Inner Loop)</div><ul><li><div class="n2" style="--c:#10395E">统一动作空间：读/写/搜/改</div></li><li><div class="n2" style="--c:#10395E">记 (LOG)：决定存储内容与位置</div></li><li><div class="n2" style="--c:#10395E">查 (PLAN)：行动前检索相关信息</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">自动化训练机制 (Outer Loops)</div><ul><li><div class="n2" style="--c:#9E2B22">改结构 (练场地)</div><ul><li><div class="n3">Meta-LLM 评审长程轨迹</div></li><li><div class="n3">诊断并自动修改代码/脚手架</div></li><li><div class="n3">案例：坐标去重减少 95% 冗余</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">练手感 (练人)</div><ul><li><div class="n3">从成功决策中筛选监督数据</div></li><li><div class="n3">LoRA 轻量微调记忆专家</div></li><li><div class="n3">养成「先查再写」的习惯</div></li></ul></li></ul></li><li><div class="n1" style="--c:#3E5C2E">实验结果与性能</div><ul><li><div class="n2" style="--c:#3E5C2E">32B 模型追平 Claude Opus 4.5</div></li><li><div class="n2" style="--c:#3E5C2E">性能翻 2-4 倍，大幅超越 671B 模型</div></li><li><div class="n2" style="--c:#3E5C2E">无效动作率下降 32~65%</div></li><li><div class="n2" style="--c:#3E5C2E">上下文输入缩减 3~30%</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">实践应用与启示</div><ul><li><div class="n2" style="--c:#6B4A8E">脚手架改写是最高杠杆</div></li><li><div class="n2" style="--c:#6B4A8E">警惕无限追加型文件</div></li><li><div class="n2" style="--c:#6B4A8E">建立记忆行为指标仪表盘</div></li><li><div class="n2" style="--c:#6B4A8E">隔离记忆专家与任务底座训练</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
