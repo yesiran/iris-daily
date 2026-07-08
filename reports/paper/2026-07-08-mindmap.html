@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nemotron三模式模型：范式合体的终局 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.07.08</span></div>
+  <div class="bar"></div>
+  <h1>Nemotron三模式模型：范式合体的终局</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>21</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题设定：两范式各有死结</div><ul><li><div class="n2" style="--c:#E63312">AR串行瓶颈：一次前向一token，低并发GPU利用率&lt;10%</div></li><li><div class="n2" style="--c:#E63312">扩散精度落后：需更多数据，学无关排列浪费容量</div></li><li><div class="n2" style="--c:#E63312">旧路互不来往：加速派守AR不碰扩散，扩散派要替代</div></li></ul></li><li><div class="n1" style="--c:#10395E">核心洞察：互补而非竞争</div><ul><li><div class="n2" style="--c:#10395E">权重λ同升同降：两目标不抢容量，本质是队友关系</div></li><li><div class="n2" style="--c:#10395E">AR隐式学预判未来，扩散目标激活沉睡能力</div></li><li><div class="n2" style="--c:#10395E">扩散给AR钉从左到右先验，两个能力各补所短</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">技术方案：一套权重三读法</div><ul><li><div class="n2" style="--c:#9E2B22">训练侧：AR损失+块级扩散加权，两阶段（纯AR→联合）</div></li><li><div class="n2" style="--c:#9E2B22">消融发现：AR损失单项+7.48分，全技巧中最大贡献</div></li><li><div class="n2" style="--c:#9E2B22">AR模式一次1token；扩散模式块内并行；自投机模式6token</div></li><li><div class="n2" style="--c:#9E2B22">自投机：扩散草稿+AR验收同模型，无需Eagle3外挂</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">性能指标：精度速度双赢</div><ul><li><div class="n2" style="--c:#3E5C2E">精度：8B AR模式超Qwen3-8B 0.86%，全超扩散基线</div></li><li><div class="n2" style="--c:#3E5C2E">速度：自投机6 TPF，GB200吞吐4倍，接受长度6.82 vs 2.75</div></li><li><div class="n2" style="--c:#3E5C2E">并行上限SOL：实际3token，理论7.6token，潜力未见底</div></li><li><div class="n2" style="--c:#3E5C2E">内容依赖：代码/多语言11.26 vs 角色扮演3.49，差3.2倍</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">反直觉发现与接缝税</div><ul><li><div class="n2" style="--c:#6B4A8E">二次自投机TPF高但真机慢，kernel优化滞后</div></li><li><div class="n2" style="--c:#6B4A8E">IFEval格式遵循掉3.01%，融合代价落最敏感处</div></li><li><div class="n2" style="--c:#6B4A8E">并行度随模板化程度变化，结构化内容获益最大</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">应用启示与范式升级</div><ul><li><div class="n2" style="--c:#8A6D1F">结构化输出直接换延迟成本下降，京小贝高模板化最受益</div></li><li><div class="n2" style="--c:#8A6D1F">格式遵循回归测试第一道关，金融产品不可妥协</div></li><li><div class="n2" style="--c:#8A6D1F">自己serving栈复测，算法赢≠真机赢</div></li><li><div class="n2" style="--c:#8A6D1F">同一模型按并发切模式：低并发自投机4倍，高并发满GPU</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
