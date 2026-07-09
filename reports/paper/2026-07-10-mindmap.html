@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>线性注意力记忆瓶颈被稀疏寻址破开 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.07.10</span></div>
+  <div class="bar"></div>
+  <h1>线性注意力记忆瓶颈被稀疏寻址破开</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>18</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">两种架构的根本权衡</div><ul><li><div class="n2" style="--c:#E63312">线性注意力：O(1)恒定成本、固定小状态、易忘</div></li><li><div class="n2" style="--c:#E63312">Transformer：KV随长度涨、精确回忆、计算贵</div></li><li><div class="n2" style="--c:#E63312">困局：记忆容量与每字成本被焊死绑定</div></li></ul></li><li><div class="n1" style="--c:#10395E">从DeltaNet到SDM的转折</div><ul><li><div class="n2" style="--c:#10395E">DeltaNet：精准擦写+门控遗忘，白板仍小</div></li><li><div class="n2" style="--c:#10395E">根本转折：拆开总容量与每字成本两件事</div></li><li><div class="n2" style="--c:#10395E">新思路：巨大记忆+稀疏索引=恒定廉价+无限容量</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">SDM的三层技术方案</div><ul><li><div class="n2" style="--c:#9E2B22">稀疏寻址：几十亿格子，每字仅碰~128个</div></li><li><div class="n2" style="--c:#9E2B22">乘积键定位：√N+√N替代N，2019年Jégou发明</div></li><li><div class="n2" style="--c:#9E2B22">参数化初始记忆：容量足以烤进知识库</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">性能收益与隐藏成本</div><ul><li><div class="n2" style="--c:#3E5C2E">回忆力翻倍升至50.2%（8B，从34.2%，RULER）</div></li><li><div class="n2" style="--c:#3E5C2E">常识推理追平：8B达56.84% vs Transformer 56.65%</div></li><li><div class="n2" style="--c:#3E5C2E">代价转移：内存利用率低10倍、端到端慢1.49倍</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">架构融合与前沿意义</div><ul><li><div class="n2" style="--c:#6B4A8E">补齐长上下文竞争中linear侧的短板</div></li><li><div class="n2" style="--c:#6B4A8E">融合两源流：线性RNN循环+稀疏显式记忆</div></li><li><div class="n2" style="--c:#6B4A8E">验证暗线：结构化稀疏才管用，无序堆砌无益</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">实用启示与决策框架</div><ul><li><div class="n2" style="--c:#8A6D1F">第三选项需验证：真实任务测试长文档回忆</div></li><li><div class="n2" style="--c:#8A6D1F">资源转换本质：用不缺的算力换紧缺的内存</div></li><li><div class="n2" style="--c:#8A6D1F">知识存储新坐标：参数化记忆在提示-RAG-微调谱中</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
