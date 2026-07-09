@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28300%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2229%22%20r%3D%2223%22%20fill%3D%22%23fff%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2224%22%20r%3D%2213%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.12%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让"过目就忘"的高效架构第一次拥有海量又廉价的记忆——线性注意力的记忆瓶颈，被"稀疏寻址"一刀破开</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-10</span></div>
+  <h1 class="doc">让"过目就忘"的高效架构第一次拥有海量又廉价的记忆——线性注意力的记忆瓶颈，被"稀疏寻址"一刀破开</h1>
+  <div class="dateline"><span>全文 <b>4,717</b> 字</span><span>约 <b>13</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Sparse Delta Memory: Scaling the State of Linear RNNs through Sparsity</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.07386</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Loïc Cabannes, Pierre-Emmanuel Mazaré, Matthijs Douze, Maria Lomeli, Gergely Szilvasy, Ilze Amanda Auzina, Justin Carpentier, Gabriel Synnaeve, Hervé Jégou</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Meta FAIR（+ Inria/ENS-PSL、图宾根大学）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-07</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-10.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-10.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 上榜·6赞（诚实标注：票数偏弱，靠 Meta FAIR 血统 + 全新架构轴选入非票数）· Meta FAIR 旗舰，作者含 FAISS/Product-Key Memory 之父 Hervé Jégou、Matthijs Douze、Code Llama 的 Gabriel Synnaeve</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, linear-attention, memory, long-context, efficiency, sparse-memory</span></div></div><div class="tools"><a class="btn hot" href="2026-07-10-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：一块"永远只有巴掌大"的白板</a><a class="t-h2" href="#s4">2. 困境：想让它多记，就得让它变贵——记忆和成本被焊死在一起</a><a class="t-h2" href="#s5">3. 旧路：DeltaNet 让白板"会擦"，但白板还是那块白板</a><a class="t-h2" href="#s6">4. 转折：白板不必小，只要每次动的地方小就行</a><a class="t-h2" href="#s7">5. 解法：几十亿个格子的记忆 + 一套"乘积键"廉价寻址</a><a class="t-h2" href="#s8">6. 结局：长文档记忆力跳一大截，还顺手多了一本"内置百科"——但天下没有免费午餐</a><a class="t-h2" href="#s9">7. 内核：便宜的秘密，从来不是"状态小"，而是"每步动得少"</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步把前沿往哪挪了</a><a class="t-h2" href="#s13">能怎么用（京小贝 &amp; 提示词）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 Meta FAIR 的 <strong>Sparse Delta Memory（SDM，稀疏增量记忆）</strong>。它推进的是一条<strong>台账里从没碰过的架构主轴</strong>：线性注意力（也就是 Mamba、DeltaNet、Kairos 那一整个"高效但过目就忘"的家族）的<strong>核心命门——那块固定大小、装不下东西的记忆</strong>，第一次被廉价地扩大了几千倍。过去一个多月台账里的"长上下文"三部曲（06-10 FlashMemory、06-15 MiniMax-SA、07-09 HiLS、06-24 Unlimited OCR）全都在给<strong>标准 softmax 注意力</strong>做减法；SDM 是<strong>另外半张地图</strong>——把那个跟 Transformer 掰手腕的<strong>竞争架构家族</strong>的最大短板补上。</p><p>信号上诚实交底：HuggingFace 只有 <strong>6 赞</strong>，偏弱（当天票数榜首全是具身智能 / 视频世界模型，不在本 skill 的能力机理选片轴上）。选它靠的是<strong>血统 + 全新赛道 + 机制锐度</strong>，不是票数：作者是 <strong>Meta FAIR</strong> 旗舰阵容，其中 <strong>Hervé Jégou 和 Matthijs Douze 正是向量检索工具 FAISS 和 2019 年"Product-Key Memory（乘积键记忆）"那篇的作者</strong>，Gabriel Synnaeve 是 Code Llama 的负责人。这篇的美妙之处正在此：<strong>七年前发明"如何在海量记忆里廉价寻址"的那批人，现在把这套手艺灌进了 2024 年最强的线性 RNN 里</strong>。对思染追前沿，它值在三点：（1）补齐了他对"两大架构家族谁能赢长上下文"的完整认知；（2）它把台账反复出现的暗线"结构化的更多才有用"再钉一枚钉子（3600 倍的记忆，因为稀疏所以每字算力不变）；（3）它给"知识该放在哪"——提示词 / RAG / 权重——多加了一个可落地的坐标点（parametric memory，把知识烤进那块被学出来的初始记忆里）。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：一块"永远只有巴掌大"的白板</h2><p>主角是<strong>线性注意力（linear attention）/ 线性 RNN</strong> 这一类模型的"记忆"。</p><p>先把两种记法摆清楚，这是全篇的地基：</p><ul class="ls"><li><strong>标准 Transformer（softmax 注意力）的记法 = 一本越写越厚的账本。</strong> 模型每读一个新词，会为它记下一条"标签 + 内容"（术语叫 <strong>KV cache，键值缓存</strong>：key 是这个词的可检索标签，value 是它携带的内容）。回答下一个词时，模型<strong>回头扫一遍账本里的每一条</strong>，谁的标签跟当前问题最搭就多看谁。好处：<strong>过目不忘</strong>，一百万字前埋的一根针，它理论上永远能翻回去找到。代价：账本<strong>随上下文一路变厚</strong>——十万字上下文就是十万条，每生成一个新字都要重扫一遍，越长越慢、越长越占内存。<strong>成本随长度涨</strong>，这是它的原罪。</li></ul><ul class="ls"><li><strong>线性注意力 / 线性 RNN 的记法 = 一块固定大小的白板。</strong> 它不留那本厚账本，而是把读过的所有东西<strong>压缩进一块尺寸固定的"状态矩阵"</strong>（就想成一块白板）。每读一个新词：在白板上改几笔，然后<strong>把这个词本身扔掉</strong>。回答时<strong>只看这块白板</strong>，不回头翻历史。好处：不管上下文多长，每个字的计算量和占用<strong>恒定不变</strong>——又快又省，这正是它被当成"效率前沿"、被寄望取代 Transformer 的原因。代价：<strong>白板就巴掌那么大，尺寸写死了</strong>。读到第一百万个字时，这一百万字全得挤在同一块小白板上——旧的必然被新的盖掉、糊掉。所以<strong>线性注意力会"忘"</strong>，尤其在"大海捞针"（长文档里精确找出某一个具体事实）这种任务上，远打不过 Transformer。</li></ul><p>主角的一生，就活在这块白板的容量诅咒里。</p><h2 id="s4">2. 困境：想让它多记，就得让它变贵——记忆和成本被焊死在一起</h2><p>有人自然会说：白板小就把白板做大点嘛。</p><p>问题在于：<strong>线性注意力每读一个字，都要把整块白板重写一遍</strong>（更新整个状态矩阵）。白板越大，每一步要动的笔画就越多，<strong>每个字的计算量就等比例涨上去</strong>。于是"能记多少"（白板面积）和"每字要算多少"（成本）被<strong>死死焊在一起</strong>：想多记 → 白板变大 → 每字变贵 → 就丢掉了线性注意力唯一的卖点（恒定廉价）。</p><p>这就是整个领域忍了好几年的两难：</p><blockquote><p><strong>廉价但健忘（线性）  vs  昂贵但过目不忘（softmax）</strong>——你只能二选一。</p></blockquote><h2 id="s5">3. 旧路：DeltaNet 让白板"会擦"，但白板还是那块白板</h2><p>这条线上前人做过一次漂亮的改进，值得交代，因为 SDM 的名字（<strong>Delta</strong> Memory）就从这儿来。</p><p>最朴素的线性注意力，写白板的方式是<strong>只加不擦</strong>：每来一个"标签→内容"就往白板上叠加。麻烦是——同一个标签如果先后出现两次、内容却不同（比如"这个变量现在等于 3"后来"这个变量现在等于 7"），两次会在白板上<strong>互相打架、糊成一团</strong>。</p><p><strong>delta rule（增量法则，Delta 就是希腊字母 Δ，"差值/改动"的意思，源头是 1980 年代的神经网络学习法则，近几年被"快权重（fast weights）"这套视角复活）</strong> 的改法是：<strong>写新内容之前，先把这个标签下的旧内容擦掉，再写新的</strong>。是一次<strong>精准编辑</strong>，不是盲目叠加——像改电子表格里的一个格子，而不是在整页上乱涂。这一下让线性注意力的"联想记忆"能力大幅变强。<strong>Gated DeltaNet（门控增量网络，2025 年底 NVIDIA × Songlin Yang，把 Mamba2 的"遗忘旋钮"和 DeltaNet 的精准编辑合到一起）</strong> 又加了一个<strong>慢慢淡忘旧记忆的旋钮（gate，门控）</strong>，成了线性注意力层里公认最强的那一档，也是 SDM 直接站上去的肩膀。</p><p>但请注意：DeltaNet 会"擦"、Gated DeltaNet 会"淡忘"，<strong>它们那块白板，仍然是同一块固定大小的小白板</strong>。改的是"怎么写"，没改"能写多大"。<strong>容量天花板一寸没动。</strong></p><h2 id="s6">4. 转折：白板不必小，只要每次动的地方小就行</h2><p>SDM 的关键 insight 一句话——</p><blockquote><p><strong>一块大白板之所以贵，是因为你每一步都把整块重写一遍。那如果白板巨大无比（几十亿个格子），而每个字只碰其中一小撮格子呢？</strong></p></blockquote><p>那"贵"就不成立了。<strong>成本贵不贵，取决于"每个字实际动了多少格子"，而不是"白板一共多大"。</strong> 把这两件事拆开——<strong>总容量</strong>和<strong>每字动的量</strong>——两难就散了：白板可以无限大（记得多），每字只动一小撮（依然便宜）。</p><p>这就是转折点：<strong>不要压缩记忆去迁就成本，而是把"每字触碰的量"压小，让容量自由放大。</strong></p><h2 id="s7">5. 解法：几十亿个格子的记忆 + 一套"乘积键"廉价寻址</h2><p>SDM 把那块"单一稠密小白板"，换成一张<strong>巨大的显式记忆表</strong>（explicit memory，N 个格子，N 可以到几十亿）。机制拆开是三步：</p><p><strong>(a) 每个字只碰一小撮格子。</strong> 来一个字，SDM <strong>不动</strong>这几十亿格子的绝大多数，只挑出一小把——大约 <strong>写 W≈64 个 + 读 R≈64 个</strong>——把 DeltaNet 那套"先擦再写"的精准编辑<strong>只作用在这几十个被选中的格子上</strong>，其余的记忆原封不动躺着。所以每个字实际动的量 ≈ 128 个格子，<strong>跟 Gated DeltaNet 一样小，与总容量 N 无关</strong>。</p><p><strong>(b) "从几十亿里挑出这一小撮"怎么能便宜？——靠 Product-Key Memory（乘积键记忆）。</strong> 直觉上，要在 N 个格子里选出最相关的 64 个，得把 N 个都打一遍分——N 是几十亿时贵到没法算。乘积键的巧思：<strong>不建一张 N 个键的大表，而建两张各 √N 个键的小表，把它俩两两组合（做"乘积"：A 表任一个 × B 表任一个 = 一个复合地址）</strong>。于是 √N + √N 个小键，就能张成 N 个复合地址；找最匹配的，只需在两张 √N 的小表里各挑一次，<strong>开销从 N 降到约 √N</strong>。N = 10 亿时，√N ≈ 3.16 万——瞬算。<strong>这正是 Hervé Jégou、Guillaume Lample 等人 2019 年那篇《Large Memory Layers with Product Keys》的原创招式</strong>，而 Jégou 就是这篇 SDM 的作者——<strong>他把自己七年前发明的"海量记忆廉价寻址"直接嫁接进了现代线性 RNN 的状态里</strong>。</p><p><strong>(c) 把初始记忆也学出来（parametric memory，参数化记忆）。</strong> 记忆既然变得这么大，就可以<strong>把"还没读任何输入前、这张记忆表里预先装了什么"当成可学习的参数</strong>，在预训练里让模型往里面<strong>永久烤进一批知识</strong>——相当于给这一层内置了一本百科全书。Gated DeltaNet 那块小白板装不下这种东西（学了也没用），SDM 的大记忆装得下。</p><p>三步合起来：<strong>每字算力 = 和 Gated DeltaNet 一样（只碰 ~128 格）；总容量 = 大几千倍（8B 规模下状态约 3600 倍大）。</strong> 便宜的算力 + 巨大的容量，两难被拆开。</p><h2 id="s8">6. 结局：长文档记忆力跳一大截，还顺手多了一本"内置百科"——但天下没有免费午餐</h2><p>在<strong>同等算力、同等参数量（iso-FLOP，控制变量到 FLOPs 都一样）</strong>的严格对比下：</p><ul class="ls"><li><strong>长上下文回忆力大涨。</strong> 在 <strong>RULER（一套标准的长上下文检索测试，考模型在 4k–131k 字的上下文里找到并用上信息）</strong> 上：1.4B 模型 Gated DeltaNet <strong>20.0% → SDM 31.2%</strong>；8B 模型 <strong>34.2% → 50.2%</strong>。差不多<strong>补上了它与"满血 softmax 注意力"（8B 时 61.2%）之间约一半的差距</strong>——却仍保住了线性注意力那份"每字恒定成本"。而且在 8B 规模上，SDM 的<strong>预训练损失（loss）甚至压到了满血注意力之下</strong>（约 0.852 vs 0.871）。</li><li><strong>常识 / 推理也涨，靠的正是那本"内置百科"。</strong> 把初始记忆学出来（parametric memory）后：代码困惑度 NLL 0.845 → 0.822、RULER 从 28.0% → 31.2%；8B 上平均任务准确率<strong>略微反超满血注意力</strong>（约 56.84% vs 56.65%）。而同样给 Gated DeltaNet 学初始状态<strong>几乎没用</strong>（白板太小装不下）——<strong>同一个机制既修好了回忆、又给了模型一个知识库</strong>。</li></ul><p><strong>最反直觉、也最诚实的一处——天下没有免费午餐，代价换了个地方藏：</strong></p><p>把状态做大 3600 倍，<strong>每字的浮点运算（FLOPs）真的一点没多</strong>（因为稀疏，绝大多数记忆没碰）。听上去像白赚。<strong>但代价不在算力，在内存硬件：</strong> 这张巨大的记忆躺在 GPU 的 <strong>HBM（高带宽内存，容量大但比片上 SRAM 慢）</strong> 里，稀疏寻址是<strong>在里面到处随机跳着读</strong>，于是<strong>GPU 的"有效算力利用率"（MFU）比稠密的 Gated DeltaNet 低了约 10 倍</strong>——即便两者 FLOPs 相同。落到真实训练：8B 的 SDM 端到端<strong>慢 1.49 倍</strong>；推理解码比 Gated DeltaNet <strong>慢约 10%</strong>（但仍比满血注意力<strong>快 6 倍</strong>）。而且这张状态<strong>占的内存跟模型参数本身一样大</strong>，只有在<strong>超长上下文（&gt;20 万字）</strong>才划算——SDM 8B 的状态，约等于满血注意力缓存 <strong>20.34 万个字</strong>所占的内存。</p><p><strong>一句话结局：它没有凭空变出记忆，而是把"稀缺又慢的内存带宽"换成了"廉价又充裕的算力"——用你不缺的资源，去买你紧缺的能力。</strong></p><h2 id="s9">7. 内核：便宜的秘密，从来不是"状态小"，而是"每步动得少"</h2><p>思染走出门带走这一颗种子——</p><blockquote><p>线性注意力被诅咒了好几年的"过目就忘"，<strong>根子从来不是"状态必须小"，而是"每一步要把整块状态重写一遍"</strong>。一旦用稀疏寻址把"每字触碰的量"和"总容量"拆开，状态就能无限大而依然廉价。<strong>"更多的记忆"从来不是问题，"没结构地更多"才是问题——结构化的更多（几十亿格子但每字只碰 128 个），既便宜又管用。</strong></p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源）</h1><p><span class="lk">第 0 层（这篇 SDM）</span>用"乘积键稀疏寻址 + 显式大记忆"，把线性 RNN 的状态扩大几千倍而每字算力不变，补上线性注意力的长上下文短板，并顺手把初始记忆当知识库。</p><p><strong>第 1 层（直接肩膀）——Gated DeltaNet（门控增量网络）</strong>：<code>arXiv 2412.06464</code>《Gated Delta Networks: Improving Mamba2 with Delta Rule》（NVIDIA × Songlin Yang，2025 底）。它把两件事捏一起：<strong>delta rule 的精准擦写</strong>（改一个格子而非乱涂）+ <strong>Mamba2 的遗忘门控</strong>（慢慢淡忘旧信息）。这是当时线性注意力层里的最强档，SDM 直接在它上面动刀。同门近亲 <strong>Gated DeltaNet-2</strong>（NVIDIA，2026-05，把 delta rule 里的"擦"和"写"解耦）。</p><p><span class="lk">第 2 层（两条源流的合流）</span>SDM 的本质是<strong>两个家族的联姻</strong>——</p><ul class="ls"><li><span class="lk">(甲) 线性注意力 / 循环状态一脉</span>Linear Attention（Katharopoulos 2020，第一次把注意力写成可循环的固定状态）→ Mamba / Mamba2（状态空间模型 SSM）→ <strong>DeltaNet</strong>（把 delta rule 搬进来，Songlin Yang 等《Parallelizing Linear Transformers with the Delta Rule》<code>arXiv 2406.06484</code>，NeurIPS 2024；更老的根是 Schlag 等 2021"线性 Transformer 其实是快权重程序员"、以及 Schmidhuber 1992 的快权重思想）。<strong>这一脉毕生在跟"固定状态容量天花板"较劲。</strong></li><li><span class="lk">(乙) 稀疏显式记忆一脉</span><strong>Product-Key Memory（乘积键记忆）</strong>，Lample、Sablayrolles、Ranzato、Denoyer、<strong>Jégou</strong> 2019 <code>arXiv 1907.05242</code>（NeurIPS 2019）；更老的根是 Memory Networks、Neural Turing Machine（神经图灵机）。<strong>这一脉的看家本领是"如何在几百万个记忆槽里廉价寻址"。</strong> 论文里点名"最接近"的近作是 Fast-Weight Product Key Memory（Zhao &amp; Jones, 2026）。</li></ul><p><strong>SDM = 把 (乙) 的稀疏寻址，灌进 (甲) 的循环状态里。</strong> 被它往前拱一步的根问题是：<strong>"线性注意力的固定小状态，真的是它换取廉价的必付代价吗？"</strong>——SDM 的回答是"不必"：把"每字算力"和"总容量"解耦，就两头都要。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步把前沿往哪挪了</h2><p><strong>它补齐了"长上下文之争"的另外半张地图。</strong> 你台账里的长上下文全在 <strong>softmax 一侧</strong>（06-10 FlashMemory 推理侧稀疏、06-15 MiniMax-SA 训练原生稀疏、07-09 HiLS 长度外推、06-24 Unlimited OCR 输出侧）——都是给"越长越贵"的满血注意力做减法。SDM 是 <strong>linear 一侧</strong>：那个跟 Transformer 竞争、被寄望更省的架构家族（Mamba / GLA / DeltaNet / 06-19 Kairos 用来"维持世界"的线性层就属此家），它<strong>最致命的短板"过目就忘"，第一次被廉价补上</strong>。意义：<strong>线性 / 混合架构不再天生输在长文档记忆上</strong>，作为未来高效长上下文底座的竞争力实打实抬了一档。往后重点看<strong>混合架构</strong>（少数几层满血注意力 + 多数层 SDM 式记忆层）——两家的长处第一次有希望焊在一起（这条"AR/扩散 vs 线性/softmax 走向合体"的暗线，和 07-08 Nemotron 三模式、06-26 iLLaDA 同气）。</p><p><strong>它给台账暗线"结构化的更多才有用"又钉一枚钉子。</strong> 从 06-18 循环圈数、06-21 思考挤答案、06-25 数据调度、06-28 草稿树，到今天的 SDM——<strong>盲目地"更多"总没用，结构化地"更多"才行</strong>。SDM 就是最干净的一例："状态大 3600 倍，但稀疏寻址让每字成本不变"。</p><p><strong>它跟你早已熟悉的"记忆"话题是两个楼层。</strong> 06-16 MRAgent（图记忆）、06-23 GateMem（记忆治理）、07-06 AutoMem（记忆即技能）都是 <strong>agent 层的外部记忆</strong>（模型之外，管文件 / 图谱）；SDM 是 <strong>架构层的内部记忆</strong>（烤进模型这一层里，可寻址、可扩容）。同一栋楼的两层，互补不重叠。</p><h2 id="s13">能怎么用（京小贝 &amp; 提示词）</h2><ol class="ls"><li><strong>选长上下文底座时，多了一个"第三选项"，但要拿自己的针去验。</strong> 过去是"linear（省但忘） vs softmax（准但贵）"二选一；现在多了"<strong>linear 家族 + SDM 式记忆</strong>"——有希望在<strong>每字恒定成本</strong>下拿到接近 Transformer 的回忆力。但护栏要记牢：SDM 在 RULER 上只<strong>补了约一半差距、不是追平</strong>，且在某些"多键"检索任务上仍偏弱。所以京小贝真要上长文档 / 合规检索这种<strong>高风险精确召回</strong>，别信标称——<strong>拿你真正在乎的那类"针"（比如埋在 8 万字里的某条合规条款）自建 needle 实测</strong>，验证曲线过关再用。</li></ol><ol class="ls"><li><strong>"我们做便宜了"这句话，永远追问：哪种资源便宜了、哪种反而更贵了。</strong> SDM 是最教科书的例子——<strong>FLOPs 一点没多，但内存带宽利用率掉了 10 倍、真实训练慢 1.49 倍</strong>。"算力便宜 ≠ 墙上时钟便宜 ≠ 成本便宜"。这条系统直觉在台账里反复出现（07-07 MIPU 训推不一致、07-09b OmniOpt 的 SOAP 质量最高却每步慢 72 倍、06-28 JetSpec 单机最快 ≠ 线上最快）。产品拍板前，把"省了哪一种、贵了哪一种"逐项摊开，别被单一指标骗。</li></ol><ol class="ls"><li><strong>"知识放哪"这条谱系，SDM 加了一个新坐标点。</strong> 京小贝的领域知识，可以活在：<strong>提示词（Karpathy 3.0）↔ RAG / 上下文 ↔ 烤进模型的参数化记忆（SDM 的可学习初始状态）↔ 全量微调</strong>。SDM 的 parametric memory 在这条谱上插入了一个<strong>"高容量、读取廉价、可端到端学"</strong>的新点——知识不必都塞进上下文或 RAG，也能住在一层专门的大记忆里。这跟 07-04 PAW"把模糊小函数编译进权重"是同一股思潮：<strong>智能价值从在线消耗（每次都塞上下文）向离线固化（烤进权重/记忆）迁移。</strong></li></ol><ol class="ls"><li><strong>提示词直觉：linear 家族是"把旧上下文糊到一块固定状态上"，这是它历史上健忘的物理原因。</strong> 如果京小贝哪天跑在 linear / 混合底座上，别指望它完美记得 8 万字前埋的某个细节——<strong>把关键事实显式锚定、并放在它被用到的地方附近</strong>，因为回忆力虽大涨，仍是<strong>概率性的、且随任务类型波动</strong>（呼应 07-09 HiLS"关键信息别埋在池化最易漏的中段"、06-24"长输出别盯自己滚雪球的中间产物"）。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2607.07386">https://arxiv.org/abs/2607.07386</a> （Sparse Delta Memory: Scaling the State of Linear RNNs through Sparsity, Meta FAIR, 2026-07-07）</li><li>HuggingFace Daily Papers 页（6 赞、作者/机构 Meta FAIR 佐证）：<a class="src" href="https://huggingface.co/papers/2607.07386">https://huggingface.co/papers/2607.07386</a></li><li>直接肩膀 Gated DeltaNet：<a class="src" href="https://arxiv.org/abs/2412.06464">https://arxiv.org/abs/2412.06464</a> （Gated Delta Networks: Improving Mamba2 with Delta Rule）</li><li>delta rule / DeltaNet 溯源：<a class="src" href="https://arxiv.org/abs/2406.06484">https://arxiv.org/abs/2406.06484</a> （Parallelizing Linear Transformers with the Delta Rule, NeurIPS 2024）；导读博客 <a class="src" href="https://sustcsonglin.github.io/blog/2024/deltanet-1/">https://sustcsonglin.github.io/blog/2024/deltanet-1/</a></li><li>稀疏寻址源头 Product-Key Memory（作者含本篇的 Jégou）：<a class="src" href="https://arxiv.org/abs/1907.05242">https://arxiv.org/abs/1907.05242</a> （Large Memory Layers with Product Keys, NeurIPS 2019）</li><li>同门近亲 Gated DeltaNet-2（NVIDIA, 2026-05，解耦擦/写）：<a class="src" href="https://www.marktechpost.com/2026/05/24/nvidia-ai-releases-gated-deltanet-2-a-linear-attention-layer-that-decouples-erase-and-write-in-the-delta-rule/">https://www.marktechpost.com/2026/05/24/nvidia-ai-releases-gated-deltanet-2-a-linear-attention-layer-that-decouples-erase-and-write-in-the-delta-rule/</a></li><li>Semantic Scholar 早期引用：本次 API 遇 429 限流未取证（论文上线约 2 天，引用数 ≈ 0 属正常）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
