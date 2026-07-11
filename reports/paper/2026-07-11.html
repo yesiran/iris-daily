@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28135%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2216%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2252%22%20cy%3D%2255%22%20r%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.13%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2210%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.18%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RL 后训练不是全身改造，是拧中间几层的旋钮——第一次逐层解剖 RLVR：单独训练一层就能追平甚至超过全参数训练，收益的"住址"是模型与生俱来的结构属性</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-11</span></div>
+  <h1 class="doc">RL 后训练不是全身改造，是拧中间几层的旋钮——第一次逐层解剖 RLVR：单独训练一层就能追平甚至超过全参数训练，收益的"住址"是模型与生俱来的结构属性</h1>
+  <div class="dateline"><span>全文 <b>3,882</b> 字</span><span>约 <b>10</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.01232</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zijian Zhang, Rizhen Hu, Athanasios Glentis, Dawei Li, Chung-Yiu Yau, Hongzhou Lin, Mingyi Hong</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">明尼苏达大学（Mingyi Hong 优化组）× 北京大学 × Amazon（Hongzhou Lin，论文声明该工作独立于 Amazon）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-01（v2 修订 2026-07-02）</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 07-08 窗口上榜仅 3 赞（诚实标注：社区票数很弱，靠机理锐度+七模型×三算法系统性证据选入非票数）· alphaXiv 收录+独立技术博客/播客已有早期讨论 · 未找到公开代码 · Semantic Scholar 限流 429 未取证（发表 10 天引用≈0 属正常）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, rl, post-training, interpretability, training-efficiency, layer-analysis</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-07-11.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-07-11-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法（实验怎么铺开）</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>台账的 RL 主线已经积了六篇：怎么训得稳（06-11 DRPO）、怎么造更不好骗的裁判（06-13 MaxProof、06-27 验证地平线）、训崩的是格式不是能力（06-29）、训练引擎和部署引擎不是一个模型（07-07 MIPU）——但从来没有一篇回答过最根本的<strong>解剖学问题：RL 到底改了模型身体的哪个部位</strong>。这篇是第一次系统的逐层解剖，结论锐利且稳定：整个 RL 的收益高度集中在网络中部的少数几层，<strong>单独训练一层，常常就能追平甚至超过全参数训练</strong>；这个规律跨 7 个模型、3 种 RL 算法、数学/代码/智能体任务全部复现，层排名跨数据集的相关性极强。</p><p>诚实交底：HuggingFace 上只有 3 赞、作者是大学研究组不是前沿大厂、没找到公开代码。选它不是因为热度，是因为机理分量——它给 2025 年以来"RL 是唤醒还是创造"这场大辩论补上了缺失的解剖学证据，而且给出一个零成本就能用的实用策略（什么都不测量、直接只训中间几层，就稳定比全参数更好）。对思染的价值：它直接改写"后训练在做什么"的想象，并且能落到微调预算、模型评估（同分的模型解的可能不是同一批题）、甚至提示词哲学（提示词和 RL 拧的是同一类旋钮）。</p><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是 <strong>RLVR</strong>——全称 Reinforcement Learning with Verifiable Rewards，"用可验证奖励做的强化学习"。拆开说：让模型自己做题（比如数学题），做完用一个能自动判对错的裁判（数学题对答案、代码题跑测试）打分，答对了就把"这次是怎么答的"往模型权重里加强一点。过去一年半所有推理模型的"变强"（DeepSeek-R1 那一波开始）都发生在这个阶段。</p><p>以及一个几乎没人问出口的问题：<strong>这场训练，到底改了模型身体的哪个部位？</strong></p><h2 id="s4">2. 困境</h2><p>一个 Transformer 模型是几十层积木叠起来的（本篇里的模型是 28 层或 36 层），每层都有自己的参数。今天全行业做 RL 训练的标准姿势是<strong>全参数均匀更新</strong>：每一步训练，从第 1 层到第 36 层，每一个参数都跟着梯度动一动。</p><p>这个姿势底下埋着一个没人检验过的假设：<strong>每一层对 RL 收益的贡献差不多，所以要动就一起动</strong>。如果这个假设是错的——比如收益其实只来自几层——那么两件事同时成立：其一，全行业在浪费海量算力和显存去更新根本不出力的层；其二，更要命的是，我们对"RL 在对模型做什么"这件事的理解，从一开始就是模糊的。</p><h2 id="s5">3. 旧路</h2><p>"层的重要性"不是没人研究过，但都绕着 RL 走：</p><ul class="ls"><li><span class="lk">剪枝派</span>把某一层整个删掉，看模型崩不崩。发现有的层删了性能塌方（有工作把它们叫"基石层"），有的层删了几乎没感觉。但这量的是"推理时哪层不可少"，不是"训练时哪层在学东西"。</li><li><strong>省钱微调派</strong>（都在 SFT 里，SFT＝supervised fine-tuning，监督微调，就是拿标准答案手把手教）：LISA 随机挑几层训、AdaGradSelect 按梯度大小挑层训。目的是省显存，"挑层"是省钱手段，没人把它当理解模型的手术刀。</li><li>还有一篇 2025 年的工作（Nepal 等人）发现：对数学推理最关键的那几层，在预训练时就定型了，后训练动不了它们的"关键性"。这是个伏笔，等下会呼应。</li></ul><p>没有人在 RL 这个当今最重要的训练阶段，做过一次干净的逐层解剖。</p><h2 id="s6">4. 转折</h2><p>作者把问题反过来问。不问"删掉哪层会坏"，问：<strong>只训练哪一层，能好？</strong></p><p>具体做法笨得可爱，但极其干净：把模型其他所有层全部冻住（参数一动不动），只放开第 k 层，完整跑一遍 RL 训练；然后定义一个量叫<strong>层贡献</strong>（layer contribution，记作 C）：这一层单独训练拿到的提升，占全参数训练总提升的百分之几。C = 1.0 就是"单训这一层＝全参数训练"；C = 0.5 是拿回一半；C 是负数就是"训这层反而比不训还差"。</p><p>这个设计的妙处：它把"这一层能承载多少 RL 要的改变"直接量了出来，跟其他层完全解耦。</p><h2 id="s7">5. 解法（实验怎么铺开）</h2><p>为了排除"碰巧"，实验铺得很宽：<strong>7 个模型</strong>（Qwen3 系 1.7B/4B/8B 基座、Qwen2.5-Math-1.5B、Qwen2.5-Instruct 1.5B/3B、DeepSeek 蒸馏的 Qwen-7B）× <strong>3 种 RL 算法</strong>（GRPO、Dr. GRPO、GiGPO——都是"让模型采样一组答案、按相对好坏加强"的主流算法变体）× <strong>多个任务域</strong>（数学推理、代码生成、还有 ALFWorld 这种"在虚拟房间里完成任务"的智能体决策）。Qwen3-1.7B 的全部 28 层每层都独立训了一遍。全参数基线也认真调过超参数，避免"故意弄个弱基线来赢"。</p><h2 id="s8">6. 结局</h2><p>三个层次的结果，一个比一个反直觉。</p><p><strong>第一层：单层真的够。</strong>每一个模型都存在单层 C ≥ 1.0——单训最好的那一层，追平或超过全参数训练。Qwen3-1.7B 单训第 10 层，数学 C = 1.14；Qwen3-8B 单训第 16 层，数学 C = 1.07。而且高贡献层全部挤在<strong>网络中部</strong>，贴输入、贴输出的两端贡献小得多——Qwen3-8B 训第 0 层（最贴输入那层）C = −0.51，比不训还差一大截。</p><p><strong>第二层：这个规律是模型的属性，不是数据的属性。</strong>换训练数据（两个不同的数学数据集），28 层的贡献排名相关系数 ρ = 0.76（Spearman 等级相关，1.0 是完全一致，0 是毫无关系，0.76 属于强相关且统计显著）；换任务（数学换成代码），排名照样相关。七个模型、三种算法，全部呈现同一个"中间高、两头低"的山峰形状。也就是说：<strong>RL 收益住在哪里，是这个模型出厂时就定好的结构属性</strong>——这正好接上了前面的伏笔（关键层预训练定型、后训练不变）。</p><p><strong>第三层：域外还更好。</strong>最扎眼的一个数字：Qwen3-8B 单训第 16 层，把数学、代码、通用推理、语言四类能力平均起来算，综合贡献 C = 1.30——<strong>比全参数训练多拿 30%</strong>。为什么？全参数训练在练数学时会顺手把代码、语言能力练伤一点（域外损伤，1.7B 上代码从 34.9 掉到 33.5）；单层训练动的地方少，不伤别的能力，域外成绩反而涨。动得少，忘得少。</p><p>然后是<strong>实用变现三级跳</strong>（这部分让发现立刻能用）：</p><ol class="ls"><li><strong>给高贡献层更大的学习率</strong>（学习率＝每步参数挪多远）：1.7B 上数学 50.82 → 53.70，多拿了整个 RL 收益的 43%；反过来给低贡献层加大学习率，全部变差——证明有效的是"选对了层"，不是"调了学习率"这个动作本身。</li><li><strong>干脆冻住低贡献层，只训最好的 10 层</strong>：8B 上 66.43 → 69.11，多拿 32% 的收益，比第 1 招还好——低贡献层的更新在大模型上不但没用，还在帮倒忙。</li><li><span class="lk">零测量启发式</span>逐层测贡献太贵？不测了，直接按位置取网络正中间 5 层来训。结果仍然稳超全参数（8B：+1.76，多拿 21%）。<strong>一个不需要任何前期测量、拿来就能用的免费午餐。</strong></li></ol><p>最后两个<strong>副发现</strong>，是全文最有嚼头的部分：</p><p><strong>副发现一（最反直觉）：同样高分的层，学到的不是同一件事。</strong>把贡献最高的 7 个"单层专家"拉出来对比：它们在奥赛数学题上的准确率都在 23%–28% 之间，看起来差不多。但看它们各自"新解出了哪些题"——两两重叠只有 34.1%（Jaccard 相似度：两个集合的交集除以并集）。第 10 层专家和第 13 层专家分数几乎一样，新解出的题却只有 31.9% 是共同的。<strong>分数相同 ≠ 会的东西相同。</strong>把 7 个专家做多数投票（每道题 7 个模型各答一次，取多数答案），准确率 33.6%——不但超过最好的单个专家（28.3%）和全参数模型（26.9%），还超过"同一个全参数模型自己采样 7 次再投票"的自洽法（self-consistency，31.3%）。<strong>结构多样性打败采样多样性</strong>：训不同的层，等于逼模型从不同的方向解决同一个问题。</p><p><strong>副发现二：权重动多少，解释不了贡献多少。</strong>有人会怀疑：中层贡献大，会不会只是因为全参数训练时中层的参数本来就动得多？量了：全参数训练里，每一层权重的变化幅度惊人地均匀（L2 范数 0.5–0.8 之间，L2 范数＝把这层所有参数的变化量平方相加再开根号，衡量"总共挪了多远"），但各层贡献天差地别。反过来，单层训练时，高贡献层和低贡献层被迫独自扛下所有改变，挪动的幅度也差不多（0.8–1.0），结果却一个天上一个地下。<strong>结论：关键不是"动多少"，是"那一层的参数空间适不适合承载 RL 要的那种改变"。</strong>中层就是天生的好地基。</p><h2 id="s9">7. 内核</h2><p>RL 后训练不是给模型做全身改造，是拧中间几层的"选择旋钮"。收益有固定的住址，住址是模型出厂时定的。一句话带走：<strong>RL 改的不是模型会什么，是模型中段"怎么选择表达它已经会的东西"。</strong></p><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第一层（直接前奏）：2025 年已有两个信号说"RL 动得很少"。</strong>其一，2025 年 5 月的《Reinforcement Learning Finetunes Small Subnetworks in Large Language Models》（arXiv:2505.11711）发现：看起来全参数的 RL 训练，实际有效更新集中在一小部分参数子网络上，且这个子网络换随机种子、换数据都基本是同一批。其二，Thinking Machines（John Schulman 团队）2025 年 10 月的著名博客《LoRA Without Regret》：用 LoRA（低秩适配器——不动原模型，只在每层旁边加一小块可训练的"补丁"）做 RL 能完全打平全参数，配的理论账是：一条 RL 轨迹只带 O(1) 比特的信息（模型只知道"这整段答案是对是错"，学不到逐字的对错），RL 根本没多少东西要写进权重。<strong>本篇把"动得少"从参数级、秩级推进到层级，并且第一次证明"少"有稳定的地址——中部。</strong>LoRA 是"每层都插补丁但补丁很薄"，本篇是"只挑几层但整层放开"，两种正交的省法指向同一个底层事实。</p><p><strong>第二层（更深的辩论）：RL 是唤醒还是创造。</strong>2025 年 4 月《Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?》（arXiv:2504.13837）用 pass@k 分析（让模型对一道题采样 k 次，只要有一次对就算过）发现：RL 训过的模型采 1 次的成绩涨了，但采 256 次的成绩反而常常不如原始基座——说明 RL 主要是<strong>把基座本来就会的解法调高概率</strong>，很少教会真正的新解法。本篇的解剖学证据和这个论断严丝合缝：如果 RL 干的是"重新加权已有能力"，它当然不需要动全身——中间几层，恰好是模型做抽象决策、选择"走哪条路径去表达"的地方。</p><p><strong>根：层的分工本来就是流水线。</strong>可解释性研究几年前就画出了 Transformer 的分工图：底层做"识字"（把字符拼成词义、处理表面句法），中层做"思考"（语义组合、抽象计算、决策），顶层做"说话"（把内部状态整形成下一个词的概率分布）。剪枝研究的"基石层"、logit lens 一脉的逐层透视，都反复看到这个形状。本篇等于<strong>拿"RL 收益"这把新尺子把这张旧分工图重新量了一遍，量出了同一个形状</strong>——中层是思考的地方，而 RL 恰恰是在改"思考的偏好"。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><strong>1. 更新"后训练在做什么"的想象。</strong>预训练造能力（能力散布全身），RL 后训练选择表达（选择集中在中段）。所以前沿模型一代代变强，真正的地基还是预训练；RL 阶段是精准调音，不是再造。这跟台账攒下的证据链完全咬合：06-29（RL 训崩的是格式不是能力）、06-30（潜思考向量里没装新东西）、今天这篇（RL 收益只住在几层里）——<strong>三篇从三个角度指向同一件事：后训练远比看起来"轻"，它是唤醒器不是创造器。</strong>"结构化的更多才有用"暗线也再 +1：全参数是"更多"，挑中间几层是"结构化的更多"，后者又便宜又好。</p><p><strong>2. 微调预算的直接杠杆。</strong>如果京东的团队做 RLVR 后训练："只训中间几层"是零风险的起步姿势——省显存、省算力，还常常更好（域外遗忘更少，8B 综合成绩比全参数多 30%）。而且不需要任何前期测量，按位置取正中间几层就行。护栏也记住：这是 1.7B–8B 的 Qwen 系上验证的，百亿以上、MoE 架构（专家混合）未验证；引导策略只在数学上验过。</p><p><strong>3. 评估认知：同分 ≠ 同能力。</strong>两个分数一样的模型，解出的可能是不同的题（重叠只有 34%）。落到京小贝：A/B 测试和模型选型时别只比平均分——量一下"两个版本各自答对的问题集合重叠多少"；同分的两个版本可能服务的是<strong>不同的用户子集</strong>，切换模型时看似分数没变、实际体验大洗牌。反过来，ensemble（多模型投票）和路由的价值有了新依据：结构多样性 &gt; 采样多样性，比"同一个模型多采几次"更值钱。</p><p><strong>4. 提示词哲学。</strong>RL 拧的是中层的"选择旋钮"，提示词拧的也是"选择旋钮"——只是一个写进权重（持久），一个写在上下文里（即时）。两者作用于同一个已有能力池。这解释了为什么好提示词经常能吃掉一大截"看似要微调才有"的收益，也给出实践顺序：<strong>先把提示词的唤醒空间榨干，再考虑动权重</strong>——因为要唤醒的东西，大概率本来就在模型里。</p><p><strong>5. 可迁移的姿态。</strong>这篇的方法论本身值得带走：面对任何"全量操作"（全参数训练、全文档塞上下文、全字段召回），都值得问一句——<strong>收益是不是其实集中在很小的一块？那一块在哪？</strong>量出来，往往就是免费午餐。</p><h1 id="s12">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2607.01232">https://arxiv.org/abs/2607.01232</a> （v2，2026-07-02）</li><li>HuggingFace Daily Papers 页：<a class="src" href="https://huggingface.co/papers/2607.01232">https://huggingface.co/papers/2607.01232</a> （07-08 窗口，3 赞）</li><li>alphaXiv 页（含 AI 摘要与讨论）：<a class="src" href="https://www.alphaxiv.org/abs/2607.01232">https://www.alphaxiv.org/abs/2607.01232</a></li><li>倒读第一层：RL Finetunes Small Subnetworks（arXiv:2505.11711）<a class="src" href="https://arxiv.org/abs/2505.11711">https://arxiv.org/abs/2505.11711</a> ；LoRA Without Regret（Thinking Machines 博客）<a class="src" href="https://thinkingmachines.ai/blog/lora/">https://thinkingmachines.ai/blog/lora/</a></li><li>倒读第二层：Does RLVR Really Incentivize...（arXiv:2504.13837）<a class="src" href="https://arxiv.org/abs/2504.13837">https://arxiv.org/abs/2504.13837</a></li><li>台账关联：[[2026-06-29--tool-rl-collapse]]、[[2026-06-30--latent-thoughts-four-axioms]]、[[2026-07-07--mipu-inference-policy-mirage]]、[[2026-06-11--drpo]]、[[2026-06-27--verification-horizon]]</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
