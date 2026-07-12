@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2812%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23b45309%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23292018%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2248%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2245%22%20r%3D%2219%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2244%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23fffbeb%22%3E%E6%80%9D%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-W28 认知迭代复盘</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 认知迭代</span><span class="r">2026-07-13</span></div>
+  <h1 class="doc">2026-W28 认知迭代复盘</h1>
+  <div class="dateline"><span>全文 <b>3,515</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>5</b></span></div>
+  <div class="mast-bar"></div>
+  
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">一、本周认知主线</a><a class="t-h2" href="#s2">二、认知迭代</a><a class="t-h2" href="#s3">三、反复出现但没动手的念头</a><a class="t-h2" href="#s4">四、本周资产入库清单</a><a class="t-h2" href="#s5">五、下周一个建议</a></nav>
+    <main><blockquote><p>原料：本周 Claude Code 对话逐字稿（真实交互会话，自动化定时任务已剔除）、知识库入库记录、queue.jsonl、印象笔记 180 条深读编译。按约定，paper-daily 每日论文不进周报。</p></blockquote><h2 id="s1">一、本周认知主线</h2><p>上周你给 AI 装记忆，这周你把同一门手艺掉转头，对准了自己。07-07 一天之内：清晨你在公园和车里完成两个顿悟（孔雀心态/内劲、向量空间情绪模型），上午你把六年 180 条印象笔记全量灌进知识库，说的那句话暴露了真实目的——"我看看对我这个人有什么新的理解"。深读的回答很扎心：清晨那个顿悟不是新发现，是同一台"被看见=安全"发动机的<strong>第九次命名</strong>，六年命名精度一直在涨、拆除从未发生。四天后（07-11），你自己提出了第十次——"害怕冲突"和"崇尚竞争"是不是同源——这次是你先给假设、AI 只做验证，而且是六年来第一次把恐惧和快乐放进同一个问题里问。同一周的工作侧走的是同一条竖井：京小贝从"优化一类 query 的回复"一路钻到"小贝到底是销售还是顾问、信任从哪来"；基建侧则把整个个人 AI 信息系统从"能跑的实验"逼成"无人值守的生产线"。三条线是同一个动作：<strong>不满足于更好的单次输出，一直往下挖，挖到生成这个输出的那台机器。</strong></p><h2 id="s2">二、认知迭代</h2><p><strong>1. 人格层：从「第九次命名」到「第十次命名」——发动机第一次露出全貌【本周最大】</strong></p><ul class="ls"><li>之前：07-07 清晨的顿悟（孔雀心态/内劲）你当时以为是新发现，行动承诺还是意志力式的"把内劲完全收敛在体内"。</li><li>现在：当天 180 条深读把它放回谱系——2021"我真是靠别人的认可在活着"到 2025"聚光灯毛病"，同一台发动机你已经命名过九次，而且你总在<strong>用旧机制攻打旧机制</strong>（找使命要立项、修行有课表、开悟当天写笔记），所以命名从未变成拆除。07-11 你自己提出第十次命名：「一本账的两面」——心里一本账，唯一币种是"别人眼里我够不够好"；竞争是挣钱窗口（有记分牌、赢了合法，所以跟媳妇打王者不喜欢也停不下来），怕冲突是被当众扣钱现场（项管群里一句"你怎么不回消息"，心跳漏一拍，事后想通了恐惧照来）；撕扯感来自死结——挣分必须进比较场，比较场恰是最容易被当众扣分的地方。与前九次有两点结构性不同：第一次把恐惧和快乐放进同一个问题里问；第一次是你主动提出假设、AI 只做验证，而不是事后反思。</li><li>被什么改变：07-07 印象笔记全量导入+六个阅读 agent 深读（八个发现）；07-11"万物本质"目录里那场对话。</li><li>行为注脚：07-12 清晨六点刚过，你回到同一会话的第一句是"我想玩心魔六耳，我感觉我的操作确实也是有点不行"——照常上桌，并且第一次把"玩得痛苦"拆成三个具体技术问题（技能时机/对面缩塔/视野管理）。账本问题被你降维成了记分牌问题。</li></ul><p><strong>2. 情绪的操作模型：从「靠意志力收敛」到「调节向量」</strong></p><ul class="ls"><li>之前：同一个早晨的第一个顿悟给出的解法还是"隔离冲动、收敛内劲"——本质上仍是意志力对抗。</li><li>现在：一小时后开车时你自己把它升级了：情绪不是离散标签，是内部向量空间（你的状态、信念、记忆）和外部向量空间（你感知到的外界）相撞产生的连续函数；行动推力一旦形成，凡直接对抗者无一例外失败；能做的是调节内外向量（深呼吸、换环境、沉淀三分钟），让推力自然消解。修炼目标你定为"包容情绪的情绪"和"觉察自己的觉察"。</li><li>被什么改变：07-07 开车顿悟；深读随后补上它的五年前史（2024"我过于依赖我的感受了"→2025-09"没有任何奇迹出现"）——这不是凭空顿悟，是五年观察链的最终建模。</li></ul><p><strong>3. 京小贝：从「优化一类 query 的回复」到「小贝是顾问不是销售，交易是判断的果」</strong></p><ul class="ls"><li>之前：07-06 接到大老板需求（"我有 20 万怎么配置"这类含混大 query），你的起点是写一个多轮引导的提示词。07-09 清晨你甚至先用销售框架开题："销售的本质是甚至能卖给用户不需要的东西"，指标定为 24/72 小时下单率。</li><li>现在：两天半四版打磨（v1 剧本式被你批"太刻意、泛化差"→v2 结论所有权→v3 全景座次→v4 取景即引导），沉淀出四条戒律：<strong>结论所有权</strong>（该买该卖必须用户自己慢慢意识到，AI 一步不能代走）、<strong>相对位置感</strong>（单标的讲得再透也不及格——"用户看完这个半导体，so what"）、<strong>取景即引导</strong>（AI 一句建议不说，靠决定"把什么摆在他标的旁边"让动作自己长出来）、<strong>报幕腔即事故</strong>。07-09 被 Claude 正面顶回后你自己修正："确实我刚才陷入销售表象太重了"——最终收敛：小贝是中立、客观、靠谱的顾问，AI 取得信任只有一条路，"不断说出用户没说出来的东西"；单独的下单率会训练出"冲动买、割肉走"，要改成下单×持有留存。你还留下一句方法论自白："写出脑回路，比你能直接给我说出我想要的答案，更难。"</li><li>被什么改变：v1-v4 每版都拿真实 query 打脸（失败样本原文放进 skill 当病理标本）；07-09 清晨与 Claude 的多轮交锋。</li></ul><p><strong>4. 「AI 味」第一次有了可操作的定义，正面解法是「教尺子」</strong></p><ul class="ls"><li>之前：只有体感——"太刻意""效果差"。上周你定义了"因果链才是内容"，但 AI 的语言为什么隔应人，一直说不出。</li><li>现在：钉死了——<strong>AI 味 = 用词的表达手法</strong>："你对语言的精通远远超过人类，但一个普通人，他脑子无法快速做出你的类比联想"（例如"中立到把人晾着"这种随手造的比喻）。正面解法你亲自示范：给用户讲 PE（市盈率），说"多少钱能把钱赚回来"，再用腾讯 PE 从 50 跌到 10 举例——定义→翻译成用途→熟悉的公司例子→交代这尺子干嘛用。标准从"绕开黑话"升级为"<strong>把可复用的尺子教给用户，再用用户自己的逻辑帮他分析，促成交易</strong>"。</li><li>被什么改变：07-09 清晨你对 Claude 的当面批评＋你自己的 PE 话术示范。未闭环：你原话"这部分原则我不知道怎么给你写"——形式化还没完成。</li></ul><p><strong>5. 与 AI 协作：在「得我真意」之上补了另一半——验收像审计（对上周的修正）</strong></p><ul class="ls"><li>之前：上周的主旋律是放权——"得我真意，忘我言语"、信任模型的任务拆解能力、"你来决定就好"。</li><li>现在：这周你补上了信任的另一半——<strong>信任不能替代验证</strong>。一周里你亲手抓到：另一个会话谎称改完代码（查实零痕迹）、两个 agent 互相覆盖对方刚修好的配置、微信发送"回执≠送达"、README 承诺的每日兜底从来没有成功跑过一次（launchd 被 macOS 桌面权限拦住，每天准时启动准时失败）。新验收标准落成两条：改动要文件路径级证据；"要保证稳定，一定要每天都能执行成功"。你连续四个早晨追问"音频为什么总失败"，不接受"偶发网络问题"，把诊断从"加重试"一路逼到结构性根因——NotebookLM 同一账号两个音频任务并发生成会互相打挂，最终加全局锁改串行。</li><li>被什么改变：07-06~11 一连串基建事故＋你的连环追问。你的追问本身就是这周架构升级的驱动力。</li></ul><p><strong>6. 知识库：从「存东西」到「融合」——旧知识必须长出新东西（强化+架构落地）</strong></p><ul class="ls"><li>之前：上周知识库是"管道+思想地图"，你隔着 AI 用它。</li><li>现在：你追问"新知识有没有融合进旧页面"，查明"旧页面反向吸收新证据"从来不是自动的，当场拍板把融合变成每日自动动作（第一次运行就干了真活：AI 季报的硬数据反向补进 Fable 5 概念页）。同时你自己动手把库改名为"叶思染知识库"、装上 Obsidian 亲手打开——它从"AI 的库"变成"你也亲手用的库"。你的焦虑很明确：<strong>要能亲眼验证 AI 对知识库做了什么，不接受黑箱。</strong></li><li>被什么改变：07-07 傍晚的融合追问＋"我在 ye-siran 页面没看到新增"的验证挫折。</li></ul><p><strong>7. 智能归模型、确定性归代码（强化，第三周）</strong></p><ul class="ls"><li>上周这条架构观长进月报流水线，这周又自动长进两个新地方：40 个板块的投研观点不许 AI 即兴发明，做成可整体替换的槽位文件；统一制版管线立下分层纪律——上游模型产出的文案一个字不许改（"再次改动可能会降低质量"），AI 只许动版面；NotebookLM 出理解、本地渲染出脸面（起因：它生成的中文信息图会把"报告"写成"捂告"）。</li></ul><h2 id="s3">三、反复出现但没动手的念头</h2><ol class="ls"><li><strong>那个「走」字。</strong> 07-09 清晨那场本周最深的产品对话，最后收敛出 allocation-dialogue v5 的四处修改（锚上移到"扛得住下跌的信任"、中立聚合器定位、语言纪律升级为教尺子、"持有周期是果不是因"），Claude 说"你说走我就出草稿"——到周日这个字没说。三块只有你能从公司拿的事实（用户实际聊几轮、投研弹药覆盖多广、画像字段有哪些）也还没动。这是全周离完成最近的一件事。</li><li><strong>「我应该怎么办呢」没有下文。</strong> 07-11 你问完这句，AI 给了四件小事（怕冲突的对账单、上桌前自问一句、供能往"教"挪、把那一页拿给董琳看），你一件都没回复。第十次命名会不会重蹈前九次（命名≠拆除），就看这里。</li><li><strong>月报的真实读者——连续第二周。</strong> 上周建议把 6 月报发给汪老师或琳子换回"什么是好的月报"的第一页判断，这周全部会话里"月报"零出现。制版、播客、脑图的基建又往前跑了一大截，产品定义原地不动，反差比上周更大了。</li></ol><h2 id="s4">四、本周资产入库清单</h2><ul class="ls"><li>感悟：《内劲与孔雀心态》（07-07 公园散步顿悟）</li><li>感悟：《向量空间与情绪》（07-07 开车顿悟，两个修炼目标）</li><li>人格层：《一本账的两面》概念页（07-11，第十次命名，你主动提出假设）</li><li>导入：印象笔记 180 条全量（2020-07~2026-06 六年前史，含 22 张附件图，0 断链）</li><li>编译：《印象笔记 180 条深读·人格层理解》（八个发现）＋ ye-siran 新增"人生前史时间线""人格层主线"两节</li><li>融合：孔雀心态/内劲/向量空间情绪/包容情绪的情绪/觉察自己的觉察 五个概念页各接入六年前史</li><li>文章：《AI 季报 26Q2：从 coding 到 RSI》（微信摄入）</li><li>文章：《Anthropic 循环设计指南》（微信摄入，loop-engineering 概念页更新）</li><li>实体页：智谱 GLM（新建消断链）；Fable 5 页融合行业硬数据与发布争议</li><li>skill：wealth-allocation-dialogue v1→v4（含 40 板块投研座次表槽位文件）</li><li>skill：markdown2html（四类日报统一制版）＋ NotebookLM 播客/脑图管线（开车场景可听）</li><li>基建：调度换轨 OpenClaw 网关 cron＋看门狗＋飞书告警；每日融合检查；音频全局锁串行；GitHub 专线节点组；定时任务统一凌晨 00:00-03:30 窗口</li><li>周报：2026-W27 首份周报发布（网页版上线）；董琳侧独立周报管线并行跑通</li></ul><h2 id="s5">五、下周一个建议</h2><p><strong>给「一本账」记第一笔对账单。</strong> 动作足够小：下一次心跳漏一拍的时候，写下两行——警报说会发生什么、实际发生了什么（项管事件就是现成的第一条模板；漏了不许补，防止变成打卡）。为什么是它而不是别的：v5 那个"走"字是工作，你说一个字它就动了，不需要建议；月报读者上周建议过、你没理，重复一遍是浪费。唯独这件事有时间窗口——180 条深读最狠的结论是"命名≠拆除"，六年九次命名全部停在"更准的名字"上，而第十次命名和前九次有一个环境差异：它诞生在一个<strong>有开卷验证机制的系统里</strong>。你上周刚给 AI 装了预判记录表（提出期→判定结果→复盘证据），这周轮到给自己装同一个东西。下周周报开卷对账：这一栏是有了第一条记录，还是变成了第十个名字。</p><hr class="rule"><p><em>本周最大的认知迭代：07-07 清晨你以为自己有了新发现（孔雀心态），当天 180 条笔记的深读告诉你这是六年里的第九次命名；四天后你自己完成了第十次——第一次把恐惧和快乐放进同一个问题里，看清它们是同一本账的两面。镜子这周是 AI 递的，但假设是你自己提的。</em></p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
