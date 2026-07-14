@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28327%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2226%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2249%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2224%22%20r%3D%2216%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把小模型 RL 学到的「改变」搬给大模型——训练成果第一次能跨规模复用（Direct-OPD）</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-15</span></div>
+  <h1 class="doc">把小模型 RL 学到的「改变」搬给大模型——训练成果第一次能跨规模复用（Direct-OPD）</h1>
+  <div class="dateline"><span>全文 <b>3,409</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Weak-to-Strong Generalization via Direct On-Policy Distillation</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.05394</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Shiyuan Feng, Huan-ang Gao, Haohan Chi, ..., Wei-Ying Ma(马维英), Ya-Qin Zhang(张亚勤), Hao Zhou(周浩)</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">清华大学智能产业研究院（Tsinghua AIR）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-06</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-15.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-15.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers #1 · 90 赞（当窗口推理/能力类最高，上方两篇为机器人 79/67）· 清华 AIR（张亚勤/马维英领衔）· 同窗口另有一篇 PUST 独立收敛到同一「弱到强信号迁移」思路，佐证这是活的前沿</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, post-training, distillation, weak-to-strong, rl, reasoning, implicit-reward</span></div></div><div class="tools"><a class="btn hot" href="2026-07-15-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型往哪进化了</a><a class="t-h2" href="#s13">对京小贝，三个具体启发</a><a class="t-h2" href="#s14">对思染的提示词，一个隐性启发</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>Direct-OPD（Direct On-Policy Distillation，直接在线策略蒸馏）</strong>，因为它把"后训练"这条前沿线又往前顶了一块，而且顶的方式很干净：<strong>它第一次证明——强化学习（RL）训练出来的成果，可以当作一种"信号资产"跨模型规模复用</strong>，不是把训练好的模型当终点去模仿，而是把"训练让模型改变了什么"抽出来、存起来、搬到更大的模型上、还能一层层叠加。</p><p>命中的质量信号：<strong>HuggingFace Daily Papers 当窗口榜首、90 赞</strong>——在推理/能力这条赛道里是最高票（票数在它上面的两篇都是机器人具身方向，不在"核心能力机理"轴上）；作者是<strong>清华大学智能产业研究院（AIR）</strong>，署名里有<strong>张亚勤（AIR 创院院长、前百度总裁）和马维英（前字节 AI Lab 负责人）</strong>这样的分量；而且同一天 HuggingFace 上还有另一篇 PUST（Proxy-guided Update Signal Transfer）<strong>独立收敛到几乎一样的"把弱模型的更新信号迁移给强模型"思路</strong>——两篇撞车，恰恰说明这不是孤立巧思，而是一条正在成形的真前沿。</p><p>对思染追前沿的价值：它命中了<strong>后训练的成本墙</strong>这个当下最要命的瓶颈，而且直接落到京小贝会遇到的两件真事——"怎么把大推理模型的本事便宜地搬到线上小模型"和"当模型比标注员还聪明时怎么继续监督它（弱到强 / 超级对齐）"。诚实交底：这篇的实验主要在数学推理（AIME 等竞赛题）上、模型规模到 7B 学生，还没上千亿前沿规模——可搬走的是那套<strong>"迁移改变量、而非最终策略"</strong>的框架心智，不是一个已在超大模型上验证过的定论。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>台上站着一个<strong>已经挺强的大模型</strong>（比如一个 70 亿参数、已经会做题的推理模型），旁边是一个<strong>更小、更弱、但刚被专门训练过的小模型</strong>（比如 15 亿参数）。这个故事问的是一件很朴素的事：<strong>小模型辛辛苦苦学到的那点本事，能不能"过继"给大模型——而不用把大模型也拉着从头重训一遍？</strong></p><h2 id="s4">2｜困境</h2><p>先把利害摆清楚。当下把模型推理能力往上顶的最强武器，叫 <strong>RLVR（Reinforcement Learning with Verifiable Rewards，带可验证奖励的强化学习）</strong>。拆开说：就是让模型反复去做一堆<strong>有标准答案</strong>的题（数学题、代码题——答案对不对可以机器直接判，这叫"可验证"），做对了就给它奖励，逼它以后多走那条"能做对"的路。</p><p>它的成本墙在哪？训练时，模型必须<strong>自己生成海量的尝试</strong>——这个尝试在行话里叫 <strong>rollout（把一道题从头到尾完整地试着解一遍，一道题要试很多很多遍）</strong>。题越难、模型越大，这个"反复试解"就越烧钱。于是出现一个越来越尴尬的局面：<strong>模型越做越大，后训练（模型预训练完之后、再专门教它怎么把能力用好的那一段）本身反而成了瓶颈</strong>。每出一个新的、更强的模型，就得把这套昂贵的 RL 从头再跑一遍，谁也扛不住。</p><h2 id="s5">3｜旧路</h2><p>一个省钱的老思路叫<strong>蒸馏（distillation：让一个强模型当"老师"，把本事教给一个"学生"模型）</strong>。既然在大模型上跑 RL 贵，那我在<strong>便宜的小模型</strong>上跑 RL，再把小模型学到的东西蒸馏给大模型，不就绕开成本墙了？</p><p>但直接蒸馏"跑完 RL 的小老师"有个硬伤：<strong>小老师最终的样子，是"RL 教会的好本事"和"它本身太小带来的笨"两样东西搅在一起的</strong>。你照着它整个人学，等于把一个大学生往小学生的天花板上拽——好的坏的一锅端，强模型反被拉低。这就是为什么"小模型 RL 完直接蒸给大模型"一直不太work。</p><h2 id="s6">4｜转折</h2><p>作者的关键一转，一句话：<strong>别照抄老师"最终是什么样"，只抄老师"被 RL 改变了哪里"。</strong></p><p>怎么拿到"改变了哪里"？给小模型拍<strong>两张快照</strong>——RL 之前一张（叫参考版 reference），RL 之后一张。两张一比，就能看出 RL 到底让它"更爱做哪个动作、更不爱做哪个动作"。这个<strong>"变化量"才是 RL 真正学到的干货</strong>，而且它天然把"小模型本身很笨"这个底色给剥掉了：因为 RL 前后两张快照带着同样的笨，两张一相减，笨互相抵消，剩下的纯粹是"RL 带来的改变"。</p><h2 id="s7">5｜解法</h2><p>落到具体机制，把术语一个个当场拆开：</p><ul class="ls"><li><strong>变化量怎么量：对数比值（log-ratio）。</strong> 数学上就是"RL 后老师对某个动作的倾向"减去"RL 前它对同一动作的倾向"（log πT − log πT_ref）。"对数比值"听着玄，白话就是：<strong>RL 后 ÷ RL 前，这个动作的概率是涨了还是跌了、涨跌多少</strong>。涨 = RL 说"多做这个"，跌 = RL 说"少做这个"。</li></ul><ul class="ls"><li><strong>这个涨跌信号当"隐式奖励"（implicit reward）。</strong> 一般的 RL 要外面另立一个"打分器"给答案打分；这里不用，直接从两张快照的差里<strong>"读出"奖励</strong>——涨的动作天然是"好动作"，该奖励。这一招其实是 <strong>DPO（Direct Preference Optimization，一种对齐方法）早就点破的观察</strong>：一个被调过的模型和它没调过的自己之间的对数比，本身就等价于一个奖励函数。作者的新贡献是<strong>第一次把这把钥匙跨模型规模、跨大小地用起来</strong>。</li></ul><ul class="ls"><li><strong>关键是"on-policy"（在学生自己的轨迹上）。</strong> 不是把老师的解题原文塞给学生去背（那叫 off-policy，照着老师的作文抄），而是<strong>让强学生自己去解题、走自己的思路，然后用小老师那份"涨跌信号"去点评学生走的每一步</strong>——"这一步，RL 的经验告诉你该多走 / 该少走"。学生<strong>始终站在自己的水平线上被纠偏</strong>，所以不会被拽到小老师的天花板下面去。这就是"On-Policy Distillation（在线策略蒸馏）"这个名字的由来。</li></ul><ul class="ls"><li><strong>再加一道自适应 KL 控制（KL 散度：衡量学生现在和某个参照"差多远"的一把尺）。</strong> 控制这把尺，就是控制"老师这份信号该信几分、别把学生带跑偏"——信号可靠时多听，不可靠时收着点。</li></ul><h2 id="s8">6｜结局</h2><p>解出来，世界变了几处，挑最反直觉的几个副发现讲：</p><ul class="ls"><li><strong>一个小小的 RL 老师，真能把一个明显更强的学生再往上顶。</strong> Qwen3-1.7B 在 <strong>AIME 2024（美国高中数学邀请赛，很硬的竞赛题）</strong>上从 <strong>48.3% 提到约 62%</strong>（论文正文写 62.4%，摘要给的是更保守的 58.3%——取证时两个数字并存，以正文为准并如实标注），只用 <strong>8 张 A100 GPU 跑 4 小时</strong>。图 1 的示范是拿一个 1.5B 的小老师去教一个 7B 的学生。</li><li><strong>它打赢了"同等训练步数、直接在大模型上跑 RL"。</strong> 省下昂贵的"稀疏奖励探索"（大模型自己瞎试很多遍才偶尔撞对一次），效果反而更好。</li><li><strong>最深的一击：跨模式迁移、却没有逐字照抄（cross-pattern transfer without token-overlap imitation）。</strong> 学生并没有复述老师的原话、老师的解题套路，但照样吸收了那个"行为改变"。这<strong>直接证明搬过去的是一个"方向"（奖励信号），不是一段文字</strong>——把"蒸馏＝模仿"这个根深蒂固的直觉给掀翻了。</li><li><strong>还能顺序叠加（sequential composition）。</strong> 多个 RL 学到的"改变量"能像打软件补丁一样，一层层摞到同一个学生身上。</li><li><strong>甚至：只在"短的解题过程"上训，却能改变模型在"长的解题过程"里的行为。</strong></li></ul><h2 id="s9">7｜内核</h2><p><strong>RL 训练的成果，第一次被证明可以当作一种"信号资产"跨模型规模复用</strong>：不是把训练好的模型当终点去模仿，而是把"训练让模型改变了什么"抽出来、存起来、搬到别处、还能叠加。后训练从"每个新模型都各自从头炼一遍"，往"经验一次炼成、到处搬用"挪了一步。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><ul class="ls"><li><span class="lk">这一篇（第 0 层）</span>Direct-OPD——把 RL 的"改变量"当隐式奖励，跨模型规模、在学生自己的轨迹上搬过去。</li></ul><ul class="ls"><li><span class="lk">上一层（两条河在这里汇合）</span><ul class="sub"><li><strong>(a) 推理模型的在线策略蒸馏（on-policy distillation）</strong>：从 <strong>GKD（Generalized Knowledge Distillation，Agarwal 等）</strong>起，到 2025–2026 一大批 OPD 工作，解决的是"怎么让学生在自己走的路上被老师纠偏"，这已经成了推理模型蒸馏的主流变体。</li><li><strong>(b) 弱到强泛化（weak-to-strong generalization，Burns 等 2023，OpenAI 超级对齐团队）</strong>：一个<strong>弱的监督者</strong>，能不能把一个<strong>更强模型</strong>的本事"引"出来？这是<strong>"可扩展监督"（scalable oversight：当模型比人还强、人已经当不了合格考官时，怎么继续管住它、给它有效反馈）</strong>的核心问题。这一层往下还连着一条很老的河——"从不完美的监督里学习"（半监督、带噪声标签学习）。</li></ul></li></ul><ul class="ls"><li><span class="lk">再上一层（第 2 层）</span><ul class="sub"><li><strong>RLVR / 推理 RL（DeepSeek-R1 那一波开始的可验证奖励强化学习）</strong>——就是这里被"摊薄成本"的那个昂贵东西。</li><li><strong>隐式奖励 / 复用训练好的模型（DPO 的"对数比即奖励"观察）</strong>——Direct-OPD 借的正是这把钥匙，只是第一次跨规模用。</li></ul></li></ul><ul class="ls"><li><span class="lk">根</span><strong>后训练成本墙</strong>。模型越大，"每出一个新前沿模型就把 RL 从头重跑一遍"越不可持续；于是整个领域在从<strong>"每个模型各炼各的"</strong>，转向<strong>"把训练里的经验抽成可搬运、可复用、可叠加的资产"</strong>。</li></ul><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型往哪进化了</h2><p>后训练正在取代"堆参数、堆数据"成为新的前沿战场，而这篇给这个战场加了一条新公理：<strong>RL 的成果是一种可搬运的资产，不只是一个最终模型文件。</strong> 它和台账里这条线一脉相承——<strong>06-11 DRPO</strong>（稳住 RL 训练）、<strong>06-21 FAPO</strong>（优化器会读中间产物去改提示词/管线）、<strong>06-25 HDS</strong>（把预训练数据供给变成实时优化）、<strong>07-13 UP</strong>（RL 的探索-稳定权衡）、<strong>07-11"一层就够"</strong>——后训练本身正被一块块"会优化的机制"接管；这一篇再加一块：<strong>RL 成果的"可搬运性 / 可叠加性"</strong>。前沿的直觉正在从"训一个更强的模型"变成"更聪明地复用已经花掉的训练力气"。</p><h2 id="s13">对京小贝，三个具体启发</h2><ol class="ls"><li><strong>蒸馏别整个照抄老师。</strong> 如果京小贝要把一个大推理模型蒸成便宜的线上小模型，Direct-OPD 的教训是——<strong>搬"改变量"、别搬"最终策略"</strong>，否则会把学生拽到老师的天花板和毛病上。真正值钱的是"这次训练让模型改了哪里"，不是"训练完的模型长什么样"。</li><li><strong>"两张快照之差 = 学到了什么"是一个能到处用的心智模型。</strong> 任何一次训练/微调，<strong>前后两个 checkpoint 的差，本身就是一份可存、可搬、可叠加的"经验资产"</strong>，而不只是一个新权重文件。这给"经验管理"打开了一个新抽屉：你可以把某次成功的对齐/纠偏，抽成一个信号，日后按需叠加到别的模型上。</li><li><strong>弱到强，就是他早晚要正面撞上的超级对齐问题。</strong> 当模型比你的标注员还聪明、人已经没法当合格考官，你怎么继续给它有效监督？这篇给的苗头答案是——<strong>传"方向性信号 / 改变量"，而不是让它照抄你（更弱的）绝对示范</strong>。这对京小贝未来用更强模型做金融判断、而人类难以逐条校验时，是个方向。</li></ol><h2 id="s14">对思染的提示词，一个隐性启发</h2><p>这篇最深的直觉是：<strong>要搬的是"改进的方向"，不是"表面的样子"。</strong> 思染写 few-shot 示例（给模型几个范例让它照着做）时，本质在做<strong>模仿</strong>——让模型抄表面。而前沿在提醒：<strong>一对"差示例 vs 好示例"之间的"差值"，往往比单摆一个好示例携带更多可迁移的信号</strong>。所以在提示里塞进"改前 / 改后"的对照（"这样写不好 → 改成这样才好，因为……"），可能比只给正例更能把"你到底想要什么方向"讲清楚。</p><hr class="rule"><h1 id="s15">来源</h1><ul class="ls"><li>论文原文（arXiv abstract）：<a class="src" href="https://arxiv.org/abs/2607.05394">https://arxiv.org/abs/2607.05394</a></li><li>论文全文（HTML v1，机制/实验细节取证于此）：<a class="src" href="https://arxiv.org/html/2607.05394v1">https://arxiv.org/html/2607.05394v1</a></li><li>质量信号 · HuggingFace 论文页（90 赞、当窗口榜首）：<a class="src" href="https://huggingface.co/papers/2607.05394">https://huggingface.co/papers/2607.05394</a></li><li>同窗口独立撞车佐证 · PUST（Proxy-guided Update Signal Transfer）：<a class="src" href="https://huggingface.co/papers/2607.11505">https://huggingface.co/papers/2607.11505</a></li><li>血统 · 作者机构：清华大学智能产业研究院（AIR），张亚勤 / 马维英 / 周浩 等（arXiv 作者与机构元数据）</li><li>溯源 · 弱到强泛化：Burns et al. 2023（OpenAI 超级对齐）；在线策略蒸馏：GKD（Agarwal et al.）；隐式奖励：DPO</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
