@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28242%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2219%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%2223%22%20cy%3D%2220%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2249%22%20cy%3D%2224%22%20r%3D%2220%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 日报 · 2026-07-13</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-07-13 · 周一</span></div>
+  <h1>AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>25</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">编制时间：2026-07-14 ｜ 只收录 <strong>2026 年 7 月 13 日当天</strong> 新发生／新披露的 AI 事件。凡属更早发生、当天只是被转载或延续讨论的，一律在文中标注<strong>原始日期</strong>并归为"背景"。所有事实与数据均随文附来源链接。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>英伟达搞"白名单"，一刀砍掉过半亚洲 AI 芯片买家</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>16 位诺贝尔经济学奖得主 + 200 多位经济学家联署："我们必须现在就行动"</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>欧洲防务 AI 公司 Helsing 融资 18 亿美元，估值冲到 180 亿</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>智谱（Z.ai）开源 GLM-5.2，同时抛出 40 亿美元香港配售</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>前沿实验室集体"下沉印度"：Anthropic 本地化 Claude 定价、OpenAI ChatGPT Work 登陆印度</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>英伟达搞"白名单"，一刀砍掉过半亚洲 AI 芯片买家</h3><p class="lp">英国《金融时报》披露、路透 7 月 13 日跟发：英伟达（Nvidia）新设了一套"白名单"制度——亚洲客户要买它的 AI 芯片，必须先通过更严的合规审查（员工上门实地探访数据中心、核对合同、当面盘问最终用户），结果<strong>超过一半的原亚洲客户（尤其是新兴云服务商 neo-cloud）没通过首轮审查、被移出可购买名单</strong>，可整改后重新申请。重点盯的是新加坡、马来西亚、日本这几个被怀疑"转口"给中国的通道；背后是特朗普政府与美国商务部 5 月针对 Blackwell 芯片流向马来西亚等地的指引在推动。<a class="src" href="https://finance.yahoo.com/technology/ai/articles/nvidia-halves-asia-buyer-list-033140201.html">来源：Yahoo Finance / 路透</a></p><div class="why"><span class="why-k">为什么重要</span><p>这是出口管制从"政府发文"升级为"英伟达自己当警察"的标志性一步——过去是华盛顿画红线、企业被动遵守，现在是英伟达主动替美国政府筛查、亲手掐断自己一半的亚洲客户名单。它说明"芯片走私"打击已经落到具体商业动作上，正在重塑"亚洲谁能买到算力"的格局；对依赖第三国采购的中国相关买家是一次实打实的收紧。同日英伟达股价跌约 3.5%。</p></div></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>16 位诺贝尔经济学奖得主 + 200 多位经济学家联署："我们必须现在就行动"</h3><p class="lp">斯坦福数字经济实验室 7 月 13 日发布《我们必须现在行动：关于 AI 对经济之改造的声明》（"We Must Act Now"）。<strong>签署者超过 200 人，包括 16 位诺贝尔经济学奖得主</strong>（迈克尔·斯宾塞、达龙·阿西莫格鲁、西蒙·约翰逊等），以及罕见地把三大前沿实验室内部人拉进来——OpenAI 财务负责人 Sarah Friar、谷歌 DeepMind 首席科学家 Jeff Dean、Anthropic 联合创始人 Jack Clark。核心论点：蒸汽机、电力、计算机分别给了社会<strong>几十年</strong>去适应，AI 可能只给<strong>几年</strong>，"我们无法在转型进行到一半时才临时拼凑制度"。<a class="src" href="https://digitaleconomy.stanford.edu/news/wemustactnow/">来源：斯坦福数字经济实验室</a>｜<a class="src" href="https://www.globalbankingandfinance.com/over-200-experts-call-urgent-action-tackle-ais-economic/">签署者与主张细节</a></p><div class="why"><span class="why-k">为什么重要</span><p>难得的一次"学院派顶级经济学家"与"前沿实验室内部人"公开合流——双方都承认经济冲击是迫在眉睫的、而现有制度没准备好。它把公共讨论从"AI 会不会改造经济"直接推进到"我们只剩几年、该建什么制度"，是给各国政府和央行的一次高规格集体喊话。</p></div></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>欧洲防务 AI 公司 Helsing 融资 18 亿美元，估值冲到 180 亿</h3><p class="lp">SiliconANGLE 7 月 13 日报道：德国防务科技独角兽 Helsing 完成 <strong>18 亿美元 E 轮</strong>融资，<strong>投后估值 180 亿美元</strong>，由摩根大通、General Catalyst、Lightspeed、Iconiq 等 10 家机构领投／参投。公司明说这笔钱用于开发新的"AI 平台"——它的产品线包括自主喷气机 CA-1 Europa、强化学习飞控 Centaur、小型无人机 HX-2 Fathom、微型自主潜航器 SG-1 Fathom 等；此前已收购飞机制造商 Grob，在英德建厂、正建第三座工厂。对标的美国 Anduril 此前融了 50 亿美元、估值 610 亿。<a class="src" href="https://siliconangle.com/2026/07/13/defense-technology-startup-helsing-raises-1-8b-18b-valuation/">来源：SiliconANGLE</a></p><div class="why"><span class="why-k">为什么重要</span><p>这是欧洲防务科技迄今最大一笔融资之一，标志"防务 AI"正式成为超大额融资赛道。AI + 地缘政治 + 硬件三者合流——传统 VC（摩根大通、Lightspeed）大举下注自主武器平台，本身就是一个信号：资本认为"会打仗的 AI"是下一个万亿级市场。</p></div></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>智谱（Z.ai）开源 GLM-5.2，同时抛出 40 亿美元香港配售</h3><p class="lp">Yahoo Finance / 彭博 7 月 13 日：中国智谱（Z.ai）以开源许可发布其最新模型 <strong>GLM-5.2</strong>（据 llm-stats 榜单，GLM-5.2 以 GPQA 91.2% 领跑开放权重模型），并已直接对标 Anthropic 的 Claude Opus 系列做测试；同时公司宣布 <strong>40 亿美元香港配售</strong>、并计划在上海追加上市，股价应声大涨。创始人强调："更有意义的安全，可能来自更广泛的参与、信息共享和监督，而不是主要依赖技术壁垒"，未来两年优先押"长周期任务、自主智能体、自训练模型"，而非短期变现。<a class="src" href="https://finance.yahoo.com/technology/ai/articles/zhipu-unveils-open-source-ai-195035952.html">来源：Yahoo Finance / 彭博</a>｜<a class="src" href="https://llm-stats.com/">开放权重榜单佐证</a></p><div class="why"><span class="why-k">为什么重要</span><p>中国开源模型的"门面选手"一边把前沿模型开源、一边巨额融资，而这恰好撞上北京正在酝酿"限制海外访问中国开源模型"的政策讨论（见下文背景）。开源在这里既是技术路线，也是地缘策略——用"免费且接近前沿"抢占全球开发者心智，正成为中美 AI 竞争的第二战场。</p></div></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>前沿实验室集体"下沉印度"：Anthropic 本地化 Claude 定价、OpenAI ChatGPT Work 登陆印度</h3><p class="lp">同一天出现一组"抢印度"动作：<strong>Anthropic</strong> 开始在印度（其美国之外第一大市场）用<strong>卢比本地化定价</strong>，部分用户已在网页与 App 端看到本地价格 <a class="src" href="https://techcrunch.com/2026/07/13/anthropic-starts-localizing-claude-pricing-for-india-its-biggest-market-after-the-us/">来源：TechCrunch</a>；同日印度 IT 巨头 <strong>LTM（原 LTIMindtree）宣布与 Anthropic 合作</strong>，在软件工程、应用现代化、业务运营场景推广 Claude / Claude Code / Claude Cowork <a class="src" href="https://finance.yahoo.com/technology/ai/articles/ltm-partners-anthropic-accelerate-claude-113000192.html">来源：Yahoo Finance</a>；<strong>OpenAI</strong> 则把能跨应用／文件"动手干活"的智能体 <strong>ChatGPT Work 扩展到印度</strong>、并扩大 GPT-5.6 的落地 <a class="src" href="https://www.infoworld.com/article/4195478/openai-launches-chatgpt-work-as-it-broadens-gpt-5-6-rollout.html">来源：InfoWorld</a>。</p><div class="why"><span class="why-k">为什么重要</span><p>几大前沿实验室在同一天把矛头对准印度——全球最大、最未被开垦的用户市场。竞争焦点正从"谁模型更强"转向"谁的定价、渠道、本地生态更贴地"。本地化定价和与本土 IT 服务商绑定，成了模型能力之外的新战场。</p></div></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 25 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong>ChatGPT Work 扩大落地 + GPT-5.6 铺量</strong>（7/13）：ChatGPT Work（融合 ChatGPT、Codex 与 GPT-5.6，可跨 Microsoft 365 / Google Drive / Slack / Notion 生成文档、PPT、网站）当天扩展到印度等更多市场，向所有套餐用户在桌面端开放。<a class="src" href="https://www.business-standard.com/technology/tech-news/chatgpt-work-agent-lays-groundwork-for-ai-super-app-126071300610_1.html">来源：Business Standard</a></p></div><div class="srow"><p><strong>临时放开用量上限 + "存起来的重置"</strong>（7/12–13）：因 GPT-5.6 Sol 需求暴涨，OpenAI 临时取消 Plus/Business/Pro 的 5 小时用量限制、并优化 Sol 推理效率；把"banked reset（把一次限额重置存起来晚点用）"推广到约 50 万 Work/Codex 用户。<a class="src" href="https://www.digitaltrends.com/computing/openai-just-took-the-handcuffs-off-your-chatgpt-work-and-codex-usage-limits-at-least-for-now/">来源：Digital Trends</a>｜<a class="src" href="https://www.explainx.ai/blog/chatgpt-codex-5-hour-limit-removed-weekly-reset-july-2026">explainx 跟踪</a></p></div><div class="srow"><p><strong class="st">GPT-Live 语音</strong>7 月 13 日更新的 ChatGPT 发布说明中出现 GPT-Live-1（全双工语音，边听边说边推理，暂不支持视频/共享屏幕）；确切上线时点与 GPT-5.6 铺量交织，需谨慎看待。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">来源：OpenAI 帮助中心发布说明</a></p></div><div class="srow"><p><strong class="st">背景（非 7/13）</strong>GPT-5.6 三档（Sol/Terra/Luna）于 <strong>7 月 9 日</strong>正式面向公众发布，Sol 定价约 5 美元/百万输入 token、30 美元/百万输出 token <a class="src" href="https://openai.com/index/previewing-gpt-5-6-sol/">来源：OpenAI</a>；苹果于 <strong>7 月 10 日</strong>起诉 OpenAI 涉窃取商业机密（用于自研硬件），马斯克随后在 X 上加码，与奥特曼隔空互怼——此为 7/10 起的延续事件，非 7/13 新事。<a class="src" href="https://www.theguardian.com/technology/2026/jul/10/apple-sues-openai-trade-secrets">来源：卫报</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong>Gemini 3.5 Pro 目标 7 月 17 日 GA——当日全是泄露与分析、谷歌未官宣</strong>（7/13）：多家媒体 7 月 13 日报道，Gemini 3.5 Pro 瞄准 <strong>7 月 17 日</strong>正式发布（比原定 6 月已推迟），泄露规格指向 <strong>~200 万–210 万 token 上下文窗口</strong>（号称生产环境最大）、Deep Think 深度推理模式；传闻定价约 12–15 美元/百万输入、36–45 美元/百万输出 token。谷歌称此前<strong>推翻了原基座模型、重启预训练</strong>，原因是工程师发现其在"递归工具调用"和 SVG 生成上存在结构性缺陷。截至 7 月 13 日，Gemini API 公开文档里仍<strong>没有 model card、没有定价页、没有 gemini-3.5-pro 条目</strong>。<a class="src" href="https://www.techtimes.com/articles/320308/20260713/gemini-35-pro-targets-july-17-after-full-rebuild-every-spec-remains-unconfirmed.htm">来源：TechTimes</a>｜<a class="src" href="https://startupfortune.com/google-delays-gemini-35-pro-launch-to-july-17-after-scrapping-its-base-model/">Startup Fortune</a></p></div><div class="srow"><p><strong class="st">提示</strong>当日"谷歌"相关的实质性一手动作有限，主要是围绕 Gemini 3.5 Pro 的泄露与解读，尚未有官方确认，需与已发布事实区分。</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong>印度卢比本地化定价 + LTM 合作</strong>（7/13）：见"今日要闻 5"。<a class="src" href="https://techcrunch.com/2026/07/13/anthropic-starts-localizing-claude-pricing-for-india-its-biggest-market-after-the-us/">TechCrunch</a></p></div><div class="srow"><p><strong>再次延长 Fable 5 访问</strong>（7/13）：为应对 OpenAI Sol 发布，Anthropic <strong>一周内第二次</strong>延长订阅用户对 Claude Fable 5 的访问。<a class="src" href="https://www.forbes.com/sites/tylerroush/2026/07/13/ai-model-wars-anthropic-extends-fable-access-again-after-openais-sol-release/">来源：Forbes</a></p></div><div class="srow"><p><strong class="st">Claude Code 周用量上限下调，7 月 13 日生效</strong>在此前提供"含 Fable 5、按周限额 50%"过渡至 7/12 之后，Anthropic 自 7 月 13 日起下调 Claude Code 周用量上限。<a class="src" href="https://www.getreadyforagents.com/news/anthropic-claude-code-usage-limits-reduction/">来源：Agentic Ready</a></p></div><div class="srow"><p><strong class="st">背景（非 7/13）</strong>Claude Cowork（多步任务委派智能体）扩展到移动端和网页，系 <strong>7 月 7 日（周二）</strong>官方博客宣布。<a class="src" href="https://mashable.com/tech/anthropic-claude-cowork-to-web-mobile-launch">来源：Mashable</a></p></div></div><div class="sector"><div class="sector-h">中国 AI（字节 / 豆包 / Seed / DeepSeek / 智谱 / MiniMax / 通义）</div><div class="srow"><p><strong>智谱开源 GLM-5.2 + 40 亿美元配售</strong>（7/13）：见"今日要闻 4"。<a class="src" href="https://finance.yahoo.com/technology/ai/articles/zhipu-unveils-open-source-ai-195035952.html">Yahoo/彭博</a></p></div><div class="srow"><p><strong>字节 Seed 团队探索自动驾驶、切入无人物流</strong>（7/13）：据中国媒体（36Kr、TechNode）报道，字节跳动通过 AI 研究单元 Seed 旗下的"世界模型（world model）"团队探索自动驾驶技术，用于无人物流；项目尚处早期，与火山引擎（Volcengine）的汽车业务相关联。字节此前已通过豆包大模型进入智能座舱。<a class="src" href="https://technode.com/2026/07/13/bytedance-explores-autonomous-driving-for-unmanned-logistics/">来源：TechNode</a>｜<a class="src" href="https://eu.36kr.com/en/p/3893815451417347">36Kr</a></p></div><div class="srow"><p><strong class="st">背景（非 7/13，供参照）</strong>① 高盛 <strong>7 月 12 日</strong>发布中国 AI 大模型竞争格局报告，看好智谱 GLM 与 DeepSeek（基础文本模型定价力与成本优势最强）、多模态看好字节；对 MiniMax、快手维持"买入"。<a class="src" href="https://www.cnbc.com/2026/07/12/goldman-sachs-picks-its-favorite-chinese-ai-models.html">来源：CNBC</a> ② 有报道称中国商务部 <strong>7 月 11–12 日</strong>前后牵头、与阿里、字节、智谱等讨论<strong>限制海外访问中国先进（含开源）模型</strong>，甚至讨论把 AI 技术外泄按国安犯罪处理。<a class="src" href="https://timesofindia.indiatimes.com/technology/tech-news/china-may-have-a-message-for-airbnb-nvidia-and-other-ceos-impressed-with-chinese-models-we-will-soon-ban-you-from/articleshow/132340674.cms">来源：Times of India</a></p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong>英伟达"白名单"砍半亚洲买家</strong>（7/13）：见"今日要闻 1"。<a class="src" href="https://finance.yahoo.com/technology/ai/articles/nvidia-halves-asia-buyer-list-033140201.html">Yahoo/路透</a></p></div><div class="srow"><p><strong>LG 电子将为英伟达造 AI 服务器机架，股价涨超 5%</strong>（7/12–13）：据韩国《首尔经济日报》，LG 电子将进入 AI 服务器机架市场（采用直触芯片液冷技术），与英伟达合作被称为完成 gigawatt 级"最后一块拼图"、意在打破台湾在该环节的垄断；消息带动 LG 电子股价 7 月 13 日涨超 5%。<a class="src" href="https://www.cnbc.com/2026/07/12/stock-market-today-live-updates.html">来源：CNBC 市场直播</a>｜<a class="src" href="https://en.sedaily.com/finance/2026/07/12/lg-enters-ai-server-rack-market-with-direct-to-chip-cooling">首尔经济日报</a></p></div><div class="srow"><p><strong>黄仁勋在股东会抨击 25 亿美元芯片走私链</strong>（7/13 报道）：与"白名单"整肃相互印证——英伟达一面收紧合规、一面公开点名走私问题。<a class="src" href="https://www.fool.com/investing/2026/07/13/nvda-biggest-risk-isnt-custom-ai-chips-avgo-or-amd/">来源：Motley Fool</a></p></div><div class="srow"><p><strong class="st">市场情绪</strong>多家投行 7 月 13 日讨论英伟达/美光/博通"AI 大牛市"逻辑与前瞻估值压缩（英伟达前瞻 P/E 约 24）。<a class="src" href="https://247wallst.com/investing/2026/07/13/famous-ai-investor-says-this-is-the-mega-bull-case-for-stocks-like-nvidia-micron-and-broadcom/">来源：24/7 Wall St.</a></p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong>16 位诺奖得主 + 200+ 经济学家联署声明</strong>（7/13）：见"今日要闻 2"。<a class="src" href="https://digitaleconomy.stanford.edu/news/wemustactnow/">斯坦福数字经济实验室</a></p></div><div class="srow"><p><strong>美国 FTC 就 AI 政策声明公开征求意见</strong>（7/13）：提示开发/部署面向消费者 AI 工具的公司审视其对 AI 能力的表述，确保功能与对外披露一致，并持续关注联邦与州层面监管演进。<a class="src" href="https://www.mondaq.com/unitedstates/new-technology/1815578/ftc-seeks-comment-on-ai-policy-statement">来源：Mondaq</a></p></div><div class="srow"><p><strong>英伟达"白名单"本质上也是出口管制落地</strong>（7/13）：见芯片板块，政策与商业动作合流。</p></div><div class="srow"><p><strong class="st">背景（非 7/13）</strong>欧盟《AI 法案》执法 <strong>8 月 2 日</strong>启动、把 AI 招聘工具纳入监管；特朗普政府 <strong>7 月 12 日</strong>被报道以"意识形态"为由针对各州 AI 法（如禁止"算法歧视"的条款）。<a class="src" href="https://asanify.com/blog/news/eu-ai-act-enforcement-july-13-2026/">来源：EU AI Act 摘要</a>｜<a class="src" href="https://www.newstribune.com/news/2026/jul/12/trump-administration-targets-state-ai-laws-over/">News-Tribune</a></p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p><strong>Helsing 融资 18 亿美元 / 估值 180 亿</strong>（7/13）：见"今日要闻 3"。<a class="src" href="https://siliconangle.com/2026/07/13/defense-technology-startup-helsing-raises-1-8b-18b-valuation/">SiliconANGLE</a></p></div><div class="srow"><p><strong>Nous Research 以约 15 亿美元估值完成新融资</strong>（7/13）：用于加速自研模型 Hermes、扩展自主智能体产品线。<a class="src" href="https://mezha.net/eng/bukvy/648b4670_nous_research_raises/">来源：Mezha</a></p></div><div class="srow"><p><strong>上半年大盘数据</strong>（7/13 披露）：PitchBook 数据显示，2026 年上半年美国风投总额达 <strong>4127 亿美元</strong>、比 2025 年全年还多 30%，其中 <strong>AI 创业公司占 86%（3559 亿美元）</strong>。<a class="src" href="https://techstartups.com/2026/07/13/top-tech-news-today-july-13-2026-apple-anthropic-blackstone-meta-openai-samsung-sharefile-more/">来源：Tech Startups</a></p></div><div class="srow"><p><strong class="st">当日中小额融资（节选）</strong>数字健康 Corner Health $2500 万 A 轮（Oak HC/FT 领投）<a class="src" href="https://fortune.com/2026/07/13/corner-health-nurse-practitioners-independent-practice-oak-series-a-funding/">Fortune</a>；企业 AI 培训平台 Section $315 万 <a class="src" href="https://www.alleywatch.com/2026/07/the-alleywatch-startup-daily-funding-report-7-13-2026/">AlleyWatch</a>；慕尼黑 AI 原生 GRC 公司 Auxilius €130 万种子前 <a class="src" href="https://www.finsmes.com/2026/07/auxilius-raises-e1-3m-in-pre-seed-funding.html">FinSMEs</a>。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li><strong>只取 7 月 13 日</strong>：报告主体只保留能定位到 2026-07-13 一手来源的事件；GPT-5.6 发布（7/9）、苹果诉 OpenAI（7/10）、谷歌微软联手对抗 MCP（<strong>实为 6/18</strong> The Information 旧闻）、高盛推荐中国模型（7/12）、中国拟限制模型出海（7/11–12）等均标注为背景，不计入"今日要闻"。</li><li><strong>区分"事件"与"泄露/分析"</strong>：Gemini 3.5 Pro 相关全部为 7/13 的泄露与媒体分析，谷歌官方未确认，已明确标注。</li><li><strong>当日高可信新增确实有限之处</strong>：谷歌/DeepMind 当天缺乏官方实质动作；OpenAI 当天多为铺量与用量政策微调（大发布在 7/9）。已如实说明，未硬凑。</li><li><strong>未采信的可疑聚合内容</strong>：部分聚合站出现的"美联储成立 AI 工作组（由 Marc Andreessen 领衔）""$730 亿 OpenAI IPO"等，缺乏可靠一手来源、且与常识不符，本报告未采纳。</li></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
