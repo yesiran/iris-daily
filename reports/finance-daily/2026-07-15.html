@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28192%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231a7f4b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b3d24%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2253%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2239%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.10%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23eafff3%22%3E%C2%A5%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20260715 · 思染跟踪金融日报</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 金融日报</span><span class="r">2026-07-15</span></div>
+  <h1 class="doc">20260715 · 思染跟踪金融日报</h1>
+  <div class="dateline"><span>全文 <b>6,244</b> 字</span><span>约 <b>17</b> 分钟</span><span>章节 <b>6</b></span></div>
+  <div class="mast-bar"></div>
+  
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">通胀连着两天爆冷，为什么黄金反而在跌？</a><a class="t-h2" href="#s2">一、美团 3690.HK：80 关四次撞不开，第五次一脚踹穿</a><a class="t-h2" href="#s3">二、小米 1810.HK：顺风把所有人都吹起来了，只有它没起来</a><a class="t-h2" href="#s4">三、比特币：65k 这道坎，第二次来撞，这次脚下是实的</a><a class="t-h2" href="#s5">四、黄金：4,000 这道关，第三次来测</a><a class="t-h2" href="#s6">明天盯什么</a></nav>
+    <main><blockquote><p>数据日：2026-07-15（周三）。港股已收盘（16:00 HKT＝08:00 UTC）＝终值。
+美盘/现货金/BTC 截稿于 <strong>UTC 7/15 17:0x（美东 13:0x）＝当日未收盘＝盘中快照</strong>，收盘裁决顺延北京 7/16 08:00 后链式订正。</p></blockquote><hr class="rule"><h2 id="s1">通胀连着两天爆冷，为什么黄金反而在跌？</h2><p>这是今天最该先回答的一问，因为它一句话戳破了大多数人对黄金的想当然。</p><p>先把两个数摆上：6 月 CPI（7/14 发布）环比 <strong>-0.4%</strong>——2020 年以来第一次负增长；6 月 PPI（7/15 发布）环比 <strong>-0.3%</strong>，市场只等着 -0.1%，上个月还是 +0.6%（<a class="src" href="https://www.bls.gov/news.release/archives/ppi_07152026.htm">BLS 原文</a>、<a class="src" href="https://seekingalpha.com/news/4613954-ppi-inflation-subsides-in-june-cooling-more-than-expected">Seeking Alpha</a>）。7 月加息概率从 42% 崩到 17%。美元指数跌到 100.67（-0.24%），10 年期美债收益率从 4.58% 降到 4.55%。</p><p>美元在跌，利率在跌。按教科书，无息的黄金该涨。</p><p><strong>结果金价跌了 0.72%（期金 4,040.60），白银跌了 3.15%。</strong></p><p>为什么？我认为最可能是这样一条链——<strong>先说清楚"实际利率"是什么，因为它是整件事的关节</strong>：你把钱借给美国政府拿 4.55% 的利息，但物价每年涨 3.5%，你真正多出来的购买力只有大约 1 个百分点。这 1 个百分点，就是"实际利率"，它才是黄金真正的对手盘——因为黄金不生息，你拿着它，等于放弃了这 1 个点。</p><p>现在关键来了：这两天名义利率只降了 3 个基点（4.58→4.55），但通胀预期降得多得多（CPI 同比 3.8%→3.5%，PPI 6.0%→5.5%）。<strong>分子降一点，减数降一大截，实际利率反而变高了。</strong></p><p>所以"通胀降温"对黄金是一把双刃刀：它松开了加息的盖子（利多），同时抬高了实际利率（利空）。今天，利空这一刃更重。</p><p>这条推理<strong>是我的推测，不是已证实的事实</strong>。另一条同样成立的解释：加息恐慌一解除，钱就奔风险资产去了（比特币站上 65k、恒指 +1.4%、韩国 KOSPI 盘中一度 +7%），黄金作为避险品被丢在一边；白银跌幅是黄金的 4.4 倍，说明是整个贵金属被减仓，Kitco 的原话是"CPI 和 PPI 之后的仓位调整"（<a class="src" href="http://www.kitco.com/news/article/2026-07-15/gold-steadies-above-4000-ppi-cools-yields-rise-kitco-am-report">Kitco AM</a>）。</p><p>两条解释的分岔点很实在：<strong>明天必须直接去取 TIPS 的实际收益率</strong>。认知库至今一直拿名义 10 年期当实际利率的替身用，从没验证过——今天正是这个替身第一次露馅的日子。</p><p>这个"美元跌+利率跌，但金跌"的组合，是认知库最核心的那条框架<strong>自建库以来第一个方向性反例</strong>。已写入未决假设，最高优先级。</p><p><span class="lk">今天的共同底色，一句话</span>通胀盖子松了，但 Warsh 没掀。他 7/14 在众议院、7/15 在参议院讲的是同一份稿子，措辞照旧强硬——"对高通胀零容忍""如果政策做对了——我们会做对——过去五年的通胀飙升将成为历史"（<a class="src" href="https://www.cnbc.com/2026/07/15/watch-fed-chairman-kevin-warsh-testify-live-before-senate-banking-committee.html">CNBC</a>、<a class="src" href="https://www.federalreserve.gov/newsevents/testimony/warsh20260714a.htm">美联储原文</a>）。两天爆冷数据，没换来一句软话。</p><p>这个底色，四个标的各自吃到了完全不同的部分。</p><hr class="rule"><h2 id="s2">一、美团 3690.HK：80 关四次撞不开，第五次一脚踹穿</h2><h3>今天发生了什么新闻</h3><p><strong>没有。</strong></p><p>这不是偷懒——是六组搜索角度（评级、回购、监管、AI/LongCat、外卖、即时零售）亲手核过的结论。CNBC 把今天的港股定性为板块行情：医药 +3.2%、地产 +2.3% 领涨，信达生物 +8%、美团 +5% 并列涨幅榜前排（<a class="src" href="https://www.cnbc.com/2026/07/14/stock-market-today-live-updates.html">CNBC</a>）。</p><p><strong>"今天没有公司新闻"这件事本身，才是今天最重要的新闻</strong>——理由见下面第三节。</p><p>唯一沾边的背景：长鑫科技定价 8.66 元/股、7/16 申购，美团出现在战略配售名单里（<a class="src" href="https://hk.stockstar.com/IG2026071500023271.shtml">证券之星</a>）。量级太小，不构成 +5.3% 的解释。</p><h3>价格与资金：让数字说话</h3><div class="tablewrap"><table><thead><tr><th></th><th>7/14</th><th>7/15</th></tr></thead><tbody><tr><td>收盘</td><td>79.20（+1.60%）</td><td><strong>83.40（+5.30%）</strong></td></tr><tr><td>成交额</td><td>39.25 亿</td><td><strong>72.45 亿（+85%）</strong></td></tr><tr><td>沽空绝对额</td><td>8.94 亿</td><td><strong>14.83 亿（+66%）</strong></td></tr><tr><td>沽空率</td><td>22.79%</td><td>20.46%</td></tr><tr><td>南向净额</td><td><strong>-5.58 亿</strong>（建库最大净卖）</td><td><strong>+12.86 亿</strong>（建库最大净买）</td></tr></tbody></table></div><p>今天开 78.95 低开，盘中先砸到 <strong>77.00</strong>，然后一路暴拉到 <strong>84.45</strong>，收在 83.40——距全天最高只差 1.05。振幅 9.41%。</p><p><strong>三个数字，每个都在推翻一件旧事：</strong></p><p><strong>① 80 这道关，四次撞不开，今天穿了。</strong> 序列摆出来看：7/8 收 80.90 站上一天就丢、7/9 冲到 81.70 回落、7/13 摸 80.00 精确触顶、7/14 摸 79.90 差 0.1——四次全被拒。今天收 83.40，直接收上去，而且是 <strong>6/2（收 85.50）以来最高的收盘价</strong>。</p><p><strong>② 南向资金一天之内，从最大的卖家变成最大的买家。</strong> 沪港通净买 +5.49 亿、深港通净买 +7.37 亿，合计 <strong>+12.86 亿</strong>（东方财富 RPT_MUTUAL_TOP10DEAL 双榜实查）——这是认知库建库以来最大的单日净买，超过 7/7 LongCat 那天的 +12.41 亿。而昨天，同一批钱还在砸出建库最大的单日净卖 <strong>-5.58 亿</strong>。单日反手约 <strong>18.4 亿</strong>。</p><p><strong>③ 这次不是空头回补。</strong> 这条最要紧。沽空率从 22.79% 降到 20.46%，看着像空头撤了——<strong>但那是被成交额翻倍稀释出来的假象</strong>。看绝对额：空头今天砸下 <strong>14.83 亿</strong>，比昨天的 8.94 亿多了 66%，是本轮第二大规模。</p><p><strong>空头加了六成火力，价格还是被顶到全天最高附近。</strong> 这跟 6/29、7/2 那几次"空头一回补价格就弹、回补完就熄火"是两种东西——那些是卖压减弱撑起来的，今天是真买盘正面碾过去的。</p><p>回购：HKEX 的 SRRPT 报表 7/14、7/15 两天的端点都返回 404，<strong>今天的回购数据拿不到</strong>，不编。按认知库的价格带模型（公司只在 64-69 接、不追高），83 元这个位置预期无回购，但未获证实。</p><h3>为什么是今天？</h3><p><strong>因果链（宏观底色 + 认知库既往模式，接起来是这样）：</strong></p><p>第一环是<strong>事实</strong>：港股 16:00 收盘，等于 08:00 UTC；美国 CPI 是北京时间 20:30 发布的。<strong>港股 7/14 那天，根本还没见到 CPI。</strong> 所以 7/14 走的是"CPI 前定价"，冷 CPI 的顺风，一整个留给了 7/15。</p><p>——这句不是今天的马后炮。认知库 7/14 那条原话写着："冷 CPI（加息概率 42%→17%）是 7/15 顺风 setup、港股尚未定价"。<strong>今天精准兑现。</strong></p><p>第二环是<strong>事实</strong>：7/15 港股恒指 +1.40% 报 24,681.1、恒科 +1.30% 报 4,740.49，南向全市场净流入 <strong>133.63 亿</strong>（<a class="src" href="https://news.fx168news.com/cooperate/2607/7474841.shtml">FX168</a>）。大池子有水。</p><p>第三环是<strong>推测</strong>：这水怎么分的，能看出座次。南向今天买腾讯（深 +21.57 亿）、阿里（深 +18.67 亿）、美团（+12.86 亿）、智谱、长飞；同时砸中芯（深 -9.64 亿）、盈富（-13.29 亿）、小米（-4.61 亿）、华虹（-2.15 亿）。<strong>这是"抛硬件链、买平台"的第二轮座次重排</strong>——7/7 那轮美团也在买方名单里，但这一轮它的排位更靠前。</p><p>所以最可信的一条链：<strong>冷 CPI 顺风（港股首次定价）→ 平台/AI 应用整队重估 → 南向实名大额进场 → 把四次撞不开的 80 关一次踹穿 → 突破本身触发动量盘 → 空头虽加码 66% 但被碾压。</strong></p><h3>认知更新</h3><p><span class="lk">验证了什么</span>7/14 预判的"冷 CPI 顺风留给 7/15"精准兑现；"80 突破需要 CPI 转冷或 Q2 财报级催化"——答案是<strong>前者就够了，不必等财报</strong>。</p><p><strong>证伪了什么，两条：</strong></p><p><strong>第一条，7/14 我自己的判断错了。</strong> 昨天认知库写："买盘是外资/动量吸南向 -5.58 亿的货、<strong>上涨地基虚</strong>"。今天南向反手 +12.86 亿——地基不虚，是南向自己次日追了上来。<strong>昨天看空的那批钱，今天成了买得最猛的钱。</strong></p><p><strong>第二条，7/10 定下的铁律出现了首个明确反例。</strong> 那条铁律是"美团只在有独立催化时才跑赢、无催化就掉队"。今天零公司催化，美团 +5.30%，大幅跑赢恒科（+1.30%）和所有平台同侪（腾讯 +3.90%、阿里 +2.35%、联想 +3%）。而且这是<strong>连续第二天</strong>——7/14 也是无催化却 +1.60% 领涨大平台。</p><p><span class="lk">新认知</span>催化不等于"公司事件"。<strong>南向实名大额进场，本身就是一种催化。</strong> 7/14-7/15 这两天的 alpha 来自资金面座次重排（-5.58 → +12.86 亿），不是新闻面。旧铁律的适用域收窄为"<strong>无事件且无南向增量时</strong>才掉队"。</p><p><span class="lk">方法论升级（这条比结论更值钱）</span>沽空"比率"在放量突破日会被分母稀释，<strong>失去指示意义</strong>——今天按旧刻度读会得出"空头减仓"的反向结论。<strong>放量日一律以沽空绝对额为准。</strong></p><p><span class="lk">冷静一点</span>7/7 那次南向 +12.41 亿，次日衰减到 +2.16 亿、第三日直接掉榜，最终被坐实为 LongCat 事件的一次性进场；小米 7/3 的 +8.63 亿也是次日即掉榜。<strong>两次前科在前，所以今天的 +12.86 亿默认仍按"一次性"看待，直到被证否。</strong> 需要再连 2-3 日净买才算"南向真转向"。</p><hr class="rule"><h2 id="s3">二、小米 1810.HK：顺风把所有人都吹起来了，只有它没起来</h2><h3>今天发生了什么新闻</h3><p><strong>一条，而且是硬的：小米 7/15 回购 390 万股、耗资 1.007 亿港元，均价约 25.82</strong>（<a class="src" href="https://www.tradingview.com/news/reuters.com,2026:newsml_FWN43H0FG:0-xiaomi-bought-back-3-9-million-class-b-shares-for-hk-100-7-million-on-july-15-hkex-filing-shows/">Reuters/HKEX filing</a>）。</p><p>这条为什么重要，见下面第三节——<strong>它把认知库反复验证过的一个模型打破了</strong>。</p><p>存储链今天上演了一出过山车：韩国 KOSPI 早上 8:20（北京时间）高开 <strong>+7% 触发熔断</strong>，SK 海力士 +11%、三星 +6%（<a class="src" href="https://m.21jingji.com/article/20260715/herald/5b127c3086e909d67310e208e917f5de.html">21财经</a>）；<strong>收盘时 SK 海力士倒跌 15%</strong>。美股这边存储继续挨砸：美光 -3.47%、西部数据 -5.09%、希捷 -5.40%、闪迪 -8.83%、铠侠 ADR -9.30%（<a class="src" href="https://www.sina.cn/news/detail/5321033552764523.html">新浪</a>）。港 A 存储同跌：兆易创新 -4.64%、中芯 -2.62%、华虹 -1.28%，科创 50 跌 3.67%。</p><p><strong>但内存现货价还是没跌</strong>——机构口径仍是"行业供不应求将持续"（<a class="src" href="https://m.21jingji.com/article/20260715/herald/1e63131f97752a2ec3a447625fa7bb85.html">21财经</a>）。认知库的老纪律在这儿必须守住：<strong>崩的是股价，不是价格</strong>。小米的成本利空一天没解。</p><h3>价格与资金：让数字说话</h3><div class="tablewrap"><table><thead><tr><th></th><th>7/14</th><th>7/15</th></tr></thead><tbody><tr><td>收盘</td><td>26.04（+0.77%）</td><td><strong>25.86（-0.69%）</strong></td></tr><tr><td>成交额</td><td>60.84 亿</td><td><strong>39.11 亿（-36%）</strong></td></tr><tr><td>沽空绝对额</td><td><strong>23.31 亿</strong>（史诗新高）</td><td><strong>10.59 亿（腰斩 -55%）</strong></td></tr><tr><td>沽空率</td><td><strong>38.30%</strong>（有记录最高）</td><td>27.07%</td></tr><tr><td>南向净额</td><td>-0.43 亿</td><td><strong>-4.61 亿</strong>（卖幅扩大 10 倍）</td></tr><tr><td>回购</td><td>未出</td><td><strong>1.007 亿 @ 均价 25.82</strong></td></tr></tbody></table></div><p>开 26.04、高 26.20、低 25.28、收 25.86。<strong>7/14 刚站上的 26 整数关，一天就丢了。</strong></p><p>盘中高点还在连续第三天下移：7/13 高 26.78 → 7/14 高 26.28 → 7/15 高 26.20。</p><h3>为什么是今天？</h3><p><strong>这是今天四个标的里最干净的一道题，因为它的答案是反直觉的。</strong></p><p><span class="lk">事实</span>恒指 +1.40%、恒科 +1.30%、南向大池子净流入 133.63 亿。同一天，腾讯 +3.90%、阿里 +2.35%、美团 +5.30%、联想 +3%——整队大涨。</p><p><strong>小米 -0.69%。不是涨得少，是直接收跌。</strong></p><p>认知库的"顺风不涨"铁律，前三次测试（6/15 +0.23%、6/24 +1.5%、6/29 +2.05%）好歹还是跟涨跑输。<strong>今天是第四次，也是最强的一次形态：顺风大日直接翻绿。</strong></p><p><strong>然后是今天真正的题眼——空头跑了，价格却还在跌。</strong></p><p>空头 7/14 在 26 关上方以 <strong>23.31 亿</strong>、占成交 <strong>38.30%</strong> 的有记录最大规模疯狂砸盘。今天呢？绝对额腰斩到 <strong>10.59 亿</strong>（-55%），占比暴降 11.2 个百分点到 27.07%（HKEX d260715e 官方，其 ADJUSTED 表回校 7/14 = 23.306 亿/60.84 亿 = 38.31%，与认知库记录吻合）。</p><p><strong>空头获利了结、撤走一半火力。按常理该反弹。价格却照跌。</strong></p><p><strong>这说明什么？跌不是空头打下来的——是没人接。</strong></p><p>这正是认知库那条"双阶段读法"的教科书样本：<strong>沽空率断崖跌 + 价格续跌 = 卖压来自非空头，是持有者/南向减仓、无承接的自然下沉</strong>（6/16-6/17 缩量阴跌型）。配合缩量 36%，性质就一个字：<strong>没人要</strong>。</p><p>证据链闭合：南向今天净卖 <strong>-4.61 亿</strong>，卖幅比 7/14 的 -0.43 亿扩大 <strong>10 倍还多</strong>。顺风大日、大池子净流入 133.63 亿，钱全去了腾讯、阿里、美团、智谱——小米跟中芯（-9.64 亿）、盈富（-13.29 亿）躺在同一张卖出榜上。</p><p><span class="lk">一句话对照今天的美团</span>美团空头加码 66% 却被碾压、收在全天高位；小米空头腰斩撤退却仍收跌。<strong>多空的强弱根本不在空头手里——在有没有真买盘。</strong></p><h3>认知更新</h3><p><span class="lk">打破的模型（今天最硬的一条）</span>认知库 #6 反复验证过的"回购 ≈ 21.5 阈值触发、跌进阈值区就买约 1 亿、弹出阈值区就停"这个机械模型，<strong>今天被实盘明确证伪</strong>——25.82 远在阈值上方 4.3 元，公司照买 1 亿。对照 7/10（25.84 区）SRRPT 实查无回购、7/13 也无回购——<strong>同样的价位，不同的行为，说明 7/13 到 7/15 之间发生了制度性变化。</strong></p><p>两条互斥解释，已写入未决假设：</p><ul class="ls"><li><strong>(A) 静默期自动档</strong>（默认倾向）：6/18 公告的"40 亿港元自动股份购回计划"（券商代为自动回购，6/19 起至 12/31），随 8 月中期业绩临近进入业绩静默期，触发条件从"看价格"切换成"按日机械执行"；</li><li><span class="lk">(B) 护价决心升级</span>管理层主动把回购价格带从 ~21.5 上移到 ~26。若成立，这是 6 月以来第一个真正偏多的公司行为信号。</li></ul><p><span class="lk">判别刻度很简单</span>明后天小米若反弹到 26.5+ 仍见回购 = (A)；停手 = (B)。</p><p>倾向 (A) 的理由：静默期时点吻合；且 (B) 需要管理层在股价从 21.34 反弹 21% 之后反而追高护价，跟 6 月"只在阈值区象征性接盘"的一贯纪律矛盾。</p><p><strong>无论 A 还是 B，都不改主结论</strong>——回购 1.007 亿 ÷ 成交 39.11 亿 = <strong>2.6%</strong>，量级上依旧无效。认知库的老话没变："回购托得住存在，托不住价格。"</p><p><span class="lk">松动的认知</span>7/2 坐实的"小米 = 存储链反向资产"双向闭环，<strong>连续两天双向失效</strong>——7/14 存储股反弹小米也涨、7/15 存储链崩盘小米也跌。按 7/2 的镜像（存储崩→小米 +4.44%），今天本该是受益日，结果照跌。<strong>市场已经不拿"内存税受害者"这个框架交易小米了，而是单独按它自己的弱势定价。</strong> 已列为未决假设 (C) 镜像已死 / (D) 只是位置不对（7/2 镜像生效时小米在 22 元超跌区+空头 36.12% 极值，如今在 25-26 反弹高位区自然点不着）。</p><p><span class="lk">这条若是 (C)，对多头是坏消息</span>意味着将来就算内存现货价真跌了（认知库长年等的那个信号），利好也传导不到小米身上——那条多头逻辑要整条作废。</p><p><strong>反转三条件</strong>（站稳 25 放量上行／存储主线松动／南向重回活跃且净买）：25 关第六日站稳 ✓ 但"放量上行"✗（缩量收跌）；股价崩 ≠ 现货价跌，✗；南向净卖，✗。<strong>仍约 0.3/3，双空定性未破。</strong></p><hr class="rule"><h2 id="s4">三、比特币：65k 这道坎，第二次来撞，这次脚下是实的</h2><h3>今天发生了什么新闻</h3><p>无 BTC 自身的定向新闻。今天的驱动<strong>全部来自宏观</strong>——冷 CPI 接冷 PPI，7 月加息概率 42%→17%。</p><h3>价格与资金：让数字说话</h3><p><span class="lk">先把纪律摆前面</span>现在是 UTC 7/15 17:0x，<strong>7/15 的 UTC 日线还没收盘</strong>（北京 7/16 08:00 才收）。所以下面 7/15 是盘中快照，7/14 是链式订正后的真收盘。</p><p><strong>7/14 真收盘 = 65,034.0</strong>（Gate 现货，开 62,337.2、高 65,100、低 62,273.7、量 9,814.6 BTC）= <strong>+4.33%</strong>。</p><p><strong>认知库 7/14 那天记的快照是 ~64,700——偏低了约 335 点。</strong> 而且这次快照偏低不只是数字问题：真收盘不是"逼近 65k"，而是<strong>收盘直接站上 65k</strong>，一举越过 7/6 高 64,700 和 7/10 高 64,692 构成的 64.7k 双顶，收复了 6/15 假突破的起点。</p><p><span class="lk">7/15（盘中快照）</span>开 65,035.3、高 <strong>65,600</strong>（本轮反弹新高）、低 64,486.8、现价 <strong>65,122.8</strong>、量 6,141 BTC = <strong>65k 上方站稳第二日，高点还在续创新高</strong>。</p><p><strong>资金腿反转了，而且昨天那个"背离"一天就收敛了：</strong></p><ul class="ls"><li>ETF 7/13：<strong>-$424.7M</strong>（FBTC -$245.6M / IBIT -$185.5M，<a class="src" href="https://crypto.news/bitcoin-price-stalls-below-63k-as-oil-cloud-outlook/">crypto.news</a>）</li><li>ETF <strong>7/14：+$181.1M 转正</strong>（Farside，<a class="src" href="https://financefeeds.com/crypto-etf-flows-rebound-on-july-14-as-bitcoin-and-ether-funds-add-239-million/">financefeeds</a>；BTC+ETH 合计 +$239.42M，<a class="src" href="https://cryptobriefing.com/bitcoin-ethereum-etf-inflows-july-14/">cryptobriefing</a> 称终结八周流出）</li></ul><p><span class="lk">恐贪指数 25（极度恐慌）</span>7/13 是 28 → 7/14 掉到 22 → 7/15 回到 25。<strong>价格站上 65k，情绪还趴在"极度恐慌"里。</strong></p><p><strong>funding +0.0025%</strong>（Gate 永续）——温和正，无过热。<strong>这波不是杠杆推的。</strong></p><p>交易所余额、爆仓多空拆分：<strong>拿不到，不编。</strong></p><h3>为什么是今天？</h3><p><span class="lk">因果链（事实部分）</span>BTC 已被交易员定性为"pure rates asset"（纯利率资产）。冷 CPI → 加息概率 42%→17% → 利率盖子松 → BTC 直线拉升。这是认知库三段式里的<strong>第②段（美联储口径落地时利率夺方向盘）的顺风版</strong>。</p><p><span class="lk">这条链两天内双向跑通了</span>7/13 油价推高加息概率 → BTC 被砸到 62,106；7/14-7/15 通胀爆冷 → 拉到 65,600。<strong>同一条链，两个方向，两天。</strong></p><p><strong>推测部分——这次和 6/15 那次假突破，脚下的东西不一样：</strong></p><div class="tablewrap"><table><thead><tr><th></th><th>6/15 那次（已证伪）</th><th>7/14-7/15 这次</th></tr></thead><tbody><tr><td>买盘身份</td><td>逼空 + 杠杆（随后多头被屠 $1.57B）</td><td>ETF 当日 +$181.1M，有机构接盘</td></tr><tr><td>杠杆状态</td><td>funding 过热</td><td>+0.0025% 温和正，无过热</td></tr><tr><td>脚下结构</td><td>空的</td><td>57,800 本轮底 / 61,655 三测三承接 / 62,958-63k 套牢区已收复</td></tr><tr><td>情绪</td><td>已亢奋</td><td>恐贪 25，极度恐慌，散户没追进</td></tr></tbody></table></div><p><span class="lk">但仍可能重演的理由，得一起摆出来</span>冷 CPI/PPI 是"盖子松了"不是"降息了"，<strong>Warsh 两场证词维持鹰调</strong>——跟 6/25 型"利空出尽反抽"同源；企业财库仍是潜在卖方（Saylor $12.5 亿框架没撤）；"pure rates asset"是把双刃——油价还在 79-80 高位、美伊未解，通胀随时可能回头，同一条链会反向砸。</p><h3>认知更新</h3><p><span class="lk">验证</span>"pure rates asset"定性连续两日双向坐实。认知库旧的"趋势确认"条件写的是"站稳 65k + 带量上攻 67k"——<strong>前半条首次满足</strong>。</p><p><strong>修正了一个自己昨天的错，而且这个错有方法论价值</strong>：7/14 认知库判"这波 +3.8% 不是 ETF 买出来的（机构在砸），价格腿/资金腿背离加剧"。<strong>但 7/14 当日 ETF 其实是净买 +$181.1M。</strong></p><p>错在哪？<strong>ETF 是 T+1 数据。</strong> 我用 7/13 的 -$424.7M 去给 7/14 的买盘定性，等于用昨天的机构行为去描述今天——<strong>系统性错位一天</strong>。</p><p><span class="lk">新纪律</span>此后凡涉"这波是不是 ETF 买的"，必须标注"当日读数明日才出、暂无法证实"，<strong>不得用前一日读数替代</strong>。</p><p><strong>新框架（接替 7/7 关闭的"止跌 vs 奔 53.6k"）</strong>：65k 收复之后，(A) 空头陷阱反转＝新一轮上行段起点 vs (B) 冷通胀的一次性重定价、65k 再度沦为假突破。证实 (A) 需要：65k 上方连收 ≥3 日（已两日，明天是第三日裁决）+ ETF 连续净流入 ≥2-3 日（已一日）+ 带量上攻 66,329（6/15 峰）→ 67k。</p><p><strong>一个反直觉的观察</strong>（推测，不构成方向证据）：恐贪 25 + 价格 65k = 情绪严重滞后于价格。这类背离通常意味着散户/杠杆还没追进、上行燃料没被提前消耗。<strong>反过来说：等恐贪冲上 40+ 的时候，反而该警惕。</strong></p><hr class="rule"><h2 id="s5">四、黄金：4,000 这道关，第三次来测</h2><h3>今天发生了什么新闻</h3><p>6 月 PPI 爆冷（前面已展开）；Warsh 参议院证词维持鹰调，参议员 Warren 抨击他"seems to invite corruption"（<a class="src" href="https://edition.cnn.com/2026/07/15/economy/fed-chairman-kevin-warsh-senate-testimony">CNN</a>）——政治噪音，对金价无定价权。</p><p><strong>一条数据面的好消息：GLD 持仓断供 17+ 个交易日之后，今天第一次取到数了。</strong></p><h3>价格与资金：让数字说话</h3><p><span class="lk">7/14 收盘链式订正</span>期金 GC=F <strong>4,069.70</strong>（由 7/15 的 prevClose 反推：4,040.6 −(−29.10)）——与 7/14 快照记的 4,068.9 基本吻合，<strong>这次快照罕见地没偏</strong>。现货 7/14 收盘 TE 未取到，不编。</p><p><span class="lk">7/15（盘中快照）</span>期金 <strong>4,040.60（-0.72%）</strong>、开 4,059.80、高 4,080.70、<strong>低 4,023.30——击穿了 4,032（7/8 低）这道支撑</strong>。现货约 <strong>4,021.66</strong>（<a class="src" href="https://www.litefinance.org/blog/analysts-opinions/gold-price-prediction-forecast/daily-and-weekly/">LiteFinance</a>）。</p><p><strong>白银 57.24（-3.15%）</strong>，高 59.405、低 56.92——<strong>跌幅是黄金的 4.4 倍</strong>，盘中一度瞬破 Kitco 列的 57.15 支撑。</p><p><strong>GLD 持仓：7/13 = 1,002.45 吨</strong>（<a class="src" href="https://en.macromicro.me/series/3069/gold-spdr-gold-trust-etf-tonnes">MacroMicro</a>）。对照认知库此前最新可得的 6/25 约 1,007.08 吨——<strong>12 个交易日只减了约 4.6 吨（-0.46%）</strong>。</p><p><span class="lk">这个数解开了一桩悬案</span>断供期间"配置盘到底进没进场"一直无法验证。答案是——<strong>没进场，但也没跑</strong>。按兵不动。</p><p><strong>美元 DXY 100.67（-0.24%）、10Y 4.55%（-3bp）——双双转松。金跌。</strong></p><h3>为什么是今天？</h3><p>前面开篇已经把这条链拆到底了（实际利率悖论 + risk-on 抽血），不重复。这里只补三点承重的：</p><p><strong>第一，7/14 那记 +1.48% 的 CPI 反抽，一天就吐回来了。</strong> 这是认知库"<strong>超跌反抽 ≠ 趋势翻多</strong>"（6/25 型）的第 N+1 次自洽。这条模式的样本已经厚得吓人：6/25、6/26、7/1、7/2、7/9、7/14——<strong>每一次"利空出尽/数据转冷"日都必有反抽，每一次都在 4,135 之下被拒，往往 1-2 日内吐回。</strong></p><p>判定线纹丝不动：<strong>收复并站稳 4,135 才算真反转。</strong> 现在 4,040，距线 95 点，而且 7/9、7/10、7/14 已经三度贴线被拒。</p><p><strong>第二，避险照旧缺席。</strong> 美伊互袭延续、WTI 79.63 高位徘徊，金不涨反跌。认知库那条"地缘对金只剩一条传导路径——<strong>地缘 → 油价 → 通胀预期 → 加息预期 → 利率 → 金</strong>"再次自洽。<strong>说白了：地缘是通过利空黄金的方式起作用的。</strong></p><p><strong>第三，GLD 那 4.6 吨解释了为什么每次反抽都软。</strong> 配置盘按兵不动 = 反抽只有宏观盘重定价 + 空头回补两股短钱，没有慢钱接力。同时它也说明：<strong>下方没有 ETF 踩踏式抛压。</strong></p><p>央行那条长期腿没变：PBoC 6 月 +14.9 吨、连续第 20 个月增持、还比 5 月提速 50%（<a class="src" href="https://www.stcn.com/article/detail/4002336.html">证券时报</a>）。但量级对比要清醒——<strong>14.9 吨/月 vs GLD 单日可动 7 吨</strong>。央行购金是估值底的长期理由，<strong>不是任何一天涨跌的解释项</strong>。</p><h3>认知更新</h3><p><span class="lk">最高优先级的未决假设</span>认知库最核心的"最高层美元/实际利率链"<strong>出现了建库以来第一个方向性反例</strong>。三条互斥解释——(甲) 精化说：框架没错，错在拿名义利率当实际利率的替身，该升级为盯 TIPS 实际收益率；(乙) 抽血说：极端 risk-on 日的仓位冲击，1-2 日自平；(丙) 框架失效说（低概率）。</p><p><strong>明天必须补取 TIPS 10 年期实际收益率</strong>——这是裁决甲说的唯一硬证据，也是认知库一直没补上的方法论缺口。</p><p><span class="lk">为什么这条要紧</span>所有日度推演都建立在这条链上。如果替身变量错了，过去几周"金随美元/利率转松而反抽"的归因可能是<strong>对了结论、错了机制</strong>——而错的机制，迟早会带错一次方向。</p><p><span class="lk">新未决假设</span>4,000 整数关三测。(D) 三测获承接、4,000-4,081 震荡（4,000 已两测两守——7/13 盘中破收 4,001.40 险守、7/14 亚盘探 3,983.23 又收复；加上央行越跌越买 + GLD 不跑）vs (E) 收盘失守 → 3,888-3,900。<strong>刻度</strong>：看 4,000 的<strong>收盘</strong>得失（盘中破不算，前两次都是盘中破收盘守）；看白银能否守 57.15——<strong>银常领金一步，银破位往往先于金</strong>。</p><p>默认倾向 (D) 略占优，但要说清楚：<strong>(D) 只是"不再跌"，不等于反弹</strong>——4,135 那条判定线还在 95 点之上。</p><p><span class="lk">认知库收敛</span>黄金核心认知今天从 <strong>25 条压到 13 条</strong>（上限 15）。删掉的是 16 条日度裁决流水账——它们的明细本就在事件账本里，重复占位；留下的是能反复用的判断（三层优先级链、判定线、6/25 型反抽模式、GLD 标尺、央行腿、数据纪律等）。<strong>认知库是长期记忆，不是日记。</strong></p><hr class="rule"><h2 id="s6">明天盯什么</h2><ol class="ls"><li><strong>【最高优先级·方法论】取 TIPS 10 年期实际收益率</strong>（FRED DFII10 或 TIP ETF）——裁决黄金"实际利率悖论"是精化框架还是推翻框架。认知库用了几周的名义利率替身，今天第一次露馅，这个缺口必须补。</li></ol><ol class="ls"><li><strong>【美团】南向 +12.86 亿是真转向，还是第三次演一次性剧本</strong>——7/7 的 +12.41 亿次日衰减、第三日掉榜；小米 7/3 的 +8.63 亿次日即掉榜。<strong>两次前科在前，默认按一次性看，直到连买 2-3 日被证否。</strong> 同时盯 80 关回踩（跌回 80 下 = 突破是一次性）和沽空 14.83 亿的去向。</li></ol><ol class="ls"><li><strong>【比特币】7/15 的 ETF 读数（7/16 出）+ 65k 上方能否收盘第三日</strong>——两条腿同时落地才算数，这条纪律在 6/24→7/7 那轮完整考验里救过一次，别在这儿破例。上看 66,329（6/15 峰）/67k。</li></ol><ol class="ls"><li><strong>【小米】回购是"静默期自动档"还是"护价升级"</strong>——刻度极简：反弹到 26.5+ 仍买 = 自动档（默认）；停手 = 护价。另盯"存储反向资产"镜像是真死了还是只是位置不对。</li></ol><ol class="ls"><li><strong>【黄金】4,000 的收盘得失 + 白银 57.15</strong>——银常领金一步。另：内存现货价是否真跌（这条同时是小米"存储主线松动"的裁决腿，一箭双雕）。</li></ol><hr class="rule"><p><em>数据来源：HKEX 每日行情表 d260715e（沽空）、东方财富 RPT_MUTUAL_TOP10DEAL（南向十大）、Gate.io 现货日线（BTC）、Yahoo Finance（GC=F/DXY/^TNX/SI=F/CL=F）、Farside Investors（ETF 流向）、MacroMicro（GLD 持仓）、BLS（CPI/PPI）。</em> <em>未取得数据（不编造）：美团/小米 7/14-7/15 回购报表（HKEX SRRPT 端点 404）、BTC 交易所余额与爆仓多空拆分、现货金 7/14 收盘（TE 未返回）、GLD 7/14-7/15 持仓（未出）。</em></p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
