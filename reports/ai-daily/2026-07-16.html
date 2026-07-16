@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28360%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2254%22%20r%3D%2222%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2253%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.12%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 日报 · 2026-07-16</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-07-16 · </span></div>
+  <h1>AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>20</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice"><strong>口径说明（重要）</strong>：本报告以<strong>北京时间 2026-07-16 全天</strong>为界。由于美国头部实验室通常在美西时间下午发布（对应北京时间当日凌晨），OpenAI「GPT-Red」、Thinking Machines「Inkling」等美国 7 月 15 日下午的发布，在<strong>北京时间落在 7 月 16 日凌晨</strong>，故计入当日，并在每条中标注原始发布时区，避免与更早的历史信息混淆。凡属 7 月 16 日之前的事件（如 Claude for Teachers 7-14、出版商起诉 Google 7-14/15、Anthropic Ode 的部分口径等）均明确标注原始日期，仅作背景，不计入「今日要闻」。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>月之暗面开源 Kimi K3，2.8 万亿参数——"目前全球参数规模最大的开源模型"</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>OpenAI 公布 GPT-Red：一个"专门攻击 AI 的 AI"，并出现"AI 训练 AI"的早期迹象</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Thinking Machines（Mira Murati）发布首款开源模型 Inkling，前 OpenAI CTO 押注"开放权重"</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>英伟达发布世界模型 Cosmos 3 Edge，并把日本工业巨头拉进"实体 AI"联盟</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>商汤开源"日日新 SenseNova-Vision"统一视觉大模型，宣告视觉 AI"缝合怪"时代终结</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>月之暗面开源 Kimi K3，2.8 万亿参数——"目前全球参数规模最大的开源模型"</h3><p class="lp">- <strong>事件</strong>：新华社上海 7 月 16 日电，在 2026 世界人工智能大会（WAIC）暨人工智能全球治理高级别会议召开前夕，月之暗面（Moonshot AI）新一代模型 <strong>Kimi K3 于 16 日发布，参数规模达 2.8 万亿</strong>，官方定位为"目前全球参数最大的开源模型"。Kimi 开放平台同步上线 K3 API，标注 <strong>2.8 万亿参数、100 万 token 上下文窗口、原生多模态理解与 Tool Calling</strong>，采用混合专家（MoE）架构与原生视觉能力。<a class="src" href="https://www.163.com/dy/article/L20JTKL405346RC6.html">新华社/网易</a> · <a class="src" href="https://platform.kimi.com/">Kimi 开放平台</a> · <a class="src" href="https://finance.sina.com.cn/tech/roll/2026-07-17/doc-inihzrtu1336054.shtml">新浪科技</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这是把"开源"和"最大规模"两个标签第一次同时钉在一款中国模型上。过去"参数最大"多由闭源旗舰（GPT/Claude 系）占据，"开源"则以中小尺寸为主；K3 把两者合一，等于向全球开发者免费交出一台此前只能租用的"最大发动机"。叠加它踩点 WAIC 发布，信号很清楚：<strong>中国把"开源+超大规模"当成了对抗美国闭源旗舰的主战术</strong>——不跟你比谁的 API 更强，而是让全世界都能免费下载一个逼近旗舰的底座，从生态侧掏空闭源的护城河。</p><p class="lp">- <strong>谨慎标注</strong>：发布前多方爆料称 K3 为 <strong>2.5 万亿参数</strong>（<a class="src" href="https://news.mydrivers.com/1/1136/1136522.htm">快科技 7-15 预热</a>），官方 7-16 正式口径为 <strong>2.8 万亿</strong>，本文以官方为准，2.5T 系发布前传闻。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>OpenAI 公布 GPT-Red：一个"专门攻击 AI 的 AI"，并出现"AI 训练 AI"的早期迹象</h3><p class="lp">- <strong>事件</strong>：北京时间 7 月 16 日凌晨（美西 7 月 15 日），OpenAI 发布 <strong>GPT-Red</strong>——一个用自博弈强化学习训练、专门发现"提示词注入（prompt injection，指把恶意指令藏在网页/邮件/文件里骗 AI 执行）"漏洞的内部模型。官方称在攻击场景测试中 <strong>GPT-Red 以 84% 对 13% 胜过人类红队</strong>；用它加固后的 <strong>GPT-5.6 Sol 在最难的直接注入基准上，失败率比四个月前的最佳生产模型低 6 倍</strong>。同时披露：<strong>旗舰 Sol 自主完成了对低配版 Luna 的后训练</strong>，被外界视为"递归自我改进（RSI，即 AI 改进另一个 AI）"的早期实例。<a class="src" href="https://openai.com/index/unlocking-self-improvement-gpt-red/">OpenAI 官方</a> · <a class="src" href="https://thehackernews.com/2026/07/openais-gpt-red-automates-prompt.html">The Hacker News</a> · <a class="src" href="https://www.helpnetsecurity.com/2026/07/16/openai-gpt-red-prompt-injection-test/">Help Net Security</a> · <a class="src" href="https://www.technologyreview.com/2026/07/16/1140600/the-download-openai-unveils-gpt-red-heat-pumps-rise-us/">MIT Tech Review</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：两层意义。第一，<strong>提示词注入是 AI Agent 大规模落地的头号安全障碍</strong>——Agent 要读你的邮件、点你的链接、跑你的代码，一旦被藏在内容里的指令劫持，后果直接。用一个更强的攻击者 AI 去持续找漏洞、再喂给防守方训练，等于把安全做成了"可自动化、可规模化"的军备竞赛，这是 Agent 走向企业生产的必要条件。第二，也更值得警惕：<strong>Sol 自己把 Luna 训出来了</strong>。这是"模型帮人做研发"往"模型自己做模型"迈出的一小步，社区对其"自主程度"仍有质疑，但方向性信号足够刺激——它触到了所有人对"AI 自我加速"最敏感的那根神经。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Thinking Machines（Mira Murati）发布首款开源模型 Inkling，前 OpenAI CTO 押注"开放权重"</h3><p class="lp">- <strong>事件</strong>：北京时间 7 月 16 日凌晨（美西 7 月 15 日上午），前 OpenAI CTO 米拉·穆拉蒂（Mira Murati）创立的 <strong>Thinking Machines Lab 发布首款自研模型 Inkling</strong>，且与 OpenAI/Anthropic/Google 的旗舰不同——<strong>开放权重（open-weights）</strong>，任何研究者和创业公司都可下载、微调。Inkling 为 <strong>MoE Transformer，总参数 9750 亿、激活 410 亿</strong>，从零训练，支持"可控推理强度"，并提供更小的 Inkling-Small 变体（多项基准与大模型相当），可在其 Tinker 平台上微调。<a class="src" href="https://thinkingmachines.ai/news/introducing-inkling/">Thinking Machines 官方</a> · <a class="src" href="https://techcrunch.com/2026/07/15/thinking-machines-amps-up-its-bet-against-one-size-fits-all-ai-with-its-first-open-model-inkling/">TechCrunch</a> · <a class="src" href="https://www.wired.com/story/thinking-machines-lab-releases-its-first-model-inkling/">WIRED</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：Murati 顶着"史上最大种子轮（2025 年 20 亿美元、估值 120 亿美元）"和 18 个月的沉默期，第一枪打的不是闭源旗舰，而是<strong>开放权重</strong>——这本身就是对"一个模型通吃一切"路线的公开质疑。当天它与 Kimi K3、商汤开源在同一天出现，把 7-16 变成了一个鲜明的"开源日"：<strong>从中国的月之暗面、商汤，到硅谷最受关注的新实验室，全都在同一天把权重交出去</strong>。这意味着模型层的差异化正在从"谁更强"转向"谁更开放、谁更能被改造"，闭源旗舰的稀缺性正被系统性稀释。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>英伟达发布世界模型 Cosmos 3 Edge，并把日本工业巨头拉进"实体 AI"联盟</h3><p class="lp">- <strong>事件</strong>：北京时间 7 月 16 日（日本当地发布），英伟达推出全新 AI 模型 <strong>Cosmos 3 Edge</strong>——一个 <strong>40 亿参数的"世界模型（world model）"</strong>，让机器在边缘侧实时感知、理解和导航物理环境。同时宣布 <strong>AIRoA、发那科（FANUC）、富士通、日立、川崎重工、久保田、NEC、软银、索尼、安川电机</strong>等日本机器人与制造业龙头加入 <strong>NVIDIA Cosmos 联盟</strong>，基于 Cosmos/Isaac/Metropolis/Jetson 平台加速智能机器落地，并在医疗健康领域展开合作。<a class="src" href="https://www.cnbc.com/2026/07/16/nvidia-reveals-new-ai-model-and-expands-japans-physical-ai-ecosystem.html">CNBC</a> · <a class="src" href="https://nvidianews.nvidia.com/news/japans-robotics-and-manufacturing-leaders-build-on-nvidia-cosmos-to-advance-physical-ai-frontier">NVIDIA 官方新闻室</a> · <a class="src" href="https://blogs.nvidia.com/blog/japan-ecosystem-2026/">NVIDIA 博客</a> · <a class="src" href="https://finance.sina.com.cn/stock/usstock/c/2026-07-16/doc-inihzfcy1345221.shtml">新浪财经</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这是英伟达把战场从"数据中心里的聊天机器人"往"工厂车间里的机器"推进的关键一步。<strong>Cosmos 3 Edge 是 40 亿参数、能跑在边缘设备上的小模型</strong>——不是比谁更大，而是让机器人现场就能"看懂并走位"。更关键的是它的打法：不卖单点芯片，而是<strong>把日本一整条机器人+制造业产业链绑上自己的软硬件栈</strong>，用"世界模型+合成数据+Jetson 硬件"做成一套别人难以替换的地基。物理 AI（机器人、自动驾驶、工业自动化）正在成为算力需求的下一个大蓄水池，英伟达在抢先把标准和生态锁死在自己这一侧。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>商汤开源"日日新 SenseNova-Vision"统一视觉大模型，宣告视觉 AI"缝合怪"时代终结</h3><p class="lp">- <strong>事件</strong>：智东西 7 月 16 日报道，商汤科技发布并<strong>全面开源</strong>日日新 <strong>SenseNova-Vision 理解生成统一视觉大模型</strong>，主打"全模态"，试图用一个统一模型取代过去"检测+分割+生成各接一个模型"的拼接方案（即"缝合怪"）。<a class="src" href="https://www.163.com/dy/article/L1VR7A61051180F7.html">网易/智东西</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：视觉 AI 长期是"一个任务一个模型"的手工缝合活，工程成本高、能力割裂。<strong>"理解与生成统一"意味着一个底座同时能看懂、也能画出</strong>，是视觉领域正在复刻大语言模型"一个模型通吃"路线的信号。叠加它选择"开源+踩点 WAIC"，与 Kimi K3 构成同一叙事：<strong>中国厂商这一天集体用"开源"当武器</strong>，在视觉和语言两条线上同时对外释放底座。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 20 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong>GPT-Red 与 GPT-5.6 Sol 安全强化</strong>（北京时间 7-16 凌晨 / 美西 7-15）：详见今日要闻 #2。核心数据——GPT-Red 自博弈强化学习训练，攻防测试 84% vs 人类 13%；GPT-5.6 Sol 直接注入失败率较四个月前最佳模型低 6 倍（一说较 GPT-5.5 低 6 倍）；Sol 自主后训练 Luna。<a class="src" href="https://openai.com/index/unlocking-self-improvement-gpt-red/">OpenAI</a> · <a class="src" href="https://thehackernews.com/2026/07/openais-gpt-red-automates-prompt.html">The Hacker News</a></p></div><div class="srow"><p><strong class="st">产品线细节</strong>Codex 更新日志（7-16）提到"用 GPT-5.6 让 Computer Use 更快"，并简化插件管理、改进移动端连接。<a class="src" href="https://developers.openai.com/codex/changelog/">OpenAI Codex Changelog</a></p></div><div class="srow"><p><strong class="st">背景澄清（勿混淆）</strong>网传"ChatGPT Work 7-16 发布"不准确——<strong>ChatGPT Work 实际发布于 7 月 9 日</strong>（面向 Pro/Enterprise/Edu 先行推送），7-16 仅为帮助文档页面刷新。<a class="src" href="https://openai.com/index/chatgpt-for-your-most-ambitious-work/">OpenAI 官方(7-9)</a> · <a class="src" href="https://venturebeat.com/technology/openai-introduces-chatgpt-work-a-cloud-based-ai-agent-that-manages-tasks-across-email-slack-and-calendars">VentureBeat(7-10)</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong>当日无重大新模型/产品发布（如实说明）</strong>。检索到的多为产品页刷新（Gemini 3.1 Pro 订阅页、DeepMind Gemini 3.5 模型页、AI Studio、Gemini in Chrome 的 auto browse 等），非当日新发布事件。<a class="src" href="https://gemini.google/subscriptions/">Gemini 订阅页</a> · <a class="src" href="https://deepmind.google/models/gemini/">DeepMind Gemini</a></p></div><div class="srow"><p><strong class="st">相关背景（原始日期 7-14/15，非当日新事件）</strong>出版商 <strong>Hachette、Cengage、Elsevier</strong> 起诉 Google，指其非法使用数百万受版权保护书籍训练 Gemini。<a class="src" href="https://www.theguardian.com/books/2026/jul/14/publishers-sue-google-gemini-ai-training">The Guardian(7-14)</a> · <a class="src" href="https://gizmodo.com/hatchette-and-elsevier-sue-google-for-using-their-work-to-train-ai-2000785480">Gizmodo(7-15)</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong>当日无独立重大新发布</strong>。近日重点事件多集中在 7-14/15：</p></div><div class="srow"><p><strong>Anthropic Ode</strong>（TechCrunch 7-15，北京时间 7-16 凌晨报道）：Anthropic 联合 <strong>Blackstone、Hellman &amp; Friedman、高盛</strong> 推出 Ode，以"前置部署（forward-deployed）+ Claude-first"方式把 Claude 嵌入中端市场企业，押注"落地实施"而非只卖模型是下一个万亿美元生意。<a class="src" href="https://techcrunch.com/2026/07/15/anthropic-blackstone-bet-the-next-trillion-dollar-ai-business-is-implementation-not-models/">TechCrunch</a> · <a class="src" href="https://www.bushletter.com/anthropic-launches-ode-to-embed-claude-in-mid-market-firms/">Bushletter</a></p></div><div class="srow"><p><strong>Claude for Teachers</strong>（7-14 发布）：面向美国 K-12 认证教师免费一年，切入教育场景。<a class="src" href="https://finance.yahoo.com/video/claude-for-teachers-anthropic-exec-explains-why-educators-get-a-year-for-free-204806483.html">Yahoo Finance</a></p></div><div class="srow"><p><strong>Claude Cowork 扩展至移动/网页端</strong>（Mashable 报道，原文称"周二发布"即 7-14）。<a class="src" href="https://mashable.com/tech/anthropic-claude-cowork-to-web-mobile-launch">Mashable</a></p></div></div><div class="sector"><div class="sector-h">中国 AI（字节/豆包/Seed/DeepSeek/智谱/MiniMax/通义 等）</div><div class="srow"><p><strong>Kimi K3 开源 2.8 万亿参数</strong>（7-16，详见要闻 #1）。<a class="src" href="https://www.163.com/dy/article/L20JTKL405346RC6.html">新华社/网易</a></p></div><div class="srow"><p><strong>商汤 SenseNova-Vision 统一视觉大模型开源</strong>（7-16，详见要闻 #5）。<a class="src" href="https://www.163.com/dy/article/L1VR7A61051180F7.html">网易/智东西</a></p></div><div class="srow"><p><strong>WAIC 2026 临近，硬件侧密集预热</strong>（7-16）：证券时报走访参展企业，多家将发布新品，含"第三代全尺寸旗舰人形机器人（旋转+直线串并联架构）"，凸显中国"软硬件协同突破、供应链可控"的叙事主线。<a class="src" href="https://k.sina.com.cn/article_7857201856_1d45362c00190864wm.html?from=tech">新浪/证券时报</a></p></div><div class="srow"><p><strong class="st">背景（原始日期 7-8）</strong>苹果"Apple 智能"大模型 7 月 8 日完成备案，<strong>阿里千问（Qwen）作为 AI 能力集成进 Apple 智能</strong>，覆盖 iOS/iPadOS/macOS/visionOS。<a class="src" href="https://aihot.virxact.com/daily">AI HOT 日报</a></p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong>英伟达 Cosmos 3 Edge 世界模型 + 日本实体 AI 联盟</strong>（7-16，详见要闻 #4）。40 亿参数边缘世界模型；FANUC、富士通、日立、川崎重工、久保田、NEC、软银、索尼、安川等加入 Cosmos 联盟。<a class="src" href="https://www.cnbc.com/2026/07/16/nvidia-reveals-new-ai-model-and-expands-japans-physical-ai-ecosystem.html">CNBC</a> · <a class="src" href="https://nvidianews.nvidia.com/news/japans-robotics-and-manufacturing-leaders-build-on-nvidia-cosmos-to-advance-physical-ai-frontier">NVIDIA 官方</a></p></div><div class="srow"><p><strong class="st">背景（原始日期 7-15）</strong>36 氪梳理显示，2024 年中国芯片半导体融资额同比减少 200 多亿，产业投融资降温；当前中国芯片半导体独角兽约 50 家。<a class="src" href="https://36kr.com/p/3185846292307848">36氪</a></p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong>当日高可信新增有限（如实说明）</strong>。当日检索到的政策类信息多为分析文章或此前生效的法规解读，未见 7-16 当天新出台的重大监管动作。相关近期事件（原始日期 7-15）：</p></div><div class="srow"><p><strong class="st">中国"拟人化人工智能交互服务管理暂行办法"7 月 15 日生效</strong>要求 AI 情感陪伴/拟人交互服务提供方与用户签订服务协议、收集年龄与监护人信息，是各法域治理"AI 陪伴/聊天机器人"风险的最新一例。<a class="src" href="https://digitalpolicyalert.org/event/39273-interim-measures-for-the-administration-of-anthropomorphic-artificial-intelligence-interaction-services-including-data-protection-regulation-enter-into-force">Digital Policy Alert</a> · <a class="src" href="https://iapp.org/news/a/chinas-regulation-on-ai-companions-takes-force">IAPP</a></p></div><div class="srow"><p><strong>美国白宫或对开源 AI 出手</strong>（Political Wire 7-15）：一名白宫高级官员示意，特朗普政府"保留未来行政令的空间"，以应对与中国相关的开源 AI 模型担忧——在 Kimi K3、DeepSeek 等中国开源模型密集出海的背景下值得关注。<a class="src" href="https://politicalwire.com/2026/07/15/trump-may-act-on-open-source-ai-models/">Political Wire</a></p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p><strong>《中国独角兽企业研究报告 2026》发布</strong>（7-16）：2025 年中国独角兽企业达 <strong>376 家，总估值突破 1.4 万亿美元，平均估值 38.5 亿美元</strong>；全年新晋独角兽 88 家（同比增 35 家）；<strong>"清华系"46 位校友企业估值合计约 4000 亿美元</strong>。报告同时指出 AI 大模型独角兽正从"技术参数竞赛"转向"场景落地与商业变现"，月之暗面、阶跃星辰、MiniMax、智谱等各据一路。<a class="src" href="https://finance.sina.com.cn/tech/roll/2026-07-16/doc-inihyywc8116023.shtml">新浪科技</a> · <a class="src" href="https://www.sfccn.com/2026/7-16/3MMDE0NDlfMjE4MzY3MQ.html">南方财经</a></p></div><div class="srow"><p><strong class="st">一级市场 AI 吸金持续（背景，原始日期 7-15）</strong>报道称二季度超 70% 风投资金流向 AI 公司；印度 AI 编程公司 <strong>Emergent</strong> 完成 1.3 亿美元融资、估值 15 亿美元；<strong>Upscale AI</strong> 追加 1.9 亿美元、总融资达 5 亿、估值 20 亿美元。<a class="src" href="https://www.under30ceo.com/vc-funding-record-510b-ai-market/">under30ceo</a> · <a class="src" href="https://www.whalesbook.com/news/English/technology/AI-Startup-Emergent-Hits-dollar15B-Valuation-After-dollar130M-Raise/6a5777495cb7edf90c311c0e">Whalesbook</a> · <a class="src" href="https://www.aol.com/articles/upscale-ai-adds-190-million-123000000.html">AOL/Upscale AI</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
