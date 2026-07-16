@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2836%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2238%22%20r%3D%2217%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2237%22%20r%3D%2219%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.30%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>推理不是写进去的，是"奖对答案 + 别插手"在万亿参数上自己长出来的</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-17</span></div>
+  <h1 class="doc">推理不是写进去的，是"奖对答案 + 别插手"在万亿参数上自己长出来的</h1>
+  <div class="dateline"><span>全文 <b>4,483</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Ring-Zero: Scaling Zero RL to a Trillion Parameters for Emergent Reasoning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.12395</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Xinyu Tang, Gangqiang Cao, ... Wayne Xin Zhao, Zhiqiang Zhang, Jun Zhou（共16人）</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">inclusionAI（蚂蚁集团 Ling / 百灵团队；含人大高瓴 Wayne Xin Zhao 赵鑫）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-14</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-17.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-17.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 2026-07-16 上榜 · 77 赞（当日推理/能力赛道最高，更高赞是 agent 手册与图像生成）· inclusionAI（蚂蚁 Ling-1T/Ring-1T 万亿开源模型线）· 首个把"纯 RL 长推理"推到 1 万亿参数并报告涌现现象的工作 · 基座 Ring-2.5-1T-Zero 属开源 Ring 系</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, reasoning, reinforcement-learning, rlvr, scaling, emergent-behavior, training-stability</span></div></div><div class="tools"><a class="btn hot" href="2026-07-17-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选这篇，是因为它把 2026 年最主线的一条能力演化——<strong>"用强化学习把推理从模型里逼出来"</strong>——第一次推到了<strong>1 万亿参数</strong>这个前沿刻度，并且诚实报告了"到这个规模会长出什么新东西"。</p><ol class="ls"><li><span class="lk">它推进了什么</span>过去一年半，"纯 RL 长推理"（DeepSeek-R1-Zero 那一路：不给模型抄任何人写的解题范例，只用"答案对不对"当奖励，让它自己学会一步步想）都只在中小模型上验证过，因为 RL 太烧算力。<strong>到 1 万亿参数会怎样、会不会长出小模型没有的能力，一直是个空白。</strong> 这篇第一次把这块空白填上，而且发现了一批"没人教、模型自己冒出来"的高级推理行为。</li><li><span class="lk">命中的质量信号</span>HuggingFace Daily Papers 2026-07-16 上榜、77 赞——当天能力/推理赛道最高（比它高赞的两篇分别是"agent 脚手架写作手册"和"图像生成模型"，不在纯能力机理这条线上）；出自 <strong>inclusionAI = 蚂蚁集团的 Ling / 百灵开源模型团队</strong>，正是做出"全球首个开源万亿参数思考模型 Ring-1T"的那个组；作者里有<strong>赵鑫（Wayne Xin Zhao，人大高瓴，LLM 领域高产研究者，也在我们之前讲过的 LoopCoder-v2 里出现过）</strong>；基座 Ring-2.5-1T-Zero 属于开源 Ring 系列，可复现性有保证。</li><li><span class="lk">对思染追前沿的价值</span>这篇让你看清一件对做产品很关键的事——<strong>顶尖模型的"会推理"越来越不是靠提示词脚手架硬搭出来的，而是靠"给一个能自动判对错的目标 + 足够稳的 RL 系统 + 规模"自己长出来的</strong>。它同时回答了"下一步能力往哪进化"和"我该怎么调整对模型的用法"。</li></ol><p>（诚实交底：论文只公开了摘要级结论 + "七个数学基准上有竞争力"这种定性描述，我在正文里拿到的具体分数有限；凡是我没拿到确切数字的地方，都标了"论文未给具体分数"，不替它编。）</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>有两个主角，一个是"配方"，一个是"锅"。</p><p><strong>配方叫"zero RL"（零 RL，也叫 RLVR）。</strong> 拆开说：</p><ul class="ls"><li><strong>RL = 强化学习</strong>，就是"让模型自己试，试对了给糖、试错了不给糖，它慢慢学会往给糖的方向走"。</li><li><strong>"verifiable rewards"（可验证奖励）= 那颗糖必须是能机器自动判对错的</strong>。数学题最合适：模型写完答案，拿标准答案一对，对就是 1 分、错就是 0 分，不需要请人来打分。</li><li><strong>"zero"（零）= 不给模型看任何人写的解题示范</strong>。传统做法会先喂一堆"人类写好的推理过程"让它模仿（这一步叫 SFT，监督微调），zero RL 把这一步砍掉，直接在<strong>没调教过的原始基座模型</strong>上开做 RL。等于不给例题、不给范文，只反复告诉它"这道你做对了 / 做错了"，逼它自己摸索出"该怎么一步步想才做得对"。</li></ul><p><strong>"锅"是一个 1 万亿参数的模型</strong>——Ring-2.5-1T-Zero，来自蚂蚁 inclusionAI 的 Ring 系列。（1 万亿 = 1,000,000,000,000 个可调参数，是目前公开尝试过 zero RL 的最大规模。它是 MoE 架构——<strong>MoE = 混合专家，模型里养了很多"专家小网络"，每处理一个字只叫醒其中一小撮</strong>，所以总参数 1 万亿、但每步真正干活的只有约 500 亿，这样万亿模型才跑得动。）</p><p>故事就是：<strong>把这个已经被验证过的配方，倒进一口从没这么大过的锅里，看会炖出什么。</strong></p><h2 id="s4">2. 困境</h2><p>大家其实"知道"纯 RL 能长出推理——DeepSeek-R1-Zero 一年多前就证明了：只用可验证奖励、不给范例，模型会自己学会"多想一会儿、回头检查、换个思路"，也就是著名的"aha moment（顿悟时刻）"。</p><p><strong>但所有证据都来自中小模型。</strong> 因为 RL 极其烧算力（模型要一遍遍自己生成长篇解题过程、再根据对错更新自己，来回几百上千次），没人烧得起在万亿模型上做。于是留下一个前沿黑洞：</p><blockquote><p><strong>同一个配方，放到 1 万亿参数，还成立吗？会只是"好一点点"，还是会冒出小模型根本没有的新能力？训练过程会经历什么？</strong></p></blockquote><p>而且——<strong>天真地照搬到大模型上，直接坏掉</strong>。作者发现naive scaling（不加改造硬放大）会出三个毛病：<strong>读不懂（模型絮絮叨叨、逻辑跳）、废话多（token 冗余，一道题写几千字没重点）、深浅失控（简单题也往死里想、难题反而想不够，没有"该想多深就想多深"的自适应）</strong>。</p><p>不解决这个，就等于"最强的模型正往哪进化"这件事，你根本看不见。</p><h2 id="s5">3. 旧路</h2><p>之前这条线是怎么走的、为什么不够？三层：</p><ul class="ls"><li><strong>旧路一——DeepSeek-R1-Zero 的原始配方</strong>：纯 RL + 可验证奖励，推理和自我反思会涌现。开创性，但<strong>只在中小规模验证</strong>，且当时为了让训练不崩，塞了不少"手工规则"——比如强行规定输出格式、给推理长度设上限。这些手工规则是"补丁"，不是理解。</li><li><span class="lk">旧路二——一批"泼冷水"的批判研究</span>R1-Zero 火了之后，有人认真复查，比如 Sea AI Lab 的《R1-Zero 式训练里可能根本没有 Aha 时刻》、以及《Understanding R1-Zero-Like Training: A Critical Perspective》(Dr.GRPO)。他们指出：<strong>所谓"顿悟"和涨分，有一部分不是 RL 教出来的，而是基座模型本来就会、外加 GRPO 这个 RL 算法自带的"越写越长就越占便宜"的偏置撑出来的</strong>。（GRPO = 一种主流的 RL 更新算法，问题之一是它在做长度归一时会系统性奖励更长的输出。）——所以"纯 RL 到底真长了多少推理"，当时是笔糊涂账。</li><li><strong>旧路三——想涨就往大做，但没人敢在万亿级做纯 RL</strong>，因为一放大，训练稳定性就崩，前面那些手工补丁也扛不住。</li></ul><p>一句话：<strong>配方被证明"能用"，但既没在最大规模验证过、又被质疑"涌现是不是假象"、还没人解决"放大就崩"。</strong> 这三件事卡在一起。</p><h2 id="s6">4. 转折</h2><p>作者的关键转身是：<strong>别再加手工规则，去把"系统"做稳，然后让规模自己教。</strong></p><p>背后是对"真正的敌人是谁"的重新认定。他们发现，在 1 万亿这个尺度，让训练崩掉的<strong>不是 RL 算法的数学不对，而是一条最不起眼的工程裂缝</strong>：</p><blockquote><p><strong>训练模型的那台引擎，和让模型"生成练习答案"的那台快速引擎，对同一句话算出的概率有极其微小的差别。</strong> 这点差别在小模型上无所谓，但在万亿 MoE 上被层层放大，就会让"奖励信号"变成谎话——模型以为自己在往对的方向走，其实梯度已经被这条数值裂缝带偏，训练慢慢发散、崩掉。</p></blockquote><p>认清这点，解法就从"再加规则约束模型"变成"<strong>把管道的数值诚实性修好，然后信奉 bitter lesson</strong>"。</p><p><strong>bitter lesson（苦涩的教训）</strong>，是 AI 领域一条被反复验证的老话，拆开就是：<strong>凡是靠人手工把知识/技巧塞进去的做法，长期都会输给"用通用方法 + 更多算力，让模型自己学"的做法。</strong> 作者赌的就是这条：与其手写一堆"该怎么推理"的规则，不如把 RL 系统做稳、把规模拉满，让推理行为自己长出来。</p><h2 id="s7">5. 解法</h2><p>一条"稳且省"的训练管道，核心是三个修水管的动作（每个都先用大白话说它在防什么）：</p><ol class="ls"><li><strong>clipped importance sampling（带截断的重要性采样）</strong>：模型生成一批练习答案后，会拿这批答案反复更新自己好几次以省算力。但更新几步后，模型已经变了，这批"旧答案"就不完全代表"现在的它"了——<strong>重要性采样</strong>就是给每个旧样本乘一个校正系数补上这个偏差；<strong>clip（截断）</strong>是给这个系数设个上下限，防止某个离谱样本把模型猛地拽偏。一句话：<strong>让"回收利用旧练习"这件事不至于反过来带崩模型。</strong></li><li><strong>training-inference ratio correction（训练-推理比值校正）</strong>：就是上面说的那条裂缝的正面修法——把"训练引擎"和"生成引擎"对同一句话算出的概率之比明确算出来、乘回去做校正，<strong>让奖励信号不再因为两台引擎的微小口径差而撒谎</strong>。（这一条是万亿尺度专属的痛，小模型基本感觉不到。）</li><li><strong>mixed-precision control（混合精度控制）</strong>：模型内部大量计算为了快用低精度（少几位小数）的数来做，但在万亿规模，某些关键环节的小数一被砍就会层层累积成大错。<strong>混合精度</strong>就是"该省的地方用低精度求快，命门环节保留高精度求准"，不让微小误差滚雪球。</li></ol><p>再叠上团队自研的 RL 稳定化方法 <strong>icepop</strong>（Ring 系列一贯用的"稳住 RL 别发散"的招）和高效 RL 系统 <strong>ASystem/AReaL</strong>（专门为这种"模型一边生成一边被更新"的大规模 RL 造的基础设施）。合起来就一句话：<strong>把 RL 这台机器在万亿尺度上焊得足够稳，然后只喂它"可验证的数学题 + 对错奖励"，不插手它怎么想。</strong></p><h2 id="s8">6. 结局</h2><p>炖出来的东西，比"分数高一点"有意思得多：</p><ul class="ls"><li><span class="lk">规模确实值钱，而且是双赢</span>放大到 1 万亿参数，<strong>样本效率</strong>（用更少的题就学会）和<strong>能力天花板</strong>（最终能到多高）<strong>同时</strong>上升——不是"要么快要么强"的二选一。七个数学基准上有竞争力（论文未给逐项具体分数）。</li><li><span class="lk">训练有清晰的两幕</span>先是 <strong>discovery phase（发现期）</strong>——模型在广撒网、摸索各种推理策略；再进 <strong>sharpening phase（磨锐期）</strong>——把摸到的有效策略打磨得又准又干净。<strong>推理能力不是线性涨上来的，是"先发散探索、再收敛磨锐"两段式长出来的。</strong></li><li><strong>最反直觉、也最值钱的一发</strong>——<strong>一批高级认知行为，没人教、模型自己冒出来</strong>，包括：<strong>self-verification（自己验算、回头查错）、parallel reasoning（同时铺开几条思路再挑）、structured formatting（自发把推理写成有结构的段落）、anthropomorphism（拟人化的自我对话式表达）</strong>，还有一个新词 <strong>context anxiety（上下文焦虑）</strong>——<strong>模型会"意识到"自己能想的篇幅有限，从而主动管理、分配自己的思考预算，别把额度浪费光</strong>。作者的结论很硬：<strong>这些行为一旦从规模里自己长出来，那些手写的启发式规则（强制格式、限长）就变多余了。</strong> 这正是 bitter lesson 的现场兑现。</li><li><span class="lk">换了一把新尺子量推理</span>光看"最后答案对不对"不够，作者提了一个三维的思维链质量框架——<strong>comprehensibility（读不读得懂）、reproducibility（换个人照着能不能复现这条推理）、efficiency（够不够简洁不啰嗦）</strong>。Ring-2.5-1T-Zero 在"写得结构化又简洁"上有明显优势——<strong>这恰好是第 2 拍那三个毛病（读不懂/废话多/深浅失控）被治好的证据。</strong></li></ul><h2 id="s9">7. 内核</h2><p>一句带走的话：</p><blockquote><p><strong>推理不是"写进"模型的，是"长出来"的。</strong> 到万亿尺度，你不该去设计模型该有哪些推理行为——你只要给它一个能自动判对错的目标、把 RL 系统焊得足够稳、然后把规模拉满，自我验算、并行思考、预算管理这些行为会自己冒出来。<strong>纯 RL 推理的瓶颈，已经从"算法够不够聪明"挪到了"系统在大尺度上够不够稳"。</strong></p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 1 层——它直接站在谁肩上：DeepSeek-R1-Zero。</strong> 纯 RL + 可验证奖励 → 推理与自我反思涌现（"aha moment"）。这是整条线的祖师爷。Ring-Zero 问的是它没回答的问题：<strong>这套东西到 1 万亿还成立吗？会多长出什么？</strong> [来源：DeepSeek-R1 论文 / Nature 报道]</p><p><strong>第 2 层——它在回应谁的质疑：R1-Zero 的"泼冷水"研究。</strong> Sea AI Lab《R1-Zero 式训练里可能没有 Aha 时刻》、《Understanding R1-Zero-Like Training (Dr.GRPO)》等指出：涌现和涨分可能部分是<strong>基座本来就会 + GRPO 算法的长度偏置</strong>造出来的假象。Ring-Zero 的隐含回应是：<strong>在 1 万亿尺度上，涌现不仅真、而且更丰富（多出 parallel reasoning、context anxiety 这些新行为）；而且我的路子是"修系统稳定性"而不是"靠拉长输出骗分"</strong>——它甚至专门治了"废话多/token 冗余"这个长度偏置的病。[来源：Sea AI Lab 博客 / Understanding R1-Zero-Like Training]</p><p><strong>第 3 层——它属于哪条更大的暗线：RL 训练稳定性。</strong> 当 RL 成了长推理的主引擎，"怎么让 RL 在大尺度上别崩"就成了核心工程前沿。这正好接上我们之前讲过的 <strong>[[2026-06-11--drpo]]（DRPO：重思 LLM RL 里的散度正则）</strong>——那篇从"约束项"角度稳训练；Ring-Zero 的 icepop + 重要性采样截断 + 训练-推理比值校正 + 混合精度，是同一诉求在<strong>万亿尺度、且专门针对"训练引擎 vs 生成引擎数值不一致"这个新病灶</strong>上的延续。<strong>根：RL 变成能力主杠杆之后，"稳住 RL"本身就是一条独立的前沿赛道。</strong></p><p>一句话串起来：<strong>DeepSeek-R1-Zero 点火（纯 RL 能长推理）→ 一批批判研究追问"是真涌现还是算法假象"→ Ring-Zero 用"修系统 + 拉规模"把它推到万亿，既坐实了涌现、又把稳定性这条暗线顶到了最前面。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型往哪进化了</h2><p><strong>推理能力的前沿，正从"算法多聪明"迁移到"规模多大 + 系统多稳"。</strong> bitter lesson 又赢一局：<strong>自我验算、并行思路、结构化表达、思考预算管理——这些你以前得靠提示词一条条硬教的行为，顶尖模型正在从规模里自己长出来。</strong> 这重新定义了"什么叫一个推理模型"：不是"被灌了很多解题模板的模型"，而是"被一个可验证目标 + 稳定 RL 逼着、自己进化出推理习惯的模型"。看模型进化，以后要多问一句：<strong>这个能力是被人写进去的，还是被规模长出来的？</strong> 长出来的，才是真前沿。</p><h2 id="s13">能怎么用（提示词 &amp; 京小贝）</h2><ol class="ls"><li><strong>别再给顶尖模型手写"推理脚手架"了。</strong> 你以前可能会写"先分析→再列要点→然后自我检查→最后总结"这种硬模板。这篇说明：<strong>self-verification、parallel reasoning、结构化表达越来越是模型的原生本能</strong>，过度用死模板去规定它"怎么想"，反而会跟它自己更优的直觉打架。新姿势：<strong>把提示词的重心从"规定思考步骤"移到"把目标和那个可自动判对错的靶子说清楚"</strong>，让它自己决定想多深。</li></ol><ol class="ls"><li><strong>"自适应推理深度"已经是一种模型属性了。</strong> 好模型会自己判断"这题该想多久"。对京小贝的含义：<strong>能让能力真正上台阶的，是给模型一个可验证的目标</strong>（比如"这个配置方案有没有满足用户设的约束""这几个数字对不对得上"），而不是给它一套固定的推理话术。<strong>凡是你能定义出"对/错自动可判"的地方，你就有机会用 RL 把能力往上顶；判不了对错的地方，你就只能停在提示词工程。这就是护城河的分界线。</strong></li></ol><ol class="ls"><li><strong>盯紧"思考 token vs 答案 token"的分配。</strong> context anxiety（模型主动管理有限思考预算）这个发现，和我们讲过的 <strong>[[2026-06-21--fapo-autonomous-prompt-optimization]]</strong> 里那颗炸弹是一体两面：<strong>更强的推理模型如果思考太占预算，会把最终答案挤没、被截断</strong>。产品上，这是条生死线——<strong>换更"能想"的模型上线，一定要同时看它的思考/答案 token 比例和输出预算，别让"想得更多"变成"答得更残"。</strong></li></ol><ol class="ls"><li><strong>"先发散、再磨锐"的两幕训练，也是一种做产品的节奏隐喻。</strong> 模型自己都是先广撒网探索、再收敛打磨。你在打磨京小贝的一个能力时，别一上来就锁死一套话术——<strong>先放开让它/让方案发散探索，攒够信号再收敛磨锐</strong>，往往比一步到位更稳。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2607.12395">https://arxiv.org/abs/2607.12395</a> —— "Ring-Zero: Scaling Zero RL to a Trillion Parameters for Emergent Reasoning"，2026-07-14 提交，inclusionAI（含赵鑫 Wayne Xin Zhao、周俊 Jun Zhou 等 16 人）</li><li>质量信号：HuggingFace Daily Papers 2026-07-16 上榜，77 赞（当日推理/能力赛道最高）—— <a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a></li><li>基座与团队血统：inclusionAI/Ring-1T（"全球首个开源万亿参数思考模型"，Ling 2.0 架构 + icepop RL 稳定化 + ASystem/AReaL RL 系统）—— <a class="src" href="https://huggingface.co/inclusionAI/Ring-1T">https://huggingface.co/inclusionAI/Ring-1T</a> ；Ling-1T —— <a class="src" href="https://huggingface.co/inclusionAI/Ling-1T">https://huggingface.co/inclusionAI/Ling-1T</a></li><li>祖师爷：DeepSeek-R1（纯 RL 激励推理，"aha moment"）—— <a class="src" href="https://www.nature.com/">https://www.nature.com/</a> 报道 &amp; DeepSeek-R1 论文</li><li>批判线：Sea AI Lab《There May Not be Aha Moment in R1-Zero-like Training》；《Understanding R1-Zero-Like Training: A Critical Perspective (Dr.GRPO)》</li><li>稳定性暗线（本库前作）：[[2026-06-11--drpo]]；相关产品启示前作：[[2026-06-21--fapo-autonomous-prompt-optimization]]</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
