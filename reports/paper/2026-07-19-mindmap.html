@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RL后训练改的是什么：0.58%谱重连的几何玄机 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.07.19</span></div>
+  <div class="bar"></div>
+  <h1>RL后训练改的是什么：0.58%谱重连的几何玄机</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>42</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题根源：ΔW中的三重困境</div><ul><li><div class="n2" style="--c:#E63312">改动量ΔW=W_RL−W₀密密麻麻，分不清真本事vs噪声</div></li><li><div class="n2" style="--c:#E63312">探索见顶</div><ul><li><div class="n3">pass@k试到一定次分数不涨、重复撞墙</div></li></ul></li><li><div class="n2" style="--c:#E63312">多能力打架</div><ul><li><div class="n3">Mix-RL混训数学涨、代码被压下（或反向）</div></li></ul></li><li><div class="n2" style="--c:#E63312">合并即报废</div><ul><li><div class="n3">专家模型直接相加，两边本事都缩水甚至倒退</div></li></ul></li></ul></li><li><div class="n1" style="--c:#10395E">机制转折：底座的光谱坐标系</div><ul><li><div class="n2" style="--c:#10395E">旧路失效</div><ul><li><div class="n3">低秩(LoRA)只说扁没说对齐</div></li><li><div class="n3">任务算术在原始坐标硬缝、坐标对不齐</div></li></ul></li><li><div class="n2" style="--c:#10395E">SVD分解：W₀=U×Σ×Vᵀ</div><ul><li><div class="n3">U/V两组方向=预训练的原子技能</div></li><li><div class="n3">Σ(对角)=原始一对一连接方式</div></li></ul></li><li><div class="n2" style="--c:#10395E">核心假说：RL只重连、不改基</div><ul><li><div class="n3">RL改的是Σ(连接)，不改U/V(技能本身)</div></li><li><div class="n3">所有后训改动应回到底座坐标系里</div></li></ul></li></ul></li><li><div class="n1" style="--c:#9E2B22">算法工程：SAR的0.58%提纯</div><ul><li><div class="n2" style="--c:#9E2B22">四步事后手术(training-free)</div><ul><li><div class="n3">对底座W₀做SVD→U、Σ、Vᵀ</div></li><li><div class="n3">取ΔW的top-k低秩部分ΔW_k</div></li><li><div class="n3">投影：M=Uᵀ×ΔW_k×V(重连矩阵)</div></li><li><div class="n3">重建：ΔW*=U×M×Vᵀ、W_SAR=W₀+ΔW*</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">重连矩阵M的结构</div><ul><li><div class="n3">对角元M_ii：调整技能音量</div></li><li><div class="n3">非对角元M_ij：多原子技能汇流→一结论(多对一逻辑)</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">参数效率极端化</div><ul><li><div class="n3">1.5B模型：改动量仅0.58%、900万参数</div></li><li><div class="n3">32B模型：0.64%、2亿参数</div></li></ul></li></ul></li><li><div class="n1" style="--c:#3E5C2E">三大反直觉战果</div><ul><li><div class="n2" style="--c:#3E5C2E">① 抽取(治探索见顶)：剪99%反而更宽</div><ul><li><div class="n3">AIME分数不变(40.31%→40.21%)</div></li><li><div class="n3">pass@k：从k=2起SAR反超完整RL(26&gt;25题)</div></li><li><div class="n3">那99%改动是有害噪声、在收窄有用探索</div></li></ul></li><li><div class="n2" style="--c:#3E5C2E">② 提纯(治能力打架)：压缩释放被压能力</div><ul><li><div class="n3">OLMo-3-32B混训Mix-RL后</div></li><li><div class="n3">代码涨(67.61%→69.09%)、数学涨(88.33%→91.71%)、都没掉</div></li><li><div class="n3">能力互压是参数空间正交方向踩脚、剪掉踩脚方向自己喘气回来</div></li></ul></li><li><div class="n2" style="--c:#3E5C2E">③ 合并(治合并即报废)：1+1&gt;1的正和组合</div><ul><li><div class="n3">数学专家+代码专家→合并模型</div></li><li><div class="n3">1.5B：合并43.44%&gt;最优单专家40.31%</div></li><li><div class="n3">14B：两专家单独74.27%/61.00%→合并74.38%/63.40%</div></li></ul></li></ul></li><li><div class="n1" style="--c:#6B4A8E">深层启示：后训练的本质重界定</div><ul><li><div class="n2" style="--c:#6B4A8E">不是创造、是重连</div><ul><li><div class="n3">预训练长出基(U/V/原子技能)</div></li><li><div class="n3">后训练只改连接(对角Σ→密网M)</div></li><li><div class="n3">RL是电工布线、不是工人盖房</div></li></ul></li><li><div class="n2" style="--c:#6B4A8E">与台账同指向</div><ul><li><div class="n3">tool-rl-collapse：崩的是外壳不是内核</div></li><li><div class="n3">latent-thoughts-four-axioms：潜向量没装新东西</div></li><li><div class="n3">one-layer-enough-rl：一层就够</div></li><li><div class="n3">四个切法→同一结论：后训练比看起来轻</div></li></ul></li></ul></li><li><div class="n1" style="--c:#8A6D1F">京小贝价值：模型资产的可拆可搬</div><ul><li><div class="n2" style="--c:#8A6D1F">能力诊断与应急</div><ul><li><div class="n3">混训时分能力单独考、别只看总分</div></li><li><div class="n3">能力退化多是正交噪声压制、事后提纯可救(不必重训)</div></li></ul></li><li><div class="n2" style="--c:#8A6D1F">模型合并的省钱杠杆</div><ul><li><div class="n3">财富/事件/客服各专家投影同坐标系后相加</div></li><li><div class="n3">一个部署拿多专家本事、超过任一单独体</div></li></ul></li><li><div class="n2" style="--c:#8A6D1F">结构优于数据的再证</div><ul><li><div class="n3">冗余不中性、会主动收窄有用探索</div></li><li><div class="n3">提示词/约束：少而对的结构&gt;多而杂堆砌</div></li></ul></li><li><div class="n2" style="--c:#8A6D1F">能力评估的前置问题</div><ul><li><div class="n3">先问底座有没这原子技能</div></li><li><div class="n3">有但未连(后训可救) vs 根本没有(换底座)</div></li></ul></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
