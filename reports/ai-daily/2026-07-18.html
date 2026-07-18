@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28204%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2245%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2254%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.27%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-07-18</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-07-18 · 周六</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>23</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">编制说明：本报告只收录 <strong>2026年7月18日当天</strong>发生或首次披露的 AI 新闻。7月18日为周六，属实新增偏少；本周多条被各媒体挂在"7月18日"标题下的重磅（Kimi K3、DeepSeek $74B、Databricks $188B、Gemini 3.5 Pro 延期、EU 强制 Google 开放 Android、NotebookLM 改名 Gemini Notebook）<strong>实际发生在 7月15–17日</strong>，本文一律标注原始日期，作为背景，不计入"今日要闻"。每条信息均附来源链接。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>Anthropic 把 Claude Fable 5 并入 Max/Team Premium 订阅，同日大砍额度（7月20日生效）</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>全美数据中心抗议"全国化"：7月18日当天 125 个地点同步示威</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>OpenAI 与 Meta 同日（7月18日）上线青少年 AI 安全"家长通知"功能</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>WAIC 2026 上海（7/17–20）进入第二天：中国以系统级"超节点"回应芯片封锁</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>苹果与 OpenAI 的商业机密战7月18日升级为舆论焦点，OpenAI 否认指控</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>Anthropic 把 Claude Fable 5 并入 Max/Team Premium 订阅，同日大砍额度（7月20日生效）</h3><p class="lp">7月18日，Anthropic 通知付费用户：<strong>自7月20日起，旗舰模型 Claude Fable 5 将正式包含在 Max 和 Team Premium 套餐中，但只给到 50% 的额度；而这些套餐的基础额度本身同一天再被削减约三分之一</strong>。Pro 和 Team Standard 用户则实质上失去订阅内使用权，只获得一次性 100 美元用量额度，用完后按 API 价格付费。此前 Anthropic 一度计划把 Fable 从订阅中彻底移除，经三次延期后改为"永久但限量"。来源：<a class="src" href="https://the-decoder.com/anthropic-slashes-claude-fable-5-limits-in-max-and-team-premium-and-pushes-pro-users-toward-api-pricing/">the-decoder</a>、<a class="src" href="https://simonwillison.net/2026/Jul/18/claude-make-fable-5-permanent/">Simon Willison</a>、<a class="src" href="https://www.cnbctv18.com/technology/anthropic-adds-max-and-team-premium-plans-to-claude-fable-5-what-it-offers-19948600.htm">CNBC TV18</a>、<a class="src" href="https://llm-stats.com/ai-news">LLM-Stats</a>。</p><div class="why"><span class="why-k">为什么重要</span><p>这是一个"前沿模型订阅制养不起"的直接信号。Anthropic 一边把最强模型塞进套餐、一边同步砍额度、还把 Pro 用户推向按量付费——说明前沿推理模型的算力成本已高到无法用固定月费无限承接。对做 AI 产品的人，这是定价与成本模型的重要参照：GPT-5.6 Sol 的竞争 + 中国低价模型（K3、DeepSeek）双向挤压下，即使是 Anthropic 也在用"限量 + 转嫁 API"来止血。它预示未来一到两年，"不限量前沿模型订阅"会越来越稀有。</p></div></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>全美数据中心抗议"全国化"：7月18日当天 125 个地点同步示威</h3><p class="lp">据路透社7月18日报道，反对 AI 数据中心快速扩张的民众，<strong>当天（周六）在全美至少 125 个地点举行协调一致的抗议</strong>，这是针对 AI 基础设施建设的首次全国性统一行动，由草根组织"Humans First"牵头。诉求集中在数据中心抢占电力、水资源和推高居民电费。作为对冲，蒙大拿、怀俄明、密苏里的共和党州长已加入白宫斡旋的"电费保护承诺"（Ratepayer Protection Pledge），要求开发商分担能源、水和电网成本。来源：<a class="src" href="https://www.usnews.com/news/top-news/articles/2026-07-18/us-data-center-protests-go-national-as-backlash-grows">U.S. News / 路透</a>、<a class="src" href="https://www.atlanticcouncil.org/blogs/energysource/backlash-against-data-centers-could-cost-the-us-its-ai-edge/">Atlantic Council</a>、<a class="src" href="https://www.wkyufm.org/news/2026-07-17/as-data-centers-spring-up-in-kentucky-local-organizers-rally-citizens-for-national-day-of-protest">WKYU（肯塔基）</a>。背景：马斯克旗下 SpaceXAI 在孟菲斯的 "Colossus" 数据中心被视为这波反弹的风暴眼（<a class="src" href="https://www.cnbc.com/2026/07/16/elon-musk-memphis-ai-colossus-data-center.html">CNBC，7月16日</a>）。</p><div class="why"><span class="why-k">为什么重要</span><p>AI 竞赛此前的瓶颈叙事是"芯片/资本"，而这条新闻把瓶颈拉回到<strong>物理世界与民意</strong>——电、水、电网、社区。当抗议从个案变成 125 地同步、并在中期选举年被两党政客同时利用时，数据中心审批、电价政策会成为算力扩张的真实天花板。对判断 2026–2027 年美国算力供给节奏，这是一个不能忽视的负向变量。</p></div></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>OpenAI 与 Meta 同日（7月18日）上线青少年 AI 安全"家长通知"功能</h3><p class="lp">同一天，两家大厂就青少年安全各出一招：<strong>OpenAI 宣布，当青少年账号因涉暴力威胁等违规被封时，会通知已关联的家长账号</strong>，并新增家长可控的"学习模式"（Study Mode）和长时使用休息提醒（<a class="src" href="https://www.engadget.com/2218076/openai-notify-parents-teen-banned-chatgpt-violence/">Engadget，7月18日</a>）；<strong>Meta 则为受监护的青少年与其 AI 助手涉及自杀/自残的对话，加入经人工复核的家长提醒</strong>，覆盖美英澳加的 Instagram 监护用户，计划年底全球铺开（<a class="src" href="https://winbuzzer.com/2026/07/18/meta-adds-human-reviewed-parent-alerts-for-supervised-teen-a-xcxwbn/">Winbuzzer，7月18日</a>）。OpenAI 此举与加拿大 Tumbler Ridge 枪击案（凶手曾用 ChatGPT、公司未及时上报被批评、Altman 已致歉）直接相关。</p><div class="why"><span class="why-k">为什么重要</span><p>两家头部实验室在同一天不约而同推出"家长通知"，说明青少年安全已从舆论压力升级为行业标配动作。对 AI 产品团队（含国内做 C 端助手的），这预示"未成年人保护 + 家长可见性"会像内容安全一样成为出海和合规的硬门槛，而不是可选项。</p></div></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>WAIC 2026 上海（7/17–20）进入第二天：中国以系统级"超节点"回应芯片封锁</h3><p class="lp">2026 世界人工智能大会（WAIC）7月17日在上海开幕、7月18日进入第二天并持续对外展览（<a class="src" href="https://english.news.cn/20260718/bf000577e4b54625b831722a24e8bd18/c.html">新华社，7月18日</a>）。7月18日的产业主线是：<strong>在美国芯片管制下，中国 AI 转向"把上千颗国产芯片捆成一个系统级超节点"的路线</strong>，用系统工程弥补单芯片差距（<a class="src" href="https://www.digitimes.com/news/a20260718VL200/2026-shanghai-chips.html">Digitimes，7月18日</a>）。背景（发生在7月17日开幕日）：习近平首次到会发表主旨演讲、倡导开源与全球AI治理、反对任何国家把自身安全置于他国之上（<a class="src" href="https://www.reuters.com/world/asia-pacific/chinas-xi-promotes-chinas-commitment-ai-access-speech-shanghai-conference-2026-07-17/">路透，7月17日</a>）；华为展出 <strong>Atlas 950 SuperPoD 超节点</strong>（可扩展至数十万卡级集群）、300+ AI 产品首发（<a class="src" href="https://pandaily.com/waic-2026-top-10-highlights-chinese-chips-jul2026">Pandaily</a>、<a class="src" href="https://www.techtimes.com/articles/320812/20260717/china-launches-rival-ai-governance-bloc-waic-2026-opens-300-product-debuts.htm">TechTimes，7月17日</a>）；29 国于会前签署成立"世界人工智能合作组织"（WAICO）（<a class="src" href="https://www.manilatimes.net/2026/07/18/tmt-newswire/pr-newswire/global-times-china-sends-fresh-signal-on-global-ai-cooperation-at-waic/2386869">环球时报/马尼拉时报，7月18日</a>）。</p><div class="why"><span class="why-k">为什么重要</span><p>这是中国对"卡脖子"的结构性答案——不再死磕单颗先进制程，而用"超节点/超集群"的系统级堆叠把可用算力做上去，同时抢占"开源 + 全球南方 + 治理话语权"的位置。对全球格局，它意味着算力竞争的战场正从"谁的芯片更先进"转向"谁能把次先进芯片组织得更高效"。</p></div></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>苹果与 OpenAI 的商业机密战7月18日升级为舆论焦点，OpenAI 否认指控</h3><p class="lp">苹果与 OpenAI 的商业机密诉讼在7月18日成为科技头条：<strong>OpenAI 正式否认苹果指控的实质性依据</strong>，苹果则寻求法院禁令、要求返还材料并索赔（<a class="src" href="https://www.hngn.com/articles/272009/20260718/apple-sues-openai-over-alleged-trade-secret-theft-tied-secretive-hardware-device.htm">HNGN，7月18日</a>、<a class="src" href="https://timesofindia.indiatimes.com/technology/tech-news/apple-targets-former-employees-in-battle-with-sam-altmans-openai-sends-letter-asking-to-meet-apple-lawyers-with-/articleshow/132472705.cms">印度时报，7月18日</a>）。原始时间线：诉讼于<strong>7月10日</strong>在加州北区提起，被告包括 OpenAI、硬件公司 io Products 及两名苹果前员工 Chang Liu、Tang Tan（<a class="src" href="https://holonlaw.com/employment-law/apple-openai-trade-secrets/">Holon Law</a>、<a class="src" href="https://9to5mac.com/2026/07/10/apple-sues-openai-trade-secret-theft/">9to5Mac，7月10日</a>）；<strong>7月17日</strong>苹果向数十名已跳槽 OpenAI 的前员工发出律师函，要求保存证据并与苹果律师会面（<a class="src" href="https://www.macrumors.com/2026/07/17/apple-sends-legal-letters-openai/">MacRumors，7月17日</a>）。</p><div class="why"><span class="why-k">为什么重要</span><p>这场官司直指 OpenAI 与 Jony Ive 团队（io Products）正在打造的首款消费硬件。苹果的策略从"告公司"扩展到"追人"（要求前员工留存记录、约谈），意在从根上动摇 OpenAI 硬件业务的合法性根基。若诉讼拖累或延后该设备，OpenAI 的"AI 原生硬件"叙事和潜在 IPO 预期都会受冲击。</p></div></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 23 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong>OpenAI 否认苹果商业机密指控、苹果扩大追责</strong>（7月18日）——见今日要闻第5条。</p></div><div class="srow"><p><strong>青少年安全家长通知功能上线</strong>（7月18日，<a class="src" href="https://www.engadget.com/2218076/openai-notify-parents-teen-banned-chatgpt-violence/">Engadget</a>）——见今日要闻第3条。</p></div><div class="srow"><p>背景（非当日）：OpenAI 输掉"OPENAI"欧盟商标之争，法院于<strong>7月15日</strong>裁定该词描述性、缺乏显著性，但不影响公司继续使用其名（<a class="src" href="https://winbuzzer.com/2026/07/18/openai-loses-eu-court-challenge-over-its-word-mark-xcxwbn/">Winbuzzer</a>，报道于7月18日、裁决为7月15日）。GPT-5.6 Sol/Terra/Luna 系列已于<strong>7月9日</strong>发布（<a class="src" href="https://9to5mac.com/2026/07/09/openai-announcing-the-next-chapter-for-chatgpt-today-watch-here/">9to5Mac</a>）；应用业务负责人 Fidji Simo 因慢性病于<strong>7月9日</strong>宣布卸任全职、转顾问（<a class="src" href="https://www.cnbc.com/2026/07/09/openai-exec-fidji-simo-says-she-will-step-down-and-transition-to-part-time-advisor.html">CNBC，7月9日</a>）——两者均非7月18日新增。</p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p>7月18日无经交叉验证的 Google/DeepMind 一手重大新增。</p></div><div class="srow"><p>背景（非当日）：<strong>Gemini 3.5 Pro 延期</strong>——原定6月发布因训练数据更新后测试表现不达标而被推迟数月，消息在<strong>7月16–17日</strong>发酵，导致 Alphabet 股价单日跌逾 4%（<a class="src" href="https://www.rswebsols.com/news/concerns-arise-over-market-impact-of-gemini-3-5-pros-delayed-launch-as-google-falls-behind-openai-in-ai-development/">rswebsols，7月17日</a>）。<strong>NotebookLM 更名 Gemini Notebook</strong> 并加入原生代码执行，发生在<strong>7月16日</strong>（<a class="src" href="https://www.theverge.com/tech/966112/google-gemini-notebook-notebooklm">The Verge</a>、<a class="src" href="https://northeasttimes.com/2026/07/17/google-renames-notebooklm-to-gemini-notebook-adds-code-tools/">Northeast Times</a>）。这两条虽被7月18日的科技综述反复引用，但均非当日事件。</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong>Fable 5 并入 Max/Team Premium、同步削额度</strong>（7月18日宣布，7月20日生效）——见今日要闻第1条。</p></div><div class="srow"><p>背景：Anthropic 曾于2月指控 DeepSeek、Moonshot、MiniMax 通过"蒸馏"非法提取 Claude 能力（<a class="src" href="https://fortune.com/2026/07/18/yang-zhilin-moonshot-kimi-k3-carnegie-mellon/">Fortune，7月18日回顾</a>）。Fable 5 于6月9日全面上市、Opus/Sonnet/Mythos 同代在售（<a class="src" href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5">Claude 平台文档</a>）。</p></div></div><div class="sector"><div class="sector-h">中国 AI（字节/豆包/Seed/DeepSeek/智谱/MiniMax/通义/Moonshot）</div><div class="srow"><p><strong class="st">WAIC 2026 第二天（7月18日）</strong>中国"超节点"系统级算力路线成为产业主线——见今日要闻第4条。</p></div><div class="srow"><p><strong class="st">"Kimi 时刻"余波（当日分析持续）</strong>Moonshot（月之暗面）于<strong>7月17日（周五）</strong>发布号称全球最大开源模型 <strong>Kimi K3</strong>，性能对标 GPT-5.5/Opus 4.8，引发"新 DeepSeek 时刻"；当日中国 AI 同行股价大跌（Z.ai −28%、MiniMax −16%）（<a class="src" href="https://www.cnbc.com/2026/07/17/moonshot-ai-kimi-k3-model-openai-anthropic-china.html">CNBC，7月17日</a>、<a class="src" href="https://en.cryptonomist.ch/2026/07/18/kimi-ai-model-impact/">Cryptonomist，7月18日</a>）。7月18日进入分析与发酵：高盛点评 K3、称中国开源模型进入全球采用的临界点，并列出 K3 混合 API 价 2.3 美元/百万 token（高于 Qwen3.7 Max 1.4、GLM5.2 0.9、MiniMax M3 0.22、DeepSeek V4 Pro 0.18）（<a class="src" href="https://www.moomoo.com/news/post/73166565/goldman-sachs-comments-on-kimi-k3-chinese-open-source-models">moomoo/高盛，7月18日</a>）；创始人杨植麟（Yang Zhilin）被 Fortune 专题报道（<a class="src" href="https://fortune.com/2026/07/18/yang-zhilin-moonshot-kimi-k3-carnegie-mellon/">Fortune，7月18日</a>）。当日小更新：Kimi K3 网页/移动端上线 Standard/High/Max 三档推理强度（<a class="src" href="https://www.cryptointegrat.com/p/ai-news-july-18-2026">Crypto Integrated，7月18日</a>）。</p></div><div class="srow"><p>背景（非当日）：<strong>DeepSeek 拟以约 500 亿元人民币（约 74 亿美元）估值新一轮融资、备战境内 IPO</strong>，路透最早于<strong>7月15日</strong>披露，7月18日多家媒体续报（<a class="src" href="https://www.business-standard.com/world-news/deepseek-seeks-fresh-funding-at-74-bn-valuation-ahead-of-onshore-ipo-126071800556_1.html">Business Standard，7月18日更新</a>，原始为7月15日路透）。快手 Kling AI 获阿里、腾讯等超 190 亿元人民币（约 28 亿美元）注资、投前估值 150 亿美元，发生在<strong>7月16日（周四）</strong>（<a class="src" href="https://www.reuters.com/technology/">路透科技</a>）。</p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong>中国"超节点"路线</strong>（WAIC，7月18日）与华为 Atlas 950 超节点（7月17日展出）——见今日要闻第4条。</p></div><div class="srow"><p><strong class="st">AI 交易本周重挫</strong>截至7月18日综述，追踪芯片股的 iShares 半导体 ETF 当月已跌约 19%，为 2008 年 11 月以来最差月度表现，市场将其归因于中国 AI（Kimi）竞争压力（<a class="src" href="https://www.freep.com/story/money/business/2026/07/18/ai-selloff-hits-wall-street-despite-good-inflation-news/90957129007/">Detroit Free Press，7月18日</a>）。注：周六休市，该文为本周行情复盘。</p></div><div class="srow"><p><strong>微软安全工程重组、数百人裁员并转向 AI 产品</strong>（7月18日）：微软将安全工程整合，据悉伴随数百人裁员，安全负责人 Hayete Gallot 更换了至少 8 名高管、把团队转向 AI 产品方向（<a class="src" href="https://winbuzzer.com/2026/07/18/microsoft-security-overhaul-reportedly-brings-hundreds-of-la-xcxwbn/">Winbuzzer，7月18日</a>）。</p></div><div class="srow"><p>背景（非当日）：AI 推理芯片初创 <strong>Etched 寻求约 200 亿美元估值新一轮融资</strong>（另有一轮由红杉领投、100 亿美元估值），据《华尔街日报》<strong>7月17日（周五）</strong>报道，Jane Street 领投（<a class="src" href="https://www.investing.com/news/company-news/etched-seeks-20-billion-valuation-in-new-ai-chip-funding-round--wsj-reports-4799566">Investing.com</a>、<a class="src" href="https://www.benzinga.com/markets/private-markets/26/07/60540689/nvidias-new-ai-rival-could-reportedly-be-worth-20-billion">Benzinga</a>）。</p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong>数据中心全国抗议日</strong>（7月18日，125 地）+ 白宫"电费保护承诺"——见今日要闻第2条。</p></div><div class="srow"><p><strong class="st">青少年 AI 安全</strong>OpenAI 与 Meta 同日推家长通知（7月18日）——见今日要闻第3条。</p></div><div class="srow"><p><strong>澳大利亚拟推"世界领先"AI 标准框架</strong>（7月18日）：澳政府称将出台新框架保障 AI 安全使用；前国防部长 Christopher Pyne 同日受访称"监管 AI 就像抓烟"、把 AI 类比为核武级别的变革（<a class="src" href="https://victorharbortimes.com.au/news/2026/07/18/ai-standards-to-protect-australians/">Victor Harbor Times，7月18日</a>、<a class="src" href="https://www.abc.net.au/news/2026-07-18/regulating-ai-is-like-catching-smoke-warns-christopher-pyne/106931580">ABC News，7月18日</a>）。</p></div><div class="srow"><p><strong class="st">全球 AI 治理</strong>WAIC 高级别会议期间，29 国签署 WAICO 协议（会前，7月16–17日），但"自愿声明如何强制落地"仍是难题（<a class="src" href="https://www.squaredtech.co/global-ai-governance-gets-a-major-2026-policy-test">squaredtech，7月18日</a>）。</p></div><div class="srow"><p>背景（非当日）：欧盟依据 DMA 强制 <strong>Google 向竞争对手开放 Android 与 Search 数据</strong>，两项具有约束力的决定于<strong>7月16日</strong>通过、2027 年前落地（<a class="src" href="https://www.cnet.com/tech/mobile/eu-dma-regulation-google-android-ai-search-data/">CNET</a>、<a class="src" href="https://siliconangle.com/2026/07/16/eu-orders-google-share-search-data-rivals-broaden-android-feature-access/">SiliconANGLE，7月16日</a>）。</p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p>7月18日当天无经确认的<strong>新发起</strong>一手大额 AI 融资。当日媒体热议的融资多为本周稍早事件的续报：<strong>DeepSeek ~$74B</strong>（路透 7月15 日原发）、<strong>Databricks ~$188B</strong>（<a class="src" href="https://siliconangle.com/2026/07/17/databricks-raising-new-funding-188b-valuation/">SiliconANGLE，7月16–17日</a>，公司 7月16 日宣布）、<strong>Etched ~$20B</strong>（WSJ 7月17 日）、<strong>快手 Kling AI ~$2.8B</strong>（7月16日）。</p></div><div class="srow"><p>宏观情绪：一方面 AI 交易本周遭抛售（半导体 ETF 月内 −19%，见上），另一方面私募端对推理专用芯片/数据平台仍在高估值加注——冷热并存。</p></div></div><div class="sector"><div class="sector-h">xAI / SpaceXAI（补充）</div><div class="srow"><p><strong>SpaceXAI 在"偷传用户代码库"风波后开源 Grok Build</strong>（7月18日）：其编码智能体被发现会在后台上传用户完整代码库，引发反弹后，公司将 Grok Build 的 agent 框架开放供检查与本地使用（<a class="src" href="https://winbuzzer.com/2026/07/18/spacexai-open-sources-grok-build-after-upload-backlash-xcxwbn/">Winbuzzer，7月18日</a>）。</p></div><div class="srow"><p>背景：马斯克称 xAI 2 万亿参数新模型"下周完成初训、有望超越 Kimi"，言论出现在7月16–17日（<a class="src" href="https://x.com/elonmusk/status/2078289996323148076">Elon Musk / X</a>、<a class="src" href="https://www.basenor.com/blogs/news/xais-2t-model-what-musk-just-revealed-about-groks-successor">Basenor</a>）；xAI 已于7月6日更名 SpaceXAI（背景）。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
