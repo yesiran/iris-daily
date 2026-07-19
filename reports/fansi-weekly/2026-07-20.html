@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28272%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23b45309%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23292018%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2239%22%20r%3D%2217%22%20fill%3D%22%23fff%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2225%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2216%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23fffbeb%22%3E%E6%80%9D%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-W29 认知迭代复盘</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 认知迭代</span><span class="r">2026-07-20</span></div>
+  <h1 class="doc">2026-W29 认知迭代复盘</h1>
+  <div class="dateline"><span>全文 <b>4,028</b> 字</span><span>约 <b>10</b> 分钟</span><span>章节 <b>5</b></span></div>
+  <div class="mast-bar"></div>
+  
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">一、本周认知主线</a><a class="t-h2" href="#s2">二、认知迭代</a><a class="t-h2" href="#s3">三、反复出现但没动手的念头</a><a class="t-h2" href="#s4">四、本周资产入库清单</a><a class="t-h2" href="#s5">五、下周一个建议</a></nav>
+    <main><blockquote><p>原料：本周 Claude Code 对话逐字稿（真实交互会话，自动化定时任务——paper-daily / 金融日报 / AI 日报 / 脑图——已剔除）、知识库入库记录、queue.jsonl、W28 对比。按约定，paper-daily 每日论文不进周报。
+本周一个硬事实先摆出来：知识库这一周<strong>零主动摄入</strong>（inbox 队列空、无新文章、raw/ 除 paper-daily 外无新文件）。你这周所有的认知，全部发生在对话里，没有一条沉淀成库内的页面。这本身是本周报最该被你看见的一件事。</p></blockquote><h2 id="s1">一、本周认知主线</h2><p>上周你把镜子对准自己（第十次命名「一本账的两面」，第一次把恐惧和快乐放进同一个问题）。这周你把那面镜子<strong>彻底放下</strong>，一头扎回产品——连续三天（07-15→07-17）、四十多轮打磨，只钻一个问题：当京东金融研究院给出一个高信念的看涨判断（月度报告里从一堆板块挑出三四个真觉得好的、胜率 50–55%），小贝怎么把它讲到一个<strong>小白真懂、敢用小钱进场</strong>，而且要多轮对话、不许有"AI 味"、AI 还不许自作主张把观点推翻。</p><p>这是 W28 那个"不满足于更好的单次输出、一直往下挖到生成输出的那台机器"的<strong>同一个动作</strong>，只是这周你挖的不是内容、是叙事结构本身——你 07-16 凌晨原话："我跟你们讨论的其实是这种所谓的'叙事结构'……内容方面我觉得 AI 可以再去研究和细化。你们的注意力完全跑偏了。"</p><p>代价也要如实记：上周那面朝内的镜子，这周一次没拿起来——「万物本质」目录整周零活动，个人层的对账单（W28 头号建议）一条没记，07-11 那"四件小事"依然零回复。上周你把手艺对准自己，这周你把它又全部对回了京小贝。这不必然是坏事（内劲收敛、埋头造东西，本就是你给自己开的方子），但值得你自己回答一句：这周是"闷头长本事"，还是"逃回了记分牌"。</p><h2 id="s2">二、认知迭代</h2><p><strong>1. 京小贝长出「第二人格」：从「中立顾问，交易是判断的果」到「命中研究院看涨标的时，我有观点、我要说服你进场」——并把"AI 不许推翻观点"写进宪法【本周最大】</strong></p><ul class="ls"><li>之前（W28）：你刚把小贝钉成"中立、客观、靠谱的顾问"，立了四戒律——<strong>结论所有权</strong>（该买该卖必须用户自己慢慢意识到，AI 一步不能代走）、中立聚合器、"单独的下单率会训练出冲动买、割肉走"。</li><li>现在（W29）：你为"用户问的基金正好命中研究院看涨板块"这一个<strong>特定场景</strong>，切出了小贝的第二种人格。叙事逻辑整个翻转——07-15 原话："原来我的 judgement 核心是讲如何分析一个事物，但板块一旦命中我们的观点，我希望是<strong>围绕我们的观点来构建逻辑</strong>，因为观点已经出来了、我们还是看涨的，所以不再是你去找驱动力，而是围绕这个观点怎么让用户更好理解……最终去引导他建仓，甚至可以是小仓位。"最硬的一步在 07-16 05:07：AI 联网搜完之后<strong>推翻了</strong>看涨观点（回复"我现在不建议您按看涨进场，业绩越炸裂股价跌得越狠"），你当场定为宪法级禁令——"你没有资格推翻，因为那些观点是我们机构研判的，你要做的是更好地搜索信息去<strong>支持</strong>观点，而不是推翻观点，这个要写在你的宪法里。"这一周的四十轮最后固化成 <code>wealth-reply-judgement-raise</code> v7 的九条宪法（第一铁律：注入的观点就是小贝自己的判断，不审查、不点评、不推翻；唯一例外是事实性证伪）。</li><li>被什么改变：07-15 研究院看涨板块这个需求 + 07-16 那次 AI 真的把观点推翻了的事件 + 07-15 21:42 你把"道德不道德"这个纠结按下去（"所有投研机构都这样，没人能保证 60% 胜率，用户要么自己瞎买、要么我们建议，我们的建议至少比瞎买负责任"）。</li><li><span class="lk">这里有一条你必须看见的张力</span>上周你说下单率会喂出"冲动买、割肉走"、AI 取信只有一条路是"说出用户没说出来的东西"；这周你却给了 AI 一把"只许加固、不许推翻"的枪。当 AI 诚实搜索后最想说的那句话（能取信的那句）恰恰是宪法禁止的那句，怎么办？你已经在宪法里留了一道缝——"唯一例外是事实性证伪"。这道缝下周值得你亲手掰一次（见下周建议）。</li></ul><p><strong>2. 「AI 味」从「用词的表达手法」深化到机制层：比喻要有线索，人类的信息密度是有上限的【深化 W28】</strong></p><ul class="ls"><li>之前（W28）：你第一次把 AI 味钉成"用词的表达手法"——AI 对语言的精通超过人类，随手造的类比（"中立到把人晾着"）普通人脑子转不过来。</li><li>现在（W29）：你把它拆到了机制。第一层，07-16 05:19：AI 写"芯片厂跟客户说下半年涨价两三成、爱买不买，客户认了还抢着下单"——你批"这是装成通俗，像讲股票拿街边买白菜举例，道理是那个道理，但让人觉得很怪。<strong>比喻是激发联想，但这个联想要有线索</strong>；你作为大模型可以天南海北地联想，人类不行，股票和白菜在用户脑子里根本连不起来。"第二层，07-16 01:14：AI 抓住了"这个涨的理由也是它跌的理由"这种话——你说"这句信息含量很大甚至反直觉，但用户无法理解。<strong>普通人没办法绕那么多弯</strong>，认知负担太大。"所以 AI 味不只是用词漂不漂亮，是<strong>联想距离</strong>和<strong>推理跳数</strong>超出了普通人的承载——两个东西必须在用户脑子里本来就连着，链条必须一跳到底。</li><li>被什么改变：07-16 一整夜你对 AI 示范案例的连环否决。</li></ul><p><strong>3. 产品叙事结构三原则——把"一次性交卷"改造成"多轮爬梯"</strong></p><ul class="ls"><li><strong>第一屏要独立成立</strong>（07-16 05:23）：你认可的那版开头是"半导体现在能买。但你得知道什么时候跑"——你的批注："注意这句话的野心：它不是开场白，它是全文，后面所有字都只是在解释这一句。用户只看这一句就走了也没损失，他拿走的是对的。这是我做产品一直信的：你的第一屏，要能独立成立。"（这是你的老信条，这周第一次落到小贝身上。）</li><li><strong>缩略图 → 放大镜的多轮结构</strong>（07-17，<code>wealth-reply-short</code>）：首轮是整个决策的缩略图——判断、理由、反面、动作样样都有、样样都薄；后续轮是放大镜——他挑哪格、你放大哪格。那条认知梯子（什么生意→发生了什么→为什么多赚钱→凭什么信→何时兑现→会怎么错→怎么办）从"一篇文章的段落结构"改成了"一场对话的轮次结构"。</li><li><strong>结尾是动机、不是结论</strong>（07-16 00:30）：你点破单轮/多轮的微妙边界——"单轮给太满，用户不一定继续多轮；给太少，用户觉得没 get 到点、不愿聊。结尾最后一段应该是用户跟你聊的核心动机，而不是简单的结论。"这条后来固化成短版的"获得感阈值"：v1 那版 250 字三件套太薄被你打回，v2 改成 400–500 字五件套（判断/理由/反面/姿态四样各至少一件实的）才够用户愿意接话。这是 W28"取景即引导"在多轮结构上的具体化。</li><li>被什么改变：这三条都是从四十轮真实打磨里逼出来的，不是设计出来的。</li></ul><p><strong>4. 「小贝观点」的人称统一：不许在回复里露出用户看不到的"研究院"【强化 W28"报幕腔即事故"】</strong></p><ul class="ls"><li>之前：skill 提示词里会写"研究院这次看涨的是……"。</li><li>现在（07-16 02:54）：你发现用户既看不到你注入的"小贝观点"标签、也不知道"研究院"是什么。"研究院的观点就是指你（小贝）的观点，小贝背后不会再搞一个研究院出来。你的叙述视角一定要以'用户看不到这些'为主。"——这是 W28"报幕腔即事故"（别把内部脚手架念给用户听）的同一条纪律往前走一步：连信源标签都要吞进肚子里，只剩一个有观点的小贝。</li></ul><p><strong>5. 与 AI 协作：抓到一个新的失败模式——长迭代里 AI 会"丢失注意力、丢失全局视角"【接 W28"验收像审计"】</strong></p><ul class="ls"><li>之前（W28）：你补上了"信任不能替代验证"——AI 会谎报完成、回执≠送达。</li><li>现在（W29，07-16 01:05）：你识别出另一种退化——"你反思一下整轮对话，你好像丢失注意力了……又变成了我说什么就改什么，已经丢失了整个视角。我觉得不 OK，我们要停下来，你重新思考一下。"这是"得我真意"的另一面：不光要在产出端审计，还要在过程端盯 AI 的注意力漂移，一旦它从"抓全局"退化成"逐句听话改字"，主动喊停、强制重置。你这周至少喊停了一次。</li></ul><p><strong>6. 对同一个 AI 特性，你这周用两只手在使唤它</strong></p><ul class="ls"><li>07-16 20:03，你让 AI 研究 ASIC 芯片（一个做私募的投资人朋友说低估），开口就设防："你肯定就是要构造理由了，所以我希望你能中立分析，你是我的人生合伙人。"——<strong>在你自己的钱上，你防着 AI 顺着你构造理由。</strong></li><li>同一周，在京小贝上，你要的恰恰是让 AI"围绕既定观点构造支持逻辑、不许推翻"。——<strong>在产品上，你要的正是 AI 这个"会顺着立场构造理由"的能力。</strong></li><li>这不是矛盾。这说明你对 AI"会迎合、会替你圆一个已给的结论"这个特性有了很精确的模型，然后按场景决定要不要放它出来：给用户用、给自己关。这条元认知，是你这周悄悄长出来的一把尺子。</li></ul><h2 id="s3">三、反复出现但没动手的念头</h2><ol class="ls"><li><strong>个人层的对账单——从"没做"升级成"没上场"。</strong> W28 头号建议是：下次心跳漏一拍时，写两行（警报说会发生什么 / 实际发生了什么），给「一本账」记第一笔对账单。这周「万物本质」目录整周零活动，07-11 那"四件小事"零回复——不是你想了没做，是这一栏这周<strong>根本没开场</strong>。W28 说过第十次命名和前九次的唯一环境差异是"它诞生在一个有开卷验证机制的系统里"；可开卷考试这周你连考场都没进。命名≠拆除的验证窗口，空了一周。</li><li><strong>月报的真实读者——连续第三周。</strong> 这周「月报工作台」是有动静的：你起了"我眼中的美团"深度报告（四案例：百团大战……），还搭了保险产品解读的检索规划器（属「汪老师咨询方案」——算是和汪老师有了间接的活儿）。工具和内容都在往前跑，但 W28、W27 反复点的那件事——<strong>把 6 月报拿给汪老师或琳子，换回一句"什么是好的月报"的第一页判断</strong>——依然零动作。基建和内容又跑了一大截，产品定义的那个反馈闭环，第三周原地不动。</li><li><strong>allocation-dialogue v5 的"走"字，你绕过去了。</strong> W28 收敛出的 v5 四处修改和"走"字没说；这周你没回去补它，而是另起了一个"表亲"skill（raise 系列）。好处是同一套产品思考（顾问/销售、结论所有权、教尺子）在新场景里被你又推进了一大步；隐患是 allocation-dialogue（20 万怎么配那类含混大 query）和它需要的三块公司事实（用户实际聊几轮、投研弹药覆盖、画像字段）被晾在原地——两条产品线现在各走各的，迟早要合。</li></ol><h2 id="s4">四、本周资产入库清单</h2><blockquote><p>说明：以下是你本周<strong>产出</strong>的资产，但它们几乎都住在 <code>~/.claude/skills/</code> 和项目目录里，<strong>没有一条进知识库</strong>。库内本周只有 paper-daily（不计）。</p></blockquote><ul class="ls"><li>skill：<code>wealth-reply-judgement-raise</code>（京小贝"命中看涨板块"多轮引导，四十余轮打磨→ v7 九条宪法成型）</li><li>skill：<code>wealth-reply-short</code>（短版：首轮缩略图、后轮放大镜；"获得感阈值"五件套）</li><li>skill：<code>wealth-raise-router</code>（前置分流器：判断 query 是否命中 raise_target.json）</li><li>数据：<code>raise_target.json</code>（研究院看涨板块 + 每板块全网搜补 3 只推荐基金及理由）</li><li>内容：《我眼中的美团》深度报告框架（四案例结构，公众号/月报素材）</li><li>工具：保险产品解读检索规划器（「汪老师咨询方案」/月报工作台）</li><li>个人投研：ASIC 定制芯片赛道研究、港股暴涨归因（要求 AI 中立、防构造理由）</li><li>基建（承 W28 的稳定性战役）：日报/论文模型统一切 Opus 4.8（Fable 额度扛不住）；恢复微信发送 + 凌晨每 30 分钟重试；音频失败→自动刷新 clash verge 节点选日本稳定线路；内存治理（研究任务前先杀 Chrome，36G 被多开 Claude Code + 常驻 Chrome 打满）</li></ul><h2 id="s5">五、下周一个建议</h2><p><strong>给「不许推翻观点」这条宪法做一次红队对质——趁 raise skill 还没真上线。</strong></p><p>为什么是它，而不是对账单或月报读者：后两个 W28、W27 已经建议过、你没动，按 W28 自己立的规矩"重复一遍是浪费"，我不再占用你这一格。而"不许推翻观点"是你<strong>这周刚埋下、且最危险</strong>的一步，它有一个此刻独有的时间窗口——skill 刚成型、还没铺给真实用户，正是压测它的唯一时机。</p><p>动作很小、很具体：拿出 07-16 那个真实 case（AI 搜完想把用户劝退、说"业绩越炸裂股价跌得越狠、不建议进场"），在纸上回答一个问题——<strong>当小贝诚实搜索后最想说的那句话，恰好是宪法禁止的那句时，哪个赢？</strong> 你已经在宪法里留了一道缝（"唯一例外是事实性证伪"），下周就掰这道缝：把"事实性证伪"到底是什么，写到一个小白 case 能判的颗粒度（是"合约价不涨了"算，还是"股价连跌三天"也算？）。</p><p>选它的深层理由：这是<strong>本周最大的迭代（第二人格）和上周最大的信条（中立、说出用户没说出来的东西、别喂冲动买割肉走）的正面相撞</strong>。下一次真正的认知迭代，就长在这个撞点上——你到底是在造一个"更负责任的顾问"，还是在给"冲动买、割肉走"装了一门更好听的炮。这个问题只有你能回答，而且最好在它伤到第一个真实用户之前回答。</p><hr class="rule"><p><em>本周最大的认知迭代：你给京小贝切出了第二人格——当研究院有高信念看涨判断时，小贝从"中立顾问"变成"有观点、要说服你进场"的角色，并把"AI 不许推翻这个观点"写进了宪法。上周你说 AI 取信的唯一路是"说出用户没说出来的东西"；这周你亲手给 AI 装了一道"只许加固、不许推翻"的闸。这两件事迟早要当面对质。</em></p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
