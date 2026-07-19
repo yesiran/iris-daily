@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28182%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2216%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.19%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2213%22%20r%3D%2211%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 行业日报 · 2026-07-19</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-07-19 · 星期日</span></div>
+  <h1>🤖 AI 行业日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>34</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">编制说明：本报告只收录 <strong>2026 年 7 月 19 日当天新发生 / 当天首次报道</strong> 的 AI 新闻。凡属更早发生、当天只是被转载或作背景的，一律<strong>标注原始日期并归入"背景"</strong>，不当作当日事件。每条均附来源链接。当日高可信增量有限的方向（如 OpenAI、纯芯片硬件）已如实说明，未硬凑。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>阿里 Qwen 3.8 发布：2.4 万亿参数，自称"仅次于 Claude Fable 5"，但无官方跑分</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Bloomberg：科技股遭抛售，大厂被逼"自证 AI 投入值不值"</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>澳大利亚发布国家 AI 计划：收紧政府部门"自动化决策"用 AI</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>中国某国企要求员工弃用 Claude Code、改用国产工具（单一来源，需谨慎）</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>谷歌 AlphaEvolve 商用（InfoQ 于 7/19 报道）：DeepMind 明星研究成果被打包成"进化式代码优化"云服务</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>阿里 Qwen 3.8 发布：2.4 万亿参数，自称"仅次于 Claude Fable 5"，但无官方跑分</h3><p class="lp">- <strong>事件</strong>：7 月 19 日，阿里巴巴 Qwen（通义千问）团队公布新旗舰 <strong>Qwen 3.8</strong>，同时上线可调用的 <strong>Qwen3.8-Max-Preview</strong>，号称 <strong>2.4 万亿参数（2.4T）</strong>、多模态、开放权重"很快放出"，并自称在其自测对比里"仅次于 Claude Fable 5"。来源：<a class="src" href="https://officechai.com/ai/alibaba-qwen-3-8/">officechai</a>、<a class="src" href="https://techsy.io/en/blog/qwen-3-8">techsy</a>、<a class="src" href="https://mlq.ai/news/alibaba-launches-qwen-38-with-24-trillion-parameters-claims-near-frontier-performance/">MLQ News</a>。</p><p class="lp">- <strong>重要的关键限定</strong>：截至 7 月 19 日，<strong>尚无 Qwen 官方博客、model card 或一张公开基准表</strong>，"2.4T 参数""仅次于 Fable 5"目前都只是厂商口径，未经第三方验证。来源：<a class="src" href="https://www.buildfastwithai.com/blogs/qwen3-8-preview-2-4t-params-open-weights-release">buildfastwithai</a>。</p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这是当天全球最受关注的一次前沿模型迭代。它说明两件事——(1) 中国头部厂商仍在用"参数往上堆 + 权重开放"的打法紧咬美国第一梯队，把对标对象直接点名到 Anthropic 最强的 Fable 5；(2) 但"先发预览、后补官方跑分"的节奏，也暴露出中国厂商在 WAIC 这种主场时点上"抢发声量"的压力大于"拿硬数据说话"。对从业者的实操含义：<strong>先别把营销口径当结论，等开放权重和第三方基准出来再判断真实位置。</strong></p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Bloomberg：科技股遭抛售，大厂被逼"自证 AI 投入值不值"</h3><p class="lp">- <strong>事件</strong>：7 月 19 日，彭博发文《Big Tech Needs to Justify AI Spending as Investors Dump Stocks》：在"上周芯片股大跌、科技股普遍回调"之后，投入 AI 最猛的几家巨头正面临越来越大的压力，要向"手指悬在卖出键上"的交易员证明这些巨额支出的回报。来源：<a class="src" href="https://www.bloomberg.com/news/articles/2026-07-19/big-tech-needs-to-justify-ai-spending-as-investors-dump-stocks">Bloomberg</a>、同日市场综述 <a class="src" href="https://ts2.tech/en/stock-market-today-19-07-2026/">ts2.tech</a>。</p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：过去两年市场是"只要你在建算力、买 GPU，股价就给你鼓掌"；这条新闻是<strong>情绪拐点的信号</strong>——投资人开始把"花了多少"换成"赚回来多少"来问。它直接决定了 AI 行业接下来的"钱环境"：如果资本市场收紧对 AI capex（资本开支）的耐心，最先受压的就是靠融资烧算力的公司和上游芯片。<strong>这也是理解当天 DeepSeek 融资、各家 AI 支出新闻的宏观底色。</strong>（注：文中"上周芯片股大跌"是背景，不是 19 日当天发生。）</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>澳大利亚发布国家 AI 计划：收紧政府部门"自动化决策"用 AI</h3><p class="lp">- <strong>事件</strong>：7 月 19 日（周日），澳大利亚政府公布国家 AI 计划与一份"AI 消费者优先事项"清单，承诺"更好地规范" Centrelink、Services Australia 等联邦福利机构在决策中使用 AI，并重启个人数据保护立法；执政的工党同时推动"数字照护义务（digital duty of care）"立法。来源：<a class="src" href="https://www.abc.net.au/news/2026-07-19/government-tighten-rules-ai-artificial-intelligence/106933212">ABC News</a>、<a class="src" href="https://www.theguardian.com/australia-news/2026/jul/19/national-ai-plan-labor-anthony-albanese-andrew-charlton">The Guardian</a>。</p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这是当天最实在的一条"政府动手"的监管新闻，且来自两家高可信主流媒体。它触到的痛点很具体——<strong>政府拿 AI 自动决定"谁能领福利、领多少"</strong>，一旦算错就是普通人被误扣钱（澳洲此前"Robodebt 自动追债"丑闻的教训）。放到全球看，它和美国、欧盟的动作是同一个方向：<strong>监管重心正从"管模型本身"往"管 AI 在公共服务里怎么用、出错谁负责"迁移。</strong></p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>中国某国企要求员工弃用 Claude Code、改用国产工具（单一来源，需谨慎）</h3><p class="lp">- <strong>事件</strong>：7 月 19 日，媒体报道山东一家国有企业发内部通知，要求各部门排查员工是否在用 Anthropic 的编程助手 <strong>Claude Code</strong> 或其他境外 AI 编程工具、7 月 17 日前上报，发现使用者须改用国产 AI 编程工具。来源：<a class="src" href="https://www.theepochtimes.com/china/chinese-state-owned-firms-ordered-to-replace-claude-code-with-domestic-ai-tools-6063940">The Epoch Times（大纪元）</a>。</p><p class="lp">- <strong>背景（非当日）</strong>：中国监管方约在 <strong>7 月 13 日前后</strong>将 Claude Code 标为存在"后门（backdoor）"安全风险，字节 Trae、阿里 Qoder、腾讯 CodeBuddy、智谱 ZCode 等国产工具被视为受益者——来源：<a class="src" href="https://thenextweb.com/news/china-ai-coding-tools-claude-code-backdoor">The Next Web（7/13）</a>、<a class="src" href="https://www.cnn.com/2026/07/17/china/china-ai-conference-analysis-intl-hnk">CNN（7/17）</a>；Anthropic 则称所谓"后门"是防蒸馏的测试机制，并有禁止中国控股实体使用的政策。</p><p class="lp">- <strong>可信度</strong>：当日报道仅见于大纪元/立场性转载，属<strong>单一来源、且底层通知发生在中旬</strong>；建议当"趋势信号"看，不当"已坐实的全国政策"看。</p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这是 AI 工具"脱钩"从美国单方面（见政策部分特朗普政府管控前沿模型分发）走向<strong>中美互相设墙</strong>的又一步。对开发者的现实含义：<strong>跨境 AI 编程工具正在被地缘政治切成两个生态</strong>，选型要开始把"合规/可用性风险"计入。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>谷歌 AlphaEvolve 商用（InfoQ 于 7/19 报道）：DeepMind 明星研究成果被打包成"进化式代码优化"云服务</h3><p class="lp">- <strong>事件</strong>：7 月 19 日，InfoQ 报道谷歌已将 DeepMind 的 <strong>AlphaEvolve</strong> 在 <strong>Gemini 企业级 Agent 平台</strong>上正式商用（GA）——这个曾"发现新矩阵乘法算法"的研究项目，如今变成任何谷歌云客户都能拿来优化自己代码的服务，且评估在客户侧运行、代码不出门。来源：<a class="src" href="https://www.infoq.com/news/2026/07/alphaevolve-generally-available/">InfoQ</a>。</p><p class="lp">- <strong>关键限定</strong>：谷歌云的发布说明里，AlphaEvolve GA 的条目<strong>约在 7 月 14 日前后</strong>就已出现（来源：<a class="src" href="https://docs.cloud.google.com/release-notes">Google Cloud release notes</a>），因此严格说这是"<strong>7 月 19 日被 InfoQ 报道</strong>"，实际上线略早。</p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：它是"前沿实验室把科研级能力打包成企业可买服务"的又一典型。<strong>AI 竞争的下半场，不只比谁的模型分高，更比谁能把研究成果变成企业当天就能付费用起来的产品。</strong></p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 34 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong>当日高可信增量有限。</strong> 明确属于 7 月 19 日的只有一条偏应用侧的合作：印度券商 <strong>5paisa Capital 宣布与 OpenAI 合作</strong>做"AI 驱动的个性化投资"。来源：<a class="src" href="https://www.thehindubusinessline.com/markets/5paisa-capital-partners-with-openai-for-ai-powered-investing/article71241028.ece">The Hindu BusinessLine（7/19）</a>。</p></div><div class="srow"><p>运营侧：第三方看板显示 OpenAI 于 <strong>7 月 18 日</strong>完成一次"强制用量额度重置"事件并已收尾——属 18 日，非 19 日。来源：<a class="src" href="https://releasebot.io/updates/openai">ResetWatch（7/19 记录）</a>。</p></div><div class="srow"><p><strong class="st">背景（非当日，标注原始日期）</strong>GPT-5.6 家族于 <strong>7 月初（约 7/9）</strong>全面可用、主打编程与网络安全编码（来源：<a class="src" href="https://windowsnews.ai/article/googles-gemini-35-pro-misses-june-launch-what-windows-developers-and-it-teams-should-do-now.439269">Windows News</a>）；与 OpenAI 最相关的重磅政策事件（白宫管控前沿模型分发）为 <strong>7 月 17 日 CNBC</strong> 首发，见"AI 政策"部分。</p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">主线</strong>AlphaEvolve 商用（见要闻 5）。</p></div><div class="srow"><p>产品口径：DeepMind 官网更新（页面时间 7/19）称 <strong>Gemini 3.5 Flash</strong> 在 Box 设计的企业工作评测集上"比 Gemini 3 Flash 高 19.6%"——属厂商自述指标。来源：<a class="src" href="https://deepmind.google/models/gemini/">Google DeepMind</a>。</p></div><div class="srow"><p><strong class="st">背景（非当日）</strong><strong>Gemini 3.5 Pro 截至 7 月 18 日仍未发布</strong>、无公开定价/模型卡/基准（Gemini 3.5 家族 5 月 19 日官宣，先放了 Flash）。来源：<a class="src" href="https://windowsforum.com/threads/gemini-3-5-pro-remains-unshipped-july-18-use-flash-now.439120/">Windows Forum（7/18）</a>。</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">Fable 5 计划归属大变（7 月 18 日官宣，7 月 19 日是旧政策的"最后一天"）</strong>Anthropic 宣布——<strong>从 7 月 20 日起</strong>，Claude Fable 5 正式纳入 <strong>Max 与 Team Premium</strong> 订阅（享标准额度的 50%）；<strong>Pro 与 Team Standard 则转为按量付费（usage credits），并一次性赠送 100 美元额度</strong>；原本延到 <strong>7 月 19 日</strong>到期的"计划内免费额度窗口"就此收尾。来源：<a class="src" href="https://www.cnbctv18.com/technology/anthropic-adds-max-and-team-premium-plans-to-claude-fable-5-what-it-offers-19948600.htm">CNBC TV18（7/18）</a>、<a class="src" href="https://economictimes.indiatimes.com/tech/artificial-intelligence/anthropic-extends-fable-5-access-through-july-19/articleshow/132350610.cms">The Economic Times（7/18）</a>、<a class="src" href="https://startupfortune.com/anthropic-limits-claude-fable-5-access-as-it-runs-out-of-compute/">Startup Fortune（7/18，"算力不够而限流"角度）</a>。→ <strong>严格说这是 18 日的公告 + 19 日的到期节点，不是 19 日新发生的独立事件。</strong></p></div><div class="srow"><p><strong class="st">地缘</strong>中国国企弃用 Claude Code（见要闻 4）。</p></div><div class="srow"><p><strong class="st">背景（非当日）</strong><strong>ClaudeBleed</strong> —— Claude for Chrome 扩展的漏洞，可让恶意浏览器扩展读取受害者 Gmail/Docs/Calendar，5 月上报、多次补丁后仍被指未根治，主要报道集中在 <strong>7 月 14–16 日</strong>。来源：<a class="src" href="https://www.securityweek.com/unpatched-claude-for-chrome-flaw-lets-extensions-read-gmail-calendar/">SecurityWeek（7/15）</a>、<a class="src" href="https://www.bleepingcomputer.com/news/security/claude-chrome-extension-flaw-lets-malicious-extensions-trigger-ai-actions/">BleepingComputer（7/16）</a>。</p></div></div><div class="sector"><div class="sector-h">中国 AI（字节 / 豆包 / DeepSeek / 智谱 / MiniMax / 通义等）—— 当日最密集，主战场是 WAIC</div><div class="srow"><p><strong>通义 Qwen 3.8 发布</strong>（见要闻 1）。</p></div><div class="srow"><p><strong class="st">豆包（字节）落地终端</strong>努比亚（Nubia）在 WAIC 发布 <strong>NaviX Ultra</strong>，号称"全球首款 AI 原生智能手机"，内置豆包移动助手。来源：<a class="src" href="https://www.igeekphone.com/nubia-navix-ultra-debuts-at-waic-as-worlds-first-ai-native-smartphone-with-doubao-mobile-assistant/">igeekphone（7/19）</a>。</p></div><div class="srow"><p><strong class="st">企业级 Agent 混战</strong>从蚂蚁到腾讯的中国科技巨头在 WAIC 密集发布面向企业客户的 AI Agent 产品，国内竞争白热化。来源：<a class="src" href="https://www.chinatechnews.com/2026/07/19/125898-how-chinese-tech-giants-from-ant-to-tencent-use-ai-agents-to-win-over-enterprise-clients">ChinaTechNews（7/19）</a>。</p></div><div class="srow"><p><strong class="st">WAIC 现场定调</strong>大模型参数规模正式进入"万亿级"区间，随之带来算力需求激增、传统单机柜已装不下。来源：<a class="src" href="https://news.futunn.com/en/post/76238059/live-from-waic-2026-large-models-enter-the-trillion-parameter">富途/Futunn 现场（7/19）</a>。</p></div><div class="srow"><p><strong class="st">具身智能（机器人）</strong>WAIC 现场大量人形机器人做拣选/分拣演示（<a class="src" href="https://english.news.cn/20260719/0c87599ee7594d58b56bd59bb0059ae4/c.html">新华社 7/19</a>）；普渡机器人（Pudu）7/19 展出全线产品、半人形新品 <strong>PUDU D7</strong> 全球线下首秀并获"最具投资吸引力企业"奖。来源：<a class="src" href="https://www.prnewswire.com/apac/news-releases/pudu-robotics-showcases-full-product-portfolio-at-waic-2026-winning-the-most-investor-attractive-enterprise-award-302829052.html">PR Newswire（7/19）</a>。</p></div><div class="srow"><p><strong class="st">背景（非当日，标注原始日期）</strong></p></div><div class="srow"><p><strong>DeepSeek 拟以约 740 亿美元（5000 亿元人民币）估值融资、备战境内 IPO</strong> —— 这是 <strong>Reuters 7 月 15 日</strong>首发（HK/北京电，两名知情人士），7/19 只是被 Jakarta Post 等转载。来源：<a class="src" href="https://www.reuters.com/legal/transactional/chinas-deepseek-raise-fresh-capital-74-billion-valuation-ahead-onshore-ipo-2026-07-15/">Reuters（7/15）</a>。DeepSeek 6 月刚完成 74 亿美元一轮。</p></div><div class="srow"><p><strong class="st">月之暗面 Kimi K3 引发"第二次 DeepSeek 时刻"</strong>Fortune <strong>7 月 17 日</strong>报道其开源突破对市场的冲击（来源：<a class="src" href="https://fortune.com/2026/07/17/china-moonshot-kimi-k3-markets-china-ai/">Fortune（7/17）</a>）。</p></div><div class="srow"><p><strong>阿里平头哥（T-Head）开源 AI 软件栈 SAIL、直插英伟达 CUDA 软件护城河、服务其"甄悟（Zhenwu）"系列 AI 芯片</strong> —— 系 <strong>7 月 18 日</strong>在 WAIC 宣布（SCMP 首发），非 19 日。来源：<a class="src" href="https://www.scmp.com/tech/tech-war/article/3361048/alibaba-targets-nvidias-dominant-software-ecosystem-open-source-ai-stack">SCMP（7/18）</a>。</p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">当日主线是"市场情绪"而非"新硬件"</strong>见要闻 2（Bloomberg：巨头被逼自证 AI 支出）。</p></div><div class="srow"><p><strong class="st">趋势分析类（7/19）</strong>韩媒分析称随着 token 用量到 2030 年将暴增 24 倍，<strong>CXL（内存扩展互连）成为继 HBM 之后的下一个 AI 芯片主战场</strong>，并称英伟达将在下一代 <strong>Vera Rubin</strong> 平台首次引入基于 NAND 的新内存层级 <strong>CMX（Compute Memory Expansion）</strong>。来源：<a class="src" href="https://en.sedaily.com/finance/2026/07/19/token-usage-to-surge-24-fold-by-2030-making-cxl-next-ai">Seoul Economic Daily（7/19）</a>。</p></div><div class="srow"><p><strong class="st">WAIC 芯片看点（背景，7/18）</strong>中国芯片厂商从"比单卡规格"转向"拼整机全栈系统"，华为发布 <strong>Ascend 950 SuperPoD</strong>、平头哥开源 SAIL 软件栈。来源：<a class="src" href="https://finance.biggo.com/news/d1a26539-30bc-414f-ae61-7ee75824403a">BigGo Finance（7/18）</a>。</p></div><div class="srow"><p><strong class="st">背景（非当日）</strong>黄仁勋 <strong>7 月 15 日</strong>在东京开发者活动上否认 Vera Rubin 量产延期传闻，称"已在量产、大量出货在路上"。来源：<a class="src" href="https://www.investing.com/news/stock-market-news/jensen-huangs-key-statements-shaping-nvidias-ai-narrative-93CH-4799226">Investing.com（7/18 汇编）</a>。</p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong>澳大利亚国家 AI 计划</strong>（见要闻 3）——当日最实的监管动作。</p></div><div class="srow"><p><strong class="st">WAIC 治理会（7/17–20 进行中）</strong>本届 WAIC 同期举办"全球人工智能治理高级别会议"，主题聚焦"负责任地发展 AI"。来源：<a class="src" href="https://news.cgtn.com/news/2026-07-19/AI-s-next-frontier-at-WAIC-2026-1OPJDtBlEBy/p.html">CGTN（7/19）</a>、<a class="src" href="https://english.cctv.com/2026/07/18/ARTIq1oydZdePMMNa0lmABHJ260718.shtml">CCTV（7/18 开幕）</a>。</p></div><div class="srow"><p><strong class="st">背景（非当日，标注原始日期，但对理解当日格局很关键）</strong></p></div><div class="srow"><p><strong class="st">白宫正在实际掌控"谁能拿到前沿模型"</strong>CNBC <strong>7 月 17 日</strong>独家——特朗普政府正采取措施控制 OpenAI、Anthropic 最强模型的分发对象；据报曾以安全为由拦下 Anthropic 两款模型。这被评论为"美国政府在没有立法、没有专门监管机构的情况下，通过一个'自愿'项目获得了对前沿 AI 的事实分发权"。来源：<a class="src" href="https://www.cnbc.com/2026/07/17/white-house-ai-access-anthropic-openai.html">CNBC（7/17）</a>、<a class="src" href="https://thenextweb.com/news/white-house-dictating-frontier-ai-model-access-anthropic-openai">The Next Web（7/18 解读）</a>。7 月 19 日 ChinaTechNews 的"周末综述"对此有转述，属转载非新事件。</p></div><div class="srow"><p>David Sacks <strong>7 月 18 日</strong>就 Kimi K3 警告"美国有输掉 AI 竞赛的风险"。来源：<a class="src" href="https://thehill.com/policy/technology/5975303-david-sacks-us-artificial-intelligence-kimi-k3-moonshot-ai/">The Hill（7/18）</a>。</p></div><div class="srow"><p>联合国"独立国际 AI 科学小组"<strong>7 月 18 日</strong>发布首份初步报告。来源：<a class="src" href="https://www.un.org/independent-international-scientific-panel-ai/sites/default/files/2026-07/en_Preliminary%20Report_.pdf">UN（7/18，PDF）</a>。</p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p><strong>当日主线是宏观情绪面</strong>（见要闻 2 Bloomberg），具体到"某公司 7/19 官宣某轮"的高可信一手消息较少。</p></div><div class="srow"><p><strong class="st">背景（非当日，标注原始日期）</strong></p></div><div class="srow"><p><strong>DeepSeek 约 740 亿美元估值融资 / 备战 A 股 IPO</strong> —— Reuters <strong>7/15</strong> 首发（详见中国 AI 部分）。</p></div><div class="srow"><p><strong>Databricks</strong> 以约 <strong>1880 亿美元</strong>估值进行战略融资、Coatue 领投，预计夏末关闭。来源：<a class="src" href="https://theaiinsider.tech/2026/07/17/databricks-is-raising-a-strategic-round-of-funding-at-a-188b-valuation/">The AI Insider（7/17）</a>。</p></div><div class="srow"><p>本周（截至 7/18）最大 10 笔融资中，<strong>Fireworks AI 融 15 亿美元</strong>、估值 175 亿美元居首。来源：<a class="src" href="https://news.crunchbase.com/venture/biggest-funding-rounds-ai-defense-fintech-robotics/">Crunchbase News（7/18）</a>。</p></div><div class="srow"><p>印度：AI 公司 <strong>Emergent</strong> 融 1.3 亿美元 C 轮、晋升独角兽（估值 15 亿美元）。来源：<a class="src" href="https://indianstartupnews.com/funding/indian-startups-raised-over-297-million-from-july-13-to-july-18-2026-ai-startup-emergent-tops-the-list-12179154">Indian Startup News（7/18–19）</a>。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
