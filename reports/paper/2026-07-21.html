@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28186%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2255%22%20r%3D%2226%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2217%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型多几条"记事本"——把用了十年的残差连接，变成第三条 scaling 轴</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-21</span></div>
+  <h1 class="doc">让模型多几条"记事本"——把用了十年的残差连接，变成第三条 scaling 轴</h1>
+  <div class="dateline"><span>全文 <b>4,539</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">xHC: Expanded Hyper-Connections</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.14530</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Xiangdong Zhang, Shaofeng Zhang, Yu Cheng, Junchi Yan 等 13 人</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">上海交大 AI 学院 · 小红书 Dots Studio · 中科大 · 北大 · 港中文</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-16</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-21.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-21.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 当窗口 45 赞（top-5，纯架构机理类）· 通讯作者严骏驰(SJTU)· 18B/28B MoE 真规模 + scaling-law 曲线 · 血统线：字节 Seed(HC, ICLR2025)→DeepSeek(mHC, 含梁文锋)→本篇</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, residual-stream, scaling, memory, pretraining</span></div></div><div class="tools"><a class="btn hot" href="2026-07-21-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：那根"加回去"的线</a><a class="t-h2" href="#s4">2. 困境：一本记事本，写多了会互相盖掉</a><a class="t-h2" href="#s5">3. 旧路：字节先把"一本"改成"好几本"（Hyper-Connections）</a><a class="t-h2" href="#s6">4. 转折：为什么大家都停在 N=4？作者把两个瓶颈拆开了</a><a class="t-h2" href="#s7">5. 解法：写得更花 + 读全部却只写几条</a><a class="t-h2" href="#s8">6. 结局：几乎白送的 +4 分，和一个"必须读全部才敢只写几条"的反直觉</a><a class="t-h2" href="#s9">7. 内核（走出门带走的那颗种子）</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源，3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝产品判断）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇不是又一篇刷分或套场景的论文，它动的是 Transformer 里<strong>用了近十年、几乎没人再碰过的那根最底层的线——残差连接（residual connection，就是每一层算完之后 <code>x = x + 层的输出</code> 那个"加回去"的动作）</strong>。它的主张一句话：这根线其实可以变成<strong>第三条把模型做强的轴</strong>——除了"把模型加宽（width）"和"把模型加深（depth，堆更多层）"之外，还能"把这根残差主干加粗成很多条并行的记事本"，而且几乎不花额外算力。</p><p>选它的三个理由：</p><ol class="ls"><li><strong>命中"能力/机理往前拱"而不是"应用刷分"</strong>——它开了一条新的 scaling 维度（残差流扩展 = 一种"记忆/状态"的扩展），正好是思染要追的"模型往哪进化"。</li><li><span class="lk">信号够硬</span>HuggingFace 当窗口 45 赞、在一堆机器人/视频生成的花活里挤进 top-5（纯架构机理类论文能拿这个票数不容易）；上海交大严骏驰组 + 小红书 Dots Studio + 中科大/北大/港中文；实验是 <strong>18B 和 28B 的 MoE 真规模模型</strong>（不是玩具），还画了正经的 scaling-law 曲线。</li><li><span class="lk">血统是一条漂亮的国产前沿接力</span>这根线的上一棒是<strong>字节跳动 Seed 团队</strong>的 Hyper-Connections（ICLR 2025），再上一棒是 <strong>DeepSeek 团队（作者名单里有梁文锋）</strong>的 mHC，这篇是上交/小红书把它推到能真正"加粗"的一步。三家中国前沿实验室接连重写同一根最底层的线，本身就是值得思染看的一条脉络。</li></ol><blockquote><p>一句诚实话：这篇的绝对票数不算"地标级"（不像 06-19 Kairos 那种 730 赞），但它在<strong>架构机理</strong>这个近期台账几乎空白的方向上（最近 10 天全是 RL/蒸馏/具身），是当窗口最有"进化逻辑"含量的一篇。宁挑这个，不硬凑一篇具身/RL 续集。</p></blockquote><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：那根"加回去"的线</h2><p>先把主角摆到台上。今天的主角不是某个大模型，是 Transformer 每一层里最不起眼的一个动作：<strong>残差连接</strong>。</p><p>它长这样：一层神经网络算出一个结果 <code>F(x)</code>，我们不直接用 <code>F(x)</code> 当这层的输出，而是写成 <code>x + F(x)</code>——把这层算的东西<strong>加回到进来的那个 x 上</strong>。这个"加回去"的动作，从 2015 年的 ResNet 起、2017 年被搬进 Transformer，之后近十年基本没动过。它太成功、太理所当然，以至于大家默认它就该是这样。</p><p>打个思染日常里铁定懂的比方：<strong>这根残差主干，就像一本从第一层一直传到最后一层的"共享记事本"。</strong> 每一层干完活，都把自己的笔记<strong>加</strong>到这本记事本的同一页上；下一层进来先读这本记事本，再写、再往下传。整个模型从头到尾，就靠这<strong>一本</strong>记事本攒信息。</p><h2 id="s4">2. 困境：一本记事本，写多了会互相盖掉</h2><p>问题就出在"<strong>一本</strong>"上。</p><p>所有层共用一本记事本、而且是往同一页上<strong>累加</strong>，会有两个老毛病，业界早就发现了（专门有个词叫"seesaw 跷跷板效应"——你摁下这头，那头就翘起来）：</p><ul class="ls"><li>一头是<strong>梯度消失</strong>：记事本传太多层，最早那几层写的东西对最后的影响越来越弱，训练时"该往回传的修正信号"传不回去。</li><li>另一头是<strong>表示塌缩</strong>（representation collapse）：如果为了让信号传得动、把每层写的东西权重都调很重，又会让相邻层的笔记越来越像、糊成一团，层与层之间失去区分度。</li></ul><p>摁下梯度消失，表示塌缩就翘起来；反过来也一样。<strong>一本记事本，天生就在这两个毛病之间被迫二选一。</strong> 这就是主角撞的墙。</p><h2 id="s5">3. 旧路：字节先把"一本"改成"好几本"（Hyper-Connections）</h2><p>第一个转过这个弯的是<strong>字节跳动 Seed 团队</strong>，2024 年的 <strong>Hyper-Connections（超连接，简称 HC）</strong>，中了 ICLR 2025。</p><p>他们的想法很直接：<strong>既然一本记事本不够，那就把它变成 N 本并行的记事本</strong>（论文里叫"把残差流 residual stream 展宽成 N 条并行流"）。不再是所有层都往同一页加，而是有 N 条并行的信息流；每一层进来时，可以<strong>学着决定</strong>从这 N 条里怎么读、算完之后往这 N 条里怎么写——"连接强度"变成可学习的参数，而不是死板的"就加回去"。</p><p>效果立竿见影：从 N=1（就是老的单条残差）加到 N=4，性能明显涨。这一下把"残差主干"从一根<strong>没法调的死管子</strong>，变成了一个<strong>可以调、可以变宽</strong>的东西。业界看到 N=1→4 的收益，开始意识到：<strong>"记事本的条数"可能是一条新的 scaling 轴。</strong></p><p>但 HC 有个副作用：把残差流展宽、让连接强度乱调，会<strong>破坏残差连接原本的"恒等映射"性质</strong>（identity mapping——就是"x 至少能原封不动传下去"这个保底通道）。保底通道一破，训练就不稳，规模一大就容易崩。</p><p>于是有了第二棒：<strong>DeepSeek 团队的 mHC（Manifold-Constrained Hyper-Connections，流形约束超连接）</strong>（作者名单里有梁文锋）。他们的修法：把 HC 那套乱调的连接<strong>约束到一个特定的"流形"上</strong>（流形 manifold 这里可以先粗略理解为"一块受限的、性质良好的取值区域"——不让参数满世界乱跑，只在这块安全区里动），<strong>恰好把"恒等映射"这个保底通道找回来</strong>，训练就稳了，能上规模。</p><p>到这里，"多本记事本"这条路看似走通了。<strong>但所有人都卡在 N=4，再往上加就不划算了。</strong> 为什么？这就是这篇论文要回答的。</p><h2 id="s6">4. 转折：为什么大家都停在 N=4？作者把两个瓶颈拆开了</h2><p>xHC 的作者做的第一件事，不是急着往上堆，而是先问：<strong>从 N=4 加到 N=16，为什么收益几乎没了、成本却暴涨？</strong> 他们拆出两个瓶颈：</p><p><strong>瓶颈一：写回去的信息太单一（write-back 信息不足）。</strong> mHC 里，每一层往那 N 本记事本里写的时候，<strong>手上只有一份东西可写——就是这层的输出 <code>out</code></strong>。不同的记事本可以给这份东西配不同的权重（这本写重点、那本写轻点），但<strong>没有人能拿到一份"不一样的内容"</strong>。结果是：记事本从 4 本加到 16 本，多出来的那些本，翻来覆去写的都是同一份 <code>out</code> 的缩放版，<strong>互相冗余，等于白加</strong>。（论文 Figure 5 佐证：N 越大，"给写回内容增加多样性"带来的收益越大——正说明这个瓶颈随 N 恶化。）</p><p><strong>瓶颈二：算"怎么混"的成本随 N 立方级暴涨（cubic cost）。</strong> 每一层要决定"这 N 本记事本之间怎么互相混合"，就得算一个 N×N 的混合矩阵，一共 N² 个系数，而生成这些系数的投影成本是 <strong>O(N³·C)</strong>（C 是特征维度）——<strong>随 N 的三次方涨</strong>。N=4 时无所谓；到 N=16，光这一项 mHC 就多花 32% 的算力（FLOPs），换来的 loss 只降了 0.006——<strong>极其不划算</strong>。</p><p>把这两个瓶颈一拆开，解法方向就清楚了：<strong>（一）得让每层写回去的内容"更多样"而不是"更多份同样的"；（二）得让"算怎么混"的成本别随 N 立方爆炸。</strong></p><h2 id="s7">5. 解法：写得更花 + 读全部却只写几条</h2><p>xHC 针对两个瓶颈，给了两招，外加一个工程优化。</p><p><strong>招一（治瓶颈一）——时序特征增强（temporal feature augmentation）：把一份 <code>out</code> 变成好几份不一样的。</strong> 既然每层只有一份输出 <code>out</code> 可写、写多了就冗余，那就<strong>当场把这一份加工成好几份不同视角的</strong>。具体做法：对这层的输出，用<strong>因果深度可分离一维卷积</strong>（causal depthwise 1D convolution——通俗说就是"只看当前 token 和它前面若干个 token、做一个滑窗加权"，"因果"指绝不偷看后面的 token）分别用 <strong>3 个不同窗口大小 {4, 8, 12}</strong> 扫一遍，得到"看 4 个 token 的视角、看 8 个的视角、看 12 个的视角"三份，加上原始那份，一共 4 份。再用 <strong>Gram-Schmidt 正交化</strong>（一个线性代数标准操作，作用是"把这几份里互相重叠的部分减掉，只留下彼此独立、不重复的信息"）把这 4 份彼此拉开、去掉冗余。这样每层就有 4 份<strong>内容真不一样</strong>的东西可以往不同记事本里写了——多出来的记事本终于有"新料"可存，不再是复读机。关键是：这一步几乎不增加每条流的计算量。</p><p><strong>招二（治瓶颈二）——稀疏残差流：读全部，只写几条。</strong> 这是全篇最漂亮的一招，也是最反直觉的地方。既然"算 N×N 怎么混"的成本随 N 立方爆炸，那就<strong>别每层都去动全部 16 条</strong>。xHC 把"读"和"写"拆成不对称的两半：</p><ul class="ls"><li><span class="lk">读——密集（dense read）</span>每一层进来时，仍然<strong>从全部 N=16 条记事本里读</strong>（把 16 条按学到的权重加权汇总成输入）。信息流不断。</li><li><strong>写——稀疏（sparse write，k=4）</strong>：算完之后，只<strong>挑 4 条</strong>记事本来更新（用一个"路由器 router"给 16 条打分、选出 top-4；其中固定留 2 条永远在线，保证总有稳定通道）。只有这被选中的 4 条走那套"混合+写回"，于是"算怎么混"的成本从 <strong>O(N³·C) 掉到 O(k³·C)</strong>——从 16³ 变成 4³，<strong>成本回到 N=4 的水平，容量却是 N=16</strong>。没被选中的 12 条原样往下传。</li></ul><p><strong>招三（工程优化）——xHC-Flash：把内存搬运量压下来。</strong> 16 条记事本传来传去，内存带宽是新负担。xHC-Flash 把每个子层的内存搬运量从 <strong>73.5C 压到 40C</strong>，逼近 mHC 在 N=4 时的 <strong>34C</strong>——也就是说，<strong>享受 16 条流的能力，付的却是接近 4 条流的内存代价</strong>。</p><h2 id="s8">6. 结局：几乎白送的 +4 分，和一个"必须读全部才敢只写几条"的反直觉</h2><p>解出来世界变了什么样：</p><ul class="ls"><li><span class="lk">18B 的 MoE 模型上</span>xHC 的下游平均分 <strong>48.8</strong>，mHC 是 44.8，原始（vanilla）是 40.6——<strong>比 mHC 高 4.0 分、比原始高 8.2 分，而训练算力只多了 4.1%</strong>。</li><li><span class="lk">28B 的 MoE 模型上</span>xHC <strong>53.6</strong> vs mHC 50.5 vs 原始 47.8——<strong>比 mHC 高 3.1 分，只多 3.0% 算力</strong>。</li><li><span class="lk">换算成"要多少算力才能追平"</span>想达到 xHC 同样的 loss，原始模型要花 <strong>1.50 倍</strong>算力、mHC 要花 <strong>1.19 倍</strong>算力。等于 xHC 用一份算力干了别人 1.2~1.5 份的活。</li><li><strong>N=4→16 的收益对比</strong>（2.5B 上）：mHC 加上去 loss 只降 0.006、算力却涨 32%；xHC 加上去 <strong>loss 降 0.012、算力只涨 4%</strong>——<strong>瓶颈真的被拆掉了，"加记事本"重新变得划算</strong>。</li></ul><p>最反直觉的副发现（往往最有意思的那颗）：<strong>"读"必须密集，"只写几条"才敢成立。</strong> 消融实验里，如果你把"密集读 + 固定通道"一起拿掉、变成"又稀疏读又稀疏写"，loss 从 1.983 一下退到 1.997——<strong>几乎把全部好处都赔光了。</strong> 原因很微妙：一条记事本在第 L 层被更新了，<strong>不保证第 L+1 层还会选中它</strong>；如果这时连"读"也是稀疏的、只读被选中的几条，那早先写进某条流的信息就会<strong>被搁浅、传不下去</strong>。解法就是让"读"永远是全的——所有层都能看到完整的 16 条状态，于是"每层只写 4 条"才不会丢信息。<strong>读要广、写要窄，这个不对称设计才是真正的胜负手</strong>，不是"稀疏"两个字本身。</p><h2 id="s9">7. 内核（走出门带走的那颗种子）</h2><p><strong>Transformer 从头到尾只有一本"共享记事本"（残差主干），一切信息都往同一页上累加、后写的会稀释先写的；这篇的贡献是把它变成 16 本可学习、可路由的并行记事本，让模型多出一大块"持久工作记忆"——而且几乎不花额外算力。它证明了：模型变强的第三条路，不是加宽、不是加深，而是"加粗那根被忽视了十年的残差主干"。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源，3 层）</h1><p>顺着"重写残差连接"这条线，往回读三层，能看到一个能力是怎么一步步长出来的：</p><ul class="ls"><li><span class="lk">第 0 层（地基·人人都懂的那根线）</span><strong>残差连接</strong>（ResNet 2015 → Transformer 2017）。<code>x = x + F(x)</code>，一根从头传到尾的单一恒等主干。十年没人动，因为它"够用、够稳"。</li><li><strong>第 1 层（字节 Seed·把一根变多根）</strong>：<strong>Hyper-Connections / HC</strong>（arXiv 2409.19606，ICLR 2025）。诊断出单条残差在"梯度消失 ↔ 表示塌缩"之间的跷跷板困境，把残差流<strong>展宽成 N 条、连接强度可学</strong>。首次把"记事本条数"提出来当一条可能的 scaling 轴，但破坏了恒等映射、规模一大就不稳。</li><li><strong>第 2 层（DeepSeek·把它调稳）</strong>：<strong>mHC / Manifold-Constrained HC</strong>（arXiv 2512.24880，作者含梁文锋）。用流形约束<strong>把恒等映射这个保底通道找回来</strong>，解决 HC 的训练不稳，能上规模——但和所有人一样，卡在 N=4，再加不划算。</li><li><strong>第 3 层（本篇·上交/小红书·把它真正加粗）</strong>：<strong>xHC</strong>。第一个把 N 从 4 推到 16 还划算的方法：<strong>多样化写回</strong>（时序增强破"写回冗余"）+ <strong>读全写少的稀疏残差流</strong>（破"立方成本"）+ <strong>Flash 内存优化</strong>。把"残差流扩展"从一个卡住的想法，变成<strong>能真正上大规模预训练的第三条 scaling 轴</strong>。</li></ul><p>一条清楚的暗线：<strong>中国三家前沿实验室（字节→DeepSeek→上交/小红书）接力重写了 Transformer 最底层、被默认了十年的那根线。</strong> 这本身就说明：前沿竞争已经卷到"重新审视人人认为理所当然的基元"这一层了。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型往哪进化了</h2><p>过去我们谈"把模型做强"，脑子里默认两条轴：<strong>加宽</strong>（更多参数）和<strong>加深</strong>（更多层）。这两条都直接吃算力和显存。xHC 把一条<strong>长期被无视的第三轴</strong>摆上桌：<strong>扩展"状态/记忆"本身——把残差主干从 1 条加粗到 16 条并行流，几乎不加 FLOPs 就多出一大块持久工作记忆。</strong></p><p>这对"追前沿"的手感很重要：<strong>下一波效率红利，可能不来自"更大的模型"，而来自"重新审视那些被默认了十年、没人再碰的基元"</strong>（残差连接、注意力、位置编码……）。谁能在一个所有人都视为理所当然的地方，找到一条几乎白送容量的轴，谁就赢了 1.2~1.5 倍的算力效率。看新模型时，除了看参数量，要多问一句：<strong>它是不是在某个"便宜的容量轴"（状态/记忆/稀疏化）上做了文章？</strong></p><h2 id="s13">能怎么用（提示词 &amp; 京小贝产品判断）</h2><p>这篇的机理，翻译成思染每天在做的"上下文/记忆管理"，有四条能直接落地的启发：</p><ol class="ls"><li><strong>别把所有东西塞进"一本记事本"。</strong></li></ol><p>残差主干 = 模型的共享记事本；一个扁平的大 prompt / 大上下文窗口，就是产品侧的"单条残差流"——用户画像、当前对话、检索到的事实、任务草稿全累加在同一坨里，<strong>后塞进去的会稀释先前确立的</strong>（这正是长对话里"模型忘了开头设定"的机理同构）。xHC 的解法翻译过来：<strong>给不同种类的状态开不同的"通道/记忆槽"</strong>（画像一槽、当前会话一槽、检索事实一槽、任务 scratchpad 一槽），别糊成一坨。京小贝的多轮理财对话尤其吃这个——把"用户风险偏好/持仓事实/本轮意图"分槽维护，后面的推理步才能干净地"读回"早先确立的事实，而不是被新内容盖掉。</p><ol class="ls"><li><strong>读要广、写要窄（这篇最反直觉、也最可迁移的一条）。</strong></li></ol><p>xHC 的胜负手不是"稀疏"，是"<strong>读全部、只写几条</strong>"这个不对称。搬到 agent/记忆系统设计：<strong>每一步让模型能读到完整的状态，但只更新它这一步真正改动的那几个槽</strong>——不要每轮把整个 memory 全量重写（又贵又容易把没动的东西写坏）。这对京小贝这类"多轮 + 有长期记忆"的产品是省钱又稳的架构原则。</p><ol class="ls"><li><strong>加"更多份一样的"没用，要加"不同视角的"。</strong></li></ol><p>瓶颈一的教训：光把记事本从 4 本加到 16 本、每本写同一份东西，纯冗余、白花钱；真正有用的是"时序增强"给出<strong>内容不同</strong>的写回。对提示词同理：<strong>往上下文里堆更多相似的例子/重复的说明，是冗余；真正抬性能的是给同一信息不同粒度、不同角度的表述</strong>（一句话摘要 + 结构化字段 + 具体样例，各占一个"视角"）。少而多样 &gt; 多而重复。</p><ol class="ls"><li><strong>"简单赢复杂"又添一例，可做回归锚。</strong></li></ol><p>消融里，那些"更花哨"的设计（更复杂的映射器变体）反而没赢过最朴素的稀疏设计——这和台账里 06-21/06-27/07-04 反复出现的规律一致：<strong>在一个新机制上，先上最朴素的版本、把它调对，往往打得过一堆更聪明的花活。</strong> 做京小贝的功能迭代时，这是个好默认：新点子先出最简实现打底线，别一上来就上复杂结构。</p><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2607.14530">https://arxiv.org/abs/2607.14530</a> （xHC: Expanded Hyper-Connections，2026-07-16）</li><li>上一棒 HC：<a class="src" href="https://arxiv.org/abs/2409.19606">https://arxiv.org/abs/2409.19606</a> （Hyper-Connections，字节 Seed，ICLR 2025）</li><li>上上棒 mHC：<a class="src" href="https://arxiv.org/abs/2512.24880">https://arxiv.org/abs/2512.24880</a> （Manifold-Constrained Hyper-Connections，DeepSeek，作者含梁文锋）</li><li>信号佐证：HuggingFace Daily Papers 当窗口榜（45 赞，<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a> ）</li><li>关键数字（18B +4.0 / 28B +3.1 / 1.50×·1.19× 追平算力 / 73.5C→40C 内存 / N=4→16 loss 0.012@+4%）：均取自论文 HTML 版正文与 Table 2、Table 4、Figure 1/5</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
