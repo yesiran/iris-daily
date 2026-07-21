@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28331%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2256%22%20r%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2226%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2212%22%20r%3D%227%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RL 不是发电机，是矿工——推理能力的上限在预训练时就被锁死了</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-22</span></div>
+  <h1 class="doc">RL 不是发电机，是矿工——推理能力的上限在预训练时就被锁死了</h1>
+  <div class="dateline"><span>全文 <b>3,696</b> 字</span><span>约 <b>10</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Understanding Reasoning from Pretraining to Post-Training</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.16097</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Jingyan Shen, Ang Li, Pavel Izmailov, Salman Rahman, Yifan Sun, Micah Goldblum, Matus Telgarsky</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">纽约大学(NYU) · 哥伦比亚大学 · UIUC · UCLA · Modal Labs</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-17</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-22.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-22.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily 21 赞（信号偏弱·诚实标注，靠"血统+正中前沿争论"选入）· 作者含 Pavel Izmailov / Matus Telgarsky / Micah Goldblum（顶尖ML研究者）· 代码+模型全开源(pre2post-chess)</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, reasoning, rl, scaling-law, interpretability, science-of-llm</span></div></div><div class="tools"><a class="btn hot" href="2026-07-22-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角：一群想把 RL 放到显微镜下看清楚的人</a><a class="t-h2" href="#s4">2｜困境：两个最基本的问题，一个都答不上</a><a class="t-h2" href="#s5">3｜旧路：三条路都走不通</a><a class="t-h2" href="#s6">4｜转折：把国际象棋当"受控显微镜"</a><a class="t-h2" href="#s7">5｜解法：联合 scaling law + 按难度解剖 RL</a><a class="t-h2" href="#s8">6｜结局：三个能复述的发现 + 一个反直觉炸弹</a><a class="t-h2" href="#s9">7｜内核：基座是矿，RL 是矿工</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">怎么用（提示词 &amp; 京小贝产品判断）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇不是"又一个把分刷高零点几"的论文，它回答的是一个<strong>当下全行业吵得最凶、却谁也没证据的根本问题</strong>：用强化学习（RL）做后训练，到底是"教会了模型新的推理能力"，还是"只是把模型本来就会的东西挑出来用得更利索"？</p><p>选它三个理由：</p><ol class="ls"><li><strong>正中前沿争论的靶心。</strong> 2025 年那篇著名的 "Does RL Really Incentivize Reasoning Beyond the Base Model?" 说"RL 只是把基座里已有的答案 sharpen（锐化/挑出来），并没有扩展模型的能力边界"。这篇用一个能完全控制变量的实验，给出了比"是"或"否"都更细的答案——<strong>易题上确实只是锐化，难题上却真能挖出基座里"几乎沉默"的正确解</strong>。</li><li><strong>血统够硬（弥补 HuggingFace 只有 21 赞的弱信号）。</strong> 作者里 Pavel Izmailov（前 OpenAI 推理团队）、Matus Telgarsky（做深度学习理论的知名学者）、Micah Goldblum，都是"研究模型本身机理"这一派的硬核人。这类"科学解剖"论文的特点就是当天投票不高、但半年后被反复引用——引用数当"信号"在这里失灵，血统和方向才是真信号。诚实说：它 HF 榜信号偏弱，是靠内容选进来的。</li><li><strong>对思染是"认知底座"级的一篇。</strong> 它直接回答"模型进化靠什么"——不是玄学，是<strong>预训练 loss 几乎完美预测后训练能达到的天花板</strong>。这对京小贝换模型、评估"这个模型微调后能不能追上"，是一条产品生死线。</li></ol><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角：一群想把 RL 放到显微镜下看清楚的人</h2><p>主角是"推理能力"这件事本身，和一群不甘心的研究者。今天所有前沿模型（DeepSeek-R1、o 系列那一路）变强，靠的都是同一招：<strong>RL 后训练</strong>——模型先预训练读海量文本，再用强化学习去练解题。"强化学习"这里就是：让模型自己做题，做对了给奖励、做错了不给，反复练，模型慢慢把"能拿奖励的做法"的概率调高。</p><p>问题是：<strong>这一招每天在用，但没人真正看清它对模型内部做了什么。</strong> 这群人想把它拆开看个明白。</p><h2 id="s4">2｜困境：两个最基本的问题，一个都答不上</h2><p>后训练时代，两个问题基础到不该没答案，却真没有：</p><ul class="ls"><li><span class="lk">问题 A</span>预训练那一步（模型多大、读多少数据）到底怎么决定后面 RL 能拿多少回报？换句话说——花在 RL 上的算力，回报是被前面那一步锁死的吗？</li><li><span class="lk">问题 B</span>RL 到底对模型做了什么？是<strong>教会</strong>了它新招（原来不会，现在会了），还是只是把它<strong>本来就会但不常用</strong>的招挑出来放大？</li></ul><p>解不了会怎样？会一直在黑箱里烧钱：不知道该把算力更多投给预训练还是投给 RL，也不知道换个更强的基座值不值。<strong>利害就是钱和方向。</strong></p><h2 id="s5">3｜旧路：三条路都走不通</h2><ul class="ls"><li><span class="lk">旧路一</span>把预训练和 RL 分开研究。各研究各的 scaling law（规模定律，就是"投入越多、能力越强"的那条经验曲线），两条线从不缝在一起，于是"预训练怎么影响 RL"这个交界处永远是空白。</li><li><span class="lk">旧路二</span>直接在真实大模型上做实验回答问题 B。做不了——真实模型的预训练语料是几万亿 token 的互联网大杂烩，完全不可控，你根本没法把"这个行为是预训练带来的还是 RL 带来的"归因清楚。</li><li><span class="lk">旧路三</span>靠嘴仗。"RL 只锐化不扩展"派 vs "RL 能教新能力"派，吵了一年，因为<strong>谁也拿不出一个能完全控制变量的干净实验</strong>。</li></ul><h2 id="s6">4｜转折：把国际象棋当"受控显微镜"</h2><p>作者的关键转弯：<strong>不在真实语言模型上纠缠，改用国际象棋当受控实验台。</strong></p><p>为什么象棋是天才选择？因为它同时满足三个真实 LLM 给不了的条件——</p><ul class="ls"><li><span class="lk">封闭可控</span>棋局的"语料"你可以自己造、自己配比，干干净净，能精确归因。</li><li><span class="lk">对错可验证</span>一步棋是不是最优解，象棋引擎一秒判定，不需要人打分（这正是 RL 需要的"可验证奖励"）。</li><li><span class="lk">可负担地跑全流程</span>象棋模型小，作者能从 500 万参数一路跑到 10 亿参数、<strong>10 个不同大小</strong>，每个都完整走一遍"预训练 → 监督微调 → RL"，把每个变量单独拧动看结果。这在真实 LLM 上贵到做不起。</li></ul><p>一句话：他们造了一个能把"预训练→RL"整条流水线放到显微镜下、逐个变量拧的沙盘。</p><h2 id="s7">5｜解法：联合 scaling law + 按难度解剖 RL</h2><p>具体两件事：</p><p><strong>（1）建一条"联合 scaling law"</strong>，把预训练和 RL 缝到一根公式里。先解释几个词，全落地：</p><ul class="ls"><li><strong>预训练 loss（pretraining loss）</strong>：模型读文本时"预测下一步"的平均错误程度，越低说明模型把这个领域学得越透。它是衡量"基座有多好"的单一数字。</li><li><span class="lk">pass@1 / pass@16</span>给模型一道题，只让它答 1 次、答对的比例叫 pass@1（衡量"一发入魂"的准头）；让它答 16 次、只要有 1 次对就算对，叫 pass@16（衡量"这题它到底会不会、多试几次能不能蒙对"，反映的是能力的"广度/多样性"）。这两个指标的分野是本文最锋利的刀。</li><li><strong>compute-optimal allocation（算力最优分配）</strong>：总算力固定，该分多少给预训练、多少给 RL 才最划算。</li></ul><p><strong>（2）按题目难度把 RL 的动作解剖成三类</strong>（这是本文最狠的地方）。他们把 RL 训练前后模型的变化拆开，看每一步棋的概率被 RL 怎么改了：</p><ul class="ls"><li><span class="lk">"放大已会的正确招"</span>这招 SFT（监督微调后的）模型本来就偏爱，RL 只是把它的概率调得更高——这就是"锐化/sharpen"。</li><li><span class="lk">"挖出几乎沉默的正确招"</span>这招在 RL 之前概率低到几乎为零，RL 把它从"沉默"里捞了出来——这才是"发现新能力"。</li><li><span class="lk">"强化错招"</span>RL 也会把某些错误走法的概率调高——这是副作用。</li></ul><p>用这两件工具，他们就能同时回答问题 A（scaling law）和问题 B（三类动作的占比）。</p><h2 id="s8">6｜结局：三个能复述的发现 + 一个反直觉炸弹</h2><p><strong>发现一：预训练 loss 几乎"算命式"地预测后训练能达到的高度。</strong> 预训练 loss 越低，同样的 RL 算力下最终得分越高，两者相关性 ρ（斯皮尔曼相关系数，衡量两个量"同涨同跌"有多齐，1 是完美同步）高达 <strong>−0.93 到 −0.99</strong>（负号是因为 loss 越低分越高，几乎是一条完美反比直线）。而且 <strong>RL 的进步速度随预训练 token 量近似线性上涨</strong>（相关性 r = +0.84）。翻译成人话：<strong>基座练得越透，RL 的杠杆越长。</strong></p><p><strong>发现二：算力该怎么分——RL 的份额随总预算增大而上升。</strong> 从约 <strong>20%</strong>（5000 万参数规模）涨到约 <strong>28%</strong>（6.8 亿参数规模）。预算越大，越值得多分给 RL。但——</p><p><strong>发现三（最关键）：RL"强烈受初始化限制"。</strong> 原文：<em>"RL is strongly initialization-limited"</em>——在总预算相同的情况下，<strong>过早开始 RL（省下预训练、把算力挪给 RL）换来的那点额外 RL 算力，补不回一个更弱的基座</strong>。基座弱，RL 再猛也追不回来。</p><p><span class="lk">问题 B 的答案（按难度分裂）</span></p><ul class="ls"><li><span class="lk">易题</span>约 <strong>80%</strong> 是"放大已会的正确招"——RL 基本只是锐化，印证了"RL 只 sharpen"那派。</li><li><span class="lk">难题</span>约 <strong>35%</strong> 是"挖出几乎沉默的正确招"（真发现），但同时约 <strong>30%</strong> 是"强化错招"（真副作用）。<strong>所以在难题上，RL 确实能教出基座里近乎没有的解法——但也会同样自信地把错招练得更牢。</strong></li><li><span class="lk">一个照妖镜指标</span>RL 让 pass@1（准头）全面上涨，但 pass@16（多试几次会不会）<strong>几乎不动、大模型上还会退化</strong>。这解释了为什么"多采样投票"救不了难题——RL 没有真正拓宽能力的"广度"，只是把已有分布压得更尖。</li></ul><p><span class="lk">math 上复现</span>换成一个 10 亿参数、读了 2000 亿 token 数学文本的真语言模型，<strong>同样的规律再现</strong>——预训练读得越久，后训练天花板越高、RL 起效越快。说明这不是象棋特例，是通用规律。</p><p><span class="lk">反直觉炸弹</span>大家常假设"RL 后的策略 = 把 SFT 策略整体升温（π_RL ∝ π_SFT 的 α 次方，一个均匀的温度调节）"。作者一测，<strong>这个假设只能勉强拟合</strong>——说明 RL 干的不是"整体均匀升温"，而是<strong>因题、因局面而异的定点重塑</strong>：它在不同难度、不同棋局上做的事完全不一样。这一刀直接否掉了"RL=统一调温"的朴素直觉。</p><h2 id="s9">7｜内核：基座是矿，RL 是矿工</h2><p>带走这一句就够了：<strong>RL 不是一台能无中生有的发电机，它是一个矿工。</strong></p><p>预训练把"潜在的推理能力"像矿脉一样埋进模型；RL 是去开采。<strong>富矿（好基座）才挖得出金子——这就是"初始化受限"。</strong> 但在难题上，好矿工确实能挖出矿脉里那些"几乎沉默、你以为没有"的金子（真发现），代价是也会挖出一堆假金子（强化错招）。所以答案不是非黑即白的"RL 只 sharpen"或"RL 教新能力"，而是：<strong>易题上它锐化，难题上它开采+夹带私货，而整座矿山的储量，在预训练那一刻就定死了。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源 3 层）</h1><p><strong>第 1 层——它直接站在谁肩上：</strong> 用"国际象棋当受控实验台研究后训练推理"，本文不是第一个。前面有 <a class="src" href="https://arxiv.org/abs/2604.05134">How Reasoning Evolves from Post-Training Data: An Empirical Study Using Chess</a>、<a class="src" href="https://arxiv.org/abs/2507.00726">Can LLMs Develop Strategic Reasoning? Chess</a>，以及研究"预训练/中训练/RL 三者相互作用"的 <a class="src" href="https://arxiv.org/abs/2512.07783">On the Interplay of Pre-Training, Mid-Training, and RL</a>。本文的独创，是<strong>第一次把预训练和 RL 缝进同一条 scaling law，并把 RL 的动作按难度定量解剖</strong>。</p><p><strong>第 2 层——它在回答谁的争论：</strong> 上游是 2025 年那场大辩论——<a class="src" href="https://arxiv.org/abs/2504.13837">Does RL Really Incentivize Reasoning Capacity Beyond the Base Model?</a>（Yue 等）用"RL 后 pass@k 不涨"论证"RL 只是把基座里已有的解锐化出来，没有扩展能力边界"。本文用可控实验给了更精细的裁决：<strong>pass@16 确实几乎不动（支持"锐化"派）；但把动作按难度拆开后，难题上 RL 又确实挖出了近乎沉默的正确解（打了"纯锐化"派一巴掌）。</strong> 两派其实都对了一半。</p><p><strong>第 3 层——根在哪：</strong> 再往下，一条根是 <strong>RLVR（Reinforcement Learning with Verifiable Rewards，用"可自动判对错的奖励"做强化学习）</strong>——DeepSeek-R1 那条把推理能力做起来的主线；另一条根是 <strong>Chinchilla scaling law</strong>（2022 年那条"模型多大、数据多少最划算"的预训练规模定律）。本文的历史意义，是把这<strong>两条从不相交的 scaling 传统焊成一条联合定律</strong>——预训练的地基定律，第一次被接到了后训练的能力天花板上。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p>后训练时代最大的幻觉是"<strong>用 RL 就能救一个弱基座</strong>"。这篇给了钉死的定量证据：<strong>post-RL 的天花板由预训练 loss 锁死，RL 是有杠杆的放大器，不是无中生有的发电机。</strong> 前沿的关注点因此在挪——从"给 RL 堆更多算力"转向"<strong>预训练和 RL 的联合算力分配</strong>"，而且随着总预算变大，该分给 RL 的比例是上升的（20%→28%）。这是一条"从堆量到配比"的成熟化信号。</p><h2 id="s13">怎么用（提示词 &amp; 京小贝产品判断）</h2><ol class="ls"><li><strong>选基座 = 选天花板，别信"微调后能追上"。</strong> 京小贝换模型、评估一个更便宜的小模型能不能通过微调/RL 追上大模型时，"初始化受限"这条定律说：<strong>弱基座的后训练天花板是钉死的，再多后训练也追不回。</strong> 评估时要看 base 的<strong>预训练质量</strong>（数据量、领域 loss），而不是只看厂商给的"RL 后 demo"——demo 好看，可能只是易题上的锐化，难题上的真实能力仍被基座封顶。</li></ol><ol class="ls"><li><strong>难任务必须配"验证/纠错"，不能只靠"让它想久一点"。</strong> 本文的机制说：难题上 RL（乃至推理时的"多想"）<strong>既会挖出沉默的正确解，也会自信地强化错招</strong>。对应到提示词——落在模型"几乎会但没自信"区间的任务，加 think / self-check 的引导能把沉默的正确解逼出来；但真正的难题上它也会把错招讲得同样理直气壮，所以<strong>难任务的产品设计必须外挂验证器/纠错环，"想久一点"本身不产生正确性</strong>。</li></ol><ol class="ls"><li><strong>别指望"多采样投票"救难题。</strong> pass@1 涨、pass@16 不动 = RL 只压尖了分布、没拓宽能力广度。产品里"同一问题多采几条、投票选最优"这招，<strong>在模型基座能力之外的难题上收益有限</strong>；真要抬高难题上限，得回到基座或数据，而不是采样策略。</li></ol><ol class="ls"><li><strong>调 temperature / 加思考预算不是线性的——A/B 要分难度桶看。</strong> "RL≠均匀升温"意味着同一个参数在易题和难题上的效果天差地别。京小贝做提示词/推理配置的 A/B 时，<strong>只看平均分会被易题的收益掩盖难题的退化</strong>——要拆难度桶分别看。这一条和 [[2026-06-22--ufp4-fp4-pretraining-shrinkage-bias]]（"看系统性漂移不看平均分"）、[[2026-07-07--mipu-inference-policy-mirage]]（推理策略才是真目标）是同一个方法论家族：<strong>别被平均数骗，去看分层的、系统性的结构。</strong></li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（abstract）：&lt;<a class="src" href="https://arxiv.org/abs/2607.16097&gt;">https://arxiv.org/abs/2607.16097&gt;</a></li><li>论文全文（HTML）：&lt;<a class="src" href="https://arxiv.org/html/2607.16097v1&gt;">https://arxiv.org/html/2607.16097v1&gt;</a></li><li>代码 + 模型（开源）：&lt;<a class="src" href="https://github.com/pavelslab-nyu/pre2post-chess&gt;">https://github.com/pavelslab-nyu/pre2post-chess&gt;</a></li><li>HuggingFace Daily Papers（21 赞，2026-07-20 榜）：&lt;<a class="src" href="https://huggingface.co/papers/2607.16097&gt;">https://huggingface.co/papers/2607.16097&gt;</a></li><li>作者宣传（可信度佐证）：Pavel Izmailov on X — &lt;<a class="src" href="https://x.com/Pavel_Izmailov/status/2079268684317508020&gt;">https://x.com/Pavel_Izmailov/status/2079268684317508020&gt;</a></li><li>倒读锚·RL 是否扩展能力争论：&lt;<a class="src" href="https://arxiv.org/abs/2504.13837&gt;">https://arxiv.org/abs/2504.13837&gt;</a></li><li>倒读锚·象棋研究后训练前身：&lt;<a class="src" href="https://arxiv.org/abs/2604.05134&gt;">https://arxiv.org/abs/2604.05134&gt;</a> ／ &lt;<a class="src" href="https://arxiv.org/abs/2507.00726&gt;">https://arxiv.org/abs/2507.00726&gt;</a></li><li>倒读锚·预训练×RL 相互作用：&lt;<a class="src" href="https://arxiv.org/abs/2512.07783&gt;">https://arxiv.org/abs/2512.07783&gt;</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
