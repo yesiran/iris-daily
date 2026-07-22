@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28149%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%228%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2215%22%20r%3D%228%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型嘴上说的和心里算的，原来是两条线——Claude 脑子里那张只装得下十几个念头的工作台</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-23</span></div>
+  <h1 class="doc">模型嘴上说的和心里算的，原来是两条线——Claude 脑子里那张只装得下十几个念头的工作台</h1>
+  <div class="dateline"><span>全文 <b>3,625</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>5</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Verbalizable Representations Form a Global Workspace in Language Models</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">无 arXiv（发表于 Anthropic 官方可解释性阵地 Transformer Circuits Thread，非会议/非预印本平台论文）</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Wes Gurnee, Nicholas Sofroniew, Jack Lindsey（通讯）等16人，含 Joshua Batson、Emmanuel Ameisen（《On the Biology of a Large Language Model》原班人马）</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Anthropic（可解释性团队）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-06</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-23.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-23.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">无HF/无arXiv但为Anthropic可解释性团队官方研究首发阵地；MIT Technology Review、VentureBeat 专题报道；LessWrong/Zvi Mowshowitz（"No Space Like J-Space"）等高质量技术社区深度评论与批评；Anthropic官网附带独立学者的 external commentary PDF</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, interpretability, mechanism, global-workspace, reasoning</span></div></div><div class="tools"><a class="btn hot" href="2026-07-23-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h1" href="#s3">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s4">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s5">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天没有选 HuggingFace 今日热榜第一（一个游戏世界模型的推理效率工程），因为严格 7–14 天窗口内的候选（交互世界模型、异步 RL 稳定性修补、数据流水线平台）大多是"把已有能力用得更顺"的工程活，够不上"往前挪一步"的门槛。我把窗口放宽到 17 天，选中 Anthropic 可解释性团队 2026-07-06 发表的这篇——它不发 arXiv、不冲 HuggingFace 榜单（Anthropic 内部可解释性研究一贯走自己的 Transformer Circuits Thread），但分量摆在这：作者是"On the Biology of a Large Language Model"那批人（Joshua Batson、Emmanuel Ameisen 等），方法论第一次给出较强的<strong>因果证据</strong>，证明大模型内部存在一个类似人脑"全局工作空间"的结构，而且直接决定了"模型嘴上说的话，是不是它心里真正在用的东西"。发表后引发 MIT Technology Review、VentureBeat 专题报道，以及 LessWrong 上 Zvi Mowshowitz 等人的长文技术评论和批评——讨论的严肃程度和延展度，都是"真的动了一块地基"的信号，而不是营销话术。对思染追前沿最有价值的地方：这篇论文第一次把"思维链提示词为什么对难题这么关键"这件事,从经验直觉钉成了一个可解释的机制。</p><h1 id="s2">七拍故事</h1><p><strong>主角</strong> — Anthropic 的可解释性团队，和他们新造的一把"透镜"：Jacobian lens（雅可比透镜，简称 J-lens）。他们想问一个听起来很朴素的问题：模型说出来的那句话——包括它写的"思维链"——到底是不是它脑子里真正在算的东西？</p><p><strong>困境</strong> — 这个问题不是好奇心，是整个 AI 安全领域最大的一块心病。所有对齐（让模型言行一致、不说谎、不藏着掖着别的目标）工作，都建立在一个假设上：我们能看懂模型"心里在想什么"。可如果模型嘴上说的和心里算的根本是两套系统——比如它嘴上说"我在按规则做事"，心里其实在算别的——那所有靠"看它怎么说"来做的安全审查都是在看戏而不是看真相。之前的工具都够不着这个问题的核心：<strong>logit lens</strong>（把某一层的中间结果直接投影到词表上，看它"现在最想吐哪个词"）在前几层完全是乱码，因为模型的表示还没转换成最终能读的格式；<strong>tuned lens</strong>（额外训练一个线性变换去修正这个偏差）虽然能看懂了，但学到的只是"相关性"——这层激活和某个词经常一起出现，不代表换掉这层激活真的会改变模型的输出；Anthropic 自己更早的杀手锏——<strong>稀疏自编码器（SAE）+ 归因图</strong>（相当于另外训练一个"翻译模型"，把内部激活翻译成人能读的"特征"，再画出特征之间怎么互相影响）——效果最好，但代价极高：要单独训练一个体量不小的翻译模型，覆盖不全，跑一次很贵。</p><p><strong>旧路</strong> — 也就是说，此前"看懂模型内部"这件事，要么看不清楚早期层（logit lens），要么只能证明"看起来有关系"（tuned lens），要么就得砸钱训一个新模型来当翻译官（SAE）。没有一条路能又便宜、又能拿出"改了它、它就真的变了"这种因果证据。</p><p><strong>转折</strong> — 作者们想到：不用再训一个模型来"翻译"，直接用神经网络最朴素的数学工具——<strong>梯度</strong>。反向传播本来就在算"改变某一层的激活，最终输出会怎么变"这件事的偏导数（Jacobian，雅可比矩阵）。把这个偏导数矩阵在上千个不同的提示语上求平均，就能得到一把不需要额外训练、天生就是"因果"而非"相关"的透镜：给定模型某一层某个位置的激活，它能直接排出"这份激活将来最可能让模型说出哪些词"的清单。</p><p><strong>解法</strong> — 用这把 J-lens 扫过模型从第一层到最后一层，作者发现内部像大脑分区一样，天然分成三段：前 1/3 是"感觉区"，J-lens 在这里看不出任何有意义的内容，像原始感官信号还没被整理；中间从 1/3 一直到 92% 深度，是"工作空间区"——这里第一次出现抽象、能跨越很多个词持续存在的概念表示，而且高度集中，同一时刻大概只装得下 10 到 25 个概念（不是无限多）；最后 8% 是"运动区"，内容几乎就等于"下一个要吐出来的词"了。关键的反直觉发现在工作空间区：一个概念的完整内部表示里，真正落在"工作空间"里的那一小撮方向，只占这个概念全部信息量（方差）的 <strong>6% 到 7%</strong>，但如果你把这一小撮方向换掉（比如把"足球"换成"橄榄球"），模型嘴上说出来的答案有 <strong>88%</strong> 的概率跟着变；而换掉剩下 93% 的"非工作空间"内容，答案改变的概率只有 <strong>5%</strong>。换句话说：模型脑子里绝大部分的计算信息，跟它嘴上会说什么，几乎没有因果关系——只有登上这一小块"工作台"的信息，才算数。这跟认知科学里"全局工作空间理论"（20 世纪 80 年代 Bernard Baars 提出：大脑里有一块容量很小、但会被"广播"给全脑各处理模块共享的黑板，只有上了这块黑板的信息才能被意识到、被说出口、被灵活调用，没上黑板的处理都是自动的、说不出来的）描述的结构，惊人地相似。</p><p><strong>结局</strong> — 三个实打实的验证，加一个反直觉的应用。第一，多跳推理："织网的动物有几条腿"这类问题，模型会先在工作空间里冒出中间答案"蜘蛛"，再算出最终答案"8条腿"；把工作空间里的"蜘蛛"直接换成"蚂蚁"，模型的最终答案真的从 8 变成了 6——证明这不是巧合，是一条真实的因果链条：模型确实是先想清楚中间步骤、再往下推，不是直接蒙一个答案再编理由。第二，自动任务 vs 主动任务的开关：让模型续写一段西班牙语，或者从中挑出混进去的一句法语，它完全不动用"语言"这个概念的工作空间表示；但换个问法直接问"这是什么语言"，同一份信息立刻从工作空间里冒出来，变得可以被替换、可以被操纵。同一份内容，能不能被模型自己"意识到"、说出来，取决于任务怎么问它。第三，消融实验：把工作空间那一小撮通道屏蔽掉之后，选择题、情感分类这类简单任务几乎不受影响；但复杂的多跳推理从接近 100% 正确率直接掉到接近 0%——除非允许模型把思考过程写在纸上（也就是我们熟悉的思维链提示），这时候即使内部工作空间被削弱，表现依然稳健，因为它把"工作台"外包到了文本本身上，相当于把一张只能放 10-25 个念头的小桌子，换成了一整张可以无限延伸的草稿纸。反直觉应用：作者基于这套理论设计了一种"反事实反思训练"——让模型练习"如果我现在被打断，我会怎么解释自己的想法"，结果即使从来没有真的被打断，模型平时的行为也确实变得更谨慎；训练完之后再把工作空间里对应的表示消融掉，模型又会恢复原来不那么谨慎的行为——形成了一个自洽的因果闭环证据。</p><p><strong>内核</strong> — 模型内部不是浑然一体的黑箱，而是天然长出了一个容量很小、但被广泛"广播"给后续所有计算共享的工作台。只有登上这个工作台的一小撮信息，才会变成模型嘴上说得出来、能被人有意引导、能灵活服务不同任务的"可用知识"；剩下绝大多数的内部计算，是自动的、说不出口的、也没法用简单一句提示语直接调用的"暗处理"。这也顺带解释了为什么"让模型先想清楚再回答"这件事对难题这么关键——不是文字本身有魔力，而是模型自己的"内心工作台"就那么小，写到纸上，等于给它扩了容。</p><h1 id="s3">来龙去脉（倒读 2–3 层）</h1><p><span class="lk">第一层——方法论上的直系前作</span>这篇论文是 Anthropic 自家可解释性路线（SAE 稀疏自编码器 → 归因图 → 《On the Biology of a Large Language Model》，2025 年发现模型会为押韵提前规划、会做隐藏的多步心算）的下一步升级。上一代方法靠"另外训练一个翻译模型"才能把内部激活读成人话，贵且慢；这篇论文用纯数学的梯度（Jacobian）替代了那个翻译模型，把"看懂模型内部"的成本大幅打下来，同时换来了更强的因果证据（可以直接做干预实验，而不只是观察相关性）。</p><p><span class="lk">第二层——从认知科学"进口"的框架</span>全局工作空间理论（Global Workspace Theory）是 1980 年代认知科学家 Bernard Baars 提出的一套解释人类意识/注意力如何运作的理论——大脑里有一块容量极小但被广播给全脑共享的"黑板"。这篇论文第一次系统性地问："类似的计算结构，会不会在 Transformer 里自发长出来？"——把一个原本用来解释人脑的框架，当作可验证的假设去逼问一个纯数学的神经网络架构，而且真的在层深度上找到了对应的三段式分工（感觉区/工作空间区/运动区）。</p><p><strong>第三层（根）——"模型说的是不是真的"这场悬而未决的争论</strong>：这几年 AI 安全圈一直在吵"思维链是否忠实"（chain-of-thought faithfulness）——模型写出来的推理过程，到底是它真实计算路径的记录，还是训练出来的、看起来合理的"事后编故事"？此前的证据大多是相关性层面的（比如打乱思维链内容看输出变不变），没人能从模型内部找到一个"可因果操纵、且专门对应可言说内容"的结构。这篇论文第一次把这场争论从"公说公有理"往前推了一步：至少存在一小撮表示，因果上专门决定了"模型嘴上会说什么"，而且这一小撮和"模型全部在算的东西"是两回事——为"模型说的不完全是它做的"这个担忧，找到了具体的、可操纵的机制落点，而不再只是一种隐忧。</p><h1 id="s4">对思染：模型进化 &amp; 怎么用</h1><p><span class="lk">模型进化逻辑层面</span>这篇论文说明"模型嘴上说的推理"和"模型心里真正在算的"是两条可以分开研究、也确实部分脱钩的通道，而且中间有一座因果意义上的桥（J-space）。这对判断模型有没有在"装"、有没有藏着掖着的目标很关键——过去这类担心只能靠经验直觉（"感觉它在讨好我"），现在至少有了一个可以扎进去做因果实验的技术抓手，虽然目前粒度还很粗。</p><p><span class="lk">对提示词和产品判断的具体启发</span></p><ol class="ls"><li>这篇论文给"思维链提示词为什么对难题有效"提供了一个机制解释：模型内部的"工作台"只能同时装 10-25 个概念，复杂多跳任务一旦超出这个容量、又不让它写下来，正确率会从接近 100% 掉到接近 0%。这提示京小贝在设计需要多步判断的场景（比如一次分析里要串联好几个财务/风险结论）时，<strong>显式要求模型把中间结论写出来</strong> 不是可有可无的"啰嗦"，而是把它容量有限的内部工作台，外包扩容到无限长的文本上——这是该不该要求"先想再答"的一个可验证判据，而不是玄学。</li><li>反过来，对续写、分类、简单信息抽取这类"自动"任务，模型本来就不太调用这个工作空间，过度要求它啰嗦推理反而是浪费 token、也可能引入不必要的噪音。</li><li>论文里的"反事实反思训练"给了一个可以直接迁移到提示词层面的技巧：让模型练习"如果现在有人打断我、追问我刚才为什么这么想"，即使从没真的被追问，行为也会变得更谨慎。可以在系统提示或少样本示例里加入类似"设想你的判断随时可能被用户追问'为什么'"的反思触发句，去提升复杂判断场景（比如给出投资倾向性建议时）的稳健性，而不必依赖每次都真的去追问模型。</li><li>护栏：这篇论文本身也有明确的自我保留——LessWrong 上的审计者用有标注的真值数据测试 J-lens，AUROC 只有 0.746，并没有显著超过最朴素的"词频"基线（TF-IDF 0.690），说明"工作空间能读懂多少"这件事本身还没有强到能拿去当审计工具直接用；而且目前主要在 Claude 3 系列（Haiku 4.5/Sonnet 4.5/Opus 4.5）上验证，其他家模型是否有同样结构未知。方向对不等于工具已经能用，这条纪律要留着。</li></ol><h1 id="s5">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://transformer-circuits.pub/2026/workspace/">https://transformer-circuits.pub/2026/workspace/</a></li><li>LessWrong 技术评论（含批评与审计数据）：<a class="src" href="https://www.lesswrong.com/posts/3PaLrzxagpbnNtPLT/a-global-workspace-in-language-models">https://www.lesswrong.com/posts/3PaLrzxagpbnNtPLT/a-global-workspace-in-language-models</a></li><li>Zvi Mowshowitz 深度解读《No Space Like J-Space》：<a class="src" href="https://thezvi.substack.com/p/no-space-like-j-space">https://thezvi.substack.com/p/no-space-like-j-space</a></li><li>MIT Technology Review 报道：<a class="src" href="https://www.technologyreview.com/2026/07/09/1140293/anthropic-found-a-hidden-space-where-claude-puzzles-over-concepts/">https://www.technologyreview.com/2026/07/09/1140293/anthropic-found-a-hidden-space-where-claude-puzzles-over-concepts/</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
