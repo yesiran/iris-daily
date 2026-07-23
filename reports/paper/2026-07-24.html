@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28148%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2252%22%20r%3D%2221%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2226%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2218%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.30%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>智能体读工具输出时，内部早已标好"哪行有用"——一个小读数头取出来，剪掉四成噪声反而更准</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-24</span></div>
+  <h1 class="doc">智能体读工具输出时，内部早已标好"哪行有用"——一个小读数头取出来，剪掉四成噪声反而更准</h1>
+  <div class="dateline"><span>全文 <b>4,622</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">SWE-Pruner Pro: The Coder LLM Already Knows What to Prune</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.18213</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Yuhang Wang, Yuling Shi, Shaoqiu Zhang, Jialiang Liang, Shilin He, Siyu Ye, Yuting Chen, Kai Cai, Xiaodong Gu（顾小东）</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">上海交通大学（顾小东组，xiaodong.gu@sjtu.edu.cn）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-20</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-24.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-24.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF 74赞（07-21 能力/机理赛道前列，当日更高赞是具身/视频生成不在选片轴）· 上交大顾小东组续作（前作 SWE-Pruner 2601.16746 同组）· S2 限流429未取证（发表约4天≈0，正常）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, efficiency, context-pruning, agent, interpretability, long-context, internal-representation</span></div></div><div class="tools"><a class="btn hot" href="2026-07-24-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：一个越读越"胖"的智能体</a><a class="t-h2" href="#s4">2. 困境：长，是要付两笔账的</a><a class="t-h2" href="#s5">3. 旧路：先靠"通用压缩尺"，再靠"外挂一个筛选员"</a><a class="t-h2" href="#s6">4. 转折：那个"哪行有用"的信号，本来就在模型脑子里</a><a class="t-h2" href="#s7">5. 解法：一个"读数头"，趴在模型自己的内部状态上取信号</a><a class="t-h2" href="#s8">6. 结局：省三四成的字，长上下文反而更准；但不是处处白赚</a><a class="t-h2" href="#s9">7. 内核（带走这颗种子）</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">怎么用（提示词 + 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>SWE-Pruner Pro</strong>（上海交大顾小东组，7-20 挂出，HuggingFace 74 赞、在 07-21 那批"能力/机理"论文里排前列，更高赞的全是具身机器人和视频生成、不在我们追的能力机理轴上）。四个理由：</p><ol class="ls"><li><strong>它开的是 ledger 里几乎空白的一根轴——"智能体上下文剪枝"</strong>。过去一个多月的台账被后训练/RL/推理机制/可解释性塞满了，这篇换个新鲜前沿：一个跑长任务的智能体（比如改代码的 agent），每一步都要把工具返回的一大段东西塞进上下文，越塞越长、越长越慢越贵、而且<strong>长到一定程度模型自己反而读不准</strong>。怎么只留有用的、把没用的剪掉，是"上下文工程"这条正在快速抬头的能力线。</li></ol><ol class="ls"><li><span class="lk">它的核心是一个机理发现，不是刷分</span>作者拿一个"线性探针"（一个极简单的线性分类器，只做一次乘法加权、不改模型）去读<strong>冻结主干</strong>在正常读取工具输出时算出的内部表示，发现"这一行该留还是该剪"的信号<strong>本来就已经躺在模型的内部状态里了</strong>（探针 AUC 0.83，而瞎猜/只按多数类走的上限 F1 只有 0.46）。也就是说：模型一边读，注意力其实一边就把"哪行重要"标好了——只是没说出来。这正是台账里反复出现的一条暗线"模型知道的比它说出来的多"（见 [[2026-07-11b--llm-as-a-verifier]] 读 logprobs、[[2026-07-02--rlmf-metacognitive-faithful-calibration]] 元认知、[[2026-07-23--anthropic-global-workspace-jspace]] 全局工作空间）在"上下文"上的又一次印证。</li></ol><ol class="ls"><li><span class="lk">反直觉的"看得少反而更准"</span>把工具输出剪掉 30–39% 的字，长上下文任务 Oolong 的准确率不降反升（+2.2 分），SWE-bench 解题率也涨 +3.8%。这和台账 [[2026-06-24--unlimited-ocr-rswa]]（输出端注意力砍窄反而更准）、[[2026-07-09--hils-attention]]（压缩摘要选块比逐字精确更抗噪）是同一枚硬币——<strong>噪声不是中性的，删掉它本身就是在帮模型</strong>。</li></ol><ol class="ls"><li><span class="lk">对思染直接可落地</span>京小贝的 agent 在拉基金数据、检索资料、拼用户画像时，本质就是在往上下文里塞东西。这篇给出的三条判断——"别全塞、模型自己知道该留啥、留下来的要能用而不是覆盖率高"——可以直接改写你对 RAG 和提示词的直觉。</li></ol><p>诚实交底：它是前作 SWE-Pruner 的续作、带增量气质（不是从零开的新范式），血统是学术组（上交大）不是前沿大厂，绝对的能力跃迁也谈不上（是效率突破 + 机理发现）；结果不是"处处白赚"（下面会讲清哪里赚、哪里是权衡）。选它，是因为它这根轴够新、这条机理够干净、对你产品够近。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：一个越读越"胖"的智能体</h2><p>想象一个自动改代码的 AI 智能体（coding agent）。你给它一个任务（"修复这个报错"），它开始干活：跑一下测试、打开一个文件、搜一个函数、看一段报错日志……每做一个动作，工具就吐回来<strong>一大段文字</strong>（tool output，工具返回的内容——可能是几百行代码、一整页报错栈）。这些东西必须原样塞进它的"上下文"（context，就是模型这一轮能看到的全部文字）里，它才能接着往下想。</p><p>问题是：任务越长，动作越多，上下文就像雪球一样越滚越大。<strong>塞进去的每一个字都要花钱、都要花时间</strong>（模型每读一个字都有成本），而且——这是关键——<strong>塞太多，模型自己会读迷糊</strong>。</p><h2 id="s4">2. 困境：长，是要付两笔账的</h2><p>上下文变长，付的不是一笔账，是两笔：</p><ul class="ls"><li><span class="lk">一笔是钱和延迟</span>模型按字收费、按字算时间。一段 300 行的报错日志里，可能只有 3 行是关键，其余 297 行是重复的堆栈、无关的路径。全塞进去 = 花 100 倍的钱去带那 3 行有用的。</li><li><span class="lk">另一笔更隐蔽——准确率</span>模型在超长上下文里会"读丢"。业界叫"迷失在中间"（lost in the middle，关键信息夹在一大堆废话中间时，模型的注意力会稀释、会漏掉它）。所以<strong>上下文不是越多越好，噪声多了会主动把模型带偏</strong>。</li></ul><p>于是有个朴素的念头：能不能在把工具输出塞进去之前，先"筛一遍"，只留有用的行？这就叫<strong>上下文剪枝</strong>（context pruning）。</p><h2 id="s5">3. 旧路：先靠"通用压缩尺"，再靠"外挂一个筛选员"</h2><p><strong>第一代旧路——通用压缩</strong>（代表作 LongLLMLingua 那一类）：拿一把跟任务无关的死尺子去量每个字"重不重要"，典型尺子是困惑度（perplexity/PPL，模型对一段文字"意不意外"的打分，越不意外越"可预测"越像废话）。问题是这尺子<strong>不认代码结构</strong>：它会把一个函数从中间切断、把一段逻辑拆散，语法都读不通了，关键实现细节反而被当"可预测的废话"删掉。</p><p><strong>第二代旧路——本组自己的前作 SWE-Pruner</strong>（[[2601.16746]]，2026 年 1 月，同一个上交大组）：它想通了"要按任务筛"，于是模仿人类程序员"选择性略读"（selective skimming，程序员看代码不逐字读、扫着找相关段落）：让智能体先说出一个明确目标（比如"重点看错误处理"），再用这个目标当提示，<strong>额外训一个 0.6B 参数的小模型（叫 skimmer，略读员）</strong> 去挑相关的行。效果不错（省 23–54% 的字还能提成功率）。</p><p><span class="lk">但第二代留了个尾巴</span>它要<strong>多养一个独立的模型</strong>。这就意味着——多一份参数要加载、多一次前向计算的延迟、而且这个"略读员"是站在主智能体<strong>外面</strong>猜"哪行相关"，它并不知道主智能体脑子里到底怎么看这段文字。<strong>你在外面重新造了一个判断相关性的器官，可主智能体自己读的时候，其实早就在判断了。</strong></p><h2 id="s6">4. 转折：那个"哪行有用"的信号，本来就在模型脑子里</h2><p>作者的关键一转是一个实验：智能体读工具输出时，它的<strong>冻结主干</strong>（frozen backbone——主模型本身，参数一个都不动）在正常的"预填充"过程（prefill，模型把这段输入先过一遍、给每个字算出一个内部表示向量）里，已经给每一行算出了内部表示。</p><p>他们拿一个<strong>线性探针</strong>（linear probe——一个最简单的线性分类器，只对这些现成的内部向量做一次加权求和，不给模型加任何新信息、也不改模型）去读这些向量，问它："这一行，该留还是该剪？"</p><p>结果：探针的判别力 <strong>AUC 0.83</strong>（AUC 是"排序准不准"的分，1.0 满分、0.5 等于瞎猜；0.83 相当能分），而如果只按"多数行都该留"这种偷懒办法走，上限 F1 只有 0.46。</p><p>结论一句话：<strong>"该留还是该剪"这个信号，本来就已经躺在主干读这段话时算出的内部状态里了。</strong> 模型一边读，注意力一边就把"哪行重要"加权好了——它只是没有把这个判断说出来。既然信号已经在里面，那还养什么外挂略读员？直接把它<strong>读出来</strong>就行。</p><h2 id="s7">5. 解法：一个"读数头"，趴在模型自己的内部状态上取信号</h2><p>于是有了 SWE-Pruner Pro（Pro = 把外挂略读员换成"读自己"的升级版）。机制拆开：</p><ul class="ls"><li><span class="lk">一个极小的读数头 f_θ</span>趴在冻结主干的<strong>最后一层</strong>内部表示上。而且这些表示是主干"读工具输出"时<strong>顺手就算好的</strong>（reuse 预填充的表示），不用为了剪枝再多跑一遍模型——几乎零额外前向计算。读数头对每一行输出一个"留/剪"标签。</li></ul><ul class="ls"><li><strong>一个"长度感知"的小配件 e(N)</strong>（length-aware embedding）：先把这段工具输出有多少行 N 告诉读数头，具体做法是把一个跟 N 有关的向量 e(N) 加到每个内部表示上（h̃ᵢ = hᵢ + e(N)）。<strong>为什么要知道长度？</strong> 因为"剪错一行"的代价跟长度极不对称：一段 5 行的关键片段里剪错一行是<strong>灾难</strong>（可能把命门删了），同样剪错一行放在 300 行的大堆里几乎无所谓。所以读数头必须知道"这段有多长"，才能决定下手多狠。这个配件初始化为零（一开始先不管长度，训练中慢慢学出对长度的敏感），把行数分成 8 个对数刻度的桶（0–2 / 3–5 / … / &gt;200）。</li></ul><ul class="ls"><li><span class="lk">训练用的标准答案</span>22,609 条真实的多轮智能体轨迹，每一行由 <strong>Claude Sonnet 4.6 当标注员</strong>打上"留/剪"标签（用一个强模型当老师给答案，不是从旧的略读员那里蒸馏来的）。</li></ul><ul class="ls"><li><strong>一个讲究的损失函数——按样本平衡的 focal loss</strong>：这里有个精细但重要的点。每条样本的"留 30% 剪 70%"这个比例本身就是信息。如果用标准的交叉熵，模型会<strong>过拟合到"典型保留率≈30%"</strong>，把那些极端比例的样本（比如 100 行只留 3 行）冲淡掉——而恰恰是这些"该狠狠剪"的极端样本最该学好。所以作者在<strong>每条样本内部</strong>分开算"留"的损失和"剪"的损失，再各占一半平均，保证每条样本的两类都平等发声，不被它自己的保留率带偏。</li></ul><p>一句话概括解法：<strong>别在外面造器官，把模型读这段话时自己算出的相关性判断，用一个几乎免费的小读数头取出来，再按"这段有多长"校准下手的力度。</strong></p><h2 id="s8">6. 结局：省三四成的字，长上下文反而更准；但不是处处白赚</h2><p>在两个开源大模型上测——<strong>MiMo-V2-Flash</strong>（小米的 309B 混合专家模型，每个字只激活 15B，256K 上下文）和 <strong>Qwen3-Coder-Next</strong>（80B 混合专家、激活 3B）——四个多轮基准（SWE-bench Verified 改 500 个真实 issue、SWE-QA 多轮问答、SWE-QA-Pro 带可执行环境的问答、Oolong 长上下文）：</p><ul class="ls"><li><span class="lk">省字</span>最多砍 <strong>39.4%</strong> 的 token（Qwen3-Coder-Next 在 SWE-QA-Pro：607K→368K）；长上下文 Oolong 上砍 <strong>30.1%</strong>（MiMo：58.9K→41.2K）。</li><li><span class="lk">最漂亮的反直觉——省字还更准</span>Oolong 上 MiMo 砍掉 30% 的字，准确率<strong>反而 +2.2 分</strong>（92.4→94.6）；SWE-bench Verified 上 MiMo 解题率 <strong>+3.8%</strong>（326→345/500）。删掉噪声本身就是在帮模型聚焦。</li><li><strong>诚实的另一面：不是处处白赚</strong>。同样是 SWE-bench，换到 Qwen3-Coder-Next 上就成了权衡——解题率 −1.2%（341→335），但换来输入 token 少 13.5%。而 MiMo 那个 +3.8% 是伴着输入 token +7.4% 拿到的（剪枝让它每步更聚焦、于是它更愿意多跑几个有效动作，净上下文反而略增）。<strong>结论：赚多少、赚在质量还是赚在成本，跟底座和任务有关，得在自己的场景上测</strong>，不能当成万能免费午餐。</li><li><span class="lk">比前作强得干净</span>同一场景（SWE-QA-Pro / Qwen3），老 SWE-Pruner 是"省 28.7% 但质量 −0.24"，Pro 是"省 39.4% 且质量 +0.24"——省得更多、质量还从降变升，同时甩掉了那个 0.6B 的外挂模型。</li><li><span class="lk">代价</span>读数头在服务器内跑，增加约 <strong>15% 的总耗时</strong>（中位 14.7%、p95 34.8%），有界但不是零。</li></ul><p><strong>最有教育意义的一个副发现——"覆盖率高 ≠ 有用"</strong>：作者试了几种损失函数，其中 Dice、Tversky 损失训出来的读数头，F1（判对了多少行的重叠度）跟最好那版<strong>只差 0.04</strong>，几乎一样高；但用大模型当裁判去评"留下来的上下文到底能不能用"，裁判分<strong>从 7.08 崩到 3.03 / 5.30</strong>。为什么？因为一个高 F1 的读数头可能留下了一副"骨架"——比如保留了函数的调用处、却把函数体删了，<strong>每一行看着都判对了、拼起来根本没法用</strong>。裁判奖励的是"智能体真能拿去用的行"，不是"行级重叠准不准"。这正是台账暗线里的老朋友：<strong>别优化那个替身指标（覆盖率），要优化真正的目标（可用性）</strong>（见 [[2026-06-27--verification-horizon]] 奖励是意图的替身）。</p><h2 id="s9">7. 内核（带走这颗种子）</h2><p><strong>我们花力气在模型外面造的很多"判断器"，模型自己读的时候其实已经算过了——把它读出来，往往比在外面重造一个又便宜又准。</strong> 而且在长上下文这件事上，"删掉噪声"不是中性的省钱动作，它本身就是在提准：因为噪声会稀释注意力。所以上下文管理不只是成本杠杆，是<strong>能力杠杆</strong>。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 1 层（直接前身）：SWE-Pruner</strong>（[[2601.16746]]，2026-01，同组）。第一次把"按任务筛代码"做对，但要<strong>额外养一个 0.6B 的略读员</strong>、靠智能体先说个目标当提示。Pro 干的事，就是<strong>把这个外挂器官内窥掉</strong>——发现主智能体自己读的时候信号已经在，直接读它的内部状态。</p><p><strong>第 2 层（更早的旧路）：通用上下文压缩</strong>，以 LongLLMLingua 那一类为代表，用困惑度（PPL）这种<strong>跟任务无关的死尺子</strong>量重要性。它的病根是不认结构、会把代码/逻辑拦腰砍断。这条线的演化是：<strong>通用压缩（任务盲）→ 任务感知的略读（SWE-Pruner，但要外挂模型）→ 读自己内部状态的剪枝（Pro）</strong>——外面的脚手架一步步被吸回到"读模型自己"。</p><p><strong>根（第 3 层）：两条老河的汇合</strong>。一条是<strong>"模型的内部状态里已经藏着我们正在外面重造的信号"</strong>——读 logprobs 当验证器（[[2026-07-11b--llm-as-a-verifier]]）、读元认知当校准（[[2026-07-02--rlmf-metacognitive-faithful-calibration]]）、把"可言说的表示"看成全局工作空间（[[2026-07-23--anthropic-global-workspace-jspace]]），到这篇"读注意力早标好的相关性"，是同一姿势。另一条是<strong>长上下文会退化</strong>这个物理事实（迷失在中间），它把"整理上下文"从省钱问题抬成了能力问题——这条线串起台账整条长上下文/注意力主线（[[2026-06-10--flashmemory-lsa]] / [[2026-06-15--minimax-sparse-attention]] / [[2026-06-24--unlimited-ocr-rswa]] / [[2026-07-09--hils-attention]] / [[2026-07-10--sparse-delta-memory]]）。Pro 站在这两条河的交点上：<strong>用"读模型自己"的办法，解"长上下文退化"的病。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p><strong>"上下文工程"正在从人手糊的外挂，收敛成"读模型自己"。</strong> 过去我们在模型外面堆了一层又一层脚手架——独立的重排器、独立的分类器、独立的略读员——去替模型判断"哪些信息重要"。这篇是又一个信号：<strong>这些判断，模型在正常读的时候其实已经算好了，最省最好的办法是把它从内部状态里读出来，而不是在外面重造一个。</strong> 这跟台账里 [[2026-07-04--paw-program-as-weights]]（把模糊小函数编译进权重、不再在线跑）、[[2026-07-11b--llm-as-a-verifier]]（读分布而不是训独立奖励模型）是同一条大势：<strong>智能的价值和判断力，正从"外部模块"下沉回"模型自己"。</strong> 对你追前沿的意义：以后看到一个"给模型加一个外挂 X 来判断 Y"的方案，第一反应应该是问一句——"模型自己读的时候，是不是已经在判断 Y 了？能不能直接读出来？"</p><h2 id="s13">怎么用（提示词 + 京小贝）</h2><ol class="ls"><li><strong>上下文管理是能力杠杆，不只是成本杠杆。</strong> 京小贝的 agent 拉基金净值、检索研报、拼用户画像时，别想着"多塞点保险"。这篇实证：把无关行剪掉三成，长上下文任务反而更准。<strong>噪声会稀释注意力</strong>——给模型的每一段检索结果/工具返回，先想清楚"这里真正有用的是哪几行"，剪掉重复堆栈、无关字段、样板话。</li></ol><ol class="ls"><li><strong>相信模型自己的相关性信号，别急着手写规则。</strong> 你不需要为"该保留哪些上下文"写一大堆 if-else 或再训一个独立分类器——模型读的时候内部已经在判断了。产品上可迁移的姿态：优先用"读模型自己"的轻量办法（甚至就是让主模型自己先标一遍哪段有用），往往比外挂一个筛选模块又便宜又准。</li></ol><ol class="ls"><li><strong>别优化"覆盖率"，要优化"可用性"（最重要的一条）。</strong> 那个 F1 高但裁判分崩掉的发现，直接对应京小贝的 RAG 评测：<strong>不要用"召回了多少相关文档/保留了多少相关行"当核心指标</strong>——留下一堆"看着相关、拼起来没法用"的碎片（比如留了结论没留数据、留了标题没留正文），覆盖率很漂亮，模型却答不出来。评测要盯<strong>下游任务成没成、留下来的上下文模型真能不能用</strong>，而不是检索重叠度。（呼应 [[2026-06-27--verification-horizon]]）</li></ol><ol class="ls"><li><strong>剪枝的狠劲要按上下文长度自适应。</strong> 同样是"剪错一行"，在一段 5 行的关键持仓摘要里是灾难、在一段 300 行的行情流水里无所谓。给不同长度、不同重要度的上下文设不同的剪枝/截断力度，别一刀切。</li></ol><ol class="ls"><li><strong>诚实纪律：先在自己的负载上测，别信"处处白赚"。</strong> 这篇明确显示同一个方法换个底座就从"+质量"变成"质量/成本权衡"。任何"省 token 还提质量"的方案，落到京小贝要用你自己的真任务、真底座 A/B 验一遍，分场景记账（呼应 [[2026-07-22--pretrain-to-rl-reasoning]] 分难度桶看、[[2026-06-22--ufp4-fp4-pretraining-shrinkage-bias]] 看系统性漂移）。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（SWE-Pruner Pro）：<a class="src" href="https://arxiv.org/abs/2607.18213">https://arxiv.org/abs/2607.18213</a> ｜ PDF：<a class="src" href="https://arxiv.org/pdf/2607.18213">https://arxiv.org/pdf/2607.18213</a></li><li>前作 SWE-Pruner（倒读第 1 层）：<a class="src" href="https://arxiv.org/abs/2601.16746">https://arxiv.org/abs/2601.16746</a> ｜ 代码：<a class="src" href="https://github.com/Ayanami1314/swe-pruner">https://github.com/Ayanami1314/swe-pruner</a></li><li>HuggingFace 信号（74 赞，07-21 榜）：<a class="src" href="https://huggingface.co/papers/2607.18213">https://huggingface.co/papers/2607.18213</a></li><li>通讯作者：Xiaodong Gu（顾小东），上海交通大学，xiaodong.gu@sjtu.edu.cn</li><li>关键数据（探针 AUC 0.83 / 多数类上限 F1 0.46；省 39.4%、30.1%；Oolong +2.2；SWE-bench +3.8%；损失消融 judge 7.08 vs 3.03；15% 耗时开销）均出自论文正文与摘要，见上述 arXiv 链接。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
