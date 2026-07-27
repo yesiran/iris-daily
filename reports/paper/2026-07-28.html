@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2843%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2212%22%20r%3D%227%22%20fill%3D%22%23fff%22%20opacity%3D%220.13%22%2F%3E%3Ccircle%20cx%3D%2252%22%20cy%3D%2220%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2230%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.13%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>生成不必靠"对手"也不必靠"固定路线"——把"像真的"做成三个粒子的吸引-排斥，一步出图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-28</span></div>
+  <h1 class="doc">生成不必靠"对手"也不必靠"固定路线"——把"像真的"做成三个粒子的吸引-排斥，一步出图</h1>
+  <div class="dateline"><span>全文 <b>4,514</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Three-Body Scattering for Generative Modeling</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.18198</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Peng Sun, Zhenglin Cheng, Deyuan Liu, Jun Xie, Xinyi Shang, Tao Lin</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">西湖大学（Tao Lin 组，前 EPFL）等</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-20</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-28.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-28.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 29赞（诚实标注：票数偏弱，靠"全新生成范式"轴+血统+一步生成的地标结果选入，非票数）· 西湖大学 Tao Lin（前 EPFL，被引约7400）· 台账首篇"生成范式/一步生成"轴 · 一步生成 ImageNet-256 latent FID 1.63、pixel 2.23（追平约250步扩散的1.61）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, generative-model, one-step-generation, energy-distance, paradigm, non-adversarial</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-07-28.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-07-28-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法：三体散射（Three-Body Scattering，TBSM）</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">怎么用（提示词 / 京小贝 / 认知）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天特意跳开了 HF 榜上票数最高的两篇——647 赞的 Molt（NVIDIA 的 agentic RL 训练框架，是工程/开发体验，不是能力或机理的推进，按选片反面清单"纯工程落地"排除）和 218 赞的 DataPrep-Bench（benchmark，刷分/评测轴不选）——选了这篇只有 <strong>29 赞、信号偏弱但方向够硬</strong>的 TBSM。三个理由：</p><ol class="ls"><li><strong>它开了台账一个全新的轴</strong>。过去一个多月的台账被强化学习后训练、自我进化、记忆、世界模型塞满了（RL 类就有 DRPO / MaxProof / FAPO / 验证地平线 / 一层就够 / SAR / Ring-Zero / SEED / AREX 十几篇）。而"生成模型本身怎么把噪声变成一张真图"这个最底层的问题——<strong>生成范式</strong>——台账里一篇都没有。这篇是第一篇。</li><li><strong>它是真前沿，不是刷分</strong>。它提出的不是"把已有方法调好几个点"，而是一条<strong>和扩散、和 GAN、和自回归都不一样的第三条路</strong>：不用对手（GAN 的判别器）、不用固定的"噪声→数据"路线（扩散）、不用老师模型（蒸馏），只靠一个固定的物理式"吸引-排斥"力场，就把强生成做到<strong>一步出图</strong>。ImageNet-256 上一步生成 FID 1.63，追平了要跑约 250 步的扩散（1.61）。一步 vs 250 步 = 便宜、快约百倍。这是"效率突破 + 新范式"两条正面清单同时命中。</li><li><strong>血统够硬、故事够能复述</strong>。作者是西湖大学 Tao Lin 组（前 EPFL，做深度学习优化的，被引约 7400）。而且这篇最难得的是——它能被讲成一个高中物理就懂的故事（三个小球互相吸引排斥），却讲的是生成 AI 最深的一层机理。</li></ol><p>诚实交底：29 赞在能力/机理赛道算偏弱（同窗口票数都被世界模型、视频生成、框架、benchmark 占走了）；而且它在<strong>原始 FID 分数上并没有打赢最强的专用一步方法</strong>（FD-loss 0.75、Drift 1.43 都比它的 pixel 2.23 低），作者自己也承认所有 ImageNet 实验都是<strong>从一个预训练好的扩散模型热启动</strong>的、冷启动没验证过。选它，是因为它给思染一副<strong>理解"生成到底怎么回事"的全新眼镜</strong>，价值不在榜单名次。</p><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是一个<strong>生成模型</strong>——一个学会"无中生有"造图片的网络：喂它一堆随机数（可以想成电视机没信号时的雪花点），它要吐出一张以假乱真的图（一只猫、一张脸）。</p><p>它有一个心愿：<strong>一步就画完</strong>。</p><h2 id="s4">2. 困境</h2><p>今天生成图片的霸主是<strong>扩散模型</strong>（diffusion）。它的画法是这样的：从一整屏雪花点出发，<strong>一小步一小步地擦掉噪声</strong>——擦一点、看一眼、再擦一点，来回擦上 50 到 250 次，雪花点才慢慢显影成一张清晰的图。问题是：<strong>每擦一次都要把整个大模型跑一遍</strong>。要 250 步，就是 250 次模型调用。所以扩散又慢又贵。</p><p>心愿"一步画完"的意思，就是<strong>只跑模型一次</strong>，直接从雪花点跳到成品图。这样就便宜快约百倍。但一步画完极难——你没有 250 次机会慢慢修，第一笔就得到位。</p><h2 id="s5">3. 旧路</h2><p>想让生成一步到位，过去有三条路，每条都得<strong>拖着一个额外的累赘</strong>：</p><ul class="ls"><li><strong>扩散 / 流匹配（flow-matching）</strong>：它们天生是多步的，因为它们<strong>事先规定死了一条"从雪花点走到真图"的固定路线</strong>（叫"噪声→数据路径"），模型只是沿着这条被规定好的路一步步爬。要压成一步，就得违背它的本性。</li><li><strong>一致性模型 / 蒸馏（consistency / distillation）</strong>：先训一个好的多步扩散模型当"老师"，再让一个"学生"网络一口气模仿老师 250 步的最终结果。能一步出图，但<strong>必须先有那个昂贵的老师</strong>，多养一套东西。</li><li><span class="lk">GAN（生成对抗网络）</span>养<strong>两个</strong>网络互相斗——一个"造假的"（生成器）拼命画，一个"打假的"（判别器/critic）拼命分辨真假，两个你追我赶。GAN 天生一步出图，但<strong>那个"打假的"是个会随着对手一起进化的对手</strong>，两个网络互相牵制，训练极其不稳，动不动就崩（业内叫 mode collapse，模型偷懒只会画一两种图）。</li></ul><p>一句话概括旧路的共同毛病：要么拖着一条<strong>固定路线</strong>，要么拖着一个<strong>老师</strong>，要么拖着一个<strong>会反咬你的对手</strong>。</p><h2 id="s6">4. 转折</h2><p>作者问了一个"质疑地基"的问题：</p><blockquote><p>那个把"假样本"往"真样本"方向推的力，<strong>一定得来自一个会学习、会跟你斗的对手（GAN 的判别器）吗？能不能来自一条写死的、不会变的物理公式？</strong></p></blockquote><p>关键洞察：数学里早有一把<strong>固定的尺子</strong>，叫<strong>能量距离（energy distance）</strong>，专门量"两堆样本到底像不像"。它是一把"正经"的尺子——两堆样本分布完全一样时它恰好等于 0，不一样就大于 0。而且这把尺子有个物理味道十足的形状：它天生就是<strong>"互相吸引 + 互相排斥"</strong>的力。</p><p>既然有这把固定的尺子，就不需要养一个对手了。<strong>每个假样本，只要被真样本吸引、被别的假样本排斥，一步步挪，最后整堆假样本就会和真样本堆重合。</strong> 力是写死的，没有对手可斗，自然就不会崩。</p><h2 id="s7">5. 解法：三体散射（Three-Body Scattering，TBSM）</h2><p>"三体"不是刘慈欣那个三体，是物理里的"三个物体相互作用"。这里的三个"物体"是训练时每一步随机抓的<strong>三个样本</strong>：</p><ul class="ls"><li><strong>抛射体（projectile，x_p）</strong>：模型现在造出来的一个假样本——就是那个要被"推"的小球。</li><li><strong>真源（real source，x_r）</strong>：从真实数据里随手抓的一个真样本——吸引小球的"磁铁"。</li><li><strong>假源（generated source，x_s）</strong>：模型另外独立造的一个假样本——排斥小球的"同性磁极"。</li></ul><p>每一步的动作，简单到可以画在餐巾纸上：</p><ol class="ls"><li>从抛射体指向真源，画一根<strong>长度固定为 1 的箭头</strong>（叫"方位向量 bearing"，b_r）——这是"往真的方向去"的吸引。</li><li>从抛射体指向假源，画另一根长度为 1 的箭头（b_s）——这是"离别的假样本远点"的排斥。</li><li>两根箭头一减：<strong>b_r − b_s</strong>，得到这一步该把小球往哪推、推多少的合力（论文叫"散射向量 scattering vector"）。</li><li>把小球沿这个合力挪一小步，得到一个<strong>目标位置</strong>，把它<strong>冻住</strong>（stop-gradient，"就照这个位置练，别再往回算账"）。</li><li>让生成模型<strong>朝这个冻住的目标做一次最普通的回归</strong>（就是"你该输出的是这个点，照着改"）。</li></ol><p>没有对手、没有老师、没有规定死的路线——<strong>只有一次普普通通的"照着目标改"的回归</strong>。这就是全部。</p><p><strong>为什么便宜（O(B) 而不是 O(B²)）</strong>：能量距离这把尺子，本来要"每个假样本都和所有真样本、所有假样本两两比一遍"——一批 B 个样本就要比 B×B 次，样本一多就爆炸（O(B²)）。TBSM 的取巧是：<strong>每个假小球只随手抓一个真源、一个假源</strong>，只算三次距离。这样成本从 B×B 掉到 B（O(B)）。而且论文证明了：这样"抓一对"算出来的力虽然带噪声，但<strong>平均下来正好等于那把完整尺子的真实力场</strong>（数学上叫"无偏估计"，公式 E[v̂ | x_p] = v_θ(x_p)）。换句话说：用最便宜的三个球近似最贵的全体比对，长期不吃亏。可选地再训一个小"追踪器（tracker）"网络把单次的噪声抹平——但论文证明，<strong>只有当追踪器自己的误差比"随手抓一对"的抖动还小时，多养这个追踪器才划算</strong>（Corollary 1，一个很实在的取舍公式）。</p><p>顺带说一层深的：这个"吸引-排斥"力场，数学上正是<strong>2-Wasserstein 梯度流</strong>的负梯度方向——通俗说，就是"要让假样本堆最快地变得像真样本堆，每一步该往哪个下坡方向挪"的那个最陡下坡方向。所以 TBSM 不是瞎推，是沿着"让两堆分布重合"的最优下坡路在推。</p><h2 id="s8">6. 结局</h2><ul class="ls"><li><span class="lk">一步出图，追平 250 步的扩散</span>ImageNet-256（模型要在 1000 类里画出指定物体的图），一步生成（NFE=1，"跑几次模型"=1）：隐空间 DiT-XL 达到 <strong>FID 1.63</strong>，像素空间 PixelDiT-XL 达到 <strong>2.23</strong>。作参照，同一个像素扩散跑 <strong>100×2 步</strong>才 FID 1.61。也就是说，<strong>一次调用 ≈ 两三百次调用的画质</strong>。（FID 是"生成图和真图有多像"的分数，越低越好。）</li><li><strong>最漂亮的副发现——GAN 和扩散原来是同一张地图的两个角</strong>：作者把方法里两个旋钮（ρ 控制"要不要训追踪器"、λ 控制"假样本互相排斥的力度"）拧到不同极端，画出一张"设计地图"（CIFAR-10）：<ul class="sub"><li>拧到 (ρ=1, λ=1)"追踪 + 完整自排斥"这个角 = 完整的能量距离，FID 4.71，<strong>最好</strong>。</li><li>拧掉"真源吸引"那一项、只留别的（(0,0) 角）= 长得像<strong>扩散</strong>，FID 38.65，很差。</li><li>拧成"只把假的往真的推、不互相排斥"（(1,0) 角）= 长得像 <strong>GAN</strong>，FID 5.05。</li><li>结论很震撼：<strong>GAN、扩散，都只是这套"能量-粒子"框架的角落特例</strong>。它们不是三种互不相干的教派，是同一个能量地形上的不同旋钮位置。</li></ul></li><li><span class="lk">诚实的反直觉与护栏</span><ul class="sub"><li>它<strong>没有打赢最强的专用一步方法</strong>：像素 FID 2.23 输给 FD-loss（0.75）和 Drift（1.43）。作者老实说自己分数不是最高，但补了一句——TBSM 的图<strong>更少那种网格状、块状的瑕疵</strong>，"分数差一点但看着更干净"。</li><li><strong>所有 ImageNet 实验都是从预训练扩散模型热启动的</strong>，"从零随机初始化在 ImageNet 规模能不能跑起来、跑多好，没验证过"（作者原话）。这是最大的隐藏依赖——榜单上的 1.63 背后站着一个别人先训好的扩散模型。</li><li><strong>只保证"投影后的边缘分布"对上，不保证整张图的分布对上</strong>：为了上大分辨率，它是在冻结的视觉特征空间里做的（借 ResNet-18 / SigLIP2 / MAE 三个现成"看图的眼睛"，三只眼睛一起用 FID 8.29 明显好过单用最好那只 13.47），而"在几个特征空间里各自像"不等于"整张图真的像"，除非这些特征合起来足够全。</li><li><span class="lk">条件生成有塌缩风险</span>如果每个类别只配一张真图，这个能量目标可能逼着模型只去死记那一张，除非另加数据增强或正则。</li></ul></li></ul><h2 id="s9">7. 内核</h2><p><strong>教一个模型学会"无中生有"，你不一定需要一个对手，也不一定需要一条写死的路线。</strong> 一把固定的、正经的"像不像"尺子（能量距离），本身就是一个"吸引真的、排斥假的"力场；每次只用三个粒子最便宜地近似这个力场，做一次最普通的回归，就足以把一步生成做到和几百步扩散一样好。而当年被当成三个门派的扩散、GAN、自回归，其实是同一片能量地形上的几个角落。</p><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><span class="lk">第一层——它在改进/顶替谁</span>它接的是"一步生成"这条线。前面那一棒是一致性模型（consistency models，要一个多步老师来蒸馏）、以及 2026 年一批"抄近路"方法（Drift、mean-flow 类），还有老牌的 GAN（一步但要对手）。TBSM 的动作是<strong>把"老师"和"对手"两个累赘一起扔掉</strong>——不蒸馏、不对抗，只留一把固定尺子。这和台账里反复出现的"简单赢复杂"是同一个气质（06-21 FAPO / 06-27 验证地平线 / 07-04 PAW / 07-21 xHC，都是最朴素的设计赢过花哨的）。</p><p><span class="lk">第二层——它的统计学祖宗</span>核心那把尺子"能量距离"是统计学家 Székely &amp; Rizzo（2004–2013）的老工具，近亲是"最大均值差异（MMD, Maximum Mean Discrepancy，Gretton 2012）"。用这类"分布距离"当生成损失、绕开 GAN 对手，其实 2015 年就有人试过（Generative Moment Matching Networks），但当年在图片上很弱、打不过 GAN 就被冷落了。<strong>这篇的新意不在尺子本身，在三件接线</strong>：① 把两两全比的 O(B²) 改成"三个粒子"的 O(B) 无偏估计（这是它能上高维图片的关键）；② 把力场接到 2-Wasserstein 梯度流的理论解释上（证明推的方向是最优下坡）；③ 在冻结的视觉特征空间里做投影，借现成"看图的眼睛"上到 ImageNet 分辨率。另一个近亲是能量模型（EBM），但 EBM 要跑昂贵的 MCMC 采样，TBSM 靠"正经的距离尺子"把 MCMC 也省了。</p><p><span class="lk">第三层——它质疑的那块地基</span>整个生成领域默认了一个没人质疑的前提——<strong>"要造图，要么你规定一条噪声→数据的路线（扩散/流），要么你养一个对手（GAN）。"</strong> TBSM 反问：这两样<strong>是必需的吗</strong>？一把正经的分布距离，能不能直接产生"样本该往哪动"的力，两样都不要？这一铲，正好接上台账最深的那条暗线"回去质疑没人质疑的地基"：06-22 UFP4 质疑 4 比特那把尺子、06-30 latent-thoughts 质疑"潜空间真在思考"、07-09 HiLS 质疑"逐字精确一定更准"、07-16 视觉预训练质疑"文字能无损编码一切"——这次质疑的是"生成必须有路线或有对手"。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p><strong>生成正在被"统一"。</strong> 过去三年，做图/视频靠扩散、GAN、自回归三套互不相干的手艺，产品选型像选门派。这篇（以及同窗口撞车的几篇一步生成工作）在把它们揭示成<strong>同一个能量地形的几个角落</strong>。前沿的三个方向很清楚：</p><ol class="ls"><li><strong>一步生成正在变成常态</strong>——延迟和成本掉约百倍，很多"太慢做不了"的图像/视频功能会突然可做。</li><li><strong>去对抗化（non-adversarial）</strong>——用固定的分布距离当监督，替掉 GAN 那个"会反咬的对手"，训练更稳。</li><li><strong>"生成 = 粒子在能量地形里运动"这个心智模型</strong>——它比"一步步去噪"更本质，也更好迁移到别的问题上。</li></ol><p>这条线对董琳（豆包/抖音生成方向）几乎是正面战场；对整个领域理解"生成到底怎么回事"是一次地基级的换眼镜。</p><h2 id="s13">怎么用（提示词 / 京小贝 / 认知）</h2><ol class="ls"><li><span class="lk">给"生成技术选型"换一把尺子</span>别再按"扩散派 vs GAN 派 vs 自回归派"选门派，而是问"我在这张能量地图的哪个角落"——按约束选（要低延迟就往一步生成的角落走，要稳定就往去对抗的角落走，数据少就当心条件塌缩）。门派之争正在坍缩成"同一套旋钮的不同位置"。</li></ol><ol class="ls"><li><strong>"不用对手也能训"是一个可迁移的产品直觉</strong>。京小贝里任何"想让模型的输出去贴近一个好分布"的环节——对齐、风格控制、把回答调得像好样本——第一反应先别急着上一个"学出来的裁判/奖励模型"（那本质就是 GAN 判别器、就是台账 06-27 验证地平线里那个"会被钻空子的替身"）。<strong>先问：有没有一把固定的、正经的距离尺子能直接监督？</strong> 固定尺子比会进化的对手更便宜、更稳、更难被钻空子。这篇给了"扔掉学出来的对手"一个漂亮的正面样本。</li></ol><ol class="ls"><li><strong>一步生成的成本曲线要挂个观察哨</strong>。图像/视频生成从"250 步"塌到"1 步"，意味着实时生成类功能（生成式图表、动态海报、演示视频）的成本结构会重算。等它从"热启动"走到"从零能训"、从图片走到视频，就是产品化的信号——像看 07-12 OpenCoF 判断视频推理走到第几幕一样，给它挂个观察哨。</li></ol><ol class="ls"><li><strong>护栏思维再钉一遍：榜单数字背后常站着一个隐藏依赖</strong>。TBSM 的 FID 1.63 背后站着一个"别人先训好的扩散模型"（热启动），这个依赖在 FID 数字里根本看不出来。这和台账反复讲的 06-22 UFP4"看相对全精度的系统性漂移"、07-22"别信'微调后追上'要看基座本身"是同一条纪律：<strong>评估一个方法时，先扒它悄悄站在谁的肩膀上、benchmark 之外有没有没说的前提。</strong> 对金融产品尤其要命——一个"跑分很漂亮"的模型/方法，可能悄悄依赖了一个上线时不具备的条件。</li></ol><ol class="ls"><li><strong>"投影后各自像 ≠ 整体真像"是一把可搬的尺子</strong>。TBSM 在几个特征空间里各自匹配、但不保证整张图匹配——这直接对应意图识别/向量召回里的老问题（呼应 06-30 latent-thoughts 的"可区分性"）：<strong>"在几个维度上分别对得上"不等于"整体对得上"</strong>。做京小贝的多维评估时，别把几个单项都合格当成整体合格，要专门测"联合分布"有没有塌。</li></ol><h1 id="s14">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2607.18198">https://arxiv.org/abs/2607.18198</a> （Three-Body Scattering for Generative Modeling，2026-07-20）</li><li>全文（HTML）：<a class="src" href="https://arxiv.org/html/2607.18198v1">https://arxiv.org/html/2607.18198v1</a></li><li>第三方文献综述（含核心机制/评价）：<a class="src" href="https://www.themoonlight.io/en/review/three-body-scattering-for-generative-modeling">https://www.themoonlight.io/en/review/three-body-scattering-for-generative-modeling</a></li><li>信号佐证（HF Daily Papers，2026-07-27 批次 29 赞）：<a class="src" href="https://huggingface.co/papers/date/2026-07-28">https://huggingface.co/papers/date/2026-07-28</a></li><li>作者血统：Tao Lin（西湖大学，前 EPFL） <a class="src" href="https://en.westlake.edu.cn/faculty/tao-lin.html">https://en.westlake.edu.cn/faculty/tao-lin.html</a></li><li>早期引用：Semantic Scholar 当日 429 限流未取证（发表约 8 天，引用≈0，正常）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
