@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28336%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2216%22%20r%3D%2218%22%20fill%3D%22%23fff%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2254%22%20r%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2245%22%20r%3D%2219%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>长程规划的本事不是"会做每一步"，而是"走十几步不跑偏"——它从哪一步长出来，第一次被拆开摆上台面</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-07-30</span></div>
+  <h1 class="doc">长程规划的本事不是"会做每一步"，而是"走十几步不跑偏"——它从哪一步长出来，第一次被拆开摆上台面</h1>
+  <div class="dateline"><span>全文 <b>5,021</b> 字</span><span>约 <b>13</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">The Physics of Multi-Turn Long-Horizon Planning: From Pre-training to Post-training via Single- and Multi-Teacher On-Policy Agentic Distillation</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.24720</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Tianyi Men, Zhuoran Jin, Kang Liu, Jun Zhao</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">中科院自动化所（CASIA，模式识别国家重点实验室，刘康 / 赵军组）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-27</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-07-30.html">https://yesiran.github.io/ai-paper-daily/reports/2026-07-30.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 上榜（约 22 赞，机理/agent 赛道）· CASIA 刘康·赵军组（国内 NLP/知识计算老牌强组）· 首次用"完全受控的合成世界"把长程规划能力从预训练到后训练的学习动力学逐段拆开 · Semantic Scholar 限流未取证（发表 3 天，引用≈0，属正常，不靠引用选入）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, planning, agent, long-horizon, distillation, rl, mechanism, world-model, continual-learning</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-07-30.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-07-30-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角 — 一个"必须连着走很多步"的模型</a><a class="t-h2" href="#s4">2. 困境 — 会做每一个动作，却走不完一整条长路</a><a class="t-h2" href="#s5">3. 旧路 — 拿一堆网上爬来的、看不清也管不住的数据硬训</a><a class="t-h2" href="#s6">4. 转折 — 别在野地里猜，造一个能拧旋钮的"实验室世界"</a><a class="t-h2" href="#s7">5. 解法 — 三段拆开：预训练怎么长、后训练怎么塑、多来源怎么融</a><a class="t-h2" href="#s8">6. 结局 — 长程规划的"配方表"第一次被写清楚</a><a class="t-h2" href="#s9">7. 内核 — 长程能力是"过程的干净度",不是"动作的丰富度"</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">模型进化逻辑往哪挪了一步</a><a class="t-h2" href="#s13">能怎么用（提示词 + 京小贝产品判断）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p><strong>为什么今天选它。</strong>"多轮长程规划"——让模型连着走十几二十步、每一步都改变局面、最后才见分晓——是当下所有 agent（智能体）产品卡住的那道墙：单轮回答已经很强，可一旦要它跨很多步把一件事办到底，它就容易在半路上跑偏、越走越错。这篇论文没有去刷任何榜，而是干了一件更底层的事：<strong>造了一个完全受控的合成小世界，把"长程规划这个本事到底是在哪一步、靠什么长出来的"从预训练一路拆到后训练，逐段做了对照实验。</strong> 它回答的是机理问题，正是思染要的那种"手感"——不是"模型又强了多少分",而是"它凭什么能连着走这么多步不散架、我该怎么喂它/怎么提示它"。</p><p><strong>命中的质量信号（诚实版）。</strong>（1）机理导向、非刷分：它的贡献是一批可复现的因果结论，不是 SOTA 高了零点几；（2）机构过硬——中科院自动化所刘康、赵军组，国内做知识计算/信息抽取/推理的老牌强组；（3）HuggingFace Daily Papers 上榜但<strong>票数偏低（约 22 赞）</strong>——这是一篇"机理类"论文的典型待遇，它不炫模型、不放 demo，社区投票天然冷淡，但方向（长程规划）是绝对的前沿主干道。<strong>引用数在这里没意义（发表 3 天）</strong>，我按方向价值和证据质量选，不按热度。</p><p><strong>对思染的价值。</strong>这篇几乎每一条结论都能直接翻译成京小贝多轮 agent 的设计动作和你的提示词写法——尤其"让模型显式写出状态怎么变"这一招，在长任务上把成绩抬了 <strong>45.8%</strong>，是可以今天就试的提示词杠杆。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角 — 一个"必须连着走很多步"的模型</h2><p>主角是一个要当 <strong>agent（智能体，能自己连着做很多步事、每步都要看当前局面再决定下一步的模型）</strong> 的大模型。它面对的不是"回答一个问题"这种一锤子买卖，而是"办成一件要十几步的事"：查资料→筛→再查→综合→下判断，或者在一个界面里点来点去把一个任务做到底。每一步它做的动作都会改变局面，下一步得基于改完的新局面接着来。</p><h2 id="s4">2. 困境 — 会做每一个动作，却走不完一整条长路</h2><p>墙在这里：<strong>模型把每一个"单步动作"都学会了，可一旦要把这些单步串成一条十几步的长链，它就散架。</strong> 论文里最扎眼的一个数字——如果训练时只喂它"1 到 5 步的短任务"，它在短任务上能做到 <strong>pass@8 达 93.12%</strong>（pass@8＝让它独立试 8 次、只要有一次做对就算过，这里 93% 就是几乎题题能做出来），可同一个模型换到"6 到 8 步的中长任务"，成绩掉到 <strong>0.83%</strong>；换到"9 步以上的长任务"，直接 <strong>0.00%</strong>。</p><p>不是它不会那些动作——每个动作单看它都会。是<strong>把动作拼成没见过的长流程</strong>这件事，它彻底不会。而且长任务上还有个更狠的毛病：早一步走错，错会顺着后面十几步滚雪球，滚到最后无可挽回。这就是长程规划真正的难点——<strong>不在"会不会做每一步"，在"能不能连着走很多步不跑偏"。</strong></p><h2 id="s5">3. 旧路 — 拿一堆网上爬来的、看不清也管不住的数据硬训</h2><p>以前大家怎么办这个能力？靠规模：拿海量互联网数据训一个大模型，指望长程规划这个本事在里面<strong>自己涌现</strong>出来。问题是这批数据<strong>又脏又不透明</strong>——你不知道里面到底有多少长链条的例子、有多少是走了弯路的次优演示、格式是什么样。于是你训出来一个会规划的模型，却完全说不清它<strong>是靠数据里的哪种成分、在哪个训练阶段</strong>学会规划的。说不清，就没法针对性地改进——只能继续加数据、碰运气。</p><h2 id="s6">4. 转折 — 别在野地里猜，造一个能拧旋钮的"实验室世界"</h2><p>作者的转念很朴素：既然真实数据看不清也管不住，那就<strong>自己造一个能完全控制的小世界</strong>，在里面把变量一个一个拧着做对照——就像化学家不在野外的浑水里做实验，而是在干净的试管里、一次只变一个条件。</p><p>这个小世界是三个<strong>"合成手工树"</strong>（论文里叫奇幻炼金 Fantasy Alchemy、畜牧养殖 Livestock Farming、电子组装 Electronic Assembly）：每个世界都是一棵树——底层是原料，把几样原料按规则合起来得到中间件，中间件再合起来得到更高一层的东西，一层层往上直到目标成品。树有多高（要几层）、每层多少类、每类多少个具体物件，全是作者手拧的旋钮。要几步能造出目标，也就精确可控：<strong>短（1–5 步）、中（6–8 步）、长（9 步以上）</strong>。</p><p>有了这个能拧旋钮的世界，"长程规划从哪长出来"这个问题就能被<strong>逐段做对照实验</strong>了：喂什么格式的数据、长短比例怎么配、数据干不干净、用哪种后训练方法——每一项单独拧，看结果怎么变。</p><h2 id="s7">5. 解法 — 三段拆开：预训练怎么长、后训练怎么塑、多来源怎么融</h2><p><strong>第一段：预训练阶段——能力是怎么"长出来"的。</strong> 三个发现：</p><ul class="ls"><li><strong>让模型显式写出"状态怎么变"，长程能力猛涨。</strong> 对照两种训练：一种让模型直接吐动作；另一种逼它在动手前先写一段"世界账本"——先认清目标属于哪一类、要凑齐哪些前置件、手里现有什么，再决定这一步动作。论文把后者叫 <strong>explicit world model construction through CoT state transition modeling</strong>，拆开就是：让模型用一段思考（CoT，chain-of-thought，模型动手前把推理过程一句一句写出来）把"我现在手里有 A、B，合起来会变出 C，于是局面从 {A,B} 变成 {C}"这种<strong>状态转移</strong>明明白白写清楚，再走下一步。效果——短任务只多 <strong>+9.4%</strong>（89.5%→98.9%），中任务多 <strong>+39.3%</strong>，长任务多 <strong>+45.8%</strong>（avg@8，即 8 次尝试的平均成绩）。<strong>任务越长，"先把状态写清楚再动手"这一招越值钱。</strong> 道理很直白：不把当前局面外化出来，走到第七步它早忘了第二步把什么变成了什么；写出来，等于随身带着一张不断更新的账本。</li></ul><ul class="ls"><li><strong>光会"单个动作"拼不出长流程，得让它真见过长链条。</strong> 前面那个"只喂短任务→长任务 0.00%"就是证据：<strong>原子技能（atomic skills，单个孤立的动作本领）足够多，也换不来把它们拼成长流程的能力。</strong> 但补救成本极低——只要往训练数据里掺 <strong>5% 的长链条轨迹</strong>，中任务的 pass@8 就从 <strong>0.83% 跳到 51.88%</strong>。不是要海量长数据，是要<strong>一点点、但必须真见过</strong>"从头串到尾"长什么样。</li></ul><ul class="ls"><li><strong>走了弯路的次优数据，对长任务是毒药。</strong> 把训练数据配成"4 份最优 : 8 份次优（走了弯路但也到了终点的演示）",短任务还撑得住，中、长任务直接<strong>塌到接近 0</strong>。原因就是第 2 拍说的滚雪球——<strong>长链条里早期的错误会一路放大</strong>，你喂它带瑕疵的示范，等于教它在起点就埋下会滚大的雷。短任务链条短，雷还没滚大就到终点了；长任务，必炸。</li></ul><p><strong>第二段：后训练阶段——能力是怎么被"塑形"的。</strong> 这里对照两种后训练（预训练之后再调教模型的手段）：</p><ul class="ls"><li><strong>GRPO</strong>（Group Relative Policy Optimization，一种强化学习法）：让模型对同一道题自己试很多遍，<strong>只看最后成没成</strong>给个分，成的那批往上抬、败的那批往下压（Group＝一组答案放一起比、Relative＝互相比高低、Policy Optimization＝据此调整它的行为倾向）。</li><li><strong>OPD</strong>（On-Policy Distillation，在线策略蒸馏）：请一个更强的<strong>老师</strong>，盯着<strong>学生自己走出来的每一步</strong>，<strong>逐个词</strong>地告诉它这一步的分布该往哪调（On-Policy＝在学生自己走的路上教、而不是拿老师的完美答案硬灌；Distillation＝把老师的判断一点点蒸给学生）。</li></ul><p>核心结论用一个叫<strong>互信息</strong>（mutual information，衡量两件事绑得多紧的量）的工具切出来：后训练存在<strong>三块区域</strong>——</p><ol class="ls"><li><span class="lk">"不必要"区</span>那些"这道题专属、换道题就没用"的具体知识（高互信息）。后训练每次只能小幅挪动参数，硬灌这类专属知识灌不进去，白费劲。</li><li><span class="lk">"有效"区</span>那些"到处都通用的规划套路"（低互信息）。这类套路模型其实预训练时已经隐约有了，后训练能把它<strong>激发、点亮</strong>，泛化到更多题上——这是后训练真正该发力的地方。</li><li><span class="lk">"不支持"区</span><strong>GRPO 在长任务上落在这里</strong>。因为它只在最后给一个成/败信号，链条一长，它<strong>根本分不清是哪一步的功劳或过错</strong>（这就是 credit assignment，功过分配问题——走完一长串只拿到一个总分，怎么把功劳和责任落到具体某一步上）。分不清，给出的参数更新方向就忽左忽右、自相矛盾，越长越乱。</li></ol><p>而 <strong>OPD 的"有效区"比 GRPO 宽得多</strong>：因为老师是<strong>逐词</strong>给方向的，不用等到最后才打分，方向<strong>一致、稳定</strong>。最能说明问题的对照——在被次优数据污染过的预训练底子上跑长任务，<strong>OPD 能把成绩拉到约 73%（avg@8），GRPO 只有约 41%</strong>，三十多个点的差距。（不同设定下具体数字有浮动，比如另一设定是 OPD 78.5% 对 GRPO 64.2%，但"长程且数据不干净时 OPD 明显更稳"这个方向是一致的。）一句话：<strong>任务越长、数据越脏，"逐步密集地教"就越比"最后打个总分"靠谱。</strong></p><p><strong>第三段：多来源整合——本事怎么"融"到一起。</strong> 现实里你常要把好几个环境、好几个老师的本事融进一个模型。作者用 <strong>MOPD</strong>（Multi-teacher On-Policy Distillation，多老师在线策略蒸馏，同时请几个各自擅长一个环境的老师教一个学生）测了三种情形：</p><ul class="ls"><li><strong>规划套路彼此兼容</strong> → 一个环境里练出的本事能<strong>迁移</strong>到没见过的新环境，打破环境边界；</li><li><strong>套路部分重叠</strong> → 模型能一边学新的、一边<strong>不严重忘掉旧的</strong>，这正是<strong>持续学习</strong>（continual learning，不断学新任务又不遗忘旧任务）想要的；</li><li><strong>套路彻底冲突</strong> → 学生为了迎合新老师<strong>把旧本事灾难性地忘光</strong>（catastrophic forgetting），互相干扰、两头落空。</li></ul><p>也就是说：能不能把多来源的本事融到一起，<strong>取决于它们底层的"规划套路"是否共享同一套骨架</strong>。共享，就能迁移、能持续学；冲突，就会互相拆台。</p><h2 id="s8">6. 结局 — 长程规划的"配方表"第一次被写清楚</h2><p>跑完这一整套对照，长程规划这个曾经"只能靠规模碰运气"的能力，第一次有了一张<strong>可操作的配方表</strong>：想让模型连着走很多步不跑偏，(1) 预训练就要逼它<strong>显式写出状态转移</strong>（长任务 +45.8%）；(2) 数据里必须掺<strong>一点真的长链条</strong>（5% 就够，短任务再多也换不来）；(3) 数据要<strong>干净</strong>，次优演示对长任务是毒药；(4) 后训练在长程、脏数据下<strong>优先用逐步密集监督的 OPD 而非只看结果的 GRPO</strong>；(5) 想融合多来源本事，先看它们的规划套路<strong>兼不兼容</strong>。</p><p>最反直觉的那颗副发现：<strong>决定长程成败的，往往不是"模型见没见过更多动作"，而是"它心里那张状态账本清不清楚、以及有没有人逐步纠着它别在早期跑偏"。</strong> 换句话说——瓶颈从"它看见了什么（感知/知识）"挪到了"它想得清不清楚、走得稳不稳（推理与过程）"。</p><h2 id="s9">7. 内核 — 长程能力是"过程的干净度",不是"动作的丰富度"</h2><p>带走这一句：<strong>一个模型能不能把一件长事办到底，不取决于它会多少花招，取决于它有没有一张随身更新的状态账本、以及训练时有没有人陪它把每一步走稳。</strong> 会做每一步 ≠ 走得完整条路；长程的胜负手在"过程的干净度"，不在"动作的丰富度"。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源）</h1><p><strong>第一层——它在改进谁。</strong> 直接对话的是两条后训练主线：一条是 <strong>GRPO 那一脉的"只看结果的强化学习"</strong>（DeepSeek-R1 时代把"自己试很多遍、成的抬败的压"推成了推理训练的主流）；另一条是近一年热起来的 <strong>on-policy distillation（在线策略蒸馏）</strong>——本台账 [[2026-07-15--weak-to-strong-direct-opd]]（Direct-OPD，弱到强的在线蒸馏）、[[2026-07-18--seed-self-evolving-opd]]（SEED 自进化在线蒸馏）都在这条线上。这篇的新意是：<strong>第一次把这两条路放到"长程规划"这个显微镜下对照</strong>，指出 GRPO 的病根是长链条里的功过分配失灵，而逐步密集的 OPD 正好补这个洞。</p><p><strong>第二层——它属于哪个研究纲领。</strong> 它是"<strong>把某个能力从预训练一路拆到后训练</strong>"这个纲领的一员。它的直接姊妹篇就在本台账里——[[2026-07-22--pretrain-to-rl-reasoning]]（《从预训练到后训练理解推理》）拆的是<strong>单轮推理</strong>（一口气想清一道题）；这篇拆的是<strong>多轮长程规划</strong>（连着走很多步办成一件事）。前沿的关注点正从"一口气想得对不对"，挪到"连着走得稳不稳"——这篇是那条主线往 agent 方向迈的一步。而"让模型显式写世界账本"这一招，又接着 [[2026-07-03--orca-world-foundation-model]]（Orca：世界在你脑中）、[[2026-06-19--kairos-world-model]]（Kairos 世界模型）那条"让模型内建一个会算的世界模型"的暗线——只不过这里的世界模型不是用来生成视频，而是用来<strong>在长链条里记住局面怎么变</strong>。</p><p><strong>第三层——根在哪。</strong> 根是强化学习里一个几十年的老问题：<strong>长程信用分配（temporal credit assignment）</strong>——一件事要做很多步、最后才知道成败，你怎么知道到底是哪一步做对/做错了、该奖励/惩罚哪一步。这个老问题如今原封不动地砸到了 LLM agent 头上：链条一长、只有最后一个成败信号，模型就学不明白。这篇给出的答案是——<strong>别只靠最后那个稀疏信号（GRPO），让一个老师逐步把方向补密（OPD）</strong>；以及在数据侧，<strong>别指望规模自动涌现，把"该见的长链条、该写的状态账本、该有的数据干净度"直接配进去。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">模型进化逻辑往哪挪了一步</h2><p>前沿的瓶颈正在从<strong>"单轮想得对不对"</strong>转到<strong>"多轮走得稳不稳"</strong>。单轮推理这两年已经被 RL 推得很强，可"连着走十几步把一件事办到底"仍是所有 agent 产品的真正天花板。这篇的意义是：它把这道墙<strong>从玄学变成了工程</strong>——长程能力不再是"喂够数据就自己涌现"的运气，而是一张可以照着配的配方表（写状态、掺长链、保干净、长程用 OPD、融合看套路兼不兼容）。<strong>对你判断"agent 什么时候能真正可靠地跑长任务"，这比任何一个跑分都更能给手感：谁把这几条配方吃透，谁的 agent 才走得远。</strong></p><h2 id="s13">能怎么用（提示词 + 京小贝产品判断）</h2><ol class="ls"><li><strong>提示词最直接的一招：逼模型"先写状态账本，再动手"。</strong> 论文里"显式写状态转移"在长任务上 +45.8%——这不用等训练，你今天就能在京小贝的多轮 agent 提示里加一条：<strong>每走一步前，先用一两句话复述"我现在掌握了什么、上一步把什么变成了什么、离目标还差哪几件",再决定这一步做什么。</strong> 相当于强制它随身带一张不断更新的账本，走到第八步不会忘了第二步干了啥。多轮理财对话、多步骤查询-核对-下结论的场景尤其受用。</li></ol><ol class="ls"><li><strong>早期错误会滚雪球——把校验点前移。</strong> 长链条里第一步的错会一路放大到无可挽回。产品含义：京小贝的多轮 agent <strong>别让它一口气跑十几步再回头看</strong>，要在<strong>前几步就设校验闸</strong>（确认它对用户意图、对关键事实的理解没歪），早发现早拽回来。这和你之前记下的 AREX"逐条自查+只补没证实那条"是一路的——[[2026-07-27--arex-rsi-deep-research]]——早验、勤验，比事后兜底便宜得多。</li></ol><ol class="ls"><li><strong>训 / 微调 agent 时的数据律：少量真长链 + 干净，胜过海量短样 + 带瑕疵。</strong> 如果你们要 SFT 或蒸馏出一个跑长流程的京小贝 agent——(a) 训练集里<strong>必须真掺进"从头串到尾"的长轨迹</strong>（哪怕只占 5%），光堆单步/短样换不来长程能力；(b) <strong>宁可少而干净，别多而带弯路</strong>，次优演示对长任务是毒药。这条直接指导你们的数据采集与清洗优先级。</li></ol><ol class="ls"><li><strong>后训练方法选型：长程、脏数据场景优先"逐步密集监督"（OPD 型），别只靠"结果奖励"（GRPO 型）。</strong> 金融多轮场景链条长、真实数据往往不干净，正是 GRPO 信用分配失灵、OPD 明显更稳的区间。若你们在做 agent 的后训练，方法选择上这是一条有据可依的默认倾向。</li></ol><ol class="ls"><li><strong>多能力融合看"套路兼不兼容"。</strong> 想把"财富问答 + 保险 + 信贷"几套 agent 本事融进一个模型，能不能不打架，取决于它们底层规划套路是否共享骨架。兼容→能迁移能持续学；冲突→会灾难性遗忘、两头落空。<strong>上新能力前先评估它和存量能力的套路冲不冲突，别默认加了就有、加了不忘。</strong></li></ol><p><strong>一句护栏：</strong> 这套结论是在三个<strong>合成的手工树世界</strong>里做出来的——干净、可控，但比真实网页/工具环境简单得多。方向和机理可信，但"5%""45.8%"这些具体数字别当成真实业务里的保证值，要在你自己的场景里 A/B 复验。合成世界证的是"该往哪拧旋钮",不是"拧到几度"。</p><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2607.24720">https://arxiv.org/abs/2607.24720</a> — <em>The Physics of Multi-Turn Long-Horizon Planning</em>，Tianyi Men / Zhuoran Jin / Kang Liu / Jun Zhao，中科院自动化所，2026-07-27</li><li>论文 HTML（详细发现、数字出处）：<a class="src" href="https://arxiv.org/html/2607.24720v1">https://arxiv.org/html/2607.24720v1</a></li><li>信号佐证 · HuggingFace Daily Papers（约 22 赞，机理/agent 赛道）：<a class="src" href="https://huggingface.co/papers?date=2026-07-28">https://huggingface.co/papers?date=2026-07-28</a> 与 <a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a></li><li>关键数字（本文引用）：短任务 pass@8 93.12% / 中 0.83% / 长 0.00%（只训短任务）；掺 5% 长轨迹 → 中 pass@8 0.83%→51.88%；显式写状态转移长任务 avg@8 +45.8%（短 +9.4%、中 +39.3%）；污染数据长任务 OPD ~73% vs GRPO ~41%（avg@8，另一设定 78.5% vs 64.2%）——均出自上述 HTML 版</li><li>姊妹篇 / 溯源：[[2026-07-22--pretrain-to-rl-reasoning]]（单轮推理版）、[[2026-07-15--weak-to-strong-direct-opd]] 与 [[2026-07-18--seed-self-evolving-opd]]（on-policy distillation 一脉）、[[2026-07-03--orca-world-foundation-model]] 与 [[2026-06-19--kairos-world-model]]（世界模型暗线）、[[2026-07-27--arex-rsi-deep-research]]（早验勤验的产品呼应）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
