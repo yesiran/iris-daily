@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mage-VL：编解码器原生流式多模态感知 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.07.31</span></div>
+  <div class="bar"></div>
+  <h1>Mage-VL：编解码器原生流式多模态感知</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>18</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题诊断：VLM实时感知困境</div><ul><li><div class="n2" style="--c:#E63312">莫拉维克悖论：推理强但实时反应弱</div></li><li><div class="n2" style="--c:#E63312">病根：均匀密集编码，每帧重复浪费算力</div></li><li><div class="n2" style="--c:#E63312">结果：视觉token过多，推理速度慢成本高</div></li></ul></li><li><div class="n1" style="--c:#10395E">三条低效旧路的通病</div><ul><li><div class="n2" style="--c:#10395E">路A：均匀编码全帧，不变背景也付全额成本</div></li><li><div class="n2" style="--c:#10395E">路B：事后剪枝，编码成本已无法挽回</div></li><li><div class="n2" style="--c:#10395E">路C：时机检测，底层还是密集编码无改进</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">关键洞察：复用压缩器现成成果</div><ul><li><div class="n2" style="--c:#9E2B22">压缩器码率分配=信息密度地图，现成无须重算</div></li><li><div class="n2" style="--c:#9E2B22">I帧完整、P帧增量，信息集中在变化处</div></li><li><div class="n2" style="--c:#9E2B22">运动矢量+残差能量直接评估重要性</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">创新方案：codec原生双层架构</div><ul><li><div class="n2" style="--c:#3E5C2E">Mage-ViT：按码率选patch编码前过滤，token减75%</div></li><li><div class="n2" style="--c:#3E5C2E">System1/2：快脑闸门+慢脑解码，事件驱动</div></li><li><div class="n2" style="--c:#3E5C2E">codec无关：H.264/HEVC皆可用，无需重训</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">成果数据：效率能力双突破</div><ul><li><div class="n2" style="--c:#6B4A8E">推理速度：4B参数快3.5倍，赢5.6B到15B模型</div></li><li><div class="n2" style="--c:#6B4A8E">实时感知：79.84分超HERMES-7B的69分</div></li><li><div class="n2" style="--c:#6B4A8E">空间推理：视频训练反提升，CrossPoint26→80分</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">进化启示：表示设计优于蛮力</div><ul><li><div class="n2" style="--c:#8A6D1F">模型进化：算力分配前置化、事件驱动化</div></li><li><div class="n2" style="--c:#8A6D1F">京小贝用法：推送闸门、P帧增量、显式引导</div></li><li><div class="n2" style="--c:#8A6D1F">核心悟道：聪明表示胜过更大参数</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
