@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28103%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2243%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2249%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2219%22%20r%3D%2217%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.26%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把"想清楚再画出来"搬进世界模型——先用一门自学出来的"物理语言"推演世界怎么变，再渲染成视频</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-01</span></div>
+  <h1 class="doc">把"想清楚再画出来"搬进世界模型——先用一门自学出来的"物理语言"推演世界怎么变，再渲染成视频</h1>
+  <div class="dateline"><span>全文 <b>5,006</b> 字</span><span>约 <b>13</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">PhiZero: A World Model Built Around Physical Language</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.28624</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Shuyao Shang, Yuqi Wang, Ruopeng Gao, Xu Chen, Tieniu Tan, Lue Fan, Zhaoxiang Zhang</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">中科院自动化所（CASIA，NLPR）——谭铁牛 / 张兆翔组</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-30</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-01.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-01.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace 当日热榜 #4 · 148 赞 · CASIA 顶尖视觉团队（谭铁牛/张兆翔） · Semantic Scholar 限流未取证（论文上线约 2 天，引用≈0）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, world-model, reasoning, discrete-representation, video-generation, physical-reasoning</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-01.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-01-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 PhiZero，不是因为它票数最高（当日榜首是通义的 GUI Agent 技术报告 234 赞、第二是 Metis 记忆基础模型 211 赞），而是因为它把过去两年"最重要的一条进化主线"清清楚楚地推进了一步——<strong>"推理优先"这套打法，正在从文字/数学，蔓延进"看世界、模拟世界"</strong>。</p><p>三点交代清楚：</p><ol class="ls"><li><span class="lk">它推进了什么</span>主流的"世界模型"（让 AI 学会预测"接下来会发生什么"的模型）都是直接去预测下一帧画面的每一个像素，物理规律被闷在一大团高维数字里、和"长什么样"缠成一坨。PhiZero 反过来：先自己从海量视频里<strong>学出一门"物理语言"</strong>（一套很短的离散符号，专门记"世界从这一刻到下一刻是怎么变的"），先用这门语言<strong>把"接下来世界会怎么变"想明白</strong>，再把这段推演<strong>渲染成视频</strong>。一句话——它给世界模型装上了"先想后画"的思维链（chain-of-thought，就是让模型先一步步写出思考过程、再给结论的那种做法）。</li></ol><ol class="ls"><li><span class="lk">命中的质量信号</span>HuggingFace 每日论文榜（社区每天投票筛过的重要论文榜）当日 <strong>#4、148 赞</strong>；作者是<strong>中科院自动化所谭铁牛、张兆翔</strong>这条国内顶尖视觉/世界模型线；在 Physics-IQ、PhyGround、WorldModelBench 等六个"考物理靠不靠谱"的评测上，同时压过 Cosmos3、Veo3.1、Wan2.2、Gemini-2.5 Flash 这批一线选手。Semantic Scholar 的早期影响力接口这次被限流没取到（论文才上线约 2 天，引用本来也≈0），如实标注。</li></ol><ol class="ls"><li><span class="lk">对思染追前沿的价值</span>这篇不是又一个"视频生成刷分"的活儿，它是一个<strong>范式信号</strong>——把"先在一个压缩、结构化、看得见的中间表示里推理，再展开成最终的重成品"这套思路，验证到了世界模型上。这条思路可以直接搬到你的提示词和京小贝的回复生成里（详见文末"对思染"一节）。方向足够新：知识库里世界模型上一次讲还是 07-03 的 Orca，而这次是完全不同的切法。</li></ol><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是一类叫<strong>"世界模型"（world model）</strong>的 AI。名字听着玄，其实就是一件事：给它看当下这一帧画面，它要能预测出"接下来这个世界会怎么演下去"——球会往哪滚、水会怎么泼、手会怎么把杯子拿起来。它是自动驾驶、机器人、具身智能（会动手动脚的 AI）背后那台"想象引擎"：AI 得先能在脑子里把世界往前推演，才谈得上规划下一步做什么。</p><h2 id="s4">2｜困境</h2><p>今天绝大多数世界模型（Sora、Veo、腾讯 Wan、英伟达 Cosmos 这一挂）的做法是：<strong>直接预测下一帧的每一个像素长什么样</strong>。画面确实越来越漂亮，但有个根子上的病——</p><p><strong>"世界怎么变"这件事，被闷死在一大团高维数字里，和"世界长什么样"焊死在一起了。</strong></p><p>拆开说：模型内部并没有一处地方明明白白写着"球撞墙会反弹""水往低处流"这类<strong>动力学规律（dynamics，就是'状态怎么从这一刻变到下一刻'的规律）</strong>。这些规律是<strong>隐式的（implicit，意思是没被单独拎出来、只是模糊地散在模型的一堆参数里）</strong>，混在"这一帧每个像素该是什么颜色"的预测里一起算。</p><p>后果有两个，都很要命：</p><ul class="ls"><li><span class="lk">物理容易穿帮</span>因为模型从没被逼着单独把"物理规律"想清楚，它常常画出漂亮但违反物理的画面（杯子穿过桌子、水凭空消失）。</li><li><span class="lk">学到的东西搬不走</span>一段"人的手把杯子拿起来"的动作规律，和"这只手长什么样、这个厨房什么光线"死死绑在一起。你想把这个动作规律迁移到机器人手上，做不到——因为"动作"和"外观"就没分开过。</li></ul><h2 id="s5">3｜旧路</h2><p>之前大家怎么绕这个坎？两条路：</p><ul class="ls"><li><span class="lk">一条是继续堆规模</span>把像素预测模型做得更大、喂更多视频，指望物理规律"涌现"出来。画质是好了，但上面那两个病是结构性的，堆规模治标不治本。</li><li><strong>另一条是 Genie 那一派的"潜在动作模型"（latent-action model）</strong>：Genie（DeepMind 2024 那个能玩的世界模型）确实动了"离散化"的念头——它从相邻两帧里学出一小套<strong>离散的"动作"符号</strong>（比如"往左""跳"），让世界模型变得可操控。但它学的是<strong>"动作"</strong>（agent 主动发出的指令），而且主要在游戏这类封闭、规则简单的场景里。它没去学<strong>开放世界里"状态本身是怎么演变的"</strong>那套更普适的物理规律。</li></ul><p>所以旧路要么"没把物理单独拎出来"，要么"拎出来的是动作、不是世界演化本身、且只在小场景管用"。</p><h2 id="s6">4｜转折</h2><p>作者的关键一转，来自一个<strong>对人的观察</strong>：</p><blockquote><p>人看世界时，不是在脑子里逐像素地重画下一帧。人是先<strong>抽象</strong>——"哦，球要滚下去了、会撞到那个箱子"——用一种<strong>类似语言的、离散的、能拿来推理</strong>的结构，先把"接下来会发生什么"想明白，<strong>然后</strong>才在脑海里补出具体画面。</p></blockquote><p>那能不能让世界模型也这样？先造一门<strong>"物理语言"（physical language）</strong>——不是人类的中文英文，而是模型<strong>自己从海量无标注视频里学出来的一套很短的离散符号</strong>，每个符号专门编码"世界从这一刻到下一刻，动力学上发生了什么变化"。然后让模型<strong>先用这门语言把世界演化推理出来，再去渲染画面</strong>。</p><p>这一转的名字，作者叫 <strong>reason-then-render（先推理，后渲染）</strong>。本质就是把 LLM 里那套"先写思考过程、再给答案"的<strong>思维链</strong>，搬到了世界模型上——只不过这里"思考过程"不是文字，是一串"物理语言"符号。</p><h2 id="s7">5｜解法</h2><p>整套系统三步走，每一步都拆到底：</p><p><strong>第一步：造出这门"物理语言"（自监督地学一个 tokenizer）</strong></p><ul class="ls"><li><strong>tokenizer</strong> 这个词落地一下：就是把连续的东西（这里是视频）切成一个个离散"符号/词元"的切分器，好比把一段声音切成一个个音节。</li><li>具体做法：先用一个<strong>时空编码器</strong>（从 Wan2.2 的视频压缩器 VAE 初始化来的；VAE = 变分自编码器，一种把画面压成一小串数字、再还原回画面的网络）把 33 帧的视频压成 9 个"潜在状态"（latent state，就是每一时刻画面的高度压缩版）。</li><li>关键设计：一个<strong>"过渡级"的 Q-Former</strong>（Q-Former 是一种"用少量固定问题去问一堆信息、抽出精华"的小网络；这里只用 <strong>32 个可学习的查询</strong>）<strong>只盯着相邻两个状态之间的差</strong>去看——也就是它编码的不是"这一帧是什么"，而是"从这一帧到下一帧，变了什么"。这个"只看变化、不看内容"的设计，是把"动力学"从"外观"里剥出来的关键手术刀。</li><li>最后用 <strong>FSQ（finite scalar quantization，有限标量量化）</strong> 把这些"变化"压成离散符号。FSQ 落地：它把每个数值强行归到几个固定档位上（这里每个维度的档位是 8/5/5/5/5/5，乘起来 = <strong>约 2.5 万个可能的符号</strong>），从而把连续的"变化"变成一个个离散的"词"。</li><li>数出来的账：一段 33 帧的视频 → 9 个状态 → 8 个相邻对 × 每对 32 个符号 = <strong>256 个"物理语言"词元</strong>。对比一下，同类切分器 Video-LaVIT 要 270 个、VideoFlexTok 要 288~576 个，PhiZero 用 <strong>256</strong> 个就还原得更清楚（<strong>LPIPS 0.087</strong>，对手 0.175/0.167——LPIPS 是"重建出来的画面和原画差多远"的一个感知距离指标，越小越像）。</li></ul><p><strong>第二步：先"推理"世界怎么变（一个会说物理语言的 VLM）</strong></p><ul class="ls"><li><strong>VLM</strong> 落地：视觉-语言模型（vision-language model），就是既能看图、又能生成文字的大模型。这里用的是 <strong>Qwen3-VL-4B</strong>（通义千问的 40 亿参数视觉语言模型）。</li><li>做法：给这个模型的"词表"里，<strong>每个 FSQ 符号都加一个新词</strong>——于是它现在能像吐单词一样，<strong>一个接一个地吐出物理语言符号</strong>（这就是 <strong>autoregressive，自回归</strong>：一个词一个词往下接，每个新词都看着前面已生成的词）。给它当前画面 + 一句指令，它就自回归地推理出"接下来这段世界演化，用物理语言写下来是什么样"。<strong>这一步就是世界模型的"思考"——但它想的是动力学、不是像素。</strong></li></ul><p><strong>第三步：把推演"渲染"成视频（一个被物理语言指挥的扩散模型）</strong></p><ul class="ls"><li><strong>扩散模型（diffusion model）</strong> 落地：一种"从一团噪点里一步步去噪、最后浮现出清晰画面"的生成方式，今天绝大多数高质量视频/图像生成都用它。这里用 <strong>Wan2.2-5B</strong>（50 亿参数视频扩散模型）当"渲染器"。</li><li>它被三样东西指挥着去噪出视频：①上一步推理出的那串<strong>物理语言</strong>（决定"世界怎么变"）；②<strong>第一帧画面</strong>（决定"世界长什么样"）；③扩散的步数。</li></ul><p>看出这套结构的妙处了吗——<strong>"世界怎么变"（物理语言）和"世界长什么样"（第一帧）被彻底分成了两个旋钮</strong>。这正是治好第 2 拍那两个病的解药。</p><p>规模交代：预训练用了约 <strong>1 万小时</strong>无标注视频；切分器再用约 500 万段 4 秒视频微调；推理器再用约 100 万段"动作丰富"的视频微调（真实∶模拟 ≈ 480 万∶20 万）；总共 <strong>128 张 A100 显卡</strong>训出来。</p><h2 id="s8">6｜结局</h2><p><strong>先看"物理靠不靠谱"的硬指标</strong>（六个评测，PhiZero 全部拿第一）：</p><div class="tablewrap"><table><thead><tr><th>评测</th><th>指标</th><th>PhiZero</th><th>最强对手</th></tr></thead><tbody><tr><td>Physics-IQ</td><td>IQ 分（越高越懂物理）</td><td><strong>41.2</strong></td><td>Cosmos3-Super 39.5</td></tr><tr><td>PhyGround</td><td>物理分</td><td><strong>3.01</strong></td><td>Veo3.1 2.85</td></tr><tr><td>WorldModelBench</td><td>总分</td><td><strong>8.19</strong></td><td>Wan2.2-5B 7.98</td></tr><tr><td>IntPhys2</td><td>总体</td><td><strong>56.34</strong></td><td>Gemini-2.5 Flash 55.63</td></tr><tr><td>LikePhys</td><td>平均误差（越低越好）</td><td><strong>41.7</strong></td><td>Hunyuan-Video 43.6</td></tr><tr><td>YoCausal</td><td>综合排名（越低越好）</td><td><strong>2.0</strong></td><td>Wan2.2-14B 3.5</td></tr></tbody></table></div><p>注意对手里有 Veo3.1、Gemini-2.5 Flash 这些一线大厂的旗舰，PhiZero 用一个 40 亿+50 亿的组合把它们在"物理"这一维上比了下去。消融实验也说清了功劳来自谁：把它退回"普通 VLM+ 提示词增强"的老做法，Physics-IQ 只有 <strong>26.6</strong>；一步步加回"物理语言推理"这套机制，涨到 <strong>41.2</strong>——<strong>涨幅几乎全来自"先想后画"这个改造本身。</strong></p><p><strong>再看真正反直觉、也最有意思的那个副产品——零样本动作迁移（zero-shot motion transfer）：</strong></p><p>因为"动作/动力学"已经被单独关进"物理语言"里、和外观脱钩了，所以可以玩一个魔术：</p><ul class="ls"><li>拿一段<strong>人</strong>把杯子拿起来的视频 → 编码成物理语言（= 抽出"这个拿取动作本身"）；</li><li>把<strong>第一帧</strong>里的"人手"P 成"机器人手 / 灵巧手"；</li><li>让渲染器用<strong>原封不动的那串物理语言</strong> + 换过的第一帧去出视频 → <strong>机器人就照着人的动作把杯子拿起来了</strong>。</li></ul><p><strong>全程没用过一对"人-机器人"的配对训练数据。</strong> 同理还能做<strong>仿真到现实</strong>（把仿真器里 LIBERO 的机器人视频，只换第一帧外观、保留物理语言，就渲染成逼真画面）和<strong>动作条件控制</strong>（把驾驶轨迹写成文字喂给推理器，它就按不同轨迹推演出对应的驾驶视频，nuScenes / AGI-Bot 上都成）。</p><p>这就是"把动力学和外观分开"这一刀带来的真正红利：<strong>规律一旦被单独拎出来，就变得可搬运、可编辑、可复用。</strong></p><h2 id="s9">7｜内核</h2><p>一句话种子：</p><blockquote><p><strong>别直接生成那个又重又具体的最终成品；先在一个压缩、离散、看得见的"中间表示"里，把"事情该怎么发生"想明白，再展开成成品。</strong>——把"逻辑/动力学"从"表面/外观"里剥出来，逻辑就变得可推理、可迁移、可控制。这，就是"推理优先"范式从文字世界迈进物理世界的那一步。</p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读 3 层）</h1><p><span class="lk">第 1 层｜它在批判谁</span>主流像素级视频世界模型（Sora / Veo / Wan / Cosmos 这一挂）。它们直接在像素空间预测下一帧，把物理动力学<strong>隐式</strong>地闷在高维视觉预测里——画质在涨，但"物理单独想清楚了没有""规律能不能搬走"这两件事没解决。PhiZero 的整篇立论就是冲着这个"隐式"来的。</p><p><span class="lk">第 2 层｜它汇了哪两条河</span></p><ul class="ls"><li><span class="lk">河 A——离散表示这条线</span>VQ-VAE（2017，把画面压成一本"离散码本"里的词）→ 各种离散世界模型（如 DreamerV3 用离散潜变量做想象）→ Genie 的"潜在动作"→ FSQ（有限标量量化，一种更简洁的离散化）。这条河的信念是：<strong>一个压缩的离散瓶颈，会逼模型抓住真正承重的结构</strong>。PhiZero 把这条线用到了"动力学"上，而且刻意只编码"相邻两帧的变化"。</li><li><strong>河 B——LLM 的"推理优先"这条线</strong>：思维链（chain-of-thought，先写思考过程再给答案）→ o1 那类"先长时间想、再作答"的推理模型 → 潜在推理（把思考藏在隐空间里，本知识库 06-14 SWITCH、06-18 LoopCoder、06-30《思想表示四公理》都在这条线上）。这条河的信念是：<strong>先在一个专门的"思考空间"里推演，再产出最终答案，比一步到位强。</strong></li></ul><p>PhiZero = <strong>河 A × 河 B 的合流</strong>：用离散表示造出一门"物理语言"当"思考空间"，用 LLM 的自回归推理在这个空间里"想清楚世界怎么变"，最后才渲染。它相当于<strong>给世界模型发明了一版"物理思维链"</strong>。</p><p><strong>第 3 层｜和 Genie 的分野（最容易混的一层）</strong>：Genie 也离散、也从相邻帧学符号，但它学的是<strong>"动作"（agent 主动的指令，且限于游戏这类封闭场景）</strong>；PhiZero 学的是<strong>"世界状态本身怎么演化"（开放世界的通用动力学）</strong>。一个是"我要怎么动"，一个是"世界会怎么变"——后者更底层、更普适，也正因为它把"世界怎么变"单独拎出来了，才有了上面那个跨形态零样本迁移的魔术。</p><p><span class="lk">和本知识库的接线</span></p><ul class="ls"><li>世界模型线：[[2026-06-19--kairos-world-model]]（原生世界模型栈）、[[2026-07-03--orca-world-foundation-model]]（世界在你脑中）——PhiZero 是这条线的新切法：不是造更强的像素预测器，而是给世界模型加一层"显式的物理推理"。</li><li>推理/潜在思考线：[[2026-06-14--switch-latent-reasoning]]、[[2026-06-18--loopcoder-v2]]、[[2026-06-30--latent-thoughts-four-axioms]]——有意思的对照：那几篇让推理<strong>藏进隐空间（潜在）</strong>，PhiZero 反过来让推理<strong>显式化、离散化成"物理语言"</strong>。显式 vs 潜在，是"推理该长什么样"的一体两面。</li><li>"结构化的更多才有用"这条暗线（[[2026-07-10--sparse-delta-memory]] 那条批注）：一个压缩的离散表示（256 个符号）反而抓住了承重结构、打赢了动辄几万维的像素预测——又钉一钉。</li></ul><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p><strong>一句话：过去两年横扫文字和数学的"推理优先"范式，正在越过语言的边界，长进"感知世界、模拟世界"里。</strong></p><p>2023–2025 我们看到的进化主线是——模型变强，越来越靠"<strong>先想、再答</strong>"（思维链→o1 类推理模型→强化学习刷推理）。PhiZero 是这条线一个标志性的越界瞬间：它证明了"先在一个压缩、结构化、显式的中间表示里推理，再产出重成品"这套打法，<strong>不只适用于'写出正确答案'，也适用于'想象世界怎么变'</strong>。</p><p>更深一层的启示是<strong>"解耦"的威力</strong>：PhiZero 把"世界怎么变（动力学）"和"世界长什么样（外观）"拆成两个独立旋钮。一旦拆开，动力学就变得<strong>可推理、可迁移、可编辑</strong>（那个零样本跨形态动作迁移就是证据）。这给你一个判断模型进化方向的抓手：<strong>下一波能力跃迁，很多会来自"把原来纠缠在一起的两件事拆开、让其中'讲逻辑'的那一半变成可以单独推理和复用的对象"。</strong> 记忆基础模型（同日 Metis）在拆"记忆 vs 计算"，PhiZero 在拆"动力学 vs 外观"——同一种进化手法，不同战场。</p><h2 id="s13">能怎么用（提示词 &amp; 京小贝）</h2><p><strong>1）把 "reason-then-render" 变成一条提示词模板。</strong> 别让模型一上来就吐最终那段又长又要有温度的用户回复。分两段逼它：</p><ul class="ls"><li><strong>第一段（render 之前的 reason）</strong>：先让它用一段<strong>压缩、结构化、只讲逻辑</strong>的中间表示，把"这事该怎么发生"想清楚——对京小贝就是那套<strong>决策骨架</strong>：用户此刻的处境 → 几个关键变量（持仓/风险偏好/市场信号）→ 状态该怎么转移 → 该落到哪个动作（买/加/减/不动）。这一段就是你的"物理语言"：短、硬、只有逻辑，没有客套。</li><li><span class="lk">第二段（render）</span>再让它把这副骨架<strong>渲染成</strong>那段有温度、符合人设的自然语言回复。</li></ul><p>好处正是 PhiZero 的好处：<strong>逻辑和表面分开后，两边都更稳、更可复用</strong>——同一副决策骨架，可以换不同话术风格/人设去"渲染"（就像同一串物理语言可以换不同"外观"去渲染），一致性和可控性都上来了。你现有的 wealth-reply 系列其实已经在往这个方向走，PhiZero 给的是一个更硬的理论背书：<strong>中间那层"压缩的显式推理"不是可有可无的过场，它才是承重墙。</strong></p><p><strong>2）"离散瓶颈不是损失，是逼出结构。"</strong> PhiZero 用 256 个符号打赢几万维像素预测，说明<strong>逼模型把中间思考压进一个紧凑、显式的表示，反而让它抓住真正承重的东西</strong>。产品含义：给京小贝设计一个<strong>紧凑、显式、可审计的"推理状态"</strong>（比如结构化的中间 JSON / 决策卡）——它比一坨端到端的自由生成<strong>更可控、更可审、更可迁移</strong>（换场景、换渠道、换人设都能复用这层）。这对一个要过合规、要能解释"凭什么这么答"的金融 AI，几乎是刚需。</p><p><strong>3）迁移视角看数据。</strong> PhiZero 不用任何"人-机器人配对数据"就迁移了动作——因为它把"动作规律"从"外观"里剥出来了。对你的启发：当你缺某个场景的配对数据时，别急着标注，先问一句——<strong>"我要迁移的那个'逻辑/规律'，能不能从'外观/表面'里单独拎出来？"</strong> 拎出来了，很多迁移就变成零样本的了。</p><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2607.28624">https://arxiv.org/abs/2607.28624</a> （PhiZero: A World Model Built Around Physical Language，CASIA，2026-07-30 提交）</li><li>全文（HTML）：<a class="src" href="https://arxiv.org/html/2607.28624">https://arxiv.org/html/2607.28624</a> （机制、评测数、消融、迁移实验均取自此）</li><li>质量信号｜HuggingFace 每日论文榜：<a class="src" href="https://huggingface.co/papers/2607.26760">https://huggingface.co/papers/2607.26760</a> 所在的 2026-07-31 榜单，PhiZero #4 · 148 赞</li><li>机构佐证｜CASIA-LM（中科院自动化所语言/世界模型组）：<a class="src" href="https://github.com/CASIA-LM">https://github.com/CASIA-LM</a></li><li>Semantic Scholar 早期影响力：本次接口限流（HTTP 429）未取到；论文上线约 2 天，引用≈0，如实标注，不硬凑信号。</li><li>对比/溯源涉及的前作：Genie（潜在动作世界模型）、VQ-VAE（离散码本）、FSQ（有限标量量化）、Wan2.2（视频扩散/VAE）、Qwen3-VL（视觉语言模型）——均见论文 Related Work。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
