@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhiZero：物理语言与世界模型推理范式 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.08.01</span></div>
+  <div class="bar"></div>
+  <h1>PhiZero：物理语言与世界模型推理范式</h1>
+  <p class="meta"><b>5</b> 条主线 · <b>20</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题根源</div><ul><li><div class="n2" style="--c:#E63312">像素级预测困局：物理规律隐式地闷在高维数字里，和外观焊死</div></li><li><div class="n2" style="--c:#E63312">双重后果：物理容易穿帮（杯子穿桌） + 动力学规律搬不走</div></li><li><div class="n2" style="--c:#E63312">旧路无效：堆规模治标不治本，Genie 只学游戏动作非通用</div></li></ul></li><li><div class="n1" style="--c:#10395E">核心方案（三步系统）</div><ul><li><div class="n2" style="--c:#10395E">造物理语言</div><ul><li><div class="n3">时空编码器+Q-Former：仅编码相邻帧的32维变化，不看内容</div></li><li><div class="n3">FSQ 量化：连续变化→256个离散符号（8×5^5 档位）</div></li><li><div class="n3">重建效果：LPIPS 0.087，优于 Video-LaVIT(0.175) 和 VideoFlexTok(0.167)</div></li></ul></li><li><div class="n2" style="--c:#10395E">推理层：Qwen3-VL-4B自回归生成物理语言序列</div></li><li><div class="n2" style="--c:#10395E">渲染层：Wan2.2-5B 扩散模型执行（物理语言+第一帧→视频）</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">实证胜负</div><ul><li><div class="n2" style="--c:#9E2B22">六项物理评测全胜</div><ul><li><div class="n3">Physics-IQ 41.2（Cosmos3 39.5）、PhyGround 3.01（Veo 2.85）</div></li><li><div class="n3">WorldModelBench 8.19、IntPhys2 56.34、LikePhys 41.7 误差最小</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">消融证明：退回传统做法只有26.6，加回物理语言涨到41.2</div></li><li><div class="n2" style="--c:#9E2B22">零样本魔术：人类动作→机器人执行、仿真→现实，无需配对数据</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">理论脉络</div><ul><li><div class="n2" style="--c:#3E5C2E">两河汇合</div><ul><li><div class="n3">河A（离散表示）：VQ-VAE→DreamerV3→Genie 潜在动作→FSQ</div></li><li><div class="n3">河B（推理优先）：思维链→o1推理→潜在推理（SWITCH/LoopCoder）</div></li></ul></li><li><div class="n2" style="--c:#3E5C2E">vs Genie核心分野：学世界状态本身（通用），非仅动作（游戏封闭）</div></li><li><div class="n2" style="--c:#3E5C2E">范式越界：&quot;先想后画&quot;从LLM文字领地蔓延进世界模拟</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">应用启示</div><ul><li><div class="n2" style="--c:#6B4A8E">Reason-Then-Render提示词模板</div><ul><li><div class="n3">第1阶段：压缩显式推理（决策骨架），只讲逻辑无客套</div></li><li><div class="n3">第2阶段：渲染成有温度自然语言回复，可复用逻辑</div></li></ul></li><li><div class="n2" style="--c:#6B4A8E">离散瓶颈逆向：256符号打赢几万维像素，紧凑表示反而更稳更可控</div></li><li><div class="n2" style="--c:#6B4A8E">迁移策略：拎出逻辑后数据需求大幅下降，启用零样本迁移路径</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
