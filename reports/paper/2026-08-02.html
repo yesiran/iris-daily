@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2884%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2235%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2222%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.12%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2218%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.24%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型"天生会记事"——把记忆从外挂的检索笔记，搬进模型内部一层层的状态，一次前向就更新、权重全程冻结；顺带戳破一个真相：今天的大模型其实几乎不会"记"，只是在反复重读聊天记录</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-02</span></div>
+  <h1 class="doc">让模型"天生会记事"——把记忆从外挂的检索笔记，搬进模型内部一层层的状态，一次前向就更新、权重全程冻结；顺带戳破一个真相：今天的大模型其实几乎不会"记"，只是在反复重读聊天记录</h1>
+  <div class="dateline"><span>全文 <b>6,781</b> 字</span><span>约 <b>18</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Metis: Memory Foundation Model</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.26760</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zeyu Zhang, Ziliang Guo, Yihang Sun, …, Zhi-Qin John Xu, Junchi Yan, Haofen Wang, Xu Chen, Feiyu Xiong, Zhiyu Li, Tat-Seng Chua</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">MemTensor(上海)/上海算法创新研究院(IAAR) × 人大 × 新加坡国立(NUS) × 上海交大 × 同济 —— 即 Memory³ 那支团队</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-29</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-02.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-02.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace 本周(W31)论文榜 #4 · 252 赞 · 07-31 当日榜一度第二(211 赞) · Memory³ 原班团队(熊飞宇/李志宇) + 严骏驰/陈旭/蔡达成 · 代码与 checkpoint 开源 · Semantic Scholar 限流未取证(上线约 4 天,引用≈0)</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, memory, architecture, continual-learning, native-memory, linear-attention</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-02.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-02-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>Metis: Memory Foundation Model（记忆基础模型）</strong>，因为它在一条对你（京小贝）最要害的主线上，往前拱了实打实的一步——<strong>记忆，正在从"挂在模型外面的检索笔记"，变成"长在模型主干里的一种原生能力"。</strong></p><p>三点交代清楚：</p><ol class="ls"><li><span class="lk">它推进了什么</span>过去两年，模型把一个个本来靠"外部脚手架"临时凑出来的能力，一样一样"内化"进了主干——先是推理（思维链提示 → o1 那类推理模型），后是多模态（外挂视觉编码器 → 原生多模态）。<strong>唯独"记忆"这件事，一直还是外挂</strong>：你把用户说过的话写进一个数据库，用的时候检索出来、再塞回上下文里。Metis 第一个正面回答"记忆能不能也内化"——它给基础模型装了一处<strong>"原生记忆状态"</strong>（native memory state）：历史信息被压进模型自己每一层的一小块内部状态里，用一种叫<strong>"记忆注意力"</strong>的机制读出来；更新这块记忆<strong>不用反向传播、不用训练，只需要跑一次前向传播</strong>；推理时<strong>所有学到的权重全程冻结不动</strong>，只有那块记忆状态在自己变。这是"记忆"从外部工程，第一次被做成模型的内生能力。</li></ol><ol class="ls"><li><span class="lk">命中的质量信号</span>HuggingFace 每日论文榜（社区每天投票筛过的重要论文榜）<strong>本周（W31）第 4、252 赞</strong>；07-31 当日榜一度排到<strong>第二（211 赞，见昨天 PhiZero 那篇的开头）</strong>。作者是国内<strong>"显式记忆"这条线的原班人马</strong>——熊飞宇、李志宇（MemTensor / 上海算法创新研究院，去年 Memory³ 那篇"显式记忆"就是他们），加上上海交大<strong>严骏驰、许志钦</strong>、人大<strong>陈旭</strong>、新加坡国立<strong>蔡达成</strong>、同济王昊奋。代码和模型 checkpoint 都开源了（github.com/MemTensor/Metis）。Semantic Scholar 的早期影响力接口这次被限流没取到（论文才上线约 4 天，引用本来也≈0），如实标注、不硬凑。</li></ol><ol class="ls"><li><span class="lk">对思染追前沿的价值</span>这不是又一个"记忆产品刷个榜"的活儿，它是一个<strong>范式信号</strong>，而且直接砸在你的业务命门上。京小贝的全部价值，几乎都压在"记得住这个用户"——他的持仓、风险偏好、上下文里聊到哪了。你现在是怎么做的？和全世界一样：把这些写进外部存储，每一轮再<strong>全量注入</strong>回上下文（你 wealth 系列里那个 <code>user_memory_info</code> 就是干这个的）。Metis 说的正是这件事的<strong>天花板和未来</strong>。更狠的是，它顺手用实验戳破了一个所有人都默认、但其实错了的假设——<strong>今天的大模型其实几乎不会"记事"，它只是在反复重读那份聊天记录</strong>（详见"结局"和"对思染"两节，这条对做产品的人是生死线级别的认知）。方向也够新：知识库上一次讲记忆还是 06-16 的 MRAgent，那讲的是"把外部检索做得更聪明"，而 Metis 是<strong>反着来——把记忆彻底搬进模型内部、连文本都不留在上下文里</strong>，完全不同的切法。</li></ol><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是<strong>大语言模型的"记忆"</strong>——准确说，是"一个 AI 助手怎么记住你"这件事。</p><p>先把"记忆"这个词拆开，因为它其实混着三样完全不同的东西：</p><ul class="ls"><li><span class="lk">一种是"权重记忆"</span>模型训练时把海量知识焊进了几千亿个参数里。这叫<strong>隐式记忆（implicit）</strong>——它记得"北京是中国首都"，但你没法在对话中途给它临时加一条、改一条，那是训练时定死的。</li><li><span class="lk">一种是"上下文记忆"</span>你这轮对话里说过的话，都在它眼前的"上下文窗口"里摊着。这叫<strong>工作记忆（working memory）</strong>——它"记得"你三句话前说了什么，纯粹是因为那几句话<strong>还明晃晃地摆在它眼前</strong>。一旦超出窗口、或换了一次对话，全忘光。</li><li><span class="lk">中间缺了一块</span>一种既能像权重那样<strong>长久留存</strong>、又能像上下文那样<strong>随时增删更新</strong>的记忆。这块，就是这个故事要造的东西。</li></ul><h2 id="s4">2｜困境</h2><p>今天所有"能记住用户"的 AI 产品，靠的都是同一招——<strong>外挂一个记事本</strong>。</p><p>拆开说：模型本身记不住跨会话的东西，于是工程师在模型<strong>外面</strong>接一个数据库。你说过的话被写进去；下次你再来，系统先去数据库里<strong>检索</strong>几条相关的，<strong>再把这几条当成文本、塞回模型的上下文窗口里</strong>，让模型"看着"这些字来回答。这就是 <strong>RAG（检索增强生成）</strong> 和市面上各种"记忆产品"（MemGPT、Mem0、A-Mem 这一挂）的共同骨架。</p><p>这套外挂法，有三个从根上治不好的病：</p><ul class="ls"><li><strong>那不是"模型在记"，那是"模型在查资料"</strong>。记忆始终是躺在模型外面的一叠纸条，模型每次现查现读。它对这些记忆没有任何"内在的掌握"——就像一个每次都要翻通讯录才知道你是谁的人，你很难说他"认识"你。</li><li><strong>越记越堵</strong>。记忆是以<strong>文本</strong>形式塞回上下文的，记得越多，塞回来的字越多，上下文越长、越慢、越贵，还容易把真正该看的信息淹掉。</li><li><strong>不会"忘"，也不会"改"</strong>。数据库能删一行，但那是物理删除，不是模型层面的"遗忘"；用户的风险偏好从保守变激进了，你很难让模型<strong>优雅地更新</strong>这条认知，而不是把新旧两条都检索出来自相矛盾。</li></ul><p>一句话困境：<strong>我们让模型"记住用户"的办法，其实是给它配了个外置硬盘，而不是给它长了个海马体。</strong></p><h2 id="s5">3｜旧路</h2><p>之前想补这块"中间记忆"的，主要有三派，各差一口气：</p><ul class="ls"><li><strong>一派是把外挂做得更聪明</strong>（RAG 的各种进化、图记忆、本知识库 06-16 讲的 MRAgent"边想边取"）。它们让"检索"这一步越来越机灵，但<strong>记忆仍然是外部的、文本形式的、要塞回上下文的</strong>——病根没动。</li><li><strong>一派是"测试时训练"（Test-Time Training, TTT）</strong>：干脆在你用它的时候，临时微调几步模型权重，把新信息"焊"进去一点。但 TTT 是一种<strong>笼统的"临时适应"</strong>——它是让模型整体去迁就当前这段数据，并不是"记忆"这个专门能力，更没有"记住/遗忘/更新/反思"这些<strong>分门别类的记忆动作</strong>。</li><li><strong>一派是这支团队自己去年的前作 Memory³（显式记忆）</strong>：他们提出，在"权重记忆"和"上下文记忆"之间，确实该有第三种——<strong>显式记忆</strong>。但 Memory³ 的做法是<strong>从离线语料里预先造好一批显式记忆，用的时候检索出来去增强注意力</strong>——本质上还是"先建库、再检索"，记忆的来源是<strong>离线</strong>的、静态的，不是你和它<strong>在线</strong>聊天时它自己长出来的。</li></ul><p>所以旧路要么"外挂没拿掉"，要么"适应太笼统、没有记忆动作"，要么"记忆是离线预造、不是在线自生"。<strong>"让模型在跟你聊的过程中，自己把信息内化成一处能长期留存、又能随时增删的内部状态"——这一步，没人真正迈过去。</strong></p><h2 id="s6">4｜转折</h2><p>作者的关键一转，是把问题重新问了一遍：</p><blockquote><p>别再问"怎么把外部记忆检索得更好"。问——<strong>"记忆"能不能像"推理""多模态"一样，被做成基础模型的一种原生能力（native capability）？</strong></p></blockquote><p>这个类比是整篇的灵魂。回顾这两年的进化，规律惊人地一致：<strong>一个能力，一开始都是靠"外部脚手架"临时凑的，最后都被"内化"进模型主干。</strong></p><ul class="ls"><li>推理：一开始靠<strong>外部提示</strong>（"让我们一步步想"这种思维链提示）→ 后来变成模型<strong>天生就会先想再答</strong>（o1、DeepSeek-R1 那类推理模型）。</li><li>多模态：一开始靠<strong>外挂一个视觉编码器</strong>再接根线 → 后来变成<strong>原生多模态</strong>，视觉能力长在主干里。</li></ul><p><strong>唯独记忆，还停在"外部脚手架"阶段。</strong> 作者说：那就轮到它了。于是他们提出一个新物种——<strong>记忆基础模型（Memory Foundation Model）</strong>，并造出第一个原型 <strong>Metis</strong>。它把"原生记忆"定义成两件事：</p><ol class="ls"><li><strong>一处持续存在、动态演化的记忆状态</strong>，就长在模型主干里面；</li><li><strong>一套原生的记忆程序</strong>（memory procedures）——模型靠自己的计算，自主地去存储和使用信息，而且这套程序里有明确的分工：<strong>记住、遗忘、更新、反思</strong>。</li></ol><p>这一转的份量在于：它把"记忆"从一个<strong>外部工程问题</strong>（怎么建库、怎么检索），重新定义成了一个<strong>模型内部的能力问题</strong>（怎么让模型天生就会记事）。</p><h2 id="s7">5｜解法</h2><p>Metis 怎么把这个想法落成一个真能跑的模型？拆成"结构"和"训练"两半。</p><h3>结构：给每一层装一个"会自己更新的记忆块"</h3><ul class="ls"><li><span class="lk">记忆状态长什么样、放在哪</span>在 Transformer 的<strong>每一层</strong>里，除了原来的注意力，再插一个<strong>"局部记忆块"</strong>。这块记忆的核心是一个矩阵 <strong>M</strong>（论文记作 M_t，尺寸约 dₖ×dᵥ）——你可以把它想成一张<strong>不断被覆写的稠密便签板</strong>，历史信息被压缩着写在这张板上；旁边还有一个归一化向量 <strong>S</strong> 帮它读的时候校准。注意：它是<strong>固定大小</strong>的——不管你聊了多长，这张便签板尺寸不变，历史被"压"进去，而不是"堆"起来。</li></ul><ul class="ls"><li><span class="lk">怎么读（记忆注意力）</span>模型处理当前这个词时，拿它的"查询"去这张便签板 M 上<strong>取</strong>出相关的历史（论文里那个 <code>diag(Q̃S)⁻¹ Q̃M</code> 就是一次归一化的取值）。然后关键一步——<strong>把这份"从记忆里取出来的"和"标准注意力（盯着眼前上下文看的那份）"用一个旋钮 γ 混起来</strong>：<code>最终 = γ·(标准注意力) + (1−γ)·(记忆注意力)</code>。这个混合很妙：<strong>眼前最近的话，靠标准注意力精确地看；久远的历史，靠压缩记忆大致地取</strong>。既不丢近处的精确，又能够到远处的往事。</li></ul><ul class="ls"><li><span class="lk">怎么写（一次前向就更新，不用训练）</span>每读完一段，便签板就更新一次，规则是"<strong>打个折、再加上新的</strong>"：<code>M_新 = λ·M_旧 + (1−λ)·(新信息的外积)</code>——λ 是遗忘系数，老记忆按 λ 慢慢衰减，新信息按外积形式累加进去。（论文说实测里换成 <strong>Gated Delta Network（门控增量网络）</strong> 那套更精细的写入规则，效果更好。）<strong>这里是全篇最反直觉、也最关键的一点：这个更新完全是"前向传播"里顺手算出来的，没有反向传播、没有梯度、不训练任何权重。</strong> 所以推理的时候，<strong>模型学到的所有权重全程冻结不动</strong>，变的只有这张便签板自己。记忆的维护，成了一次"免费"的前向计算。</li></ul><blockquote><p>说句大白话对照：机制上，这套"固定大小的矩阵便签板 + 打折累加的写入"，其实就是<strong>线性注意力 / DeltaNet 那一系"快权重"的做法</strong>——那条线本来是为了让注意力更省算力才发明的。Metis 的聪明不在于发明了这块状态，而在于<strong>把它从'一块省算力用的哑状态'，训成了'一块听得懂指令、会记会忘会更新会反思的活记忆'</strong>——这就要靠下面的训练。</p></blockquote><h3>训练：用"中期训练"教会它记忆的四个动作</h3><p>光有一块会累加的便签板还不够——它得<strong>学会怎么用</strong>。作者专门造了一批"记忆专用"数据，在正常预训练之后、正式用之前，插一段<strong>"中期训练"（mid-training）</strong>，用三个损失函数把记忆能力灌进去：</p><ol class="ls"><li><strong>记忆重建损失（reconstruction）</strong>：给模型一段材料，逼它把材料压进便签板、之后又能<strong>一字不差地还原</strong>出来——训的是"<strong>压得进、取得出</strong>"的无损压缩本事。</li><li><span class="lk">记忆操作损失（operation）</span>这是核心。用带指令的样本，教模型做四个动作——<strong>记住（remember）、遗忘（forget）、更新（update）、反思（reflect）</strong>；还专门掺进"干扰样本"，逼它别被无关信息带偏。</li><li><strong>正则损失（regularization）</strong>：喂它两类"陷阱"数据——一类是<strong>多事实绑定</strong>（同时记住好几个人各自的事、还得能选择性忘掉某一个），一类是<strong>记忆污染</strong>（记完之后接一段无关闲聊，看它会不会把该记的和不该记的搅在一起、把私货泄露出去）。训的是"<strong>别串味、别泄露</strong>"。</li></ol><p>规模交代（都是论文里的真数）：底座用的是 <strong>Qwen3.5，做了 4B / 9B / 27B 三个尺寸</strong>；记忆数据主料 <strong>357,137 条、约 4.06 亿 token</strong>（来自 27 个公开基准），辅料 <strong>609,443 条</strong>（专门练多事实绑定、选择性遗忘、记后对话这些硬骨头），合计约 <strong>96.7 万条</strong>；用 <strong>8 张 H100</strong>、跑约 1.4 万步训出来。</p><h2 id="s8">6｜结局</h2><p><strong>先看那个戳破假设的头号发现——把上下文拿走，看模型到底还"记不记得"。</strong></p><p>作者设计了一个很干净的考法（MemOps，"无上下文"设定）：先让模型读一段信息，然后<strong>把这段信息从上下文里彻底抹掉</strong>，再考它"记住/更新/遗忘/反思"这四个动作做得怎么样。满分逻辑下，分数越高越会记。结果（论文表 5，27B 规模）：</p><div class="tablewrap"><table><thead><tr><th>模型</th><th>记住</th><th>更新</th><th>遗忘</th><th>反思</th><th>平均</th></tr></thead><tbody><tr><td><strong>Qwen3.5-27B（原版大模型）</strong></td><td>3.57</td><td>0.93</td><td>0.91</td><td>0.69</td><td><strong>1.69</strong></td></tr><tr><td>Temp-LoRA-27B（测试时临时微调）</td><td>20.68</td><td>6.48</td><td>2.50</td><td>4.83</td><td>9.70</td></tr><tr><td>δ-Mem（一种记忆基线）</td><td>7.44</td><td>6.02</td><td>1.82</td><td>1.55</td><td>4.38</td></tr><tr><td><strong>Metis-27B</strong></td><td><strong>28.27</strong></td><td><strong>31.02</strong></td><td><strong>10.91</strong></td><td><strong>26.55</strong></td><td><strong>24.76</strong></td></tr></tbody></table></div><p>读懂这张表，比记住 Metis 赢了多少更重要：</p><ul class="ls"><li><strong>原版 Qwen3.5-27B 只有 1.69 分——几乎是零。</strong> 一个顶尖大模型，一旦你把聊天记录从它眼前拿走，它对刚读过的东西<strong>基本什么都记不住</strong>。这坐实了第 2 拍那句话：我们平时以为大模型"记性好"，<strong>其实它根本不是在'记'，它只是在反复重读还摊在它眼前的那份聊天记录</strong>。记录一撤，记忆归零。</li><li><strong>连"测试时临时微调"（Temp-LoRA）也只到 9.70。</strong> 就是说，笼统地临时改几步权重，帮助有限——记忆确实是个<strong>得专门训</strong>的能力，不是随便适应一下就有的。</li><li><strong>Metis-27B 到 24.76，把原版拉高了一个数量级</strong>（"反思"一项 0.69→26.55，几乎从无到有）。这证明"记忆"真的可以被当成一种能力，训进模型主干里。</li></ul><p><strong>再看一个很诚实、也很有嚼头的细节：连 Metis，"遗忘"这一项也是最低的（10.91）。</strong> "记住"容易，"选择性地忘掉某一条、还不误伤别的"最难——这恰恰是记忆里最考验治理的地方（想想：用户要求删除、风险偏好变更、合规要求"别再提这件事"）。作者没藏这个短板，把它摆在明面上。</p><p><strong>作者自己交代的两个局限</strong>（不是我替它找补，是论文明说）：</p><ul class="ls"><li><span class="lk">长程任务会掉</span>因为记忆是被压进一块<strong>固定大小</strong>的参数里的，聊得太久太多，信息会被压丢——"压缩"省了空间，代价是长时间跨度上的细节流失。</li><li><span class="lk">偶尔会"串味"</span>不同的语义在同一块潜在状态里混着放，有时会糊到一起，认岔。</li></ul><p>这两条其实是同一枚硬币的两面：<strong>把记忆压进固定大小的状态，是它省钱、免训练、一次前向就更新的根本原因，也是它记不了太长、偶尔认岔的根本代价。</strong> 这是个清清楚楚的取舍，不是 bug。</p><h2 id="s9">7｜内核</h2><p>一句话种子：</p><blockquote><p><strong>我们一直以为大模型"记性好"，其实它只是在反复重读还摊在眼前的聊天记录——真正的"记忆"，是一种得专门训练、才能长进模型主干里的原生能力。</strong> Metis 迈出的这一步是：把记忆从"外挂的、文本形式的、要塞回上下文的检索笔记"，变成"内生的、压缩形式的、一次前向就自我更新的内部状态"，并且第一次给它配上"记住/遗忘/更新/反思"这套能听指令的记忆动作。代价也讲明白了——压进固定状态，换来的是免训练更新，赔上的是长程细节。</p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><span class="lk">第 1 层｜它在批判谁</span><strong>外挂记忆这整个范式</strong>——RAG，以及市面上的记忆产品（MemGPT、Mem0、A-Mem），还有把外挂做得更聪明的各种改进（含本知识库 06-16 的 MRAgent"边想边取"）。它们的共同点是：<strong>记忆始终是模型外面的、以文本形式存在的东西，用的时候要检索出来、塞回上下文</strong>。Metis 的整篇立论就是冲着这个"外挂"来的——它要把记忆<strong>从上下文里彻底拿掉</strong>（原话：removes textual memory from the context entirely），搬进模型内部。</p><p><span class="lk">第 2 层｜它汇了哪两条河</span></p><ul class="ls"><li><span class="lk">河 A——"显式记忆"这条线</span>从这支团队自己去年的 <strong>Memory³（2407.01178）</strong> 来。Memory³ 提出，在"权重（隐式记忆）"和"上下文（工作记忆）"之间，该有第三种——<strong>显式记忆</strong>。但 Memory³ 是<strong>从离线语料预造记忆、再检索来增强注意力</strong>。Metis 是同一批人把这条线往前推：<strong>从"离线预造 + 检索"，变成"在线交互中自己长出来的、常驻主干的动态状态"</strong>。这条河的信念是：<strong>记忆该是介于权重和上下文之间、独立的第三种东西。</strong></li></ul><ul class="ls"><li><strong>河 B——"高效注意力 / 快权重"这条线</strong>：线性注意力 → DeltaNet → 门控增量网络（Gated Delta Network），以及测试时训练（TTT）。这条河为了省算力，发明了<strong>"固定大小的压缩状态 + 打折累加的更新"</strong>——也就是 Metis 那块便签板的写入规则的出处。但这条河造出来的状态是<strong>"哑"的</strong>：它能压缩历史，却不懂"记住/遗忘/更新/反思"这些<strong>分门别类的指令动作</strong>。这条河的信念是：<strong>一个固定大小的循环状态，就能高效地把历史压住。</strong></li></ul><p><strong>Metis = 河 A × 河 B 的合流</strong>：从河 B 借来那块高效的压缩状态，用河 A 想要的"显式、可指令的记忆能力"去改造它，再用中期训练把"记住/遗忘/更新/反思"灌进去，最后用 γ 旋钮把它和标准注意力混起来（近处精确看、远处压缩取）。<strong>它相当于给'线性注意力那块哑状态'，请了个会听指令的记忆管家。</strong></p><p><strong>第 3 层｜最深的根（最容易看漏的一层）</strong>：根在一个老问题——<strong>"隐式记忆（权重，长久但改不动）"和"工作记忆（上下文，灵活但留不住）"之间，缺一块既长久又灵活的中间记忆。</strong> 这个缺口很早就有人指出（认知科学里长时记忆 vs 工作记忆的分野），Memory³ 第一次给它起了名（显式记忆），Metis 第一次让它<strong>原生化、且能一次前向就更新</strong>。往上还接着一条更大的暗线——<strong>"能力内化"这个元规律</strong>：推理从"思维链提示"内化成"推理模型"，工具使用从"外部编排"内化成"原生工具调用"，记忆现在从"外挂检索"内化成"记忆基础模型"。<strong>凡是今天还靠外部脚手架临时凑的能力，前沿都在抢着把它焊进权重里。</strong></p><p><span class="lk">和本知识库的接线</span></p><ul class="ls"><li><span class="lk">记忆线</span>[[2026-06-16--mragent-reconstructive-memory]]（把外部检索改成"边想边取"——但记忆仍是外部、文本的；Metis 正好反过来，把文本从上下文里彻底拿掉）、[[2026-06-23--gatemem-memory-governance]]（记忆治理：记得准反而成了安全漏洞——Metis 那个最难的"遗忘"动作，恰恰就是治理最吃劲的地方，两篇对着看）、[[2026-06-08--code2lora]]（给模型补知识的"第三条路"，介于上下文与微调之间——Metis 是"第三种记忆"，同一种"找中间态"的直觉）。</li><li><span class="lk">高效状态 / 压缩线</span>[[2026-06-10--flashmemory-lsa]]、[[2026-06-15--minimax-sparse-attention]]（这两篇压的是"读进来"的 KV 缓存；Metis 压的是"写进去"的记忆状态——都是"用固定/稀疏的结构换掉线性膨胀"）、[[2026-06-24--unlimited-ocr-rswa]]（把生成时的记忆账钉成常数——同样是"固定大小状态"的亲戚）。</li><li><strong>"能力内化"元规律 &amp; 解耦手法</strong>：[[2026-08-01--phizero-physical-language-world-model]]（昨天那篇——PhiZero 在拆"动力学 vs 外观"，Metis 在拆"记忆 vs 计算"，同一种进化手法、不同战场；昨天那篇结尾我就点了这个对照）。</li></ul><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p><strong>一句话：模型进化有一个稳定的元规律——凡是今天还靠"外部脚手架"临时凑的能力，前沿都在抢着把它"内化"进模型主干；现在轮到了"记忆"。</strong></p><p>推理、多模态都走过这条路（外部提示/外挂编码器 → 原生能力）。Metis 是"记忆"这条线上一个标志性的越界瞬间：它证明了<strong>记忆不必永远是外挂的检索笔记，可以做成模型天生就会、一次前向就更新的内生状态</strong>。</p><p>这给你一个<strong>判断模型往哪进化的抓手</strong>：下次看到某个能力现在是靠"在提示词里搭脚手架、或在模型外面接个模块"实现的，就可以预判——<strong>它大概率会被内化进权重，而且内化之后，形态和成本都会变</strong>。你现在用外部记忆库 + 每轮全量注入做的事，两三年内很可能会被"原生记忆"部分取代。<strong>提前把这条演化线看在眼里，就是你要的那种"手感"。</strong></p><p>更要命的是它顺手给你的那记警钟——<strong>别再默认"模型记得住"</strong>。那张 1.69 分的表说得明明白白：<strong>大模型对"不在当前上下文里"的东西，几乎是零记忆。</strong> 你以为它"记得"这个用户，其实它只是在重读你每轮塞回去的那份资料。<strong>所以在能力真正内化之前，记忆必须由你的产品牢牢掌控，一刻都不能托付给模型的"自觉"。</strong></p><h2 id="s13">能怎么用（提示词 &amp; 京小贝）</h2><p><strong>1）把"记住/遗忘/更新/反思"当成你自己那套记忆层的设计图。</strong> 市面上（也包括你现在）的记忆做法，绝大多数只做了<strong>"记住 + 检索"</strong>两件事。Metis 把记忆拆成<strong>四个动作</strong>，恰恰点出了另外两件你多半漏掉、而价值和事故都藏在里面的事：</p><ul class="ls"><li><span class="lk">遗忘（forget）</span>用户风险偏好从保守变激进了、要求"别再跟我提某只票"、合规要求删除——这些不是"删一行数据库"那么简单，是要让模型<strong>别再在推理里翻出旧认知</strong>。Metis 实测这一项最难（10.91），说明<strong>你产品里最该重点测的，恰恰是遗忘/更新这些"happy path 之外"的路径</strong>，而不是只测"记得住"。</li><li><span class="lk">更新（update）</span>持仓变了、目标变了，要的是<strong>用新认知覆盖旧的</strong>，而不是把新旧两条都检索出来让模型自相矛盾。</li><li><span class="lk">反思（reflect）</span>把一长段跨会话历史，<strong>压成一句"这个用户到底是谁"的画像</strong>，作为长期状态留下来——而不是每轮把原始流水账全倒回去。</li></ul><p><strong>把这四个动词，直接变成你记忆模块的四类操作和四类测试用例。</strong> 这是这篇今天就能落地的最大一块。</p><p><strong>2）"反思"就是一条能马上试的提示词纪律。</strong> Metis 的"反思"（把长历史压成紧凑状态）——搬到提示词层，就是<strong>别把原始聊天记录整段整段地carry下去，而是定期让模型把"到目前为止关于这个用户/这次对话我确定知道的"压成一小段结构化摘要，之后只带这段摘要往下走</strong>。这和你已经在用的东西一脉相承：昨天 PhiZero 的 reason-then-render（先在压缩表示里想清楚）、07-30 长程规划那篇的"状态账本"（动手前先写清我现在掌握什么）——<strong>同一个道理反复出现：维护一份紧凑、显式的状态，别依赖原始的信息流。</strong> 记忆基础模型只是把这条纪律，从"提示词技巧"升级成了"模型内生结构"。</p><p><strong>3）看清你现在做法的天花板和边界，别过度乐观。</strong> 你的 <code>user_memory_info</code> 全量注入，本质就是最直白的"外挂 + 塞回上下文"。Metis 告诉你两件事：一，<strong>这条路的方向对</strong>（在原生记忆成熟前，注入是唯一靠谱的办法，那张 1.69 分的表反而证明你不能不注入）；二，<strong>这条路有天花板</strong>（记得越多、注入越多、上下文越堵越贵越容易被淹）。而 Metis 那条"原生记忆"的路，代价也讲得很清楚——<strong>压进固定状态，会丢长程细节、偶尔认岔</strong>。所以给你的判断是：<strong>短期继续注入、但要把"注入什么、注入多少"当成一个需要精心治理的问题</strong>（这点又和 06-23 GateMem、06-25 数据调度那两篇的"别只看单指标、要治理"呼应）；<strong>中长期紧盯原生记忆这条线</strong>，一旦它把"长程不丢"和"选择性遗忘"这两块短板补上，就是你重构记忆架构、大幅降本的时机。</p><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2607.26760">https://arxiv.org/abs/2607.26760</a> （Metis: Memory Foundation Model，2026-07-29 提交，v1）</li><li>全文（HTML）：<a class="src" href="https://arxiv.org/html/2607.26760v1">https://arxiv.org/html/2607.26760v1</a> （架构公式、三个训练损失、Qwen3.5-4B/9B/27B 底座、数据规模、表 5 的 MemOps 分数、局限与定位，均取自此）</li><li>代码与模型：<a class="src" href="https://github.com/MemTensor/Metis">https://github.com/MemTensor/Metis</a> ；checkpoint <a class="src" href="https://huggingface.co/collections/IAAR-Shanghai/metis">https://huggingface.co/collections/IAAR-Shanghai/metis</a></li><li>质量信号｜HuggingFace 每日论文榜：本周（W31, 07-26–08-01）榜 <strong>#4 · 252 赞</strong>；07-31 当日榜一度<strong>第二（211 赞）</strong>（见 [[2026-08-01--phizero-physical-language-world-model]] 开头的对照）</li><li>机构/团队佐证｜MemTensor（上海）/ 上海算法创新研究院（IAAR），前作 Memory³：<a class="src" href="https://arxiv.org/abs/2407.01178">https://arxiv.org/abs/2407.01178</a> （熊飞宇、李志宇同组，"显式记忆"那篇）</li><li>Semantic Scholar 早期影响力：本次接口限流未取到；论文上线约 4 天，引用≈0，如实标注，不硬凑信号。</li><li>溯源涉及的前作与对照：Memory³（显式记忆）、RAG、MemGPT / Mem0 / A-Mem（外挂记忆）、DeltaNet / Gated Delta Network / 线性注意力（快权重状态）、Test-Time Training（测试时训练）、Temp-LoRA 与 δ-Mem（表 5 基线）——均见论文 Related Work 与实验节。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
