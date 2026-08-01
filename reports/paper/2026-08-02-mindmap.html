@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metis：记忆从外挂升级为模型原生能力 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.08.02</span></div>
+  <div class="bar"></div>
+  <h1>Metis：记忆从外挂升级为模型原生能力</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>18</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题：大模型只在重读，不会真正记</div><ul><li><div class="n2" style="--c:#E63312">外挂检索三痛点：不是记、堵、不会忘</div></li><li><div class="n2" style="--c:#E63312">实证：Qwen1.69分，撤上下文记忆归零</div></li><li><div class="n2" style="--c:#E63312">缺口：权重与上下文间的显式记忆</div></li></ul></li><li><div class="n1" style="--c:#10395E">进化：能力内化到模型主干</div><ul><li><div class="n2" style="--c:#10395E">推理内化：思维链→o1推理模型</div></li><li><div class="n2" style="--c:#10395E">多模态内化：外挂编码器→原生多模态</div></li><li><div class="n2" style="--c:#10395E">记忆内化：外挂检索→原生记忆（Metis首次）</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">技术：记忆矩阵+注意力混合</div><ul><li><div class="n2" style="--c:#9E2B22">每层装记忆块M，γ混合标准注意力</div></li><li><div class="n2" style="--c:#9E2B22">前向自动更新（无梯度），打折累加</div></li><li><div class="n2" style="--c:#9E2B22">训练三个损失：重建、操作四动作、防污染</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">验证：可测可训可控</div><ul><li><div class="n2" style="--c:#3E5C2E">Qwen1.69→Metis24.76；记住28.27、更新31.02</div></li><li><div class="n2" style="--c:#3E5C2E">短板坦白：遗忘最难10.91，长程掉、串味</div></li><li><div class="n2" style="--c:#3E5C2E">代价清晰：固定状态换免训和快更新</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">京小贝应用：四动词体系改记忆层</div><ul><li><div class="n2" style="--c:#6B4A8E">记住/遗忘/更新/反思→四类操作</div></li><li><div class="n2" style="--c:#6B4A8E">反思纪律：定期压缩成结构化摘要</div></li><li><div class="n2" style="--c:#6B4A8E">路线图：短期外挂注入必需；中长期待内化补短板</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">趋势：显式记忆从离线预造→在线自生</div><ul><li><div class="n2" style="--c:#8A6D1F">第三种记忆：权重和上下文之间的中间态</div></li><li><div class="n2" style="--c:#8A6D1F">演化预判：外挂能力2-3年被内化进权重</div></li><li><div class="n2" style="--c:#8A6D1F">时机把握：原生记忆补短板=大幅降本起点</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
