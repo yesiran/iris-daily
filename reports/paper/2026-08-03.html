@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28203%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2213%22%20r%3D%2222%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2253%22%20cy%3D%2256%22%20r%3D%2219%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把'搜索时用的动作'拿去训练模型本身——学习和进化第一次咬进同一个圈，AI 开始能改进'造 AI'这件事</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-03</span></div>
+  <h1 class="doc">把'搜索时用的动作'拿去训练模型本身——学习和进化第一次咬进同一个圈，AI 开始能改进'造 AI'这件事</h1>
+  <div class="dateline"><span>全文 <b>4,287</b> 字</span><span>约 <b>11</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Frontis-MA1: Training an AI4AI Model towards Recursive Self-Improvement in Machine Learning Engineering</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.28568</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Junlin Yang, Che Jiang, Yu Fu, … Ning Ding(丁宁), Bowen Zhou(周伯文), Kaiyan Zhang(张凯彦) 等 24 人</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Frontis.AI（Horizon Research） × 清华大学 C3I 实验室（周伯文组）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-30</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-03.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-03.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF 07-31 榜 #4 · 168 赞 · 全套开源（GitHub FrontisAI/OpenRSI + 权重）· DAIR.AI(Elvis Saravia) 专门推荐 · S2 限流未取证</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, recursive-self-improvement, ai4ai, agent, rl, evolutionary-search, self-improvement</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-03.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-03-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读三层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">诚实交底 / 护栏</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>Frontis-MA1</strong>（清华 C3I 周伯文组 × Frontis.AI，作者含丁宁、张凯彦；2026-07-30 上线，HuggingFace 07-31 榜第 4、168 个赞）。选它，因为它踩在"前沿之巅"那个主题上——<strong>递归自我改进</strong>（Recursive Self-Improvement，简称 RSI：一个系统能改进"让自己变强"的那个过程，改完更会改，像滚雪球；说白了就是"AI 改进造 AI 这件事本身"）。</p><p>它不是产品报告、也不是刷分。它给了一个干净的新机制：<strong>把"搜索时反复用到的那几个动作"直接拿去训练模型本身</strong>，让"学习"（把动作练熟）和"进化"（用动作搜出更好的解）第一次咬进同一个圈里滚起来。</p><p>质量信号：Frontis.AI（Horizon Research）联合清华 C3I 实验室，全套开源（模型权重 + 从练功场到搜索的整套系统 OpenMLE），DAIR.AI（Elvis Saravia，海外做 AI 教育、粉丝很多的账号）在 X 上专门发帖推荐说"整套栈都放出来了，非常有意思"。同批 HuggingFace 榜上票数更高的两篇（AskChem 292 赞是化学文献工具、Qwen-UI-Agent 281 赞是 GUI 智能体的产品技术报告），都不在"推进能力机理"这条选片轴上——本篇按机制锐度 + RSI 主题的前沿性 + 对思染追前沿的直接价值选入，<strong>不是靠票数</strong>。</p><p>对思染追前沿的价值：这是"模型正在往哪进化"这个北极星问题最直接的一篇——<strong>"AI 改进 AI"从科幻词第一次变成一条有工程落点、还能验证的曲线；而且它用一张能塞进游戏电脑的 4090 消费级显卡，就把 GPT-5.5＋Codex 打赢了</strong>。它锋利地说明一件事：决定能力上限的，越来越不是"模型多大"，而是"模型 + 它的使用/搜索循环"这个整体转得好不好。</p><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>一个 <strong>350 亿参数</strong>的模型（35B ＝ 35 billion ＝ 三百五十亿个可调的数字旋钮），名叫 Frontis-MA1。它不是普通的"帮你写代码"模型——它的活儿是<strong>改进"造 AI"这件事本身</strong>。研究者管这类模型叫 <strong>AI4AI</strong>（AI for AI，用 AI 来做 AI），追的是一个几十年的老梦：递归自我改进（RSI）。</p><h2 id="s4">2｜困境</h2><p>RSI 一直停在口号阶段，卡在一个死结上：<strong>没人能把它放进一个"能当场验对错"的场子里练。</strong> 你说 AI 能自我改进——那改进什么？改得对不对，谁说了算？没有客观标尺，"自我改进"就是玄学。</p><p>作者挑了一个特别聪明的落脚点：<strong>机器学习工程</strong>（Machine Learning Engineering，MLE，就是"拿到一份数据和一个目标，写代码把模型训出来、反复调到分数尽量高"的这件苦活）。为什么挑它？因为这件事<strong>天生自带验分器</strong>——代码跑通了没有、分数涨了没有，一跑就知道，不用请人打分。于是 MLE 成了 RSI 的一个"考场"：在这里，"有没有真的改进"是能被机器当场判定的。</p><h2 id="s5">3｜旧路</h2><p>之前也有让 AI 自动做 ML 工程的系统，两条代表路线：</p><ul class="ls"><li><strong>AIDE 那一类"智能体式自动 ML"</strong>：找一个现成的最强大模型（GPT 级别），用提示词驱动它，让它不停改代码、试、再改，像展开一棵搜索树。</li><li><strong>AlphaEvolve 那一类"进化式写代码"</strong>（DeepMind 2025 年出的，用 Gemini 驱动，去年靠它发现过新算法、刷新过一些数学难题）：把一堆候选程序丢进一个"程序库"，让大模型不断变异（改一改）出新程序，用评分器打分，好的留下、差的淘汰——完全是抄生物进化的自然选择。</li></ul><p>这两条路有个<strong>共同的死穴</strong>：那个大模型是<strong>冻住的</strong>（frozen ＝ 参数一个字都不改，只被当成一个"点子发生器"来使唤）。它在这一轮搜索里踩过的坑、试出来的妙招，全都随搜索结束一起蒸发；下一次从零开始。换句话说——<strong>搜索在进步，模型本身一点没长进</strong>。这根本不是"自我改进"，只是"用一把不会变的锤子反复砸"。</p><h2 id="s6">4｜转折</h2><p>作者的关键一转特别朴素：<strong>既然搜索时反复在用那几个固定动作，为什么不把这几个动作拿去训练模型本身？</strong></p><p>他们把"改代码"这件事拆成<strong>四个原子动作</strong>（原子 ＝ 不能再拆的最小积木）：</p><ul class="ls"><li><span class="lk">Draft（起草）</span>从零写出第一版代码。</li><li><span class="lk">Improve（改良）</span>拿一版能跑的代码，往上加东西让它更好。</li><li><span class="lk">Debug（修错）</span>一版代码报错跑不通，把它修好。</li><li><span class="lk">Crossover（杂交）</span>拿两版各有所长的代码，缝成一版取两家之长（这个词借自生物——两个父本重组出更强的后代）。</li></ul><p>转折点在于：<strong>这四个动作，既是训练时喂给模型学的，也是搜索时模型实际使的，两边是同一套接口。</strong> 于是"学习"（把动作练熟）和"进化"（用动作搜出更好的解）第一次咬进了同一个圈——搜索跑出来的真实结果反过来训练模型，训得更熟的模型再去搜出更好的结果。作者的原话是把两者 "coupling learning and evolution in a single loop"（把学习和进化耦合进同一个循环）。一句大白话：<strong>那个"改进者"，自己也在被改进。</strong></p><h2 id="s7">5｜解法</h2><p>落成一个三层的开放全栈系统，叫 <strong>OpenMLE</strong>：</p><ul class="ls"><li><span class="lk">OpenMLE-Gym（练功场）</span>约 <strong>2,240 道</strong>"质量过筛、能真跑"的 ML 工程题。每道题配一个<strong>沙箱</strong>（sandbox ＝ 一个隔离的执行环境，代码在里面跑，跑挂了也脏不到外面），跑完给结构化反馈（错在哪、分多少）。这就是那个"能当场验对错"的场子。</li><li><span class="lk">OpenMLE-RL（练动作）</span>拿这些题，用两种方式把四个动作练进模型——先做 <strong>SFT</strong>（Supervised Fine-Tuning，监督微调 ＝ 给模型看大量"这一步该怎么改"的正确示范，照着学），再做 <strong>RL</strong>（Reinforcement Learning，强化学习 ＝ 让模型自己试，试对了给奖励、试错了扣分，靠奖惩把好动作固化下来）。所有训练数据都是<strong>"执行落地的"</strong>（execution-grounded ＝ 每条数据的对错不是人拍脑袋标的，而是代码真跑一遍、用结果说话），共 <strong>26,259 条</strong>验证过的样本，而且都跟考试用的基准题<strong>去过重</strong>（把跟考题重样的剔干净），保证学到的是本事、不是背答案。</li><li><span class="lk">OpenMLE-Evo（长程搜索）</span>真做题时，把练熟的四个动作组合起来做一场"长程进化搜索"——起草几版、各自改良、修错、把好的杂交，一代代往下滚，滚很多轮，最后挑最好那版交卷。加强版 <strong>OpenMLE-Evo-Max</strong> 再多两样：一是"跟具体考题无关的经验先验"（把在别处攒的通用套路带进来当起手式），二是异步搜索（多条搜索线并行跑、不互相等，省时间）。</li></ul><p>三层连起来就是一个闭环：<strong>Gym 造出可验的题 → RL 把动作练进模型 → Evo 用练熟的动作搜出好解 → 搜出来的真实结果又回流成新的训练信号。</strong></p><h2 id="s8">6｜结局</h2><p>世界变成什么样，含两个最反直觉的点：</p><p><strong>硬指标</strong>——考场是 <strong>MLE-Bench Lite</strong>（OpenAI 的 MLE-Bench 的精简版，22 道 Kaggle 风格真实数据竞赛题；Kaggle ＝ 全球最大的数据竞赛平台，每题给你数据和目标、你训模型去争排名；"Medal Average 奖牌均分"＝把成绩折算成能拿铜/银/金牌的比例再平均，越高越接近人类高手）。Frontis-MA1（35B）从底座的 <strong>39.39%</strong> 一路拉到：加 Evo 搜索 <strong>60.61%</strong>、加 Evo-Max <strong>71.21%</strong>。<strong>71.21% 越过了 GPT-5.5＋Codex 的 68.18%</strong>，逼近 GPT-5.6 Sol 的 72.73%，也逼近一个 <strong>2.8T</strong>（2.8 trillion ＝ 2.8 万亿参数，比它大约 80 倍）的巨无霸 Kimi K3。</p><p><span class="lk">最反直觉的第一点</span>这一切是在<strong>一张 RTX 4090 消费级显卡、显存被卡到只有 12GB、每题 12 小时预算</strong>里跑出来的。一个能塞进普通游戏电脑的 350 亿小模型，靠"练熟动作 + 会滚的搜索圈"，打赢了动辄要一整个机房、参数大它几十倍的冻结巨模型。<strong>赢的不是块头，是那个会自我改进的圈。</strong></p><p><span class="lk">最反直觉的第二点（也是最要命的证据）</span>他们拿一个模型<strong>从没见过</strong>的新考场 <strong>NatureBench Lite</strong> 来验（held-out ＝ 专门留出来、训练时碰都没碰过的题，用来看是真会了还是背了）。结果两个零件<strong>各自都能迁移</strong>：框架不动、只把里头的模型换成训练过的 → 达到人类最优水平（Match-SOTA，SOTA ＝ State Of The Art ＝ 当前最好成绩）从 <strong>50% 涨到 70%</strong>；反过来模型不动、只把搜索框架换成 Evo → 从 <strong>20% 涨到 50%</strong>。<strong>两边分开换都涨</strong>，说明学到的不是"这套题的答案"，而是"怎么改进代码"这件<strong>可迁移的真本事</strong>。对一个号称"自我改进"的系统，这条迁移证据比刷分本身重要得多——它把"是不是在背题"这个最大的质疑，当场按死了。</p><h2 id="s9">7｜内核</h2><p>一句话带走：<strong>"自我改进"不再是空谈，前提是给它一个能当场验对错的考场，再把"搜索时用的动作"和"训练模型的目标"焊成同一套——于是搜索的每一次试错都在喂养模型，模型每强一分又让搜索更狠一分，学习和进化咬进一个圈里滚起来。</strong> 决定强弱的，从此不再只是"模型多大"，而是"这个圈转得好不好"。</p><h1 id="s10">来龙去脉（倒读三层）</h1><p><span class="lk">第一层——它在改进谁</span>直接对着两条"进化/自动 ML"路线开刀——AIDE 那类"用冻结大模型 + 提示词驱动搜索树"，和 <strong>AlphaEvolve</strong>（DeepMind 2025，Gemini 驱动的进化式写代码，用程序库 + 评分器做自然选择，去年靠它发现过新算法）。这两条的共同前提是"大模型冻着当点子发生器"。Frontis 整篇文章就是拆掉这个前提：<strong>别让模型冻着，让它跟着搜索一起学。</strong> 它站的考场是 OpenAI 2024 年的 MLE-Bench（把 Kaggle 竞赛整理成"能自动验分"的 AI 做题考场）。</p><p><span class="lk">第二层——这条问题线是什么</span>再往上，是"递归自我改进 / AI4AI"这条几十年的老命题——能不能造一个 AI，让它改进"造 AI"这件事本身，改完更会改？历史上它有很多半截影子：AlphaZero 靠自我对弈越下越强（但只在棋盘这种封闭规则里）、STaR 那类用模型自己生成的数据再训自己（但只在单点能力上）、AutoML/NAS 让程序自动搜网络结构（但搜的是结构、模型自己不学）。它们各摸到一角，都没把"学习"和"进化"真正合成一个能滚的闭环。Frontis-MA1 的贡献是：在 MLE 这个自带验分的落脚点上，第一次把这个闭环<strong>具体、可复现地</strong>搭出来（全套开源）。这条线台账里刚出现过——[[2026-07-27--arex-rsi-deep-research|AREX]] 是"递归自我改进的深研 agent"（同一个 RSI 主题，但落在"做深度研究"这个域；本篇落在"造 AI/写 ML 代码"这个域，更贴近'模型进化'的核心）。</p><p><span class="lk">第三层——根在哪</span>最底下是智能的两台"可规模化引擎"之争——Rich Sutton 的《苦涩的教训》（The Bitter Lesson）讲：长期真正管用、能吃满算力的只有两样——<strong>学习</strong>（从数据里练）和<strong>搜索</strong>（在可能性里试）。过去大多数系统只押一台：要么纯训一个大模型（只学不搜），要么用冻结模型狂搜（只搜不学）。Frontis 的世界观是<strong>别二选一，把两台引擎接成一根轴</strong>——搜索产出的经验拿去训练（学），训强的模型再去驱动搜索（搜），一个圈。这正好接上台账里反复出现的暗线：真正的能力增长往往不在"把单个模型堆更大"，而在"让模型和它的使用过程互相喂养"——呼应 [[2026-06-09--openskill|OpenSkill]]（没有老师/答案时自己造验证锚点来练自己）、[[2026-06-12--arbor-htr|Arbor]]（把洞见而非日志存成记忆、越做越懂）、[[2026-06-13--maxproof|MaxProof]]（更强的不是大脑而是更不好骗的裁判 + 种群搜索）、[[2026-07-18--seed-self-evolving-opd|SEED]]（自我进化的在线蒸馏）。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p>过去我们讲"模型进化"，默认主语是<strong>人</strong>——研究者在改进模型。Frontis-MA1 是一个信号：<strong>主语正在往"系统自己"移一格。</strong> 当"改进造 AI 的流程"本身能被训练、能当场验分、还能迁移到没见过的任务，"AI 改进 AI"就从科幻词变成了一条有工程落点的曲线。</p><p>它还坐实了一个更普适的判断：<strong>决定能力上限的，越来越是"模型 + 它的使用/搜索循环"这个整体，而不是模型单点参数量。</strong> 一张 4090 的小模型靠会滚的圈打赢 80 倍大的冻结巨模型，就是这条判断最锋利的证据。这跟台账里 [[2026-07-19--spectral-rewiring-sar|SAR]]"后训练只是重连不是创造"、"能力都在往主干内化"的暗线是一体的：模型的价值正从"一个静态的大文件"，转向"一个会跟着使用不断自我校准的活过程"。</p><h2 id="s13">怎么用（提示词 &amp; 京小贝）</h2><ol class="ls"><li><strong>把"改进"拆成四个可命名的原子动作</strong>——起草 / 改良 / 修错 / 杂交。这对提示词是现成模板：让京小贝面对复杂回复任务时，别一口气生成，而是显式走"先起草骨架 → 逐条改良 → 自查修错 → 若有两版好答案就取长补短合并"。把模糊的"你写好一点"拆成四个明确动作，每一步都可评、可控，质量和可复现都更稳（这跟你昨天那套 reason-then-render 的"先想清楚再渲染"是一脉的，只是把"想"进一步拆成了四个动作）。</li><li><strong>只在"能当场验对错"的地方谈自我改进。</strong> Frontis 能成，全靠 MLE 自带"跑一遍就知道对错"的验分器。京小贝里哪些环节有这种"客观可验的钉子"——算出来的收益率数字对不对、赎回规则查得准不准、下单参数齐不齐——就在那些环节大胆上"生成 → 自动验 → 不对再改"的小循环；哪些环节没有客观标尺（语气、判断口吻），就别硬套自我改进，老老实实用示范和规则。<strong>先找到验分器，再谈自我进化</strong>——这是这篇给产品的第一条纪律。</li><li><strong>"搜索时用的动作，就该是训练时练的动作"——两边对齐。</strong> 迁到产品语言：你线上让模型走的那套操作流程（先查工具、再判断、再生成、再自检），就应该是你训练/沉淀数据时对齐的那套动作。别训练一套、线上跑另一套——那样线上每一次真实试错都白白蒸发、喂不回模型。把"线上怎么用"和"离线怎么练"焊成同一套接口，真实流量才会变成让模型越用越强的燃料（直接呼应你们 next-query / 数据飞轮的工程判断）。</li><li><strong>别被"大就是强"绑架。</strong> 一张消费卡的小模型 + 好循环 &gt; 冻结的巨模型。对京小贝的成本判断：与其一味追更大的底座，不如把预算投在"让模型和使用过程互相喂养"的那个循环上——可验证环境、动作沉淀、真实反馈回流。这三样搭好了，小底座也能拱上去。</li></ol><h1 id="s14">诚实交底 / 护栏</h1><ul class="ls"><li><span class="lk">信号强度</span>HF 07-31 榜 #4 · 168 赞（比不上同批 AskChem 292、Qwen-UI-Agent 281，但那两篇一个是化学文献工具、一个是 GUI 智能体的产品技术报告，都不在"推进能力机理"的选片轴上）。本篇按机制锐度 + RSI 主题的前沿性 + 对思染的直接价值选入，<strong>非票数</strong>。</li><li><span class="lk">早期影响力未取证</span>Semantic Scholar 接口今天限流（429 Too Many Requests）没拿到；论文 07-30 上线、引用≈0 属正常，不靠引用选入。</li><li><span class="lk">数字口径</span>MLE-Bench Lite 22 题、Medal Average、GPT-5.5+Codex 68.18 / GPT-5.6 Sol 72.73 / base 39.39→Evo 60.61→Evo-Max 71.21、单张 RTX 4090 12GB / 12 小时每题、NatureBench 迁移 50→70 与 20→50——均取自论文与官方项目页，是实验室自报数字，方向机理可信，<strong>绝对值别当业务保证</strong>。GPT-5.5/5.6、Kimi K3 是论文里当参照系的对手模型名，版本以论文为准。</li></ul><h1 id="s15">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2607.28568">https://arxiv.org/abs/2607.28568</a></li><li>代码/权重（全套开源）：<a class="src" href="https://github.com/FrontisAI/OpenRSI">https://github.com/FrontisAI/OpenRSI</a> ；项目页 <a class="src" href="https://frontisai.github.io/OpenRSI/">https://frontisai.github.io/OpenRSI/</a></li><li>信号佐证：HuggingFace Daily Papers 07-31 榜第 4（168 赞）；DAIR.AI(Elvis Saravia) 在 X 推荐 <a class="src" href="https://x.com/dair_ai/status/2083231722913882159">https://x.com/dair_ai/status/2083231722913882159</a> ；alphaXiv <a class="src" href="https://www.alphaxiv.org/abs/2607.28568">https://www.alphaxiv.org/abs/2607.28568</a></li><li>参照系：AlphaEvolve（DeepMind 2025）<a class="src" href="https://arxiv.org/abs/2506.13131">https://arxiv.org/abs/2506.13131</a> ；Sutton《The Bitter Lesson》</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
