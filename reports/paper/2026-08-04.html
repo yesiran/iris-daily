@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28334%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2231%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2223%22%20r%3D%2223%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2248%22%20r%3D%229%22%20fill%3D%22%23fff%22%20opacity%3D%220.12%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>给"没有标准答案的任务"造一个自动裁判——把开放任务改写成一场"谁是卧底"，投票结果天然可核对，于是强化学习第一次能强化"写得好不好</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-04</span></div>
+  <h1 class="doc">给"没有标准答案的任务"造一个自动裁判——把开放任务改写成一场"谁是卧底"，投票结果天然可核对，于是强化学习第一次能强化"写得好不好</h1>
+  <div class="dateline"><span>全文 <b>5,788</b> 字</span><span>约 <b>15</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">From RLVR to RLSVR: Task Transformation Induces Self-Verifiable Rewards for Open-Ended LLM Self-Improvement</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2607.23802</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Qinsi Wang, Jing Shi, Huazheng Wang, Kun Wan, Yiran Wu, Bo Liu, Qingyun Wu, Hai Helen Li, Yiran Chen, Handong Zhao, Wentian Zhao</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Duke × Adobe Research × Penn State（含 AutoGen 多智能体框架作者 Qingyun Wu）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-07-26（v1）/ 2026-07-31（v2）</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-04.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-04.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers #1 · 138 赞（约第二名的 3 倍）· COLM 2026 接收 · 代码开源（github.com/wangqinsi1/RLSVR）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, rl, post-training, self-improvement, reward-design, self-play</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-04.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-04-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：一台已经很会做数学题、却教不会"写得好不好"的强化学习机器</a><a class="t-h2" href="#s4">2. 困境：真正值钱的任务，大多"没有标准答案"</a><a class="t-h2" href="#s5">3. 旧路：请一个"更强的模型/人"来当裁判——贵、偏、还有天花板</a><a class="t-h2" href="#s6">4. 转折：不去"造一个裁判"，而去"改造任务"——让任务自己长出铁裁判</a><a class="t-h2" href="#s7">5. 解法：SpyRL——把任务改写成一场"谁是卧底"</a><a class="t-h2" href="#s8">6. 结局：软任务上真的练强了，还带出几个反直觉的发现</a><a class="t-h2" href="#s9">7. 内核（一句带走的种子）</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选这篇，是因为它正面撞上了当下大模型训练里<strong>最卡脖子、最值钱的一个问题</strong>：强化学习怎么才能强化"没有标准答案的任务"。</p><ul class="ls"><li><span class="lk">它推进了什么</span>过去两年推理模型（会数学、会写代码）之所以突然变强，靠的是一个叫 <strong>RLVR</strong> 的招——"用可核对的奖励做强化学习"。但这招有个死穴：只在数学、代码这种"答案能对错分明地判定"的地方管用。一到写作、总结、对话、投顾建议这种<strong>好坏没有标准答案</strong>的任务，就只能请一个更强的模型或人来当裁判打分，又贵、又有偏见、还打不过比裁判更强的学生。这篇论文提出一个新的后训练范式 <strong>RLSVR</strong>（自可核对奖励的强化学习），并给出一个具体到能跑的实现 <strong>SpyRL</strong>——把开放任务改写成一场"谁是卧底"游戏，让<strong>投票结果</strong>充当那个"自动、免费、可核对"的裁判。这是"让强化学习走出数学/代码"这条路上一个干净、可复现的样板。</li><li><span class="lk">命中了哪些质量信号</span>HuggingFace 每日论文榜（社区每天投票筛过的重要论文榜）<strong>第 1 名，138 个赞，约是第二名的 3 倍</strong>——社区注意力高度集中在它身上；已被 <strong>COLM 2026</strong>（Conference on Language Modeling，语言模型专门的顶级会议）接收；作者来自 <strong>Duke（杜克大学，Yiran Chen、Hai Li 是 ECE 名家）× Adobe Research × Penn State</strong>，其中 Qingyun Wu 是多智能体框架 AutoGen 的作者——一个搞多智能体自博弈的论文，出自多智能体框架的人手里，分量更实；<strong>代码已开源</strong>。</li><li><span class="lk">对思染追前沿的价值</span>京小贝做的是金融投顾，输出的"一句建议好不好"恰恰是<strong>开放式、没有标准答案</strong>的——正是 RLVR 够不着、只能靠人工标注或大模型打分的领域。这篇给出的深层思路（"把不可验证的目标，包装成一个有明确胜负规则的博弈，让好坏从规则里自动浮现"），对你写提示词、设计评估、判断"下一代模型靠什么把软能力也练强"，都能直接借用。</li></ul><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：一台已经很会做数学题、却教不会"写得好不好"的强化学习机器</h2><p>先把主角领上台。这两年大模型最亮眼的进步——会一步步推数学、会调试代码——背后是同一台发动机：<strong>强化学习</strong>。</p><p>一句话解释强化学习：让模型自己去试，试对了给它"糖"（奖励），试错了不给，反复几百万次，它就慢慢学会往"能拿到糖"的方向走。这跟训练小狗、跟人靠"做对了爽、做错了难受"来学习，是同一个道理。</p><p>关键在于——<strong>"糖"从哪来、谁来判"这次算对还是算错"</strong>。这台机器最近之所以突然变聪明，是因为找到了一种特别干净的发糖方式，叫 <strong>RLVR</strong>。</p><ul class="ls"><li><strong>RLVR</strong> = Reinforcement Learning with <strong>Verifiable</strong> Rewards = "用<strong>可核对</strong>的奖励做强化学习"。</li><li><strong>可核对（verifiable）</strong>是这里的题眼：意思是"这次答得对不对，有一个铁的、不用商量的办法当场判定"。数学题算出 42，标准答案就是 42，一对就对、错就错，不需要任何人打分；代码写完，跑一遍测试用例，过就是过、不过就是不过。<strong>裁判是"事实"本身，不是某个人的口味。</strong></li></ul><p>正因为裁判是铁的、免费的、不会累也不会偏心，这台机器可以不知疲倦地自己试几百万次，越练越强。这就是过去两年推理模型爆发的底层原因。</p><h2 id="s4">2. 困境：真正值钱的任务，大多"没有标准答案"</h2><p>可这台机器有个尴尬的边界：<strong>它只在"答案能被铁判定"的地方好使</strong>。</p><p>数学、代码是幸运儿——有标准答案。但你数数生活里真正值钱的任务：写一封说服客户的邮件、把一份长报告总结得又准又不啰嗦、给一个焦虑的用户讲清楚"你这笔钱现在该不该动"、写一段让人想读下去的文案……这些<strong>好坏都没有标准答案</strong>。同一个问题，两个不同的好回答可以完全不一样，你没法像对数学题那样"一对就知道对错"。</p><p>论文里把这类叫 <strong>open-ended tasks（开放式任务）</strong>：出口不唯一、好坏靠品味、没有一个铁裁判。</p><p>一旦没有铁裁判，那台强化学习机器就断粮了——它不知道该给哪次试探发糖。于是它最擅长的"自己试几百万次越练越强"，在这些任务上<strong>卡死</strong>。而偏偏，这些没有标准答案的任务，才是真实世界里绝大多数有价值的活。<strong>能力前沿的那堵墙，就横在这儿。</strong></p><h2 id="s5">3. 旧路：请一个"更强的模型/人"来当裁判——贵、偏、还有天花板</h2><p>没有铁裁判，那就人造一个裁判呗。过去大家就是这么干的，主要三条老路：</p><ul class="ls"><li><span class="lk">人来打分（RLHF）</span>Reinforcement Learning from <strong>Human Feedback</strong>，"用人的反馈做强化学习"。让人一条条看模型的回答、标出哪个更好，再拿这些人工偏好训练。问题很直白：<strong>人贵、慢、标不了几条</strong>，几百万次的试探根本喂不起。</li><li><strong>训一个"打分模型"（reward model，奖励模型）</strong>：先用人标的那批数据训出一个专门打分的小模型，之后让它替人打分。省了人力，但它只是"人偏好的二手复印件"，人没标到的地方它就瞎猜，而且模型很快学会<strong>专挑这个打分模型的漏洞骗高分</strong>（术语叫 reward hacking，钻奖励的空子），越练越油。</li><li><strong>请更强的大模型当评委（LLM-as-judge）</strong>：直接叫一个更强的模型（比如 GPT-4o）来评"这两个回答哪个好"。这条现在最流行，但三个硬伤：<strong>① 有偏见</strong>——评委模型自己的口味会渗进去（比如偏爱长的、偏爱辞藻华丽的）；<strong>② 有天花板</strong>——学生的水平<strong>没法超过评委</strong>，评委看不懂的好，它就打不出高分，于是被评委的能力上限锁死；<strong>③ 贵</strong>——每训一步都要多请一次大模型来评，推理成本哗哗地烧。论文里给了个具体数字：用 Qwen3.5-27B 和 GPT-4o 当"打分表评委"跑一轮，光评委的调用费就分别烧掉 <strong>200 美元和 900 美元</strong>。</li></ul><p>一句话概括旧路的共同病根：<strong>为了给开放任务造裁判，你不得不引入一个"外部的、带口味的、有能力上限的、要花钱的"第三方</strong>。你造的裁判越强，成本和偏见越大；裁判越弱，学生越练越歪。这是个死结。</p><h2 id="s6">4. 转折：不去"造一个裁判"，而去"改造任务"——让任务自己长出铁裁判</h2><p>作者的关键转身在这里，非常漂亮：<strong>别再纠结怎么造一个好裁判了。换个问题——能不能把任务本身改一改，让它自己长出一个铁裁判？</strong></p><p>这个 insight（顿悟）是从<strong>自监督学习</strong>偷来的。</p><p>一句话解释自监督学习：它是"不用人工标注、让数据自己给自己出题"的一套办法。最经典的例子是 BERT 的"完形填空"——拿一句话，随手盖住其中一个词，让模型猜被盖住的是什么。<strong>答案是谁？就是被盖住的那个词本身，白纸黑字，不用任何人来标。</strong> 于是你有了无穷无尽、自动带标准答案的练习题。这类"人为设计出来、专门用来产生免费监督信号的假任务"，术语叫 <strong>pretext task（代理任务 / 前置任务）</strong>——它本身不是你最终想要的能力，但做它能逼出你想要的能力，而且它自带铁答案。</p><p>作者的转折就是把这套哲学搬到强化学习的奖励上：</p><blockquote><p>开放任务本身没有铁答案（写得好不好没法核对）。<strong>那我就把它包进一个"有明确胜负规则的游戏"里</strong>——游戏的胜负是铁的、可核对的，而"能不能在游戏里赢"又恰好跟"任务做得好不好"绑在一起。这样，游戏的输赢就成了那个免费、无偏、可核对的裁判。</p></blockquote><p>这就是从 <strong>RLVR → RLSVR</strong> 的那一跳：把"可核对（Verifiable）"升级成"<strong>自</strong>可核对（<strong>Self</strong>-Verifiable）"——奖励不再需要外部裁判，而是从任务被改造后的<strong>内部规则</strong>里自动冒出来。</p><h2 id="s7">5. 解法：SpyRL——把任务改写成一场"谁是卧底"</h2><p>光有哲学不够，得有一个真能跑的游戏。作者设计的这个游戏叫 <strong>SpyRL</strong>（Self-<strong>P</strong>la<strong>Y</strong> Reinforcement Learning，自博弈强化学习），灵感直接来自桌游<strong>《谁是卧底》</strong>。</p><p>先说《谁是卧底》原版怎么玩：一桌人，绝大多数人拿到同一个词（比如"可乐"），有一个"卧底"拿到一个相近但不同的词（比如"雪碧"）。每人轮流描述自己的词但不能说破，然后全体投票，票数最高的被认为是卧底、出局。卧底为了不暴露，得努力把描述说得像大多数人；大多数人为了揪出卧底，得努力把描述说得又准又有区分度。</p><p>SpyRL 把这个结构套到"训练模型做任务"上，分两个阶段：</p><p><strong>① 做任务阶段（Performing Stage）</strong>：一局放 <strong>5 个智能体</strong>（论文默认 n=5，都是同一个模型的多个副本）。给它们同一道题（比如"总结这份长报告"）。但有个机关——其中 <strong>4 个是"平民"，拿到完整的题目</strong>；<strong>1 个是"卧底"，拿到的题目被人为抹掉了一部分信息</strong>。抹多少？论文里：总结/写作类抹掉 <strong>20% 的输入</strong>，数学类抹掉 <strong>40%</strong>。这个"抹信息"的动作，论文用一个算子 g(·) 表示。卧底因为少了一块信息，得先<strong>连蒙带猜把缺的补上</strong>，再去做题——它做出来的东西，往往就会比平民<strong>差那么一点、露那么一丝破绽</strong>。</p><p><strong>② 找卧底阶段（Detection Stage）</strong>：5 个智能体看着彼此交出的答卷，投票选出"谁最像那个信息不全的卧底"。</p><p><span class="lk">奖励怎么来（关键）</span>卧底是谁，是<strong>开局就由环境定死的</strong>（哪个副本被抹了信息，系统清清楚楚）。所以"这一票投得对不对"是<strong>铁的、可核对的</strong>——就像数学题有标准答案一样，投中真卧底就是对、投错就是错，不需要任何人打分。<strong>这就是那个自动长出来的铁裁判。</strong></p><p><strong>为什么"能不能揪出卧底"就等于"任务做得好不好"？</strong> 这是整个设计的灵魂：</p><ul class="ls"><li>卧底想不被揪出来，唯一的办法是<strong>把缺失的信息补得足够好、把任务做得跟平民一样漂亮</strong>，让自己的答卷混在里面看不出破绽；</li><li>平民想准确揪出卧底，唯一的办法是<strong>自己先把任务做到极致</strong>——只有自己做得又准又到位，才能反衬出卧底那点因信息缺失导致的瑕疵。</li></ul><p>于是不管你是平民还是卧底，<strong>为了在这场游戏里赢，你都被逼着"把手上这道题做到最好"</strong>。"做得好"这件不可核对的事，被"投票赢没赢"这件可核对的事，牢牢绑在了一起。模型为了赢游戏而不断提升，就顺带把任务能力练上去了——论文把这叫"持续自我进化"。</p><p><strong>一个绕不过的技术坑，和它的解法（RAE）</strong>：卧底本来就少一块信息，先天吃亏，它做得差<strong>不一定是策略烂，可能只是信息少</strong>。如果直接因为"它像卧底"就狠罚它，等于在惩罚"信息不足"而不是"能力不行"，方向就带歪了。作者加了一个叫 <strong>RAE（Role-Advantage Estimation，角色优势估计）</strong> 的校准：<strong>先把"卧底天生的信息劣势"这部分扣掉，再来算它真正的策略好坏</strong>——好比考试给缺考半张卷子的人按比例折算，别拿绝对分直接跟人比。这个校准至关重要（见下一拍的数字）。</p><h2 id="s8">6. 结局：软任务上真的练强了，还带出几个反直觉的发现</h2><p>在 <strong>Qwen3-4B / Qwen3-8B</strong>（阿里通义千问 Qwen3 系列的 40 亿、80 亿参数开源模型）上训练，对比两个当红的"自博弈自我进化"方法 <strong>R-Zero</strong> 和 <strong>Absolute Zero</strong>（这两个是"模型自己出题自己解、不用外部标注"的路线），结果：</p><ul class="ls"><li><strong>总结（GovReport 长报告数据集，指标 ROUGE-L）</strong>：ROUGE-L 是"看你写的总结跟参考答案有多少连续的词重叠"，越高越贴题。Qwen3-4B 上 SpyRL <strong>36.7</strong>，Absolute Zero 33.2；Qwen3-8B 上 SpyRL <strong>34.1</strong> vs 32.5。</li><li><strong>创意写作（WritingPrompts）</strong>：SpyRL 对 R-Zero 的<strong>胜率 77.3%</strong>（两个模型各写一篇、让评委比谁好，SpyRL 赢的比例）。更硬的是<strong>人类评审</strong>：SpyRL 对"原始模型 / 未训练底座 / Absolute Zero"的胜率分别是 <strong>80.0% / 78.5% / 74.0%</strong>——真人也觉得它写得更好。</li><li><span class="lk">数学（GSM8K 小学数学应用题）</span>Qwen3-4B 上 <strong>93.4%</strong> vs 89.3%；Qwen3-8B 上 <strong>93.5%</strong> vs 92.0%。注意这一条的意义——它证明这套"游戏化奖励"<strong>不光在软任务上有用，连有标准答案的硬任务也一起涨</strong>，说明练的是通用的"把题做到位"的能力，不是投机取巧。</li></ul><p>几个反直觉的副发现（往往最有意思）：</p><ul class="ls"><li><span class="lk">没有"卧底"这个机关，整套就废了</span>去掉卧底机制，模型很快原地踏步（论文 Table 8）；只让它们做任务、不投票找卧底（"Only Performing"），成绩卡在 72.3%，加回完整的博弈才冲到 79.5%。<strong>"竞争性地互相找茬"本身，才是逼出进步的那根鞭子</strong>，光埋头做题不行。</li><li><span class="lk">RAE 那个校准，去掉就崩</span>不做"卧底信息劣势"的折算，七个基准的平均分从 <strong>50.4 掉到 37.5</strong>——因为"优化器会把'卧底信息少'错当成'策略差'"，方向直接带偏。这说明：设计自动奖励时，<strong>必须把'规则造成的先天不公'从'真本事'里择干净</strong>，否则模型学到的是错的东西。</li><li><span class="lk">抹多少信息，居然不太敏感</span>卧底被抹 20% 还是 40%，结果几乎一样。原因正是 RAE 会自动把这点差异重新校准掉——<strong>机制的鲁棒性来自那个校准，而不是来自把参数调得多精</strong>。</li><li><span class="lk">人数有甜点</span>一局从 3 个智能体加到 5 个，平均收益从 5.5 涨到 9.3；但加到 6–8 个反而收益递减。<strong>n=5 是那个甜点</strong>——人太少凑不成有效的"互相揪"，人太多信号被稀释。</li></ul><h2 id="s9">7. 内核（一句带走的种子）</h2><p><strong>当一件事"好不好"没法直接核对时，别急着找个裁判来打分——去设计一个'有明确胜负、且胜负和好坏挂钩'的游戏，让答案从规则里自动浮现。</strong> SpyRL 的做法是把"写得好不好"翻译成"能不能在'谁是卧底'里赢"，而输赢是铁的、免费的、无偏的。这一步，等于给强化学习递上了一把钥匙，去打开它过去进不去的那片最大的门——所有"没有标准答案却最值钱"的任务。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源）</h1><p>顺着"强化学习的奖励从哪来"这条线，往回倒三层，就能看清这篇站在哪：</p><p><strong>第 0 层（本篇）· RLSVR / SpyRL</strong>：把开放任务改写成一场自带铁裁判的游戏，奖励从规则内部自生。解决"开放任务没法核对、只能外请裁判"的死结。</p><p><strong>第 1 层（直接前身）· R-Zero / Absolute Zero——自博弈自我进化</strong>：这两个是这篇的正面对标。它们的思路是"模型自己给自己出题（proposer 出题者）、自己解（solver 解题者），不用任何人工标注就能滚起来自我进化"。这已经很前沿了——<strong>连题目都不用人给</strong>。但它们仍然被锁在"可核对的领域"里：因为要判解题者做得对不对，还是得依赖数学/代码那种能核对的答案。SpyRL 的突破正是<strong>把"自生成可核对信号"的思路，从'自己出可核对的题'推进到'把不可核对的题包成可核对的游戏'</strong>，第一次伸进了开放任务。</p><p><strong>第 1b 层（同源主干）· RLVR——可核对奖励的强化学习</strong>：这是过去两年推理模型（DeepSeek-R1、OpenAI o1 那一批会深度思考的模型）爆发的引擎。它的贡献是"<strong>扔掉带口味的打分模型，直接用事实当裁判</strong>"，在数学/代码上把强化学习推到了极致。这篇的标题"From RLVR to RLSVR"就是明说：<strong>我是 RLVR 的延长线，要把它管用的范围从'天生可核对'扩到'天生不可核对'。</strong></p><p><strong>第 2 层（再上一层的根）· RLHF / 奖励模型 / LLM-as-judge——外请裁判的时代，以及更深处的自监督学习</strong>：RLVR 之所以是进步，是因为它甩掉了上一代的包袱——那个时代给开放任务的奖励，全靠"人打分（RLHF）→ 训个打分模型 → 请更强模型当评委"，共同的病是<strong>外部裁判带偏见、有能力天花板、要花钱</strong>。而这篇真正的思想母体，是更老的<strong>自监督学习</strong>（BERT 完形填空那一脉）：它教会整个领域一件事——"<strong>别去外面找监督信号，设计一个假任务（pretext task），让监督从数据自己身上长出来</strong>"。SpyRL 就是把自监督的这句箴言，从"预训练造练习题"搬到了"强化学习造奖励"上：<strong>那场'谁是卧底'游戏，就是 SpyRL 版的完形填空。</strong></p><p>一条线拎起来：<strong>自监督（让数据自己出题）→ RLHF/评委（开放任务外请裁判，贵且偏且有上限）→ RLVR（数学代码里用事实当裁判，甩掉评委但只限可核对域）→ R-Zero/Absolute Zero（自己出题自己解，但仍限可核对域）→ RLSVR/SpyRL（把不可核对的任务包成有铁裁判的游戏，奖励自生，第一次伸进开放域）。</strong> 每一步都在回答同一个问题：<strong>能不能少求人、让"对不对"这件事自动、免费、无偏地成立。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><strong>这一步，模型进化往哪挪了？</strong></p><p>RL（强化学习）是这一代模型变强的主引擎，而这台引擎最大的燃料瓶颈，就是"<strong>奖励从哪来</strong>"。数学、代码这两块"天生可核对"的地，已经被 RLVR 基本吃透了——所以你会看到模型的数学、代码能力这两年突飞猛进。但真实世界里绝大多数值钱的任务——写作、对话、总结、说服、投顾判断——<strong>都是"没有标准答案"的开放任务</strong>，RL 过去伸不进去，只能靠人工标注或大模型打分硬顶，又贵又有天花板。</p><p>这篇给出的信号是：<strong>下一波能力增长，很可能来自"给不可验证的任务，造出可扩展、无偏、便宜的奖励"这个方向。</strong> 谁先把"软能力"（写得好、答得得体、说得让人信）也变成可以让 RL 自动强化的东西，谁就能把模型在这些"最像人、最值钱"的地方也推到新高度。SpyRL 是这条路上一个具体、可复现、连代码都开源的样板——它证明了"<strong>把不可验证包装成可验证</strong>"这条路走得通。你不需要记住 SpyRL 这个具体玩法，要记住的是那个母命题：<strong>软能力的 RL 化，是下一个前沿。</strong></p><p><strong>怎么用（提示词 &amp; 京小贝）？</strong></p><ol class="ls"><li><strong>评估设计的思路转弯——从"让模型自评"转向"让好坏从规则里浮现"</strong>。你做京小贝的回复质量评估时，最自然的做法是"让一个大模型给回答打个分"。这篇提醒你：<strong>自评/他评都带口味、有天花板、还贵</strong>。一个更稳的替代思路是——把"这条投顾回复好不好"改造成一个<strong>有明确胜负规则的对局</strong>。比如让若干条候选回复"互相找茬/互相投票"（哪条最像是漏了关键风险提示的那条），或者做成"给同一个用户问题，藏掉一条真实市场信息，看哪条回复因此露怯"——让<strong>好坏从规则的输赢里自动冒出来</strong>，而不是靠一个评委拍脑袋。这比堆一个更强的评委模型更抗偏、更省钱。</li></ol><ol class="ls"><li><strong>提示词层面的迁移——"把模糊目标翻译成有胜负的任务"</strong>。这篇最可复用的思想，是"<strong>不可核对 → 包成可核对</strong>"。你写提示词时，凡遇到"帮我判断这个方案好不好""这段文案够不够打动人"这种没有标准答案的目标，与其直接问模型"好不好"（它只会顺着你给个模糊的好评），不如<strong>给它设一个有胜负的擂台</strong>：让它生成 5 个版本并两两 PK、逐条说明"谁赢在哪、输在哪"，或者让它扮演"专挑漏洞的卧底猎手"去攻击自己的答案。<strong>结构化的对抗，比开放式的自评，逼出的质量高得多</strong>——这跟论文里"去掉找卧底机制就原地踏步"是同一个道理。</li></ol><ol class="ls"><li><strong>一条要刻进产品直觉的护栏——把"规则造成的先天不公"从"真本事"里择干净</strong>。论文里 RAE 那个发现（不校准卧底的信息劣势，成绩从 50.4 崩到 37.5）是个通用教训：<strong>任何"让 AI 自动评判/自动打分"的机制，都要先问一句——我这个规则，有没有系统性地冤枉了某一类本来没错的情况？</strong> 放到京小贝：如果你用某个自动指标去筛"好回复"，要警惕它是不是在奖励"话多/辞藻华丽/敢下重结论"，而冤枉了"该谨慎时谨慎、该说不知道时诚实"的回复。<strong>自动奖励最危险的地方，从来不是它笨，而是它把'规则的偏'当成'真本事'去放大。</strong></li></ol><hr class="rule"><h1 id="s12">来源</h1><ul class="ls"><li>论文原文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2607.23802">https://arxiv.org/abs/2607.23802</a></li><li>论文 HTML 全文（含方法、实验、消融数字）：<a class="src" href="https://arxiv.org/html/2607.23802">https://arxiv.org/html/2607.23802</a></li><li>代码开源（SpyRL 分支）：<a class="src" href="https://github.com/wangqinsi1/RLSVR/tree/SpyRL">https://github.com/wangqinsi1/RLSVR/tree/SpyRL</a></li><li>信号佐证 · HuggingFace 每日论文榜（#1 · 138 赞）：<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a>（2026-08-03 榜）</li><li>信号佐证 · 论文页标注：COLM 2026 接收；v1 2026-07-26 / v2 2026-07-31</li><li>背景概念佐证 · RLVR（可核对奖励强化学习）综述与资料：<a class="src" href="https://github.com/opendilab/awesome-RLVR">https://github.com/opendilab/awesome-RLVR</a> ；<a class="src" href="https://www.emergentmind.com/topics/reinforcement-learning-with-verifiable-rewards-rlvr">https://www.emergentmind.com/topics/reinforcement-learning-with-verifiable-rewards-rlvr</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
