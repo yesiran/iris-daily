@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AURORA-LM：文字从逐字到块并行生成的范式转变 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.08.06</span></div>
+  <div class="bar"></div>
+  <h1>AURORA-LM：文字从逐字到块并行生成的范式转变</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>17</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题现象：语言为何还在逐字生成</div><ul><li><div class="n2" style="--c:#E63312">图像/视频/音频用扩散+潜空间做整块生成</div></li><li><div class="n2" style="--c:#E63312">语言仍坚持自回归逐词，天生离散无法平滑</div></li><li><div class="n2" style="--c:#E63312">代价双重：生成排队（延迟/成本），模态分裂</div></li></ul></li><li><div class="n1" style="--c:#10395E">前人死结：保真度vs可生成性无法兼得</div><ul><li><div class="n2" style="--c:#10395E">向量丰富→编码信息多→保真高但扩散难学</div></li><li><div class="n2" style="--c:#10395E">向量压小→扩散好学但解码糊、丧失细节</div></li><li><div class="n2" style="--c:#10395E">离散扩散路线：还在词层面打转，未进连续空间</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">创新反转：保住表示，升级生成器</div><ul><li><div class="n2" style="--c:#9E2B22">核心洞察：不阉割上游迁就下游，反向升级下游能力</div></li><li><div class="n2" style="--c:#9E2B22">块因果设计：块间顺序块内并行，兼得连贯与效率</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">技术方案：5项核心创新落地</div><ul><li><div class="n2" style="--c:#3E5C2E">Query编码器：学习提问向量，前缀对齐，高保真解码</div></li><li><div class="n2" style="--c:#3E5C2E">块因果扩散+流匹配：块间顺序块内并行，训练更稳</div></li><li><div class="n2" style="--c:#3E5C2E">不对称加噪：输入加噪预测完整向量，保住丰富度</div></li><li><div class="n2" style="--c:#3E5C2E">噪声校准+自轨迹一致性：对齐表示宽度，焊合训推缝隙</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">实验成果：连续/扩散类最强验证</div><ul><li><div class="n2" style="--c:#6B4A8E">OpenWebText+XSum双任务最强，更小赢更大模型</div></li><li><div class="n2" style="--c:#6B4A8E">1B参数、1500EFLOPs规模化验证，昇腾NPU全程跑通</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">战略意义：生成范式与多模态未来</div><ul><li><div class="n2" style="--c:#8A6D1F">范式转变：逐字→块扩散并行，改写延迟成本结构</div></li><li><div class="n2" style="--c:#8A6D1F">多模态统一：文字进潜空间，文图音共用生成底座</div></li><li><div class="n2" style="--c:#8A6D1F">产品应用：结构先行提示、长文本成本重划、实时异步界线</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
