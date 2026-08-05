@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28288%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2226%22%20r%3D%2221%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2242%22%20r%3D%2211%22%20fill%3D%22%23fff%22%20opacity%3D%220.12%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2215%22%20r%3D%2223%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 日报 · 2026-08-05</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-08-05 · 周三</span></div>
+  <h1>AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>14</b> 条</span><span>趋势 <b>5</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">编制说明：本日报只收录 <strong>2026-08-05 当天</strong>新发生／新披露的 AI 新闻。凡属更早发生的事件，均标注其原始日期并作为背景处理。每条事实、数据后均附来源链接。若某方向当日高可信增量有限，会明确说明，不硬凑。</p>
+
+  <div class="listen">
+    <div class="listen-k">听<span>PODCAST</span></div>
+    <div class="listen-b"><audio controls preload="metadata" src="2026-08-05.m4a"></audio>
+    <p class="cap">NotebookLM 生成的双人对谈版，按"为什么重要"展开 Top 5，适合通勤。</p></div>
+  </div>
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>谷歌 AI 高层大地震：Hassabis 卸任 DeepMind CEO 转任董事长兼 Alphabet 首席科学家，传奇工程师 Jeff Dean 27 年后离职创业</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Anthropic 首次公开确认自研 AI 芯片：为 Claude 组建定制硅团队</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>SpaceX 首份财报把英伟达"钦定"为独家 AI 芯片供应商，并发布"Starmind"太空算力卫星</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>DeepSeek 重启第二轮融资，估值约 5000 亿元人民币（约 741 亿美元）</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>QuestMobile 半年榜：豆包 3.82 亿月活断层领跑中国 AI 原生 App</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>谷歌 AI 高层大地震：Hassabis 卸任 DeepMind CEO 转任董事长兼 Alphabet 首席科学家，传奇工程师 Jeff Dean 27 年后离职创业</h3><p class="lp">Alphabet 于当地时间周三（8 月 5 日）宣布 AI 部门重大人事重组：Demis Hassabis 卸下 Google DeepMind CEO 职务，转任该部门董事长、并出任母公司 Alphabet 首席科学家，同时继续执掌药物研发子公司 Isomorphic Labs；Pichai 称此举让他"能把全部精力放在主动塑造 AGI 的未来上"。原 DeepMind 首席技术官 Koray Kavukcuoglu 升任高级副总裁、执掌 DeepMind，直接向 Pichai 汇报。同时，谷歌首席科学家、深度学习奠基人之一 Jeff Dean 在效力 27 年后离开谷歌，据报道去联合创办一家名为 "Discovery Loop" 的初创公司。<a class="src" href="https://www.cnbc.com/2026/08/05/google-chief-scientist-jeff-dean-leaving-company-after-27-years.html">CNBC</a>｜<a class="src" href="https://www.axios.com/2026/08/05/google-deepmind-demis-hassabis-ai">Axios</a>｜<a class="src" href="https://9to5google.com/2026/08/05/demis-hassabis-deepmind/">9to5Google</a>｜<a class="src" href="https://www.businessinsider.com/google-ai-leadership-demis-hassabis-steps-down-deepmind-ceo-2026-8">Business Insider</a>｜<a class="src" href="https://qz.com/jeff-dean-google-chief-scientist-discovery-loop-startup-080526">Quartz（Jeff Dean 创业）</a></p><div class="why"><span class="why-k">为什么重要</span><p>DeepMind 是全球最有历史地位的 AI 研究机构，一天之内它的一号位换人、灵魂人物同时"退居二线"、公司里最资深的科学家离职创业——这不是普通的人事调整，而是谷歌 AI 组织形态的重构。它意味着两件事：其一，Hassabis 把重心从"跑一个和 OpenAI/Anthropic 贴身肉搏的模型产品部门"转向"更纯粹的前沿研究和 AGI/科学（Isomorphic）"，说明前沿实验室内部"做研究"与"做产品、拼规模、拼上线速度"之间的张力已经大到需要用组织架构来化解；其二，Jeff Dean 这种级别的人出走创业，是顶尖 AI 人才继续从大厂向初创流动的又一个强信号。把 Gemini 模型开发的实际指挥权交给工程/技术出身的 Kavukcuoglu，是谷歌为接下来的"上线速度战"重新排兵布阵。</p></div></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Anthropic 首次公开确认自研 AI 芯片：为 Claude 组建定制硅团队</h3><p class="lp">Anthropic 于周三（8 月 5 日）首次公开证实，正在组建内部芯片设计团队，为其 Claude 系列模型打造定制芯片，目标是让模型跑得更快、更省成本，并将采取"软硬件协同设计"的路线。公司同时强调，仍会继续采购 AWS、谷歌、英伟达、AMD 的硬件。此举证实了路透社今年 4 月一篇独家报道（当时 Anthropic 尚未承认）。<a class="src" href="https://techcrunch.com/2026/08/05/anthropic-is-hiring-an-ai-chip-design-team/">TechCrunch</a>｜<a class="src" href="https://www.businessinsider.com/anthropic-in-house-silicon-chip-team-claude-2026-8">Business Insider</a>｜<a class="src" href="https://qz.com/anthropic-custom-ai-chip-design-team-claude-080526">Quartz</a>｜<a class="src" href="https://www.techzine.eu/news/analytics/143437/anthropic-builds-its-own-chip-team-for-claude/">Techzine</a></p><div class="why"><span class="why-k">为什么重要</span><p>这是"AI 大厂自己造芯片"这条主线上又一块拼图落地。谷歌有 TPU、亚马逊有 Trainium、OpenAI 与博通合作定制芯片——现在连以"纯模型公司"著称的 Anthropic 也下场了。背后的经济账很直白：英伟达最先进的服务器机柜单价高到"能拖垮一个小国"（24/7 Wall St. 语），推理成本是模型公司最大的长期支出，谁能把自家最高频的负载压到定制芯片上，谁就能在单位 token 成本上甩开对手。它同时说明，模型层的竞争正在向下延伸到硬件层——未来的护城河不只是"谁的模型聪明"，还包括"谁能把聪明模型跑得又便宜又快"。</p></div></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>SpaceX 首份财报把英伟达"钦定"为独家 AI 芯片供应商，并发布"Starmind"太空算力卫星</h3><p class="lp">SpaceX 在上市后的首次财报电话会上宣布，将其 AI 基础设施独家押注英伟达硬件，马斯克称英伟达的 Vera Rubin 架构是"现有最好的 AI 计算机"；同时与英伟达联合发布 "Starmind AI1" 卫星算力载荷——每颗卫星搭载英伟达 Rubin GPU 与 Vera CPU，把"数据中心级"算力送上轨道，靠太阳能供电，计划 2027 年起发射。消息带动英伟达股价盘前上涨、相关杠杆 ETF（NVDL）涨约 7%，而 AMD 大跌约 8%–9%，美光、英特尔同步走低；有分析师测算，若 SpaceX 兑现哪怕四分之一的算力承诺，英伟达营收有望冲向 1 万亿美元量级。<a class="src" href="https://www.cnbc.com/2026/08/04/spacex-spcx-earnings-live-updates-q2-2026.html">CNBC</a>｜<a class="src" href="https://www.tipranks.com/news/amd-intc-mu-nvda-why-nvidia-stock-rises-in-pre-market-while-other-chip-stocks-slide-8-5-2026">TipRanks（芯片股异动）</a>｜<a class="src" href="https://interestingengineering.com/ai-robotics/spacex-nvidia-starmind-ai1-compute-payload">Interesting Engineering（Starmind 技术细节）</a>｜<a class="src" href="https://247wallst.com/investing/2026/08/05/analyst-if-spacex-delivers-even-a-quarter-of-elon-musks-promised-compute-nvidia-could-hit-1-trillion-in-revenue/">24/7 Wall St.（$1T 测算）</a></p><div class="why"><span class="why-k">为什么重要</span><p>一是把英伟达的护城河又挖深一层——在 Anthropic 等大厂纷纷自研芯片"去英伟达化"的同时，SpaceX 这样体量的新玩家反而"全家桶"式独家绑定英伟达，说明市场在"自研 vs 采购"上出现明显分化，短期内英伟达在最前沿训练/推理上的统治地位并未松动。二是"算力上天"这个此前偏科幻的方向第一次有了具体的商业时间表（2027 年发射），太空可能成为下一个数据中心选址，绕开地面的电力、散热和土地约束。三是它同时暴露了资本市场对 AI 基建的分歧：同一天 SpaceX 因 AI 投入激增导致成本飙升而遭遇抛售，说明"疯狂 capex"这把双刃剑已经被投资者盯上。</p></div></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>DeepSeek 重启第二轮融资，估值约 5000 亿元人民币（约 741 亿美元）</h3><p class="lp">据 8 月 5 日报道，DeepSeek（深度求索）在因创始人梁文锋一段被泄露的言论导致融资一度暂停后，已重启第二轮融资：投前估值定在至少约 5000 亿元人民币（约 741 亿美元），目标募集约 50 亿元人民币（约 74 亿美元）。作为对照，其首轮外部融资（2026 年 6 月完成）约 74 亿美元、估值约 520 亿美元，腾讯领投约 15 亿美元、宁德时代约 7 亿美元、梁文锋个人投入约 30 亿美元。<a class="src" href="https://digitalphablet.com/business/chinas-deepseek-resumes-second-funding-round-at-74-1b-valuation/">Digital Phablet</a>｜<a class="src" href="https://www.abcmoney.co.uk/2026/08/deepseek-investment-round-suspended-what-liang-wenfengs-leaked-remarks-really-cost-the-company">ABC Money</a>｜背景：<a class="src" href="https://www.theepochtimes.com/china/deepseek-pauses-fundraising-after-founders-remarks-leaked-6068630">The Epoch Times（7-30 融资暂停）</a></p><div class="why"><span class="why-k">为什么重要</span><p>DeepSeek 从今年 6 月首轮的约 520 亿美元估值，两个月内攀升到约 741 亿美元，涨幅超四成，把中国 AI 的一级市场热度直接拉满，也说明"低成本高性能"的开源路线正被资本重新定价。同时这条新闻提醒了一个中国 AI 特有的风险变量：创始人的一句话（被泄露的言论）能让一轮融资喊停又重启，估值的波动不完全由技术和财务决定。<strong>可信度说明</strong>：该消息主要来自二线财经媒体转述"近期报道"，未见 DeepSeek 官方确认，属发展中事件，建议以后续一线信源为准。</p></div></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>QuestMobile 半年榜：豆包 3.82 亿月活断层领跑中国 AI 原生 App</h3><p class="lp">8 月 5 日多家媒体报道，QuestMobile 发布 2026 上半年 AI 原生 App 用户规模榜单（统计 2026 年 6 月独立 AI 应用月活）：豆包以 3.82 亿月活（DAU 约 1.78 亿）断层第一，阿里千问以 1.67 亿月活居第二，DeepSeek 以 1.30 亿月活列第三；豆包月活约为千问的 2.3 倍。另据机构数据，豆包 3.82 亿月活已跻身全网 App 总榜第 16 位，是增速最快的品类之一。<a class="src" href="https://finance.sina.com.cn/tech/discovery/2026-08-05/doc-inimhiec5123586.shtml">新浪科技</a>｜<a class="src" href="https://ai.zol.com.cn/1227/12273216.html">中关村在线</a>｜<a class="src" href="https://tech.ifeng.com/c/8vJKV0B47Gr">凤凰网（全网第16）</a></p><div class="why"><span class="why-k">为什么重要</span><p>在模型层"谁更强"的口水战之外，这份榜单给出了 C 端真实使用量的硬数据——字节的豆包在消费级 AI 助手上的领先不是"声量领先"而是"月活断层领先"，且已经能和全网头部 App 掰手腕（总榜第 16）。它意味着中国 AI 的竞争重心正从"发布会打榜"转向"日活、留存、生态入口"这类互联网老兵最擅长的战场，字节的流量分发能力正在被兑现成 AI 用户规模。（数据口径为 2026 年 6 月月活，榜单于 8 月 4 日发布、8 月 5 日被广泛报道。）</p></div></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 14 items</span></div>
+  <div class="sector"><div class="sector-h">1）OpenAI / GPT</div><div class="srow"><p><strong class="st">ChatGPT Ads 接入 AppsFlyer 做效果衡量</strong>随着 OpenAI 扩张广告业务，移动衡量平台 AppsFlyer 成为 ChatGPT Ads 的衡量合作方，让广告主能把投放与 App 安装、打开、内购、订阅打通。<a class="src" href="https://communicateonline.me/insights/chatgpt-wants-a-place-on-the-media-plan-appsflyer-says-measurement-will-decide-if-it-gets-there/">Communicate Online（8-5）</a></p></div><div class="srow"><p><strong class="st">ChatGPT 图像生成出现故障</strong>OpenAI 于 8 月 5 日确认部分用户遇到图像生成失败问题。<a class="src" href="https://windowsreport.com/chatgpt-image-generator-is-down-not-working-for-some-users-openai-confirms/">Windows Report（8-5）</a></p></div></div><div class="sector"><div class="sector-h">2）Google / DeepMind / Gemini</div></div><div class="sector"><div class="sector-h">3）Anthropic / Claude</div><div class="srow"><p><strong class="st">当日一线</strong>首次公开确认自研 AI 芯片、组建定制硅团队（见要闻 2）。</p></div><div class="srow"><p><strong class="st">当日相关</strong>临床研究外包龙头 ICON 与 Anthropic 达成合作，把 Claude 部署进临床试验流程（EDC、IRB 文档、站点激活等）。<a class="src" href="https://www.clinicaltrialvanguard.com/clinical-trial-ops-brief/what-icons-claude-deal-actually-means-for-the-site-coordinator-running-your-trial/">Clinical Trial Vanguard（8-5）</a></p></div></div><div class="sector"><div class="sector-h">4）中国 AI（字节/豆包/Seed/DeepSeek/智谱/MiniMax/通义）</div><div class="srow"><p><strong class="st">当日一线</strong>豆包 3.82 亿月活登顶 QuestMobile 半年榜（要闻 5）；DeepSeek 重启第二轮融资、估值约 741 亿美元（要闻 4）。</p></div><div class="srow"><p><strong class="st">当日趋势报道</strong>路透社刊发分析《一款廉价的中国新 AI 模型正在美国本土市场追平 Anthropic、OpenAI》，综述 DeepSeek V4 Flash、通义 Qwen3.8-Max、MiniMax 等"更便宜、更强"的中国开源模型对美国厂商的冲击（据 OpenRouter 数据，开源中国模型可比领先的 Anthropic/OpenAI 模型便宜 60%–90%）。<a class="src" href="https://www.reuters.com/technology/artificial-intelligence/">Reuters（8-5，分析）</a>｜<a class="src" href="https://www.sentisight.ai/cheap-chinese-ai-models-rival-big-players/">SentiSight 综述</a></p></div></div><div class="sector"><div class="sector-h">5）AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong>SpaceX 独家绑定英伟达 + Starmind 太空算力</strong>（要闻 3），带动当日芯片股剧烈分化：英伟达涨、AMD 跌约 8%–9%、美光/英特尔走低。<a class="src" href="https://www.tipranks.com/news/amd-intc-mu-nvda-why-nvidia-stock-rises-in-pre-market-while-other-chip-stocks-slide-8-5-2026">TipRanks</a></p></div><div class="srow"><p><strong>Anthropic 自研芯片</strong>（要闻 2）从需求侧再添一条"去英伟达化"信号，与 SpaceX 的"加倍押注英伟达"形成鲜明对照。</p></div><div class="srow"><p><strong class="st">产业观察</strong>有分析指出 AI 基建竞争的焦点正从"芯片竞赛"转向"供应链竞赛"——英伟达净利润因数据中心需求同比大增约 210%，但资本开支增速已超过经营性现金流增速，大量现金被投入供应链锁定。<a class="src" href="https://www.investorideas.com/news/2026/technology/08052-ai-infrastructure-chip-supply-chain-globaldata.asp">InvestorIdeas / GlobalData（8-5）</a></p></div></div><div class="sector"><div class="sector-h">6）AI 政策 / 监管</div><div class="srow"><p><strong class="st">背景（8 月 3 日）</strong>白宫敲定针对前沿模型的自愿性 AI 监督框架，倾向在模型公开发布前对其网络安全风险进行审查，整体维持"轻监管"基调（细节未完全公开）。<a class="src" href="https://www.politico.com/news/2026/08/03/white-house-finalizes-voluntary-ai-oversight-framework-01022437">POLITICO（8-3）</a>｜<a class="src" href="https://www.nytimes.com/2026/08/04/technology/ai-washington-regulation-whiplash.html">NYT（8-4，政策反复）</a></p></div><div class="srow"><p><strong class="st">背景（8 月 2 日）</strong>欧盟《AI 法案》关于通用目的 AI（GPAI）模型的监管义务正式进入由 AI Office 与成员国主管机构执行、监督的阶段。<a class="src" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai">European Commission</a></p></div></div><div class="sector"><div class="sector-h">7）AI 投融资</div><div class="srow"><p><strong class="st">当日一线</strong>DeepSeek 重启融资、估值约 741 亿美元（要闻 4）。</p></div><div class="srow"><p><strong class="st">当日其他轮次</strong>建筑科技（contech）赛道近期 6 家机器人/AI 初创合计融资约 2.34 亿美元。<a class="src" href="https://finance.yahoo.com/technology/articles/6-contech-firms-pull-combined-123000613.html">Construction Dive via Yahoo（8-5）</a>；FinSMEs 收录 8 月 5 日多笔，含 WindBorne Systems（气象智能平台）融资约 3700 万美元、Proxy Foods AI 等。<a class="src" href="https://www.finsmes.com/">FinSMEs</a></p></div><div class="srow"><p><strong class="st">当日市场情绪</strong>彭博指出，微软、Meta 财报后市场开始"给 AI 竞赛分出赢家和输家"；同日 BitMEX 创始人 Arthur Hayes 警告"AI 信贷泡沫"——过度杠杆的数据中心投入终将破裂。<a class="src" href="https://www.bloomberg.com/news/newsletters/2026-08-05/the-market-is-sorting-winners-and-losers-in-the-ai-race">Bloomberg（8-5）</a>｜<a class="src" href="https://www.coindesk.com/markets/2026/08/05/live-updates-an-ai-credit-bubble-could-set-up-bitcoin-s-path-to-usd1-million">CoinDesk（8-5）</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>"自研芯片"从大厂扩散到模型公司，但市场对"自研 vs 采购"出现明显分化</h4><p>同一天里，Anthropic 官宣自研定制芯片、加入谷歌(TPU)/亚马逊(Trainium)/OpenAI(博通)的行列，走"软硬件协同、压低推理成本"的路；而 SpaceX 反其道而行，把 AI 基建独家押注英伟达。这背后是同一个约束——推理成本是模型公司最大的长期开支，英伟达最先进机柜的天价让所有人重新算账。结论殊途：手里负载足够大、足够同质的公司（Anthropic）倾向自研摊薄成本；而追求"最快拿到最前沿算力、不想自己踩硬件坑"的新玩家（SpaceX）则选择全家桶绑定英伟达。护城河的战线正从模型层下沉到硅片层。</p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>前沿实验室进入"组织重构 + 人才再流动"期</h4><p>谷歌一天内让 Hassabis 从产品一线抽身去做纯研究/AGI、把 Gemini 指挥权交给技术出身的 Kavukcuoglu、并送别 Jeff Dean 去创业——这不是孤例，而是"研究理想主义"与"产品规模化、上线速度战"之间张力的组织化解。顶尖科学家从大厂向初创的持续流动（Jeff Dean、以及此前 Ilya 的 SSI），说明 AI 的人才市场仍在剧烈重新洗牌，大厂用架构调整来同时保住研究纯度和产品节奏。</p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>中国 AI 的"双线胜利"越来越清晰：C 端月活断层领先 + 模型性价比全球搅局</h4><p>一边是豆包 3.82 亿月活、跻身全网 App 前 16，证明字节的流量分发能力已被兑现成真实的 AI 用户规模；另一边是 DeepSeek/通义/MiniMax 以便宜 40%–90% 的开源模型在美国本土市场追平前沿厂商（路透社当日专门成文）。资本也在给这条路线重新定价——DeepSeek 两个月内估值从约 520 亿冲到约 741 亿美元。竞争重心正从"发布会打榜"转向"日活、留存、单位成本"这些更硬的指标。</p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>"算力上天"第一次有了商业时间表，AI 基建的想象空间被打开</h4><p>SpaceX 的 Starmind 卫星把"数据中心级算力送入轨道、用太阳能供电、2027 年起发射"从科幻变成路线图。若成立，太空有望绕开地面的电力、散热、土地三大约束，成为下一个数据中心选址维度。这也解释了为什么资本市场同时既兴奋又警惕。</p></div></div><div class="trend"><div class="trend-n">5</div><div><h4>AI 资本市场开始"分赢家和输家"，泡沫警报升温</h4><p>微软/Meta 财报后的差异化反应、SpaceX 因 AI capex 激增而遭抛售、Arthur Hayes 的"AI 信贷泡沫"警告——多个信号在同一天叠加，说明市场对"疯狂投入换增长"的容忍度正在下降，从"所有 AI 概念普涨"进入"看谁能把投入变成利润"的分化阶段。对从业者的含义是：接下来一年，能讲清单位经济模型（每一分算力投入换来多少收入/利润）的公司，会比只讲愿景的公司更受青睐。
+---
+*数据与信息截至 2026-08-05。凡标注"背景"的条目均为更早发生的事件，仅用于帮助理解当日新闻，不应误读为当日新增。少数条目（如 DeepSeek 二轮融资）为发展中事件、信源为二线媒体转述，已在正文标注可信度，请以后续一线信源为准。*</p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
