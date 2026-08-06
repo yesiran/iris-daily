@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28162%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2214%22%20r%3D%2223%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2234%22%20r%3D%2214%22%20fill%3D%22%23fff%22%20opacity%3D%220.30%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228%22%20r%3D%2222%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.12%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多模态不是"拼装"是"共同发育"——语言反哺视觉、视觉会偷懒、越早一起长越好：原生多模态预训练的四条物理定律</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-07</span></div>
+  <h1 class="doc">多模态不是"拼装"是"共同发育"——语言反哺视觉、视觉会偷懒、越早一起长越好：原生多模态预训练的四条物理定律</h1>
+  <div class="dateline"><span>全文 <b>4,028</b> 字</span><span>约 <b>11</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Towards Physics of Multimodal Pretraining: Knowledge Flow, Modality Synergy, Early Unification, and Recipes</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.05000</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Junlin Han, Shengbang (Peter) Tong, David Fan, Minghao Chen, Philip Torr, Filippos Kokkinos, Mike Lewis</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Meta FAIR × NYU × University of Oxford</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-06</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-07.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-07.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace 8-7 当日新榜 #3–4·37赞（新榜仍在累积，不靠票数选入）· Meta FAIR×NYU×牛津顶配班底（Mike Lewis / Rob Fergus / Naila Murray / Philip Torr / Peter Tong）· 承接同组 3 月《Beyond Language Modeling》(2603.03276) 的机理化续作 · Semantic Scholar 未取证（发表约 1 天，引用≈0）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, multimodal, pretraining, architecture, interpretability, science-of-llm</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-07.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-07-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法：四条定律（术语全部落地）</a><a class="t-h2" href="#s8">6. 结局：世界变了什么（含最反直觉的副发现）</a><a class="t-h2" href="#s9">7. 内核（走出门带走的那颗种子）</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源 · 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">怎么用（提示词 + 京小贝产品判断）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选它，不是因为票数（HF 8-7 新榜刚开，它 37 赞、排三四位，还在涨），而是因为三件事叠在一起：</p><ol class="ls"><li><strong>它推进的是"机理"，不是刷分</strong>。它问的是一个所有前沿模型都绕不开、但一直靠拍脑袋试错的问题：把"看懂图 / 画出图 / 会说话"这三种本事从头塞进<strong>同一个</strong>模型里一起训，它们到底是互相帮、还是互相抢？该先训哪个？结构该共享到什么程度？这篇像做物理实验一样，把每个旋钮单独拧、量因果，第一次给出了<strong>可复现的定律</strong>——这正是本 skill 要追的"揭示模型内在机理"。</li><li><strong>机构信号顶配</strong>。作者是 Meta FAIR × NYU × 牛津的一线班底：Mike Lewis（BART / Llama 作者）、Rob Fergus、Naila Murray、Philip Torr、Peter Tong（Cambrian-1 作者）。而且它是这个组自己 3 月《Beyond Language Modeling》的<strong>机理化续作</strong>——从"探索出一些现象"升级到"总结成物理定律"，脉络清清楚楚。</li><li><strong>方向就是模型进化的主线</strong>。前沿正在从"给语言模型外挂一个视觉眼睛"整体转向"一个模型从头一起长出所有模态"（GPT、Gemini 都在这条线上）。这篇是给这个转向补上"到底该怎么训"的科学地基。</li></ol><p>诚实交底：它今天在 HF 榜上不是第一（第一是一篇 agent 训练法 ABSeeker），最近半个月 ledger 里 agent / 强化学习也已经很密。我特意换一个<strong>完全不同的前沿切面</strong>给思染——多模态到底怎么"发育"出来的。信号偏"机构+机理"而非"票数",这点如实说明。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>一个想同时<strong>看懂图、画出图、还会说话</strong>的模型——也就是今天所有前沿大模型都在往里走的"原生多模态"（native multimodal：不是外挂一个视觉模块，而是一个模型从头把文字、看图、画图一起学）。</p><p>以及一群想把这件事<strong>从玄学变成科学</strong>的研究者：Meta FAIR、纽约大学、牛津的一线团队。他们的口号很直白——给多模态预训练找出它的"物理定律"。</p><h2 id="s4">2. 困境</h2><p>大家都在抢着做原生多模态，但<strong>没人真说得清这三种本事塞进一个脑子里会发生什么</strong>。撞的是三面墙：</p><ul class="ls"><li><strong>加视觉数据，会不会把语言能力拖垮？</strong> 一个模型容量就那么大，让它花力气学看图，会不会把说话的本事挤没了？</li><li><strong>该先训哪个？</strong> 是先把语言模型训扎实、再"接上"视觉省事？还是一开始就一起训？</li><li><strong>结构该共享到什么程度？</strong> 注意力、前馈网络、归一化——哪些该让文字和图像共用一套、哪些该各走各的？</li></ul><p>解不了这三面墙，就只能烧钱试错：训一版、发现不对、推倒重来。多模态预训练一次实验动辄几千张卡几周，试错代价高到离谱。</p><blockquote><p>术语落地：<strong>前馈网络（FFN, Feed-Forward Network）</strong>——每个词（或每个图像块）过完"注意力"这一步之后，还要各自单独过的一个小型两层神经网络。可以理解成模型里负责"加工、存知识"的车间。<strong>归一化（normalization）</strong>——把一层的数值缩放到一个稳定范围，防止训练时数值乱飘，相当于每层之间的"稳压器"。</p></blockquote><h2 id="s5">3. 旧路</h2><p>之前主流两条路，都没有"定律"，全凭手感：</p><ul class="ls"><li><strong>后接派（late alignment）</strong>：先把一个纯语言模型训好，再把视觉"对齐/接"上去。省事、复用现成语言模型。业界大量做法是这样。（剧透：这篇发现它有隐性大代价。）</li><li><span class="lk">凭直觉设计结构派</span>拍脑袋决定哪些结构共享、哪些分开，训出来能用就行，说不清为什么。</li></ul><p>而这个团队自己 3 月的《Beyond Language Modeling》（arXiv 2603.03276）是"探索版"——试出了一些"统一多模态预训练有戏"的现象，但还没上升成规律。<strong>这篇要做的，就是把它变成"物理"</strong>：受控实验、单变量、可复现的定律。</p><h2 id="s6">4. 转折</h2><p>关键的一转念：<strong>别再拿"能不能 work"当问题</strong>。改成像物理学家做实验那样——把每一个旋钮（语言数据配比、视觉数据配比、生成数据配比、接入的早晚、结构共享的程度、视觉数据的复杂度）<strong>单独拧一格</strong>，然后精确测量：它对另外两种能力产生了什么<strong>因果</strong>影响？</p><p>于是"多模态"这团糨糊，被拆成了一张有方向、有强弱、有临界点的<strong>力场图</strong>。哪股力帮哪股、帮多少、什么时候会翻脸变成互相抢——都能量出来。</p><h2 id="s7">5. 解法：四条定律（术语全部落地）</h2><p>他们先在小规模上单变量地扫，测三种能力：</p><ul class="ls"><li><span class="lk">语言</span>9 个多选推理/常识题 + 两个问答基准（Natural Questions、TriviaQA）+ 在 DCLM/C4 上的"困惑度"。</li><li><span class="lk">视觉理解</span>16 个基准，分四类——通用（GQA/MME/MMBench/SEED）、知识（ScienceQA/MMMU/MathVista）、OCR 与图表（TextVQA/ChartQA/DocVQA/OCRBench）、纯视觉（RealWorldQA/MMVP/CV-Bench）。</li><li><span class="lk">视觉生成</span>GenEval（能不能按提示把元素正确组合出来）、DPG-Bench、CLIP 相似度、生成的扩散损失。</li></ul><blockquote><p>术语落地：<strong>困惑度（perplexity, ppl）</strong>——模型对"下一个词"有多"意外"。越低说明它越笃定、预测越准，是语言能力最基础的体温计。<strong>扩散损失（diffusion loss）</strong>——衡量模型"画图"这一步画得准不准的误差，越低越好。</p></blockquote><p>扫出来四条定律：</p><h3>定律一 · 知识流动（谁给谁当养料，而且不对称）</h3><ul class="ls"><li><strong>语言 → 视觉：强正向。</strong> 把训练数据里语言的比例从 0% 一路加到 80%，视觉理解<strong>全线单调变好</strong>。⚠️ 这条最反直觉：<strong>多喂纯文字，反而让模型更会看图。</strong> 语言像是视觉理解的养料。</li><li><strong>视觉理解 → 视觉生成：强正向。</strong> 多喂"看懂图"的数据，"画图"明显变好，扩散损失显著下降。会看，才会画。</li><li><strong>视觉生成 → 语言/理解：基本中性。</strong> 加生成数据，对另外两样既不明显帮、也不明显拖（语言分数只有小幅波动）。</li><li>他们还用 CLEVR（一个可控的合成图像集）把迁移精确到<strong>概念级</strong>：颜色、形状这种<strong>低层属性</strong>在两个方向上都几乎零迁移；空间关系、大小、数量这种<strong>结构性概念</strong>则是<strong>不对称</strong>的——"理解"能把它迁给"生成"，反过来"生成"几乎迁不回"理解"。</li></ul><p><span class="lk">一句话内核</span>能力之间不是平等互换，而是<strong>有方向的养料流</strong>，且这条流是偏的。</p><h3>定律二 · 协同还是竞争，由"数据复杂度"决定</h3><p>同样是加视觉数据，是帮忙还是抢地盘，取决于图有多"难"：</p><ul class="ls"><li><strong>简单视觉</strong>（纯色背景、噪声图）是"跨模态助推器"——加进去，连<strong>语言困惑度都还降了</strong>（Δppl −0.211、−0.183，负号=变好）。</li><li><strong>复杂视觉</strong>（视频、SSTK 这类）会<strong>抢容量、逼出竞争</strong>——语言困惑度不降反涨（Δppl +0.052、+0.075，正号=变差）。</li></ul><p><span class="lk">结构配方（怎么让它们协同而不是打架）</span></p><ul class="ls"><li><strong>共享</strong>注意力 + <strong>共享</strong>最后一层归一化 → 给不同模态留一条"能互相对话"的通道。</li><li><strong>分开</strong>前馈网络（论文叫 <code>split_ffn</code>）→ 让每种模态有<strong>自己的加工车间</strong>，不互相抢容量。</li><li>效果对比很硬：<code>split_ffn</code> 同时拿到语言 +0.211、视觉 loss −0.0168 的<strong>协同</strong>；而全共享的 <code>dense</code>（连前馈也共用）两头亏——语言 −0.272、生成 +0.0537（都变差）。这个结论在 4 种不同的视觉编码器上都成立（RAE、原始像素、CLIP+VAE、UniTok/AR），不是某一种搭配的偶然。</li></ul><p><span class="lk">一句话内核</span>要多能力共处，秘诀是<strong>"共享对话通道、分开加工车间"</strong>。</p><h3>定律三 · 越早一起长越好 + "视觉偷懒"现象（vision laziness）</h3><p>固定总训练预算，只改<strong>视觉数据接入的早晚</strong>：先纯语言训 0 / 200 / 400 / 600 / 800B（十亿）个词，再接视觉。结果——<strong>接得越晚，最终越差</strong>，通用/OCR/纯视觉理解和所有生成指标一路下滑。再把六种"先后顺序"方案全试一遍，<strong>"一起从头联合训"碾压所有先后方案</strong>；连最像人类发育的"先看世界→再学理解→最后学说话"都不如联合训。数据回放（replay）能缓一点"学新忘旧"，但补不回损失掉的协同。</p><p>为什么？他们抓到了机理，取名 <strong>vision laziness（视觉偷懒）</strong>：视觉接得越晚，视觉通路就越"不肯投入自己"，实测四个信号同时变弱——</p><ul class="ls"><li>视觉专用前馈的激活强度越来越"安静"；</li><li>包裹图像的特殊 token 的向量越缩越小（越没融进语言的"意义空间"）；</li><li>推理时视觉前馈的激活骤降；</li><li>生成时"图像块去看其它图像块"的注意力占比明显下滑。</li></ul><p><span class="lk">说人话</span>你先让模型把语言练得特别强，再塞视觉进去，它会发现"靠语言先验猜一猜"比"老老实实去看图"更省劲，于是<strong>学会走语言捷径、偷懒不真看图</strong>。你给它留了条省力的路，它就不走难而对的那条了。</p><h3>定律四 · 配方（把前三条落成省算力的实操）</h3><p>把三条定律拼成配方：<strong>非对称数据配比</strong>（按定律一，语言多喂点去养视觉）+ <code>split_ffn</code> 结构（按定律二）+ 早期联合训（按定律三）。结果：<strong>只用 5% 的算力预算就拿到很强的生成性能</strong>。然后在<strong>多个 13.5B（135 亿参数）的 MoE 模型、2T（2 万亿）token</strong> 上做单变量对照，把这套配方在大规模上验证站得住（默认结构：16 层、隐藏维 2048、分组查询注意力 GQA 32 查询头/8 键值头、前馈放大 1.5 倍）。</p><blockquote><p>术语落地：<strong>MoE（Mixture-of-Experts，混合专家）</strong>——模型里放很多个"专家小网络"，每个 token 只激活其中一小撮，用小得多的计算量撑起大得多的参数量。<strong>token</strong>——模型处理文本/图像时切成的最小单位（一个词、词的一部分、或一个图像块）。</p></blockquote><h2 id="s8">6. 结局：世界变了什么（含最反直觉的副发现）</h2><p>多模态预训练第一次有了<strong>可复现的"物理"</strong>：能预测三种能力互相怎么影响、能省 95% 的试错算力（只花 5%）、还能解释为什么。三个最反直觉的副发现，值得单独记住：</p><ol class="ls"><li><strong>多喂纯文字，反而让模型更会看图。</strong> 语言是视觉理解的养料——最"省事"的那条路（后接视觉）恰恰不是最好的。</li><li><strong>"先练好语言再接视觉"这条业界最省事的主流路，会让模型偷懒不看图。</strong> 省事的代价是能力打折，而且是隐性的、不测激活根本发现不了。</li><li><strong>"越像人类发育越好"是错的。</strong> 人是先看世界后学说话，但模型<strong>一起从头联合训</strong>才最好——生物直觉在这里帮倒忙。</li></ol><h2 id="s9">7. 内核（走出门带走的那颗种子）</h2><blockquote><p><strong>把多种能力塞进一个模型，不是"拼装"，是"共同发育"。</strong> 谁给谁当养料是有方向、不对称的（语言喂视觉、理解喂生成）；越早一起长越好，晚接的能力会"偷懒"不投入；要让它们协同而不是互相抢，靠的是<strong>"共享对话通道、分开加工车间"</strong>。</p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源 · 3 层）</h1><ul class="ls"><li><span class="lk">第 1 层（直接前作）</span>这篇续自同一个团队 2026 年 3 月的《Beyond Language Modeling: An Exploration of Multimodal Pretraining》（arXiv 2603.03276）。前作是<strong>探索</strong>——试出"统一多模态预训练有戏"的一批现象；这篇是把它<strong>机理化/物理化</strong>——受控单变量实验、总结成可复现定律。名字从"Exploration（探索）"到"Physics（物理）"，就是这一步升级。</li><li><span class="lk">第 2 层（能力根基）</span>再往上是 <strong>Cambrian-1</strong>（Tong 等 2024，把"视觉理解"这件事在多模态大模型里做扎实的代表作，本篇一作 Peter Tong 也是它的作者）和 <strong>Web-SSL</strong>（Fan 等 2025，大规模视觉自监督预训练）。这条线解决的是"怎么让模型真看懂图"。本篇的视觉理解评测协议，直接沿用了 Cambrian-1 这一脉。</li><li><strong>第 3 层（时代背景 / 被它补课的对象）</strong>：更大的背景是整个前沿的<strong>"原生多模态"转向</strong>——从"给语言模型外挂一个视觉编码器、最后拼一下"（late fusion / 后接）走向"一个模型从头一起学所有模态"。GPT、Gemini 都在这条线上。这篇正是给这个转向补上<strong>"到底该怎么训"的科学地基</strong>，并用 vision laziness 把它要取代的那条老路（后接视觉）的<strong>隐性代价第一次量化出来</strong>。</li></ul><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><p>前沿正从<strong>"文本模型 + 外挂视觉眼睛"</strong>整体切换到<strong>"原生一起发育的多模态"</strong>。这篇最大的意义，是把这个切换从"工程玄学"变成"有定律的科学"，并且给出一个反直觉的世界观：<strong>模型里的各种能力之间是"发育"关系，不是"模块拼装"关系</strong>——有养料流向、有早晚窗口、会偷懒、会抢容量。理解模型往哪进化，就要理解"能力之间怎么互相塑造"，这篇是这方面第一张靠谱的地图。</p><h2 id="s13">怎么用（提示词 + 京小贝产品判断）</h2><ol class="ls"><li><strong>"偷懒定律"是最通用、最能直接用的一条。</strong> 它的本质是：<strong>只要给模型一条更省力的捷径，它就会放弃更难但更对的那条路。</strong> 这正是提示词工程里"给了参考答案/太强的先验，模型就懒得真推理"的多模态版。落到京小贝：如果你在上下文里塞进现成结论、或一段过强的检索摘要，模型很可能"懒得"再去核对底层数据、直接顺着先验走。<strong>对策</strong>——用结构强制它 engage 难信号，比如要求"先逐条复述关键数据/字段，再下判断"，把偷懒的捷径堵上。</li></ol><ol class="ls"><li><strong>"早合 vs 后接"迁移到"检索融合 / 上下文注入"。</strong> 论文说视觉越早、越深地融进训练越好，最后拼一下（late alignment）最差。对应到 RAG/多源信息编排：把外部信息<strong>早早地、深度地</strong>编进模型的推理过程（例如在系统层就给角色、给判断标准、给数据口径），通常比"最后临时拼一段 context"更稳。这是一条能直接指导上下文结构设计的直觉。</li></ol><ol class="ls"><li><strong>"共享对话通道、分开加工车间"是多能力共存的结构直觉。</strong> 迁到多智能体/多技能编排：让不同角色/技能<strong>共享同一份上下文和同一套判断标准</strong>（共享注意力/归一化的类比），但<strong>各自有专用的处理段/工具</strong>（分开前馈的类比），避免它们互相抢"注意力预算"、把彼此的输出搅浑。京小贝里"财富判断 / 事实查询 / 交易执行"这些不同职能，就适合共享事实底座、分开各自的处理逻辑。</li></ol><ol class="ls"><li><strong>"养料不对称"提醒：别想当然地假设"加一种能力/数据会对称受益"。</strong> 他们发现语言强喂视觉、生成却不反哺。做数据配比、能力叠加、或给模型加新技能时，<strong>要按方向分别验证</strong>收益，而不是默认"互相都有好处"。这对做产品能力叠加时的资源分配是个务实的清醒剂。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.05000">https://arxiv.org/abs/2608.05000</a></li><li>论文全文（arXiv HTML）：<a class="src" href="https://arxiv.org/html/2608.05000v1">https://arxiv.org/html/2608.05000v1</a></li><li>HuggingFace Daily Papers（8-7 当日榜，37 赞）：<a class="src" href="https://huggingface.co/papers/2608.05000">https://huggingface.co/papers/2608.05000</a></li><li>直接前作《Beyond Language Modeling: An Exploration of Multimodal Pretraining》：<a class="src" href="https://arxiv.org/abs/2603.03276">https://arxiv.org/abs/2603.03276</a> ｜ 项目页 <a class="src" href="https://beyond-llms.github.io/">https://beyond-llms.github.io/</a></li><li>团队/一作主页（Peter Tong，含 Cambrian-1 一脉）：<a class="src" href="https://tsb0601.github.io/">https://tsb0601.github.io/</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
