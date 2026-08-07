@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28297%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2254%22%20r%3D%2219%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2211%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2253%22%20r%3D%2226%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-08-07</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-08-07 · </span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>23</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">编制说明：本日报只收录 <strong>2026 年 8 月 7 日当天</strong> 新发生 / 首次披露的 AI 事件。经交叉核验后发现，本周多条"大新闻"（DeepMind 高层地震、Meta Muse Code、AI 从头设计病毒、Perplexity 胜诉、AMD 收购 Taalas、软银 100 亿贷款、DeepSeek 重启融资）其实都发生在 <strong>8 月 5—6 日</strong>——这些一律标注原始日期、只作背景，不冒充"今日"。8 月 7 日真正的高可信新增，集中在"美国审查中国离岸调用英伟达算力""Anthropic 主动放宽生物安全限制""OpenAI 给免费用户开无限对话""DeepSeek 调用量三倍反超但被迫涨价""Firmus 20 亿美元融资"这几件上。当日纯政策/监管的新增信息偏少，已在对应栏目如实说明，未硬凑。</p>
+
+  <div class="listen">
+    <div class="listen-k">听<span>PODCAST</span></div>
+    <div class="listen-b"><audio controls preload="metadata" src="2026-08-07.m4a"></audio>
+    <p class="cap">NotebookLM 生成的双人对谈版，按"为什么重要"展开 Top 5，适合通勤。</p></div>
+  </div>
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>美国政府开始"系统性"审查中国 AI 公司绕道海外云、离岸调用英伟达芯片</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Anthropic 主动"松绑"Claude Fable 5 的生物学安全限制，相关误拦下降约 85%</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>OpenAI 给免费用户开放"无限文本对话"，默认模型升级到 GPT-5.6 Luna，ChatGPT 周活破 10 亿</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>DeepSeek 调用量达 OpenAI 三倍，却同步预警"API 要大幅涨价"，并重启约 80 亿美元融资</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>AI 数据中心公司 Firmus 获约 20 亿美元融资，估值约 105 亿美元，英伟达/黑石领投</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>美国政府开始"系统性"审查中国 AI 公司绕道海外云、离岸调用英伟达芯片</h3><p class="lp">彭博 8 月 7 日报道，美国有关部门正系统排查中国 AI 企业通过<strong>境外数据中心 / 海外云租用</strong>方式获取英伟达高端算力的路径，导火索是近期中国模型（如 DeepSeek）接连展示的能力突破。<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-07/us-reviews-china-s-offshore-access-to-nvidia-chips-after-ai-breakthroughs">US Reviews China's Offshore Access to Nvidia Chips After AI Breakthroughs（Bloomberg, 8/7）</a>；德媒同日跟进<a class="src" href="https://www.handelsblatt.com/technik/ki/nvidia-chips-us-behoerde-prueft-wohl-systematisch-chinesische-ki-firmen/100245783.html">Nvidia-Chips: US-Behörde prüft systematisch chinesische KI-Firmen（Handelsblatt, 8/7）</a>。</p><div class="why"><span class="why-k">为什么重要</span><p>过去的芯片管制只堵"卖芯片给中国"这一道门——不许把 H 系列 GPU 运进中国。但企业发现一个绕法：不买芯片，改成<strong>去新加坡、马来西亚、中东的数据中心里"租"英伟达的机器算</strong>，人在中国、算力在境外，管制就管不到。这条新闻的意思是：美国准备把这道绕法也堵上，把战线从"卖硬件"下沉到"卖算力服务（云）"这一层。一旦落地，中国大模型公司靠海外云补算力的口子会收窄，也会波及所有向中国客户提供云算力的东南亚/中东数据中心生意。</p></div></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Anthropic 主动"松绑"Claude Fable 5 的生物学安全限制，相关误拦下降约 85%</h3><p class="lp">Anthropic 8 月 7 日官方发文，说重写并重训了 Fable 5 的生物学分类器，把"生物相关的兜底拦截"在各产品面上<strong>减少了约 85%</strong>，让模型能正常回答日常健康、生物教育类问题；同时对<strong>病毒学、毒理学、分子设计</strong>等真正双重用途（既能救人也能造武器）的请求继续拦。<a class="src" href="https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards">Improving Fable 5's Biology Safeguards（Anthropic, 8/7）</a>；媒体解读<a class="src" href="https://thenextweb.com/news/anthropic-claude-fable-5-biology-safeguards-fallbacks-dual-use">Anthropic loosens Claude Fable 5's biology safeguards（TNW, 8/7）</a>。</p><div class="why"><span class="why-k">为什么重要</span><p>一直以来前沿实验室的动作都是"越来越严"，这条罕见地是"主动放松"。原因很实在——Fable 5 太强，之前为了防生物武器把关口设得过死，结果连"我发烧了吃什么药""高中生物题"都被误拦，用户体验烂、正常需求被误伤（这叫"误报"）。所以 Anthropic 把关口往回挪：日常/教育类放行，真正危险的（造病毒那类）继续堵。它的深层含义是：安全不是简单地"卡得越死越好"，卡过头本身也是一种代价；实验室开始为"错杀好人"付费。而这件事发生在 8 月 6 日"AI 从头设计出 16 种能用的病毒"论文（见下）刷屏的同一周，两件事放一起，正好把"AI 生物能力到底该放多开"这个矛盾摆到了台面上。</p></div></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>OpenAI 给免费用户开放"无限文本对话"，默认模型升级到 GPT-5.6 Luna，ChatGPT 周活破 10 亿</h3><p class="lp">OpenAI 于 8 月 6 日晚—7 日announce：免费版（Free）和 Go 版用户的默认模型从 GPT-5.5 换成 <strong>GPT-5.6 Luna</strong>（本周推），下周起<strong>文本聊天不再限次数</strong>，并加一个"Think（深度思考）"按钮；Plus/Pro 用户用更强的 <strong>GPT-5.6 Sol</strong>。官方称事实性错误比 GPT-5.5-Instant 分别下降 62%(Luna)/68%(Sol)，ChatGPT 周活已超 10 亿。<a class="src" href="https://dataconomy.com/2026/08/07/openai-chatgpt-unlimited-text-chats-gpt-5-6-luna/">OpenAI Removes ChatGPT Text Chat Limits After Reaching 1 Billion Users（Dataconomy, 8/7）</a>；<a class="src" href="https://theaiinsider.tech/2026/08/07/openai-expands-chatgpt-access-with-new-models-details-emerge-on-upcoming-hardware-device/">OpenAI Expands ChatGPT Access…（The AI Insider, 8/7）</a>。（注：Luna 设为默认的动作在 8/6 已启动，"免费无限次"这条是 8/7 才明确并广泛报道的增量。）</p><div class="why"><span class="why-k">为什么重要</span><p>这是一次典型的"防守性降价"，只不过降到了 0。背景是——开发者在大量流向 DeepSeek（见要闻 4），OpenAI 7 月 30 日先把 Luna 的 API 价格砍了 80% 都没拦住，于是干脆把 C 端最核心的"聊天次数"这道收费墙拆掉，用免费无限来守住 10 亿用户的基本盘。意味着头部厂商的护城河正从"我模型更强"转向"我分发更广、我更便宜甚至免费"——能力差距在缩小，价格和用户规模成了新战场。</p></div></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>DeepSeek 调用量达 OpenAI 三倍，却同步预警"API 要大幅涨价"，并重启约 80 亿美元融资</h3><p class="lp">据 OpenRouter 数据，<strong>8 月 3—7 日 DeepSeek V4 Flash 调用量共 11.31 万亿 tokens，GPT-5.6 Luna 为 3.54 万亿，前者约为后者三倍</strong>；正是这种"打折也拦不住用户外流"逼得 OpenAI 走向免费。<a class="src" href="https://finance.sina.com.cn/wm/2026-08-07/doc-inimnent3229656.shtml">DeepSeek 调用量达 OpenAI 三倍，打折无效后 OpenAI 选择免费（新浪财经, 8/7）</a>。与此同时，DeepSeek（8/6 公告）预警"近期将整体上调 API 定价、涨幅较大"，理由是高端 GPU 推理成本高、V4 Flash 日均处理约 8 万亿 token 供不应求、长期低价吞噬现金流。<a class="src" href="https://www.36kr.com/p/3927722067376257">DeepSeek 要大幅涨价（36氪, 8/6）</a>。另据彭博 8/6，DeepSeek 重启约 <strong>80 亿美元</strong>融资、估值逼近 <strong>740 亿美元</strong>，8/7 有跟进并称其入股宇树(Unitree)。<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-06/deepseek-resumes-8-billion-round-with-monolith-in-the-running">DeepSeek's $8 Billion Round Resumes（Bloomberg, 8/6）</a>；<a class="src" href="https://www.chinatechnews.com/2026/08/07/126834-deepseeks-74-billion-mega-raise-resumes-amid-price-hike-warning">$74B Mega-Raise Resumes Amid Price Hike Warning（ChinaTechNews, 8/7）</a>。</p><div class="why"><span class="why-k">为什么重要</span><p>这组数据把"便宜的开放模型正在赢得开发者"讲透了——DeepSeek 用极低价把调用量做到 OpenAI 三倍。但硬币的另一面是：便宜到不赚钱、扛不住算力账单，所以它一边融资一边不得不涨价。这说明当前这轮竞争的胜负手，已经从"谁模型强"变成"谁能在把价格压到地板的同时还活下去"。</p></div></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>AI 数据中心公司 Firmus 获约 20 亿美元融资，估值约 105 亿美元，英伟达/黑石领投</h3><p class="lp">8 月 7 日，主攻亚太"AI 工厂"（数据中心）的 Firmus（前身是比特币矿企）宣布新一轮约 <strong>20 亿美元</strong>融资，Coatue、英伟达、黑石(Blackstone)参与，估值升至约 <strong>105 亿美元</strong>（澳媒口径含批复额度可达 29 亿美元、后续拟 IPO）。<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-07/ai-data-center-group-firmus-draws-2-billion-from-coatue-nvidia">AI Data Center Group Firmus Draws $2 Billion From Coatue, Nvidia（Bloomberg, 8/7）</a>；<a class="src" href="https://www.afr.com/technology/firmus-to-turbocharge-ai-factories-roll-out-after-giant-funding-deal-20260807-p60mc5">Firmus to turbocharge AI factories roll-out（AFR, 8/7）</a>。</p><div class="why"><span class="why-k">为什么重要</span><p>钱还在疯狂涌向"盖算力的地方"而不是"训模型的人"。更值得注意的是英伟达又一次投资了自己的客户/需求方——它出钱帮别人建数据中心，这些数据中心再回头买它的 GPU，等于用投资给自己的芯片需求"保底"。这种"卖铲子的人给挖金子的人塞钱"的循环，是这轮 AI 基建热的典型结构，也是外界担心"AI 资本开支是否过热"的原因之一。</p></div></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 23 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">免费无限对话 + GPT-5.6 Luna 默认化（8/6—7）</strong>详见要闻 3。免费/Go 用户下周起文本聊天不限次，新增"Think"按钮切换更强推理。<a class="src" href="https://dataconomy.com/2026/08/07/openai-chatgpt-unlimited-text-chats-gpt-5-6-luna/">Dataconomy, 8/7</a></p></div><div class="srow"><p><strong class="st">硬件细节曝光（8/7）</strong>同批报道透露 OpenAI 与 Jony Ive 的 LoveFrom 合作的首款设备是一款<strong>甜甜圈形状的桌面 AI 音箱</strong>，金属外壳、有活动部件，定价约 300—400 美元，可能 2027 年发布。<a class="src" href="https://theaiinsider.tech/2026/08/07/openai-expands-chatgpt-access-with-new-models-details-emerge-on-upcoming-hardware-device/">The AI Insider, 8/7</a></p></div><div class="srow"><p><strong class="st">背景（非今日）</strong>GPT-5.6 Sol 预览、"下一代模型 Astra 用约 2000 美元 token 解开 10 道十年未解数学题（含非索非群存在性）"、GPT-5 满一周岁 + Agent 插件标准，均为 <strong>8/1—8/6</strong> 的事。<a class="src" href="https://openai.com/index/previewing-gpt-5-6-sol/">Previewing GPT-5.6 Sol（OpenAI）</a>、<a class="src" href="https://the-decoder.com/openai-announces-its-next-major-model-astra-by-dropping-ten-previously-unsolved-math-solutions/">OpenAI announces Astra…（the-decoder, 8/6）</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong>本领域 8/7 的新增主要是"余震"而非新事件</strong>。核心地震发生在 <strong>8 月 5 日</strong>：Demis Hassabis 卸任 DeepMind CEO、转任 DeepMind 董事长兼 Alphabet 首席科学家，Koray Kavukcuoglu 升任 SVP 直接向 Pichai 汇报；Jeff Dean（27 年老将）、Oriol Vinyals、Sanjay Ghemawat、Quoc Le 集体出走，联合创办谷歌参投的 AI 科学创业公司 <strong>Discovery Loop</strong>，当日 Alphabet 股价一度跌约 4—5%。<a class="src" href="https://thenextweb.com/news/google-deepmind-shakeup-hassabis-jeff-dean-vinyals-discovery-loop">Google DeepMind shakeup（TNW, 8/5）</a>、<a class="src" href="https://techjournal.org/demis-hassabis-steps-down-deepmind-ceo">techjournal（8/5 事件）</a></p></div><div class="srow"><p><strong class="st">8/7 当天的增量</strong>主要是余波与分析——《洛杉矶时报》报道 Jeff Dean 离开"重挫内部士气"<a class="src" href="https://www.latimes.com/business/story/2026-08-07/loss-of-most-google-engineer-jeff-dean-jolts-morale-inside-companys-ai-ranks">LA Times, 8/7</a>；SemiAnalysis 长文《Gemini is cooked but GCP is cooking》<a class="src" href="https://newsletter.semianalysis.com/p/gemini-is-cooked-but-gcp-is-cooking">SemiAnalysis, 8/7</a>；以及对 Gemini 4 或将发布的预期。<a class="src" href="https://www.geeky-gadgets.com/google-deepmind-gemini-4-expected/">Geeky Gadgets, 8/7</a>（注：Gemini Robotics 2 是 <strong>7/31</strong> 发布，非今日，故不计入。）</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">放宽 Fable 5 生物安全限制（8/7）</strong>详见要闻 2。<a class="src" href="https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards">Anthropic 官方, 8/7</a></p></div><div class="srow"><p><strong class="st">组建内部芯片团队（8/6—7 报道）</strong>Anthropic 正在组建内部半导体团队为 Claude 设计定制芯片，同时继续用 AWS、谷歌、英伟达、AMD 的处理器（已通过 Project Rainier 部署近百万颗 AWS Trainium2），首款芯片时间未公布。<a class="src" href="https://techwireasia.com/2026/08/anthropic-custom-ai-chips-claude/">techwireasia, 8/7</a></p></div><div class="srow"><p><strong class="st">任命法律负责人（8/7）</strong>Anthropic 任命法律科技创业者 Robert Mahari 出任"Claude for Legal"负责人。<a class="src" href="https://www.law.com/legaltechnews/2026/08/07/anthropic-appoints-legal-tech-founder-robert-mahari-as-head-of-claude-for-legal-/">Law.com, 8/7</a></p></div><div class="srow"><p><strong class="st">安全提示（8/7）</strong>有安全媒体披露 Claude Code 存在一处 RCE（远程代码执行）风险——恶意 Pull Request 可在未经批准的情况下执行命令，使用者需留意。<a class="src" href="https://cyberpress.org/claude-code-rce-flaw-pull-requests-execute-commands/">cyberpress, 8/7</a></p></div></div><div class="sector"><div class="sector-h">中国 AI（字节/豆包/DeepSeek/智谱/MiniMax/通义）</div><div class="srow"><p><strong class="st">DeepSeek 三倍调用量 + 涨价预警 + 重启融资（8/6—7）</strong>详见要闻 4，是当日中国 AI 最硬的一组信息。</p></div><div class="srow"><p><strong class="st">字节 CEO 定调（8/6 年中全员会，8/7 传播）</strong>梁汝波表示"要接受大语言模型一段时间的落后、坚持长期自研"，同时判断"AI 在生产力上的发展快于预期，To B 变得更重要"，并称飞书新增客户中已有九成以上同步采购飞书 AI；此前 7/30 字节已整合豆包、飞书、火山引擎，成立面向 B 端的"创造力服务平台"。<a class="src" href="https://www.163.com/dy/article/L3LQ82UB05129QAF.html">字节 CEO：接受大语言模型短期落后，AI 业务重点转向 B 端（网易, 8/6—7）</a></p></div><div class="srow"><p><strong class="st">国内简报口径</strong>IT 之家 8/7 早报同样把"DeepSeek 官宣拟大幅上调 API 定价"列为当日科技要闻。<a class="src" href="https://www.ithome.com/0/986/785.htm">IT之家 0807 早报</a></p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">美国审查中国离岸调用英伟达算力（8/7）</strong>详见要闻 1，既是芯片也是政策事件。<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-07/us-reviews-china-s-offshore-access-to-nvidia-chips-after-ai-breakthroughs">Bloomberg, 8/7</a></p></div><div class="srow"><p><strong class="st">周五(8/7)芯片股回暖，英伟达涨约 4%</strong>市场消化了 AMD 收购推理芯片初创 <strong>Taalas</strong>（把模型权重直接"刻"进硅片以省内存、提能效，交易于 <strong>8/6</strong> 官宣）后，芯片股整体走强。<a class="src" href="https://www.benzinga.com/markets/tech/26/08/61042097/chip-stocks-find-buyers-after-earnings-shock-shakes-out-ai-trade">Chip Stocks Find Buyers…（Benzinga, 8/7）</a>、<a class="src" href="https://www.cnbc.com/2026/08/06/amd-buys-taalas-startup-that-hardwires-ai-models-into-its-silicon.html">AMD 收购 Taalas（CNBC, 8/6）</a></p></div><div class="srow"><p><strong class="st">英伟达 Cosmos 3 开放世界模型（8/6—7）</strong>英伟达发布面向"物理 AI/机器人"的开源世界模型 Cosmos 3（Super 64B / Nano 16B / Edge 4B），在部分文生图/文生视频基准登顶。<a class="src" href="https://blogs.nvidia.com/blog/open-world-models-physical-ai/">NVIDIA Blog</a>、<a class="src" href="https://www.hpcwire.com/bigdatawire/this-just-in/nvidia-showcases-cosmos-3-and-omniverse-for-open-physical-ai-development/">BigDATAwire</a></p></div><div class="srow"><p><strong class="st">算力金融化（8/6 背景）</strong>软银以其 OpenAI 股权为抵押获得 100 亿美元保证金贷款。<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-06/softbank-secures-10-billion-margin-loan-backed-by-openai-stake">Bloomberg, 8/6</a></p></div><div class="srow"><p><strong class="st">上游成本（8/7 周报）</strong>美国对关键芯片材料多晶硅加征 15% 关税。<a class="src" href="https://chipbriefing.substack.com/p/daily-us-imposes-15-tariff-on-polysilicon">chipbriefing, 8/7 前后</a></p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong>当日纯监管新增有限，最实的一条即要闻 1</strong>（美国审查中国离岸算力接入，8/7）。这实质是把出口管制从"卖芯片"延伸到"卖云算力"。</p></div><div class="srow"><p><strong class="st">背景（非今日，需标注原始日期）</strong>欧盟《AI 法案》第 50 条<strong>透明度/AI 标识义务已于 8 月 2 日生效</strong>（聊天机器人须披露身份、合成内容须可机读标记，违者最高罚 1500 万欧元或全球营收 3%），而高风险系统义务被推迟到 <strong>2027 年 12 月 2 日</strong>。<a class="src" href="https://www.aljazeera.com/news/2026/8/6/what-came-into-force-with-the-eus-ai-act-this-week-and-what-didnt">Al Jazeera, 8/6</a>。另，美国第九巡回法院 <strong>8 月 6 日</strong>就 Perplexity 诉亚马逊案作出裁决，收窄了 CFAA（反黑客法）对"AI 代理访问第三方网站"的适用——认定发起访问的是用户而非 Perplexity。<a class="src" href="https://www.cooley.com/news/insight/2026/2026-08-06-ninth-circuit-rules-on-ai-agent-access-to-third-party-websites-under-cfaa">Cooley, 8/6</a></p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p><strong class="st">Firmus ≈20 亿美元 / 估值≈105 亿美元（8/7）</strong>AI 数据中心，英伟达、黑石、Coatue 参投，详见要闻 5。<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-07/ai-data-center-group-firmus-draws-2-billion-from-coatue-nvidia">Bloomberg, 8/7</a></p></div><div class="srow"><p><strong class="st">Whatnot 5.45 亿美元（8/7）</strong>直播电商平台融资以加速 AI 扩张。<a class="src" href="https://www.pymnts.com/news/investment-tracker/2026/live-commerce-platform-whatnot-raises-545-million-to-speed-ai-expansion/">PYMNTS, 8/7</a></p></div><div class="srow"><p><strong class="st">Inner Logic 1150 万美元种子轮（8/7）</strong>为"程序性设备"自主化提供底层基础设施。<a class="src" href="https://theaiinsider.tech/2026/08/07/inner-logic-raises-11-5m-seed-round-to-build-autonomy-enabling-infrastructure-for-procedural-devices/">The AI Insider, 8/7</a></p></div><div class="srow"><p><strong class="st">背景（8/6）</strong>国防 AI 制造商 Hadrian 融资 14 亿美元、估值约 79 亿美元<a class="src" href="https://www.cnbc.com/2026/08/06/hadrian-defense-tech-ai-manufacturing.html">CNBC, 8/6</a>；DeepSeek 约 80 亿美元轮次重启、估值近 740 亿美元<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-06/deepseek-resumes-8-billion-round-with-monolith-in-the-running">Bloomberg, 8/6</a>。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
