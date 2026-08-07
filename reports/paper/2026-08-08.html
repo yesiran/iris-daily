@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2843%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2251%22%20r%3D%2216%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2214%22%20cy%3D%2213%22%20r%3D%2223%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>任务自己生任务、越生越难、判分永远对得上——AI agent 训练数据第一次转出"看不见天花板"的飞轮</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-08</span></div>
+  <h1 class="doc">任务自己生任务、越生越难、判分永远对得上——AI agent 训练数据第一次转出"看不见天花板"的飞轮</h1>
+  <div class="dateline"><span>全文 <b>4,826</b> 字</span><span>约 <b>13</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Recursive Synthesis for Long-Horizon Terminal Tasks</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.05466</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zhongzhi Li, Yucheng Shi, Zongxia Li, Ruhan Wang, Anhao Li, Zixun Huang, Junyao Yang, Lei Ke, Ninghao Liu, Haitao Mi, Leowei Liang</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">腾讯混元（Tencent Hunyuan）等</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-05</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-08.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-08.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 当窗口#1 · 206 赞（约第二名 3.5 倍，地标级票数）· 腾讯混元团队 · 建在自家 TerminalWorld 种子集 + Long-Horizon-Terminal-Bench 之上</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, agent, data-synthesis, long-horizon, rl, self-improvement, verification</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-08.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-08-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角：一台"专门给 AI 出考卷"的机器</a><a class="t-h2" href="#s4">2｜困境：想让这种 agent 变强，卡在"没题可练"</a><a class="t-h2" href="#s5">3｜旧路：要么靠真人记录、要么各造各的，都不能自我加难</a><a class="t-h2" href="#s6">4｜转折：先长答案，再让其余三样追着答案对齐——而且把做过的难题回收当新种子</a><a class="t-h2" href="#s7">5｜解法：一条"长解→对齐→真沙盒验一遍→回收当种子"的流水线，每一步都卡着"两条硬合法性"</a><a class="t-h2" href="#s8">6｜结局：难度暴涨、模型被练强，而"没有天花板"是最反直觉的那个发现</a><a class="t-h2" href="#s9">7｜内核：喂养 agent 的不是模型,是任务;而任务可以自己生任务、越生越难、判分永远对得上——且没有天花板</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步,前沿往哪挪了</a><a class="t-h2" href="#s13">能怎么用(落到你的提示词和京小贝)</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选这篇——<strong>RST（Recursive Synthetic Terminal Tasks，递归合成终端任务）</strong>，理由有三条，每条都不含糊：</p><ol class="ls"><li><strong>它推进的是"喂养 agent 的东西"，不是模型本身，而这恰恰是当下真正的瓶颈。</strong> 过去两年我们默认"模型越大越强"；到了 agent 时代，模型架构反倒不是卡点了，卡点是——<strong>你上哪儿去找几百万个又难、又是真环境、又能自动判对错、而且题目/环境/标准答案/判分脚本四样东西彼此不打架的长任务</strong>来训练它？人工写一道这样的题要花几百到几千美元。RST 把这道题的成本砍到<strong>每道约 0.05 美元</strong>（便宜了几千到几万倍），而且做出来的题一轮比一轮难、<strong>十五轮下来还看不到天花板</strong>。这是"能力从哪来"这条链子上最上游、也最被忽视的一环被撬动了。</li></ol><ol class="ls"><li><strong>质量信号是地标级的。</strong> 它在 HuggingFace Daily Papers（社区每天投票筛重要论文的榜，是我这个 skill 的首选入口）当窗口<strong>排第一，206 个赞，约是第二名的 3.5 倍</strong>——这个票数在我三个月的台账里只有 6 月 19 日商汤 Kairos 世界模型（730 赞）那种级别之上。出自<strong>腾讯混元团队</strong>（前沿实验室），且不是孤立一篇：它建在腾讯自家的 TerminalWorld 种子任务集、Long-Horizon-Terminal-Bench 评测之上，是一条正在推进的完整研究线里的关键一环。</li></ol><ol class="ls"><li><strong>对你（思染）追前沿、也对京小贝，价值直接。</strong> 这篇讲清了一件事：<strong>下一代强 agent 的护城河，正在从"谁的模型大"转向"谁有一台能自动造出无穷难题、还能自动判分的数据机器"</strong>。这个认知能直接改你对"京小贝这类金融 agent 怎么才能持续变强"的判断——答案越来越不是"换个更大的底座",而是"你有没有一台自我加难的任务工厂 + 一个永远对得上的判分器"。</li></ol><p>诚实交代：这是训练数据合成方向的论文，不是新架构、也不是刷榜。但它<strong>带来了实打实的能力跃迁</strong>（监督微调 +最多 10 个百分点、强化学习相对提升 20%–41%），且揭示了一个机理性的新东西——<strong>递归自举的难度扩张没有观测到上限</strong>。这正是选片原则里"训练方法里带来能力跃迁的""效率突破（让强能力变便宜）"两条正面清单同时命中。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角：一台"专门给 AI 出考卷"的机器</h2><p>主角不是某个模型，是一台<strong>出题机</strong>。它要伺候的对象叫"终端 agent（terminal agent）"——<strong>能自己敲命令行、在真实电脑环境里干多步活的 AI</strong>。"终端（terminal）"就是程序员打字敲命令那个黑框框：<code>cd</code> 进目录、<code>git</code> 提交代码、装依赖、跑脚本、改配置、debug……一件真事往往要连着敲几十上百条命令、跨好几个文件才能做完。这种"一口气干很多步才有结果"的活，叫<strong>长程任务（long-horizon task）</strong>——"horizon（地平线）"就是"你得看多远才能到终点",步子越多、地平线越远。</p><h2 id="s4">2｜困境：想让这种 agent 变强，卡在"没题可练"</h2><p>要让 agent 学会干这种活，得拿海量这样的题去训它。但一道<strong>合格</strong>的训练题，必须同时凑齐四样东西，而且四样必须<strong>彼此对得上</strong>：</p><ul class="ls"><li><span class="lk">题目（instruction）</span>用大白话说清"要你干成啥"（比如"把这个项目的日志改成按天切分并压缩归档"）。</li><li><span class="lk">环境（environment）</span>一个装好了对应文件、依赖、初始状态的真实沙盒（这里用 Docker——<strong>一个把整套软件环境打包冻起来、到哪台机器上都一模一样跑起来的盒子</strong>）。</li><li><strong>标准答案（reference solution）</strong>：一段真能把这活干成的脚本（<code>solve.sh</code>），是"这题有解"的活证据。</li><li><span class="lk">判分器（verifier）</span>一段自动检查"到底干成没有"的脚本（<code>test.sh</code> / <code>test_state.py</code>），而且得<strong>只认真干成、不认蒙混</strong>。</li></ul><p>难就难在"四样对得上"。人工写一道，要来回校对题面、搭环境、写答案、调判分，一道就烧掉<strong>几百到几千美元</strong>——根本没法量产。那直接让大模型一口气生成呢？<strong>它十有八九把四样之间的对应关系写崩</strong>：题面说要 A、判分器却在查 B，或者判分器查的东西题面根本没提、agent 无从知道该干这个。于是要么题目自相矛盾、要么无解、要么"判分器在偷偷考没告诉你的东西"。<strong>"造不出足够多又对得上的难题"——这就是把 agent 能力往上顶时,真正撞的那堵墙。</strong></p><h2 id="s5">3｜旧路：要么靠真人记录、要么各造各的，都不能自我加难</h2><p>之前这条线上大家怎么解的：</p><ul class="ls"><li><span class="lk">TerminalWorld</span>从真人操作记录里扒出经过验证的任务（RST 的 639 个"种子题"就来自它）——真实可靠，但<strong>数量被真人产能锁死</strong>。</li><li><strong>CLI-Universe、SWE-Gym、TermiGen、Endless Terminals</strong>：搭得出可执行的环境，但<strong>没有"把做过的题回收再变难"这个循环</strong>，也没把四样东西全程对齐。</li><li><span class="lk">SETA</span>会调难度和多样性，但<strong>只调一层，不会一轮一轮递归地把上一轮的产出当下一轮的种子</strong>。</li><li><span class="lk">BenchEvolver、TRACE</span>会"进化"任务，但<strong>没做工作区 / 判分器 / 题面的全套协同对齐</strong>。</li></ul><p>一句话概括旧路的共同短板：<strong>要么产能受限、要么造完就完，没有一个能"自己踩着自己的肩膀、一轮比一轮难还始终对得上"的闭环。</strong></p><h2 id="s6">4｜转折：先长答案，再让其余三样追着答案对齐——而且把做过的难题回收当新种子</h2><p>作者的关键转念有两处，都很朴素但很关键：</p><p><strong>转念一：出题顺序反过来——"先把答案做长，再让题面、环境、判分器追着答案改"（Grow Solution, then Align，先长解、再对齐）。</strong> 直觉上我们出题是"先想题面再配答案";但四样对不上的根源恰恰是"题面先写死、答案凑不上"。RST 反着来：<strong>先在已有答案脚本上真的多加几步操作</strong>（比如在"切分日志"之上再加"加密归档 + 校验完整性"），这一步是<strong>在真沙盒里跑通的</strong>，所以"有解"是铁的；然后再回头把环境补上新依赖、把判分器改成检查这些新产出、把题面改写成新目标。<strong>因为一切以"真跑通的答案"为锚,四样天然对得上。</strong></p><p><strong>转念二：把每一道验证通过的题,同时塞回"下一轮的种子池"。</strong> 这是"递归（recursive）"的含义——<strong>函数自己调用自己、结果又喂回自己</strong>。第 1 轮从 639 个种子造出题;这些题验证通过后,<strong>既进训练池、又当第 2 轮的新种子</strong>;第 2 轮在它们身上再加几步、更难,通过的又当第 3 轮种子……<strong>难度像滚雪球一样自我加码</strong>，人只在最开始给了 639 个火种。</p><h2 id="s7">5｜解法：一条"长解→对齐→真沙盒验一遍→回收当种子"的流水线，每一步都卡着"两条硬合法性"</h2><p>每一轮的具体机制（术语都当场落地）：</p><ol class="ls"><li><span class="lk">选种子 + 扫可行动作</span>从上一轮挑题（带"多样性配额"——限制同一个父任务、同一类别、同一改写手法不能扎堆,防止越滚越单调）;然后扫这道题的文件和结构,看 <strong>40 种"改写算子（operator）"</strong>（"算子"就是一种预定义的加难手法,比如"增加一步并发处理""加一层错误重试""引入一个需要跨文件校验的约束")里哪些能用得上。</li><li><strong>定目标 + 立契约（contract）</strong>：选一个算子,写下"要新增什么行为、答案怎么改、判分器该多查什么、这些新要求 agent 能从哪儿看出来"。<strong>只做表面改动、或偷偷塞暗要求的方案,直接毙掉。</strong></li><li><span class="lk">长解 + 对齐四样</span>先扩答案 <code>solve.sh</code>,再改环境 Dockerfile、更新判分器、改写题面、调资源超时。</li><li><span class="lk">真沙盒验一遍</span>起一个全新沙盒,<strong>真的把环境建起来、把标准答案跑一遍、把判分器执行一遍</strong>。跑不过的给最多 2 次"有限修复"机会,还不行就扔掉。<strong>过关的门槛是两条硬合法性</strong>——<ul class="sub"><li><strong>有解合法性（oracle validity）</strong>：标准答案必须能通过判分器（证明这题真有解、判分器没冤枉人）。"oracle"（神谕）在这里指"已知正确的答案"。</li><li><strong>契约合法性（contract validity）</strong>：<strong>判分器查的每一项,都必须在题面里写了、或能从工作区里看出来</strong>——不许有"没告诉你却要考你"的暗题。</li></ul></li><li><span class="lk">回收再播种</span>过关的题,<strong>同时进"下一轮种子池"和"强化学习训练池"</strong>;拿模型在这些题上自己跑出来的成功轨迹（self-rollout,模型自己一步步操作的记录）当监督微调的教材。</li></ol><p>这套流水线的漂亮之处:<strong>"有解"由真沙盒兜底、"对得上"由两条合法性兜底、"越来越难"由递归回收兜底</strong>——三件难事各有各的机制卡死,合起来就是一台能自动量产合格难题的机器。规模数字:<strong>639 个种子 → 15 轮 → 37,484 道题,每道约 0.05 美元,顺带收集了 327,189 条训练轨迹。</strong></p><h2 id="s8">6｜结局：难度暴涨、模型被练强，而"没有天花板"是最反直觉的那个发现</h2><p><strong>做出来的题真的越来越难</strong>（不是嘴上说难）：从第 1 轮到第 15 轮——</p><ul class="ls"><li>标准答案中位长度:<strong>67 行 → 374 行（5.6 倍）</strong></li><li>要敲的命令中位数:<strong>40 条 → 244 条（6.1 倍）</strong></li><li>用到的不同命令行工具:<strong>17 种 → 71 种</strong>;判分器的检查点:<strong>17 条 → 57 条</strong></li><li><strong>但题面只长了 1.4 倍(85 → 122 词)</strong>——说明变难的是"要真干的活",不是"把话说啰嗦",这点很关键。</li></ul><p><strong>难到什么程度?</strong> 拿当时很强的模型 DeepSeek-V4-Pro 去做,通过率(pass@4,给 4 次机会看能否做对一次)从第 1 轮的 <strong>90% 掉到第 15 轮的 2.5%</strong>——<strong>难度翻了 36 倍</strong>。第 1 轮几乎全会,第 15 轮几乎全不会。</p><p><strong>练出来的模型真的变强</strong>:拿这些题去训 Qwen3.5——</p><ul class="ls"><li><strong>监督微调(先照着标准答案学)</strong>:Qwen3.5-27B 和 122B 版在三个评测上<strong>最多涨 10 个百分点</strong>。</li><li><strong>强化学习(自己试错、判分器给奖惩)</strong>:Qwen3.5-27B 相对基线<strong>提升 20%–41%</strong>,做到 49.44%(Terminal-Bench 2)/ 32.00%(Terminal-Bench Hard)/ 22.07%(Long-Horizon Terminal Bench)。</li></ul><p>三个评测名字要落地:<strong>Terminal-Bench 2</strong> 是终端 agent 的通用考卷;<strong>Terminal-Bench Hard</strong> 和 <strong>Long-Horizon Terminal Bench</strong> 是<strong>独立于训练集另造的考卷</strong>——在"没见过的题"上也涨,说明学到的是真本事、不是背题。</p><p><strong>最反直觉的三个副发现(往往最有意思):</strong></p><ul class="ls"><li><strong>递归了 15 轮还没撞到天花板。</strong> 按常识,"自己喂自己"迟早会退化——题越造越水、越造越像。可 RST 里:每千次尝试的出题成功率稳定在 498–572、候选通过率稳定在 74.5%–81.5%、题目领域的丰富度几乎不掉(熵 0.821 → 0.817)、第 15 轮任意一个种子贡献的题都不超过 0.77%、40 种算子里 36 种还在用。<strong>"父题→子题"的每一步还在实打实加难(78% 的题还在加代码行、77% 还在加命令)。作者据此说:这个过程能一直滚下去,远超论文报告的规模。</strong> 这是全篇最重的一句——<strong>它把"agent 训练数据"从一个会枯竭的矿,变成了一口看不见底的井。</strong></li><li><strong>多样性没被递归磨平。</strong> 第 15 轮里,一道典型题和它最像的邻居,<strong>共享的词还不到一半(相似度 0.464 &lt; 0.5)</strong>——哪怕很多题共用同一个父题,长出来的样子还是各不相同。</li><li><strong>越往后,题反而出得越"干净"。</strong> 后面几轮的题,"偷偷考暗要求"的比例从 38.2% 升到 63.5%被拦下、"题面太短说不清"的风险从 41.6% 降到 7.5%、判分点和题面对得上的覆盖率从 0.42 升到 0.57。<strong>流水线在把题造难的同时,自己学会了把题造得更规整。</strong></li></ul><h2 id="s9">7｜内核：喂养 agent 的不是模型,是任务;而任务可以自己生任务、越生越难、判分永远对得上——且没有天花板</h2><p>一句话带走:<strong>当"造出又难又可验证又自洽的题"这件事被自动化、还能自我加难到没有上限,那么 agent 能被训到多强,就不再由"我们能人工出多少题"封顶,而是由"这台出题机能滚多少轮"决定。</strong> 瓶颈从"模型多大"、甚至从"数据多少",挪到了"你有没有一台自我加难、判分永远对得上的任务工厂"。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 1 层——它直接改进谁:一堆"终端任务合成"的前作。</strong> 这条线最近很热:TerminalWorld(从真人记录扒任务,RST 的种子来自它)、CLI-Universe(可验证的终端任务合成引擎,arXiv 2606.22883)、Meta-Task(把"出题"本身变成一道终端任务来训,2607.27929)、Skill Graphs(用技能图谱扩展任务,2604.25727)、SETA/SWE-Gym/TermiGen/BenchEvolver/TRACE。<strong>它们的共同缺口:要么产能受限、要么造完就完、要么四样东西不全程对齐。RST 补上的是"递归回收 + 四样全程对齐 + 真沙盒兜底"这个闭环。</strong></p><p><strong>第 2 层——这条问题线为什么在此刻爆发:agent 进入"用强化学习练"的时代,而强化学习最缺的就是"可验证的题"。</strong> 要让 agent 靠试错自我提升,你得有能自动判对错的环境和奖励——这正是 Long-Horizon-Terminal-Bench(2607.08964,给长程终端任务做密集奖励打分的评测)这类工作在立的标杆。标杆立起来了,"拿什么海量数据去够到这个标杆"就成了新瓶颈。RST 是对这个瓶颈的正面回答。</p><p><strong>第 3 层——最深的根:AI 进步的引擎,正在从"堆模型参数/算力"换成"堆可验证的经验"。</strong> 这半年我台账里反复出现同一条暗线:"更多"没用、"结构化的更多"才有用(6-28 JetSpec);验证本身是一条与预训练/后训练并列的 scaling 轴(6-27 验证地平线、7-11b LLM-as-a-Verifier);以及"递归自我改进"(7-27 AREX、8-3 Frontis-MA1、腾讯自家 7-21 的 Hyra RSI 研究 agent)。<strong>RST 和它们是同一个母题的不同面孔——但它把"递归自我改进"从'模型改进自己'挪到了更上游的'数据自己生成自己',而且第一次给出了"没有观测到天花板"的证据。</strong> 训练管线这半年被逐块重新审视(数据、数值、优化器、训推接缝),RST 审视的是最源头那块:<strong>题从哪来。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步,前沿往哪挪了</h2><p><strong>能力的护城河正在从"模型层"下沉到"数据引擎层"。</strong> 过去你判断一个 AI 产品/团队强不强,会看它底座模型多大、多新。RST 这类工作在提示一个新判据:<strong>谁手里有一台"能自动造出无穷难题、还能自动判分"的机器,谁才能让 agent 持续变强——因为强化学习时代,模型是可以买/开源的,但"又难又可验证又自洽的任务流"是买不到的、得自己造。</strong> "recursive(递归)+ verified(可验证)+ no ceiling(没天花板)"这三个词凑在一起第一次成立,意味着:<strong>agent 的能力上限,越来越由"训练环境/任务的自我进化速度"决定,而不是模型规模。</strong></p><h2 id="s13">能怎么用(落到你的提示词和京小贝)</h2><ol class="ls"><li><strong>给京小贝定"变强"的路线时,别只盯底座——盯"任务工厂"。</strong> 京小贝要在金融场景越做越强(看懂持仓、判断行情、生成配置动作),真正的复利不在"换个更大的模型",而在<strong>你有没有一套能自动生成"又真实、又难、又能自动判对错"的金融 agent 任务的机制</strong>。RST 的四件套可以整个搬:金融任务的<strong>题面</strong>(用户诉求)、<strong>环境</strong>(脱敏的真实行情/持仓沙盒)、<strong>标准答案</strong>(合规且正确的处置)、<strong>判分器</strong>(既查"给对了没"、又查"有没有蒙混/违规")——尤其"判分器只认真干成、不认蒙混"这条,对金融合规是刚需。</li></ol><ol class="ls"><li><strong>"先长解、再对齐"可以直接迁移成一种造评测/造提示词样例的手法。</strong> 你要给京小贝造难样例时,别先写题面再凑答案(容易自相矛盾);<strong>先写出一条真能跑通的正确处置流程,再倒推题面和判分点</strong>——这样造出来的样例天然自洽。这是一条能立刻用起来的操作原则。</li></ol><ol class="ls"><li><strong>"契约合法性"是提示词工程的一条硬纪律:判分/验收标准里的每一条,都必须在给模型的指令里明说、或让它能查到。</strong> RST 发现"偷偷考暗要求"是任务崩坏的主因之一。对应到你写提示词:<strong>凡是你打算用来验收输出的标准,必须在提示词里写清楚、或给模型能拿到的上下文——不要用"它应该懂"的暗标准去判它。</strong> 这条能显著降低京小贝"答得看似对、其实没踩中真实验收点"的情况。</li></ol><ol class="ls"><li><strong>"结构化的自我加难"比"一次性堆难题"更值钱——这是一条选型/投入原则。</strong> RST 证明:一个会"回收上一轮产出、每轮加一点、始终对得上"的循环,比"一次造一大批难题"更能持续产出且不塌缩。对京小贝的数据飞轮、对董琳那边豆包/抖音客服的训练数据生产,判据都一样:<strong>优先投"能自我滚动加难的闭环",而不是"一锤子的大批量标注"。</strong></li></ol><ol class="ls"><li><strong>一个可迁移的认知姿态:当你觉得"模型不够强"时,先问"是不是没喂它足够难又对得上的题"。</strong> 很多时候 agent 表现差不是模型笨,是训练/评测的题太浅、或判分标准和题面对不上。RST 提醒:<strong>能力问题常常是数据问题、判分问题伪装的。</strong> 遇到京小贝某个能力上不去,先审"题和判分器",再怀疑模型。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2608.05466">https://arxiv.org/abs/2608.05466</a> （Recursive Synthesis for Long-Horizon Terminal Tasks，腾讯混元团队，2026-08-05）</li><li>论文全文（机制/数字/消融）：<a class="src" href="https://arxiv.org/html/2608.05466">https://arxiv.org/html/2608.05466</a></li><li>信号佐证（HuggingFace Daily Papers 当窗口 #1 · 206 赞）：<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a> （2026-08-06 榜）</li><li>前作与脉络：<ul class="sub"><li>Long-Horizon-Terminal-Bench（密集奖励评测，本篇训练靶子之一）：<a class="src" href="https://arxiv.org/abs/2607.08964">https://arxiv.org/abs/2607.08964</a></li><li>CLI-Universe（可验证终端任务合成引擎）：<a class="src" href="https://arxiv.org/pdf/2606.22883">https://arxiv.org/pdf/2606.22883</a></li><li>Meta-Task（把出题变成一道终端任务）：<a class="src" href="https://arxiv.org/html/2607.27929">https://arxiv.org/html/2607.27929</a></li><li>Toward Scalable Terminal Task Synthesis via Skill Graphs：<a class="src" href="https://arxiv.org/html/2604.25727v1">https://arxiv.org/html/2604.25727v1</a></li><li>腾讯混元 Hyra-1.0（递归自我改进研究 agent，同门 RSI 线）：<a class="src" href="https://alphasignal.ai/news/tencent-ships-hyra-1-0-an-agent-that-critiques-and-rewrites-its-own-work">https://alphasignal.ai/news/tencent-ships-hyra-1-0-an-agent-that-critiques-and-rewrites-its-own-work</a></li></ul></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
