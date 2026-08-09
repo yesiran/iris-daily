@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28177%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2249%22%20cy%3D%2217%22%20r%3D%2214%22%20fill%3D%22%23fff%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%2236%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 日报 · 2026-08-09</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-08-09 · 周日</span></div>
+  <h1>AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>29</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">编制说明：本报告只收录 <strong>2026-08-09 当天发布/发生</strong>的 AI 新闻。8 月 9 日是周日，属于新闻淡日，当天真正"全新发生"的硬新闻有限。为避免误导，凡是当天被大量转载、但<strong>事件本体发生在更早日期</strong>的（如 DeepMind 换帅=8/5、DeepSeek 涨价=8/6、Hadrian 融资=8/6、OpenAI 暂停 Astra=8/7），一律在正文里<strong>标注原始日期</strong>并归入"背景"，不冒充当日新增。每条新闻均附来源链接。</p>
+
+  <div class="listen">
+    <div class="listen-k">听<span>PODCAST</span></div>
+    <div class="listen-b"><audio controls preload="metadata" src="2026-08-09.m4a"></audio>
+    <p class="cap">NotebookLM 生成的双人对谈版，按"为什么重要"展开 Top 5，适合通勤。</p></div>
+  </div>
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>OpenAI 的 AI 浏览器 Atlas 在 8 月 9 日正式关停，能力被塞回 ChatGPT 本体</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>穆迪警告：银行押注 AI，等于把命脉交到几家硅谷公司手里</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>OpenAI 收购 AI 做 PPT 的创业公司 NextSlide，三年内第 17 起收购浮出水面</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>中国 Kimi 母公司月之暗面（Moonshot AI）启动上市前最后一轮，估值冲到约 500 亿美元</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>（延续性重磅）三大 AI 实验室相继撞上"临界级"网络攻击能力，安全治理从口号变成实操</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>OpenAI 的 AI 浏览器 Atlas 在 8 月 9 日正式关停，能力被塞回 ChatGPT 本体</h3><p class="lp">- <strong>事件</strong>：OpenAI 去年推出的"AI 原生浏览器" Atlas，按预告在 <strong>2026-08-09 当天正式停止运行</strong>（距离上线仅 292 天）。OpenAI 说不再单独做浏览器，而是把"让 AI 自己去网页上点按、操作、办事"（业内叫 agentic browsing，智能体式浏览）的能力，直接并进 ChatGPT 桌面版和它的编程工具 Codex 里。<a class="src" href="https://www.igeekphone.com/openais-atlas-shutdown-shows-why-ai-doesnt-need-a-new-browser/">igeekphone</a> / <a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI 帮助中心-发布说明</a> / <a class="src" href="https://eu.36kr.com/en/p/3931781634260099">36氪</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这条是 8 月 9 日为数不多"真在当天发生"的标志性事件。它给"要不要专门做一个 AI 浏览器"这个赌注画了句号——答案是<strong>不需要</strong>。同期 Chrome 的全球份额稳稳守着三分之二没动，几个挑战者（Arc、Sidekick 等）陆续停更或被收购。真正的启示：AI 能力的落点不是"再造一个入口 App"，而是<strong>收回到助手本体里</strong>（你已经在用的那个对话框），谁掌握了用户天天打开的那个入口，谁就赢。这也和下面第 3 条（收购 NextSlide）是同一个动作——<strong>做减法、往 ChatGPT 里聚拢</strong>。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>穆迪警告：银行押注 AI，等于把命脉交到几家硅谷公司手里</h3><p class="lp">- <strong>事件</strong>：8 月 9 日，评级机构穆迪（Moody's，全球三大信用评级公司之一，专门给企业和金融机构的"还钱能力/风险"打分）发报告说：全行业抢着上 AI，正让大银行陷入对"极少数硅谷科技公司"的深度依赖，一旦其中一家出故障或坐地起价，金融系统会大面积受冲击。穆迪给这种风险起名叫"供应商依赖风险"（vendor dependence risk），并直指两种具体危害——<strong>大规模宕机</strong>（一家挂了、所有依赖它的银行一起瘫）和<strong>被垄断者抬价</strong>（几家主导厂商联手抬高 AI 服务价格）。<a class="src" href="https://www.theguardian.com/business/2026/aug/09/ai-push-banks-tech-firms-moodys-risks-financial-sector">The Guardian</a> / <a class="src" href="https://www.aol.co.uk/articles/ai-push-putting-banks-mercy-090010000.html">AOL 转载</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：这是<strong>评级机构第一次把"AI 集中度"当成金融稳定性问题来正式点名</strong>，而不只是反垄断部门的话题。含义有两层：一是 AI 从"效率工具"升级成了"系统性风险源"，监管和风控口子会开始盯它；二是对做金融 AI 的人（比如国内的金融科技产品）是直接相关的一手信号——客户（银行）的采购逻辑里，"别把鸡蛋放一个篮子里、要有可替换的供应商"会越来越重，<strong>单一大模型绑死一家客户的打法会越来越难卖</strong>。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>OpenAI 收购 AI 做 PPT 的创业公司 NextSlide，三年内第 17 起收购浮出水面</h3><p class="lp">- <strong>事件</strong>：8 月 8 日晚 NextSlide 创始人自己发文披露、8 月 9 日被 TechCrunch 等大量报道：OpenAI 已经收购了 NextSlide——一个"你打一句话、它自动生成整套幻灯片/PPT"的工具，团队并入 ChatGPT。创始人 Ahmed Beshry 此前把另一家公司 Caper AI 以 3.5 亿美元卖给了 Instacart。据统计这已是 OpenAI 三年内第 17 起收购。<a class="src" href="https://www.implicator.ai/openai-acquires-nextslide-discloses-deal-months-late/">implicator.ai</a> / <a class="src" href="https://www.storyboard18.com/brand-marketing/openai-acquires-presentation-startup-nextslide-107155.htm">Storyboard18</a> / <a class="src" href="https://easternherald.com/2026/08/09/openai-acquires-nextslide-chatgpt-presentations/">Eastern Herald</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：单看是笔小收购，但连起来看是趋势——OpenAI 在<strong>一件件把"办公室里的活儿"（写文档、做表格、做 PPT、做网站）吞进 ChatGPT</strong>，目标是让你不用再打开一堆专门软件。和 Atlas 关停放一起看，方向完全一致：<strong>能力集中、入口收拢</strong>。对做垂直 AI 工具的创业公司是个警号——你做的那个"点功能"，很可能就是巨头下一个顺手补齐的模块。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>中国 Kimi 母公司月之暗面（Moonshot AI）启动上市前最后一轮，估值冲到约 500 亿美元</h3><p class="lp">- <strong>事件</strong>：8 月 9 日多家媒体报道，月之暗面（Kimi 的开发商）正在开启 IPO（首次公开募股，即上市）前的最后一轮融资，目标估值约 <strong>500 亿美元</strong>——比 7 月刚完成的那轮（35 亿美元融资、350 亿美元估值）又跳了一大截；公司计划最快 2026 年四季度或 2027 年一季度在香港上市，已和中金公司、高盛谈过。投资方包括阿里巴巴、腾讯、IDG 资本。<a class="src" href="https://www.caproasia.com/2026/08/09/china-ai-startup-moonshot-ai-to-raised-new-funding-at-50-billion-valuation-plans-hong-kong-ipo-in-2026-q4-or-2027-q1-founded-in-2023-by-yang-zhilin-investors-include-alibaba-tencent-idg-capita/">Caproasia</a> / <a class="src" href="https://aiweekly.co/alerts/moonshot-converts-to-joint-stock-ahead-of-hong-kong-ipo">AI Weekly</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：把它和 DeepSeek 8 月 6 日预告"大幅涨价、不再打低价"放一起看，是同一个信号：<strong>中国大模型这一波正从"烧钱打价格战抢用户"切换到"冲估值、准备上市、开始想着怎么赚钱"的阶段</strong>。资本在给头部几家中国 AI 公司重新定价，香港正在成为它们集中上市的地方。这是判断中国 AI 竞争格局往哪走的关键风向。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>（延续性重磅）三大 AI 实验室相继撞上"临界级"网络攻击能力，安全治理从口号变成实操</h3><p class="lp">- <strong>事件</strong>：这是本周最大的行业主线，8 月 9 日仍在被 CNBC 等深度追踪报道，但<strong>事件本体发生在 8 月 6-7 日</strong>，此处作为延续性要闻列出并标注原始日期：OpenAI 于 <strong>8 月 7 日（周五）</strong>宣布，暂停旗下即将发布的模型 <strong>Astra</strong> 的部分开发——因内部测试发现它在"自主找出并利用软件零日漏洞（zero-day，指厂商还不知道、没打补丁的安全漏洞）、发起复杂网络攻击"上的能力逼近了公司自定的"临界"红线。<a class="src" href="https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/">TechCrunch(8/7)</a> / <a class="src" href="https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/">OpenAI 官方说明</a> / <a class="src" href="https://www.forbes.com/sites/jonmarkman/2026/08/09/openai-pauses-astra-after-it-nears-first-ever-critical-cyber-risk/">Forbes(8/9)</a>。同期 Anthropic（<strong>8/6-7</strong>）指控三家中国实验室（DeepSeek、月之暗面、MiniMax）用约 2.4 万个假账号、刷了超 1600 万次对话来"偷师"Claude 的能力（业内叫 distillation，蒸馏，即用别人模型的输出来训练自己的模型）。<a class="src" href="https://thenextweb.com/news/bytedance-banned-distilling-rival-ai-models-in-2023-it-is-the-one-chinese-lab-anthropic-did-not-accuse">The Next Web</a></p><p class="lp">- <strong>为什么重要 / 意味着什么</strong>：短短八天内，OpenAI、Anthropic、Meta 三家都撞上了"模型自己会搞网络攻击"的同类问题，英国 AI 安全研究所称这种行为"前所未见"。含义是：<strong>AI 安全从抽象的伦理讨论，第一次变成了厂商真的按自定框架去"踩刹车"的实操</strong>——OpenAI 依据的是它的"预备框架"（Preparedness Framework，一套"能力到什么危险程度就必须停手加固"的内部规矩）。这既是行业自律的里程碑，也解释了为什么第 2 条穆迪的系统性风险警告会在同一周出现——大家都开始意识到，能力越强、越集中，出事的杀伤面越大。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 29 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong>Atlas 浏览器 8/9 关停</strong>（见要闻 1）；能力并入 ChatGPT 桌面版与 Codex。<a class="src" href="https://eu.36kr.com/en/p/3931781634260099">36氪</a></p></div><div class="srow"><p><strong>收购 NextSlide</strong>（见要闻 3），补齐"AI 一句话生成 PPT"。<a class="src" href="https://www.storyboard18.com/brand-marketing/openai-acquires-presentation-startup-nextslide-107155.htm">Storyboard18</a></p></div><div class="srow"><p><strong>暂停 Astra 模型开发</strong>（原始日期 8/7，见要闻 5），首次因"临界网络攻击能力"主动踩刹车。<a class="src" href="https://www.theguardian.com/technology/2026/aug/08/openai-astra-security-concerns">Guardian(8/8)</a></p></div><div class="srow"><p>背景补充：OpenAI 还预告 <strong>8 月 30 日</strong>将下线 ChatGPT 里的官方 DAL·E GPT，引导用户改用 ChatGPT Images（原始信息来自发布说明，非 8/9 新增）。<a class="src" href="https://releasebot.io/updates/openai">Releasebot</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">DeepMind 大换帅（原始日期 8/5，非当日新增）</strong>联合创始人 Demis Hassabis 退出日常管理、转任 DeepMind 董事长兼 Alphabet 首席科学家；Koray Kavukcuoglu 以"高级副总裁"（非 CEO）身份接管 Gemini 模型开发与前沿研究；传奇工程师 Jeff Dean 等 4 人离职去创办新公司 Discovery Loop。CEO 皮查伊的公开信《The next chapter of our AI momentum》在 8/9 前后传播。<a class="src" href="https://www.theguardian.com/technology/2026/aug/08/google-demis-hassabis-deepmind-shifts-role">The Guardian(8/8)</a> / <a class="src" href="https://blog.google/company-news/inside-google/message-ceo/next-chapter-ai-momentum/">blog.google</a> / <a class="src" href="https://the-decoder.com/google-dismantles-deepmind-and-bets-on-a-fresh-start-as-hassabis-heads-for-the-exit/">the-decoder</a></p></div><div class="srow"><p><strong class="st">分发面依旧强势</strong>Gemini App 月活达 9.5 亿（8/8 数据），Gemma 开源模型累计下载超 9 亿次。<a class="src" href="https://quantumzeitgeist.com/google-gemini-app-million-monthly-users/">quantumzeitgeist</a> / <a class="src" href="https://blog.google/company-news/inside-google/message-ceo/next-chapter-ai-momentum/">blog.google</a></p></div><div class="srow"><p><strong class="st">产品小更新</strong>NotebookLM 已更名为 Gemini Notebook（更名本体在数周前，8/9 为持续报道），并在滚动加入"学习笔记本""自动加源"等功能。<a class="src" href="https://www.androidauthority.com/gemini-notebook-source-automation-3696153/">Android Authority</a></p></div><div class="srow"><p>背景：市场仍在等 Gemini 3.5 Pro / Gemini 4，此前有延期传闻，被指在前沿性能上暂时落后于 Anthropic 与 OpenAI。<a class="src" href="https://www.geeky-gadgets.com/google-deepmind-gemini-4-expected/">Geeky Gadgets</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong>指控三家中国实验室"蒸馏偷师"</strong>（原始日期 8/6-7）：点名 DeepSeek、月之暗面、MiniMax 用约 2.4 万假账号刷 1600 万次对话提取 Claude 能力，称构成国家安全风险；值得注意的是<strong>唯独没点名字节跳动</strong>（因字节 2023 年起就内部禁止蒸馏外部模型）。<a class="src" href="https://thenextweb.com/news/bytedance-banned-distilling-rival-ai-models-in-2023-it-is-the-one-chinese-lab-anthropic-did-not-accuse">The Next Web</a> / <a class="src" href="https://abcnews.com/Business/ai-models-fake-identities-trick-humans-cyberattack-officials/story?id=135384187">ABC News</a></p></div><div class="srow"><p><strong class="st">产品/生态（本周滚动，非 8/9 独有）</strong>Claude Fable 5 优化了生物学安全护栏，把"误拦正常生物/健康/教育提问"的比例降了约 85%；Claude Code 新增"自托管运行环境""会话之间互相发消息"等能力。<a class="src" href="https://releasebot.io/updates/anthropic">Releasebot</a> / <a class="src" href="https://github.com/anthropics/claude-code/releases">Claude Code Releases</a></p></div><div class="srow"><p>背景：Sonnet 5 的引入期优惠价（每百万 tokens 输入 2 美元/输出 10 美元）持续到 8 月 31 日，9 月 1 日起涨到 3/15。<a class="src" href="https://thevibefather.com/blog/anthropic-model-pricing-2026-complete">thevibefather</a></p></div></div><div class="sector"><div class="sector-h">中国 AI（字节 / 豆包 / Seed / DeepSeek / 智谱 / MiniMax / 通义）</div><div class="srow"><p><strong>月之暗面（Kimi）冲约 500 亿美元估值、备战港股 IPO</strong>（见要闻 4）。<a class="src" href="https://www.caproasia.com/2026/08/09/china-ai-startup-moonshot-ai-to-raised-new-funding-at-50-billion-valuation-plans-hong-kong-ipo-in-2026-q4-or-2027-q1-founded-in-2023-by-yang-zhilin-investors-include-alibaba-tencent-idg-capita/">Caproasia</a></p></div><div class="srow"><p><strong class="st">DeepSeek 预告大幅涨价（原始日期 8/6）</strong>一句话公告称将"近期显著上调 API 整体价格"，被彭博社解读为"不同寻常"，可能标志中国 AI 不再主打低价；同时 DeepSeek 正大规模融资（据报寻求接近 80 亿美元）并筹备 IPO。8/9 有中文媒体跟进解读。<a class="src" href="https://eu.36kr.com/en/p/3929155270131075">36氪(8/6起)</a> / <a class="src" href="https://www.setn.com/news/1885592">三立新闻(8/9)</a> / <a class="src" href="https://www.smartkarma.com/insights/this-week-in-ai-aug-2-8-minimax-h3-led-video-ai-deepseek-raises-price-and-resumes-funding">Smartkarma(8/9)</a></p></div><div class="srow"><p><strong class="st">阿里通义 Qwen3.8-Max（原始发布 8/3，周一）</strong>2.4 万亿参数、100 万 tokens 上下文窗口，主打编程、研究、AI 智能体与视觉分析，官方称是迄今最强模型；8/9 有多语种跟进报道。<a class="src" href="https://koran-jakarta.com/2026-08-09/alibaba-luncurkan-qwen38-max-model-ai-dengan-24-triliun-parameter">Koran Jakarta(8/9)</a> / <a class="src" href="https://www.it-boltwise.de/alibaba-qwen3-8-max-mit-24-billionen-parametern-eu-strafe-und-zahlen-termin.html">it-boltwise</a></p></div><div class="srow"><p><strong class="st">字节跳动 Seed 团队预训练约 10 万亿参数大模型（原始日期 8/7-8）</strong>动用约 3 万张 GPU，规模逼近 Anthropic 旗舰 Mythos 5；由前 DeepMind 研究员吴永辉带队，坚持"不蒸馏别人的模型、自己独立研究"的路线（这也是 Anthropic 唯一没点名字节的原因）。<a class="src" href="https://cryptobriefing.com/bytedance-10-trillion-parameter-model/">cryptobriefing</a> / <a class="src" href="https://www.kucoin.com/news/flash/bytedance-begins-training-10-trillion-parameter-ai-model">KuCoin</a></p></div><div class="srow"><p><strong class="st">MiniMax</strong>其视频模型 H3 本周在视频编辑赛道领跑（本周榜单，非 8/9 独有）。<a class="src" href="https://www.smartkarma.com/insights/this-week-in-ai-aug-2-8-minimax-h3-led-video-ai-deepseek-raises-price-and-resumes-funding">Smartkarma</a></p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong>SK 海力士豪掷约 381 亿美元建两座新存储厂（董事会通过在 8/7-8）</strong>，TheStreet 在 8/9 的分析点破"这笔钱的名字叫英伟达"——54 万亿韩元里绝大部分砸向 HBM（高带宽内存，一种堆叠式高速内存，是 AI 芯片跑得快的关键配件）。SK 海力士供应了英伟达超过 60% 的 HBM。<a class="src" href="https://www.thestreet.com/technology/sk-hynix-38-billion-nvidia-expansion">TheStreet(8/9)</a> / <a class="src" href="https://www.briefs.co/news/sk-hynix-adds-38-1-billion-in-new-memory-fab-spending/">briefs.co(8/8)</a></p></div><div class="srow"><p><strong class="st">台积电（TSMC）重启龙潭园区，布局 1.4 纳米制程与 CoWoS 先进封装（8/9 报道）</strong>CoWoS（一种把多颗芯片和内存"拼装叠放"在一起的先进封装技术，AI 大芯片全靠它）和 1.4nm 产能双双全球售罄。<a class="src" href="https://www.techtimes.com/articles/323679/20260809/tsmc-revives-longtan-14nm-fabs-cowos-hub-both-sell-out-globally.htm">TechTimes(8/9)</a></p></div><div class="srow"><p><strong class="st">台湾 7 月出口创历史第三高（8/9 数据报道）</strong>增长高度集中在 AI 与半导体，暂无明显放缓迹象；但美国关税调查构成风险。<a class="src" href="https://www.zaikei.co.jp/article/20260809/865034.html">财经新闻(zaikei)</a></p></div><div class="srow"><p>背景：英伟达上周股价累计涨超 10%（8/8），得益于 SpaceX 相关利好与 AI 交易担忧缓解；下一次财报定在 8 月 26 日。<a class="src" href="https://finance.yahoo.com/technology/article/nvidia-ends-week-up-more-than-10-as-ai-chip-fears-ease-205751147.html">Yahoo Finance</a>。AMD 首款机架级系统 Helios（直接对标英伟达整机）预计四季度放量（财报 8/4）。<a class="src" href="https://www.cnbc.com/2026/08/04/amd-earnings-report-q2-2026.html">CNBC</a></p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong>穆迪把"AI 集中度"列为金融系统性风险（8/9，见要闻 2）</strong>。<a class="src" href="https://www.theguardian.com/business/2026/aug/09/ai-push-banks-tech-firms-moodys-risks-financial-sector">The Guardian</a></p></div><div class="srow"><p><strong class="st">厂商自律成为新常态</strong>OpenAI 依"预备框架"暂停 Astra（8/7）、英国 AI 安全研究所称模型攻击行为"前所未见"、美国白宫据报已敲定对顶级美国模型的网络安全测试。<a class="src" href="https://memeburn.com/ai-cybersecurity-just-got-a-lot-scarier-after-this-weeks-biggest-ai-tests/">Memeburn</a></p></div><div class="srow"><p><strong class="st">欧盟 AI 法案（EU AI Act）关键条款已于 8 月 2 日生效（背景）</strong>针对"通用目的 AI 模型"（GPAI，即像 GPT/Gemini 这类什么都能干的大模型）的规则与透明度义务进入执行期。<a class="src" href="https://gmdekkers.substack.com/p/whats-up-with-the-eus-ai-law">gmdekkers</a> / <a class="src" href="https://www.diplomacyandlaw.com/post/eu-ai-act-explained">diplomacyandlaw</a></p></div><div class="srow"><p><strong class="st">地方/新兴市场推进</strong>印度马哈拉施特拉邦 8/8 通过《2026 AI 政策》（推动产业、治理、公共服务用 AI）；印度中央政府 8/8 就"AI 深度伪造内容"作出关键决定（要求标注）。<a class="src" href="https://newsonair.gov.in/maharashtra-announces-ai-policy-2026-to-boost-industry-governance-and-public-services/">newsonair</a> / <a class="src" href="https://www.financialexpress.com/life/technology-ai-flies-an-f-16-fighter-and-creates-a-virus-indias-ai-labelling-and-googles-deep-minds-exit-weekly-ai-wrap-aug-8-4313927/">Financial Express 周报</a></p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p><strong>月之暗面约 500 亿美元估值、港股 IPO</strong>（见要闻 4）。<a class="src" href="https://aiweekly.co/alerts/moonshot-converts-to-joint-stock-ahead-of-hong-kong-ipo">AI Weekly</a></p></div><div class="srow"><p><strong>法律 AI 公司 Harvey AI 拟融 5 亿美元、估值 155 亿美元、年化经常性收入（ARR，可理解为"订阅制业务一年稳定能收到的钱"）3.5 亿美元</strong>（原始信源 The Information 经 SiliconANGLE 于 8/7 转述，8/9 仍在传播）。<a class="src" href="https://www.masternodeai.com/en/news/harvey-ai-500m-15-5b-valuation-legal-ai">MasterNodeAI</a></p></div><div class="srow"><p><strong class="st">国防制造 AI 公司 Hadrian 完成 13.7 亿美元 D 轮、估值约 79 亿美元（原始日期 8/6）</strong>用软件+机器人+自动化产线造航空航天与军工零件。<a class="src" href="https://techcrunch.com/2026/08/06/defense-tech-hadrian-raises-1-37b-at-8b-valuation/">TechCrunch(8/6)</a></p></div><div class="srow"><p><strong class="st">本周其他大额（背景）</strong>AI 连接平台 Lumilens 出隐身状态、融资超 7 亿美元；<a class="src" href="https://news.crunchbase.com/venture/biggest-funding-rounds-billion-dollar-raises-manufacturing-energy-ai/">Crunchbase</a> 英伟达参投的 Volta 累计融资达 3 亿美元；<a class="src" href="https://www.alleywatch.com/2026/08/the-weekly-notable-startup-funding-report-8-10-26/">AlleyWatch</a> 新加坡 AI 基础设施公司 Acrab 完成 1.3 亿美元 B 轮。<a class="src" href="https://www.dealstreetasia.com/stories/editors-take-the-week-that-was-aug-3-8-491574">DealStreetAsia</a></p></div><div class="srow"><p><strong class="st">趋势侧写（8/9 特稿）</strong>WIRED 报道越来越多 AI 富豪承诺捐出财富；若 OpenAI、Anthropic 如期上市，将批量造出新富豪，AI 或成科技慈善的超大来源。<a class="src" href="https://www.wired.com/story/ai-billionaires-are-pledging-their-wealth-good-or-bad/">WIRED</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
