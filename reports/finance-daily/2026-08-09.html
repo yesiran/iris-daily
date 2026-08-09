@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2829%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231a7f4b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b3d24%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2254%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2234%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.27%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23eafff3%22%3E%C2%A5%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20260809 · 思染跟踪金融日报</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 金融日报</span><span class="r">2026-08-09</span></div>
+  <h1 class="doc">20260809 · 思染跟踪金融日报</h1>
+  <div class="dateline"><span>全文 <b>2,210</b> 字</span><span>约 <b>6</b> 分钟</span><span>章节 <b>5</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-09.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">一、美团（3690.HK · 数据截至 8/7 收盘）</a><a class="t-h2" href="#s2">二、小米（1810.HK · 数据截至 8/7 收盘）</a><a class="t-h2" href="#s3">三、比特币（BTC · 8/8 UTC 收盘定格 + 8/9 盘面进行中）</a><a class="t-h2" href="#s4">四、黄金（伦敦现货金 · 数据截至 8/7 收盘）</a><a class="t-h2" href="#s5">明天（本周）盯什么</a></nav>
+    <main><blockquote><p>复盘日 2026-08-09（周日）。港股与伦敦金周末休市，美团/小米/黄金数据定格上一交易日<strong>周五 8/7</strong>；比特币 24 小时交易，8/8 UTC 收盘已链式定格、8/9 盘面进行中。</p></blockquote><hr class="rule"><p>周五收盘后砸下来一颗炸弹：<strong>7 月非农只增 -2.3 万人</strong>（市场等的是 +8~9.5 万，5、6 月还合计下修 10.3 万，失业率 4.1%）——就业塌了一角，压在利率头上的盖子被掀开，9 月加息概率一夜从约 55% 掉到 44%，10Y 美债退火到 4.66%、美元指数跌破 100 到 99.60。</p><p>问题是：<strong>这颗炸弹，只有一半市场定价了。</strong> 周五美股当场吃到（标普 +0.62%、纳指 +1.30%），黄金当场翻多冲上七周新高。但港股 8/7 是下午收盘、早于北京晚 8:30 才发的非农——<strong>你手里的美团、小米，这天一分钱利率红利都没吃到。</strong> 所以今天（周一 8/10）开盘就是一场干净的实测：这股利率顺风，到底能不能落到"没有自身催化就掉队"的美团小米身上？</p><p>而且顺风能不能续，很快有裁判：<strong>本周三 8/12 晚 8:30，7 月 CPI（预期同比 +3.4%）</strong>。它一票决定四个标的的共同底色——偏软，利率顺风续命，金续攻、比特币松口气、港股估值分红继续；偏强，降息交易掉头回摆，金回落、比特币承压。这一周，四个标的其实盯的是同一个按钮。</p><p>下面逐个说。</p><hr class="rule"><h2 id="s1">一、美团（3690.HK · 数据截至 8/7 收盘）</h2><p><strong>新闻：周末没有一条属于美团自己的事。</strong> 唯一的硬催化仍是 <strong>9 月 2 日的 Q2 财报</strong>（TipRanks 确认日期；上一季 EPS -HK$1.332、比预期的 -HK$0.941 亏得更多，外卖补贴战还在烧钱，是背景不是新事）。</p><p><strong>价格与资金：8/7 收 92.20，平收 0.00%</strong>（昨收也是 92.20），成交约 2,842 万股、26 亿港元。<strong>南向资金沪深两条榜单都没有它。</strong> 掉榜听着像被冷落，但那天南向真金在大砸腾讯（-21.88 亿）、阿里（-16.85 亿），钱集中扑向 MINIMAX、药明生物、智谱这些 AI 单票和创新药——<strong>美团掉榜等于"没被抛"，反而在整队被砸的平台股里相对被保护。</strong></p><p><strong>为什么是这个走势？</strong> 一条因果链：美团现在是"催化依赖型 alpha"——手里没有自己的独立催化时，它连板块的 beta 都吃不满，涨跌全看当天热点在不在平台股（事实：8/7 恒指 +0.54% 是 risk-on 日，但热点全在 AI/半导体/创新药，美团平收，连边都没沾上）。而它平收、没被砸，是因为南向掉榜=没人抛它（推测：这是"下跌侧 beta&lt;1、掉榜即避风港"的老模式又一次生效）。<strong>至于非农那颗炸弹，8/7 港股收盘早于发布时间，美团完全没定价——真正的反应要看今天 8/10 补不补涨。</strong></p><p><strong>认知更新：</strong> 今天 8/10 是"利率顺风能否落到催化依赖型个股"的干净实测，盯开盘缺口 + 南向是否重回买榜（掉榜太久，顺风来了也可能没人接）。本周新增风险按钮＝8/12 CPI。这两条已写入认知库。</p><hr class="rule"><h2 id="s2">二、小米（1810.HK · 数据截至 8/7 收盘）</h2><p><strong>新闻——今天最该记的一条，是中报日期提前了：Q2 中报定在 8 月 18 日</strong>（此前认知库记的是"约 8 月下旬 8/26"，多篇 ad-hoc-news 在 8/5–8/9 一致确认是 <strong>8/18</strong>；早前一篇 7/25 提的 8/26 是"完整二季报"口径，以最新多源为准）。市场共识：营收约 <strong>1,107.6 亿元</strong>、每股收益约 <strong>0.225 元</strong>，<strong>UBS 已经点名要盯经营利润率两项指标</strong>。翻译成人话：一个可能报出"净利同比降超 43%"的利润预警，从"月底"提前到了<strong>距今只剩约 8 个交易日</strong>。技术面也在帮空头——8/7 走出周线"射击之星"加小型死叉，多家机构直接喊"财报前回避"。</p><p><strong>价格与资金：8/7 收 27.06，+0.74%</strong>（昨收 26.86），盘中一度探破 26 关到 26.06 又被拉回，成交约 1.48 亿股、40 亿港元，<strong>较前一日缩量约 26%</strong>。<strong>南向同样沪深双榜掉榜。</strong></p><p><strong>为什么？</strong> 这是 7 月 30 日 SkyNomad 发布会崩盘（当天崩 7.28% 跌穿 31/30/29 三关）之后<strong>第一次缩量止跌反抽</strong>——但请看清它是谁在动：涨的不是自己人的钱。南向从 8/6 的净卖 -3.22 亿退到 8/7 双榜掉榜，是<strong>卖盘歇了口气、不是买盘回来了</strong>；成交缩了 26%，是"卖压减弱、买盘没到"的死猫跳。所以这 +0.74% 是超跌反抽，不是反转。<strong>跟美团摆在一起看更清楚</strong>：同一个 risk-on 日，美团平收=相对被保护，小米缩量反抽但头顶压着"中报利润预警 + 崩盘惯性"两座山——<strong>比美团弱一档。</strong></p><p><strong>认知更新：</strong> 中报日期订正为 8/18（真按钮逼近），已写入认知库。反转三条件——28 关失守、存储成本没松、南向掉榜非转买——<strong>三条仍然全逆。</strong></p><hr class="rule"><h2 id="s3">三、比特币（BTC · 8/8 UTC 收盘定格 + 8/9 盘面进行中）</h2><p><strong>新闻：周末比特币一度跌破 6.5 万美元</strong>（Yahoo：非农后需求转弱、ETF 流入勉强抵消一则"分叉担忧"），另有分析点出<strong>短期持有者成本基在 67,523 美元、尚未收复</strong>——意思是大批近期买入者还套着，反弹地基不牢。</p><p><strong>价格与资金（数字说话）：</strong></p><ul class="ls"><li><strong>8/8 UTC 真收盘＝64,958</strong>（开 64,919 / 高 65,185 / 低 64,823）——<strong>订正周末快照那句"低量站上 65k"：其实是贴着 65k 下方收盘，没真站上。</strong></li><li><span class="lk">8/9 UTC 盘中</span>又冲到 65,294 就回落，现约 65,188–65,220（+0.23%/24h）——<strong>65k 还是一道反压，冲得上、守不住。</strong></li><li>现货 ETF 最新是 8/7 的 <strong>+$102M</strong>，虽然连续第五日流入，但<strong>逐日递减</strong>（170→211→244→137→102），周末无新数据。</li><li>funding -0.000036（中性微负）＝<strong>不是杠杆推的</strong>；恐慌贪婪指数逐日回升 25→29→30→<strong>31</strong>（脱离极度恐慌）。</li></ul><p><strong>为什么？</strong> 一句话：<strong>比特币只认利率这一根弦，但它对利率的弹性远小于黄金。</strong> 同样是非农这一枪利率退火——黄金当场 +3%、一周 +5% 翻多七周新高，比特币只够爬回 65k 贴一下脸又掉下来。差别在于它<strong>缺配置盘级别的大钱</strong>：每天一两亿美元的边际 ETF 流入，顶不出一个能站稳 65k 的实体买盘。所以周末港股、黄金、地缘这些事它一件不跟，就在 65k 上下低量磨。</p><p><strong>认知更新：</strong> 8/8 真收盘 64,958（订正"站上 65k"为"贴脸未站上"）已入库。本周唯一按钮同样是 <strong>8/12 CPI</strong>——偏软利率再退火利多、偏强则 9 月路径回摆压它。</p><hr class="rule"><h2 id="s4">四、黄金（伦敦现货金 · 数据截至 8/7 收盘）</h2><p><strong>新闻：黄金翻多，基本坐实。</strong> 全球最大黄金 ETF——SPDR GLD 持仓补到 <strong>1,014.15 吨（8/5 读数）、连续第三周增持、7 月 15 日以来累计 +12.27 吨</strong>。这块"配置盘接力"是认知库盯了几周的最后一块拼图，现在填上了——<strong>盯了一个多月的最强预测"这只是 6/25 型超跌反抽、不是真翻多"，被决定性推翻。</strong></p><p><strong>价格与资金：8/7 现货金约 $4,343–4,356，单日 +约 3%</strong>（TradingEconomics 4,343.43/+2.44%、CNBC 现货近 4,356/+3%），<strong>七周新高、本周涨超 5%，是 1 月以来最强单周</strong>；COMEX 期金 GC=F 收 4,399.7；白银约 $63、六周新高。背景利率：DXY 99.60（破 100 之下）、10Y 4.66%。</p><p><strong>为什么？</strong> 驱动很干净：<strong>弱就业 → 降息重定价 → 名义利率跌 + 美元软</strong>，这是黄金最舒服的框架级顺风。注意区分——涨的<strong>不是</strong>战争避险（避险仍是死腿，霍尔木兹、油价反弹都不是主角），涨的是利率框架。三条确认腿这次全兑现：现货连三日站上判定线 4,135、GLD 配置盘连三周进场、驱动是框架级弱就业顺风。</p><p><strong>认知更新：</strong> "反抽非翻多"被推翻、升级为"翻多坐实"，已入库。<strong>唯一的风险按钮＝8/12 CPI</strong>：偏软续攻，偏强则降息交易掉头回摆、金可能从 4,350 上方回落。</p><hr class="rule"><h2 id="s5">明天（本周）盯什么</h2><ol class="ls"><li><strong>周一 8/10 港股开盘＝非农补涨实测</strong>：美团/小米补不补这颗利率炸弹？美团盯南向是否重回买榜、小米盯 28 关与南向是否回补——补涨了，证明利率顺风能落到催化依赖型个股；不补，说明"掉榜太久、顺风也没人接"。</li><li><strong>周三 8/12 晚 8:30，7 月 CPI（预期 +3.4% YoY）＝四标的共同总裁判</strong>（周四 8/13 再补 PPI）：偏软，金续攻、比特币松口气、港股估值顺风续；偏强，降息交易回摆，金回落、比特币承压、港股顺风收回。这一周所有仓位其实都押在这一个数上。</li><li><span class="lk">比特币</span>65k 能否从"贴脸"变成"收盘站上"；现货 ETF 是否流入第六日（还是就此断流）。</li><li><span class="lk">黄金</span>4,350 得失；GLD 是否连第四周增持（配置盘不撤＝翻多站得住）。</li><li><span class="lk">两个财报倒计时</span>小米中报 8/18（利润预警可能降超 43%，距今约 8 个交易日）；美团 Q2 财报 9/2（唯一硬催化）。</li></ol></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
