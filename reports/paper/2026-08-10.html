@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28334%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2217%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2239%22%20r%3D%227%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2249%22%20r%3D%228%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让智能体把"环境"背进自己脑子里——不用再造沙盒，它自己既当演员又当世界</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-10</span></div>
+  <h1 class="doc">让智能体把"环境"背进自己脑子里——不用再造沙盒，它自己既当演员又当世界</h1>
+  <div class="dateline"><span>全文 <b>4,316</b> 字</span><span>约 <b>11</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">EnvACE: Internalizing Environment Dynamics via World Rehearsal for Agentic Reinforcement Learning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.06197</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zishan Xu, Zhiyuan Yao, Yuxin Chen, Yifu Guo, Zhengxi Lu, Yuquan Lu, Jinyang Huang, Yan Xu, Yasheng Wang, Weinan Zhang, Xingshan Zeng, Weiwen Liu</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">上海交通大学 × 腾讯 × 浙江大学 × 新加坡国立大学 × 中山大学 × 中南大学 × 香港中文大学</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-06</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-10.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-10.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers #6 · 38 upvotes · 上海交大(张伟楠组)×腾讯 · 底座 Qwen3-8B</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, agent, reinforcement-learning, world-model, self-play, tool-use</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-10.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-10-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">① 主角</a><a class="t-h2" href="#s4">② 困境</a><a class="t-h2" href="#s5">③ 旧路</a><a class="t-h2" href="#s6">④ 转折</a><a class="t-h2" href="#s7">⑤ 解法</a><a class="t-h2" href="#s8">⑥ 结局</a><a class="t-h2" href="#s9">⑦ 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读三层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇 <strong>EnvACE</strong>，讲的是训练"会用工具办事的智能体"时那个最贵、最卡脖子的东西——<strong>环境</strong>——怎么被彻底绕过去。</p><p>先说清楚"环境"是什么：你想让模型学会连着调好几步工具把一件事办成（查天气→订机票→填表→付款），它每调一次工具，总得有个东西"回它一句结果"，它才知道下一步该干嘛。这个"回结果的东西"就是环境：可能是真实的 API、一个模拟器、或工程师手搭的假沙盒。问题是——<strong>这个环境本身极贵</strong>：真 API 调不起也不敢乱调，假沙盒要一个个手写、还得保证它回的结果是对的（否则模型学到一堆错的因果）。今天整个"智能体强化学习"这行的主流打法，就是<strong>拼命造更多、更真的环境</strong>去喂模型。</p><p>EnvACE 反过来问：<strong>能不能不造环境，让模型把环境"背"进自己脑子里？</strong> 它的办法叫"世界排练"——让同一个模型自己跟自己演：一会儿当<strong>演员</strong>（发出工具调用），一会儿当<strong>世界</strong>（编出这次调用应该回什么结果），两个角色轮流演、一起变强。练到最后，模型自己脑子里就长出了一个"我这么一动、世界会怎么回应"的预测器，再也不用真环境。</p><p>为什么今天选它：<strong>(1) 它推进的是一条"scaling 路径"的认知</strong>——不是把已有能力调好一点，而是把"训练信号从哪来"这件根本事换了个来源，是 Dreamer 那一脉"基于模型的强化学习"第一次干净地落到 LLM 工具智能体上；<strong>(2) 信号中等偏上</strong>——HuggingFace 当日榜 #6、38 赞，作者是上海交大张伟楠组（做强化学习/世界模型的知名团队）联手腾讯等七家机构，底座是真训的 Qwen3-8B，不是玩具；<strong>(3) 对思染是正中靶心</strong>——京小贝要训"会用金融工具的智能体"，最大的工程成本恰恰就是搭一套忠实、安全的 API 沙盒，这篇给的是"让模型自己当沙盒、还能先在脑子里彩排一遍再碰真接口"的思路。诚实说一句：它的绝对分数不是碾压式 SOTA（多数榜单是"打平或略胜"造环境的对手），真正的赢点在<strong>范式的省与可扩展</strong>——用 8B 打平甚至反超要靠外部环境的更大模型，且不花一分钱环境成本。方向比分数重要，这也是它当选的理由。</p><h1 id="s2">七拍故事</h1><h2 id="s3">① 主角</h2><p>一个 8B 大小的语言模型（Qwen3-8B），被要求学会一件难事：<strong>连着调好几步工具、把一个多轮任务办成</strong>——查资料、调 API、看返回、再决定下一步，直到任务完成。</p><h2 id="s4">② 困境</h2><p>要教它这个，标准做法是<strong>强化学习</strong>：让它去"试错"——真的动手调工具，办成了给奖励，办砸了不给，模型据此调整。可"试错"必须有个<strong>对象</strong>：它每调一次工具，得有东西<strong>回它一句真实的结果</strong>。这个"回结果的对象"就是<strong>环境</strong>。</p><p>麻烦在于，环境<strong>又贵又难又不可信</strong>：</p><ul class="ls"><li><strong>真环境</strong>（真实 API）：调用要花钱、有速率限制、还有副作用（真订了机票、真扣了钱），训练时根本不敢让它乱试上百万次。</li><li><strong>模拟/合成环境</strong>（工程师手搭的假沙盒）：得一个任务一个任务地手写，覆盖不全；更命的是——<strong>你怎么保证这个假环境回的结果是对的？</strong> 假环境一旦回错，模型就把错的因果学进去了（这在原文里叫环境要"构造、验证、正确落地"三重成本）。</li></ul><p>一句话：<strong>在智能体这行，卡脖子的不是"模型学得快不快"，而是"你能不能造出足够多、足够真的环境让它去练"。</strong> 环境成了天花板。</p><h2 id="s5">③ 旧路</h2><p>过去大家怎么解？两条路，都在"环境"这个字上打转：</p><ul class="ls"><li><strong>第一条：拼命把环境造大造真。</strong> 代表是"Agent World Model / 无限合成环境"这类工作——用代码加数据库搭出成千上万个可靠的假环境，让模型有海量地方练。思路是"环境不够就多造环境"。本篇里的对手 EnvScaler、ScaleEnv、AWM、Simulator 全是这一派。问题没解决，只是把成本堆上去了。</li><li><strong>第二条：从已有的交互里榨出更多信息。</strong> 代表是它的直接前辈 <strong>EnvRL</strong>（2606.17680，两个月前）——它发现模型每次真去环境里跑一趟，那条轨迹里其实藏着大量"我一动、环境怎么变"的规律，而稀疏奖励的强化学习把这些规律浪费了。于是 EnvRL 加了两个副任务（预测下一状态、反推刚才的动作），逼模型顺手把环境的变化规律学进去。<strong>但 EnvRL 还是得先有真环境、真去里面跑一遍</strong>，它只是"从真跑里多学一点"，没把真环境省掉。</li></ul><h2 id="s6">④ 转折</h2><p>作者的关键一转是：<strong>既然目标是"让模型脑子里有一个环境模型"，那为什么不干脆让模型自己把环境也演出来？</strong></p><p>把两件本来分开的事——"模型（演员）"和"环境（世界）"——<strong>合并成同一个脑子的两个角色</strong>。模型一会儿演演员、发出工具调用；一会儿演世界、编出"这个调用应该回什么结果"。它自己跟自己演一整场，中间<strong>完全不碰真环境</strong>。真环境只在偶尔需要时用来对答案、纠偏。这就把"环境"从一个必须外部构造的<strong>东西</strong>，变成了模型自己脑子里可以生成的<strong>能力</strong>。</p><h2 id="s7">⑤ 解法</h2><p>这套机制叫 <strong>World Rehearsal（世界排练）</strong>，核心是一个"自我对弈"的循环——<strong>自我对弈</strong>就是一个模型自己跟自己下棋、两边都是它，越打越强（AlphaGo 那套的味道）。这里两个角色是：</p><ul class="ls"><li><span class="lk">演员角色（Acting）</span>给它当前的历史，让它发出下一个动作（工具调用）。原文写成 <code>a_t ~ π_θ(·|h_t, Act)</code>——读作"在历史 h_t 下、以演员身份，采样出动作 a_t"。</li><li><span class="lk">世界角色（Rehearse）</span>把演员刚发的动作接过来，让<strong>同一个模型</strong>编出"这个动作应该得到什么环境返回"。写成 <code>ô_t ~ π_θ(·|h_t, a_t, Rehearse)</code>——那个带帽子的 ô_t 就是"模型脑补出来的环境回应"。</li><li>然后把这一来一回拼进历史 <code>h_{t+1} = h_t ⊕ (a_t, ô_t)</code>，继续下一轮。</li></ul><p><span class="lk">最关键的设计</span>这两个角色<strong>共用同一套参数 θ</strong>（同一个脑子），一起更新。更新用的是 <strong>Role-wise GRPO</strong>。GRPO 我给你落地一下：它是一种给强化学习省钱算"这步答得好不好"的办法——同一道题让模型答很多遍，把每一遍的得分跟这一批的平均分比，高于平均就往这个方向多推、低于就压回来，好处是<strong>不用另外再训一个"裁判网络"</strong>去打分（省一大笔）。EnvACE 的"Role-wise"就是给演员和世界<strong>各算各的平均基线</strong>，免得两个角色互相干扰。</p><p>练完之后还有一手<strong>测试时排练（test-time rehearsal）</strong>：真办任务前，模型先在自己脑子里的世界模型里<strong>把好几条候选路线各彩排一遍</strong>、挑出最好的一条，再去碰真环境。相当于"三思而后行"——但这个"思"是在自己内化的世界里真跑了一遍，不是空想。</p><h2 id="s8">⑥ 结局</h2><p>用 8B 的 Qwen3 训出来，在四张"会不会连着调工具办事"的考卷上（BFCL-v4、τ²-Bench、VitaBench、FinMCP-Bench，都是专门考多步工具使用的 benchmark）：</p><ul class="ls"><li><strong>总分（四榜算术平均）32.91%</strong>，略胜要靠外部环境的最强对手 AWM-14B 的 32.54%——<strong>注意 EnvACE 只有 8B，对手是 14B</strong>，用更小的模型、零环境成本，打平甚至反超。</li><li><strong>τ²-Bench 上 36.7%</strong>，把 AWM-14B（30.7%）甩开近 6 个点，是赢得最漂亮的一张榜。</li><li><strong>BFCL-v4 上 46.04%</strong>，略输给造环境派 EnvScaler-8B 的 47.07%——<strong>这里诚实标注：它没全赢</strong>，在这张榜上稍逊，但代价是对手要真造一堆环境。</li><li><span class="lk">金融工具榜 FinMCP-Bench</span>工具精确率 54.04%、工具 F1 46.78% 都是全场最高（不过工具召回率 41.23% 输给 EnvScaler 的 49.35%）。</li><li><span class="lk">测试时排练白赚一截</span>只彩排 2 条路（N=2、并行挑最优），总分从 36.7% 抬到 <strong>40.9%（+4.2）</strong>，τ²-Bench 从 31.4% 抬到 38.0%（+6.6）。不用重新训练，纯靠"先在脑子里跑一遍再动手"就涨。</li></ul><p><strong>最反直觉的两个副发现（最有意思的地方）：</strong></p><ol class="ls"><li><strong>让同一个脑子既当演员又当世界，比拆成两个专门的脑子更好。</strong> 直觉上你会觉得"术业有专攻"，演员归演员、世界归世界，各训各的应该更强。结果相反：<strong>参数共享</strong>（一套参数干两件事）36.7%，<strong>分开训</strong>只有 35.5%，共享反而高 1.2 个点。原因很朴素——<strong>你越会预测世界会怎么回应，你就越会行动；你越会行动，就越懂世界的脾气</strong>。两件事本来就是一体两面，硬拆开反而互相断了养分。这其实是"内化环境能直接帮到策略本身"的证据。</li><li><strong>测试时的"三思而后行"，只对已经内化了世界的模型有用。</strong> 拿一个没经过 EnvACE 训练的原始模型去做同样的"脑内彩排"，在顺序模式下<strong>反而比不排练还差</strong>。也就是说——<strong>光多想没用，你得先真把世界的规律学进脑子，"想"才有东西可想</strong>。这一刀砍掉了"测试时多花算力就一定更好"的幻觉：多花的算力必须落在一个内化了世界的模型上才生效。</li></ol><p>（另外训练动态上有个小坑：中途某些检查点性能会抖动、掉下去，但后期会自己恢复——这种"演员和世界共同进化"的过程会经历一段别扭期。）</p><h2 id="s9">⑦ 内核</h2><p><strong>把"环境"从模型外部一个必须花大价钱构造的东西，变成模型内部可以自己生成的一种能力。</strong> 智能体不再只是"世界里的一个演员"，它同时把"世界会怎么回应我"背进了自己的权重里——于是它能在无人陪练、零真实调用的情况下自己排练成长，还能在真正动手前先在脑内彩排一遍。这是"基于模型的强化学习"（先学个世界模型、再在想象里练）这条老思路，第一次干净地落到 LLM 工具智能体身上。</p><h1 id="s10">来龙去脉（倒读三层）</h1><p><strong>第一层——它在超越谁：造环境派（environment scaling）。</strong> 当下智能体强化学习的主流共识是"要练得好，就得有更多更真的环境"。于是一整派工作在拼命造环境：Agent World Model（无限合成环境，用代码+数据库搭出海量可靠假沙盒）、EnvScaler、ScaleEnv、Simulator、TOUCAN……它们都把环境当成一个"你必须在模型外面构造出来的外部神谕"。EnvACE 的正面departure：<strong>别造了，把环境内化进模型自己</strong>。本篇的所有基线都来自这一派，赢它们的意义就是"证明不造环境也能打平"。</p><p><strong>第二层——它的直接前辈：EnvRL（2606.17680，2026-06）。</strong> EnvRL 是第一个说"模型真去环境里跑一趟留下的轨迹里，藏着大量被稀疏奖励浪费掉的环境规律"，于是加了两个副任务（预测下一状态、反推动作）逼模型把环境的变化规律学进去。它已经有了"让模型内化环境"的种子。<strong>但它还差一步</strong>：EnvRL 仍然离不开真环境、必须真去里面跑。EnvACE 把这最后一步跨过去了——<strong>让模型自己生成环境回应（自我对弈）</strong>，于是连真环境都不用了。这条问题线的演化很清楚：造更多环境（第一层）→ 从跑真环境里多学环境规律（EnvRL）→ 干脆让模型自己演环境、不跑真环境（EnvACE）。一步步把"对外部环境的依赖"削到零。</p><p><strong>第三层——它的思想根系：Dreamer 那一脉"基于模型的强化学习" + 自我对弈。</strong> 更深的根在经典强化学习里：Dreamer/PlaNet 那条线很早就提出——<strong>别老让智能体在真实世界里试错（太慢太贵），先学一个"世界模型"，然后让它在这个模型里"做梦/想象"着练</strong>，成本极低。EnvACE 本质就是把这套"先学世界、再在想象里练"搬到 LLM 工具智能体上，只不过这里的"世界"是工具生态、API 的行为规律。再叠一层自我对弈（AlphaGo：一个网络自己跟自己下、两边都是它、越打越强）——EnvACE 让同一个模型既是演员又是世界，本质是"跟自己对弈"来同时长出策略和世界模型。<strong>所以这篇不是凭空冒出来的新招，而是两条硬核老传统（世界模型 + 自我对弈）在 LLM 智能体这个新场景的合流。</strong> 认清这一点，你就知道它大概率不是孤篇，而是一条会持续长下去的主干。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><strong>这一步往哪进化了。</strong> 前沿的移动方向是：<strong>从"scale 环境"转向"内化环境"</strong>。过去一年智能体能力的瓶颈，肉眼可见地卡在"环境不够、造环境太贵"上——所有人都知道智能体要靠强化学习练，可强化学习要环境，环境要人造。EnvACE 代表的转向，跟当年经典强化学习从"在真实世界里试错"跳到"在学好的世界模型里做梦"（Dreamer）是同一种认知跃迁，现在轮到 LLM 智能体了。<strong>你要盯的信号</strong>：接下来会不会有一批工作沿着"模型自己当环境/自己造训练数据/自己给自己出题"这条线往前走——这是"智能体自给自足、摆脱对外部人造环境依赖"的大方向，一旦成立，智能体训练的成本结构会被重写。</p><p><strong>对京小贝的产品判断，三个具体启发：</strong></p><ol class="ls"><li><strong>训练成本的账要重算。</strong> 你们要训"会用金融工具的智能体"，过去的思维定式是"先花大力气搭一套忠实、安全的 API 沙盒"——这套沙盒又贵、又难保证忠实（回错一次，模型学一堆错因果）。EnvACE 给的信号是：<strong>模型可以学着自己当沙盒</strong>，把你们工具/接口的行为规律内化进权重。这不一定马上能替掉真沙盒，但它改变了"必须先造环境才能训"的前提——沙盒可以从"必需品"降级为"偶尔用来对答案的校准器"。</li></ol><ol class="ls"><li><strong>"测试时排练"是一个可以马上偷来用的产品/提示词模式。</strong> 论文里那个"真动手前先在脑子里把几条路各彩排一遍、挑最好的再执行"——这对<strong>金融这种"错一步有真实后果"的场景是天生契合</strong>的。落到京小贝：让智能体在真正调用下单/转账/查征信这类<strong>有副作用的接口前</strong>，先在内部"干跑"一遍完整流程、自查会不会出错，确认没问题再碰真接口。这就是一个"dry-run（空跑演练）后再执行"的护栏，既能提升成功率（论文里白赚 4~6 个点），又能挡住危险动作。<strong>提示词层面</strong>你今天就能试：给智能体加一句"先在内部推演这次工具调用会返回什么、会不会出错，推演通过再真正执行"。</li></ol><ol class="ls"><li><strong>"光多想没用、得先学进去"这条要记牢。</strong> 论文那个反直觉发现——<strong>没内化世界的模型，让它测试时多想反而更差</strong>——对你判断"该不该给智能体加更多测试时算力"是一记提醒：<strong>test-time compute（答题时多花算力）不是万能药</strong>。如果模型对你的业务世界（金融产品、用户行为、接口脾气）本身就没内化，让它"多想几遍"只会把错误放大。<strong>正确顺序是：先让它把你的业务世界学进权重（内化），再谈测试时多想。</strong> 顺序反了，加算力=加噪声。这条能帮你在资源分配上少踩坑：与其盲目堆推理算力，不如先确认"世界"进没进模型的脑子。</li></ol><h1 id="s12">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2608.06197">https://arxiv.org/abs/2608.06197</a> （EnvACE，2026-08-06）</li><li>论文 HTML（含结果表、公式）：<a class="src" href="https://arxiv.org/html/2608.06197v1">https://arxiv.org/html/2608.06197v1</a></li><li>信号佐证（HuggingFace Daily Papers，当日榜 #6 · 38 upvotes）：<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a></li><li>直接前辈 EnvRL：<a class="src" href="https://arxiv.org/abs/2606.17680">https://arxiv.org/abs/2606.17680</a> （Learn from Environment Dynamics in Agentic RL）</li><li>造环境派代表 Agent World Model（无限合成环境）：<a class="src" href="https://arxiv.org/abs/2602.10090">https://arxiv.org/abs/2602.10090</a></li><li>思想根系：Dreamer / 基于模型的强化学习（世界模型里"做梦"式训练）、AlphaGo 自我对弈</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
