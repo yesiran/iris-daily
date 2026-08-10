@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28159%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%2222%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2213%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2226%22%20r%3D%2217%22%20fill%3D%22%23fff%22%20opacity%3D%220.19%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>为什么"背标准答案"会越学越差、"自己试错"却能一门门叠加——RL 更新几乎互不打架的机理</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-11</span></div>
+  <h1 class="doc">为什么"背标准答案"会越学越差、"自己试错"却能一门门叠加——RL 更新几乎互不打架的机理</h1>
+  <div class="dateline"><span>全文 <b>4,500</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">SFT Conflicts, RL Coexists: A Theoretical and Empirical Analysis of Multi-Task Learning Paradigms for LLMs</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.03573</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Kejian Zhu, Zhuoran Jin, Shangqing Tu, Hongbang Yuan, Yushi Bai, Kang Liu, Juanzi Li, Jun Zhao</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">清华 KEG（李涓子组）× 中科院自动化所（刘康、赵军组）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-06</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-11.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-11.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 当日窗口#1 · 30 赞（本窗口最高）· 清华 KEG + 中科院自动化所 · arXiv v2 采用 ICML 模板（未见公开接收记录）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, post-training, rl, sft, multi-task, interpretability, mechanism</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-11.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-11-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法（机理，这是全篇的核）</a><a class="t-h2" href="#s8">6｜结局（世界因此变了什么样，含最有意思的副发现）</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这对"模型进化逻辑"意味着什么</a><a class="t-h2" href="#s13">能怎么用（落到京小贝 &amp; 你的提示词）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选这篇，是因为它回答了一个每个做后训练的人都撞到过、却几乎没人从第一性讲清楚的问题：<strong>为什么把一个模型"一门课一门课地补"，用监督微调（SFT）补，越补越崩；换成强化学习（RL）补，却能一门门叠上去、互不打架？</strong></p><ul class="ls"><li><span class="lk">它推进了什么</span>不是又刷了个榜，而是给"后训练为什么这样表现"补了一块<strong>机理</strong>——它把 SFT 和 RL 在多任务上的天壤之别，一路追到了参数层面（每学一道题，模型内部数字往哪挪、挪多少），再用一条数学不等式说清了根因。这属于 skill 正面清单里最稀缺的一类：<strong>揭示模型内在机理 + 训练方法带来能力跃迁</strong>。</li><li><span class="lk">命中的质量信号</span>HuggingFace 每日论文榜（社区每天投票筛过的重要论文榜）在 2026-08-11 这个窗口里排第一，30 个赞是当前窗口最高；作者来自清华 KEG（李涓子组，做知识与大模型）和中科院自动化所（刘康、赵军组，做 NLP 的老牌强组）；arXiv 第二版用的是 ICML（机器学习顶会）的排版模板（是否已接收未见公开记录，这里只说"投了这个方向"，不夸大）。新论文引用数≈0，这里用榜单名次和机构当"分量"信号。</li><li><span class="lk">对思染的价值</span>京小贝就是一个<strong>多技能</strong>产品——判断分析、事实查询、交易下单、持仓诊断……一堆技能被后训练进同一个模型。这篇讲的正是你天天在做的事：<strong>这些技能该怎么往一个模型里塞、才不会互相拆台</strong>。它给的不只是道理，还有一个能直接照做的配方（下面第四段"怎么用"）。诚实说一句：它的实验规模不大（1.5B 小模型、四门课），结论要不要照搬到更大模型上还得自己验；但机理讲得干净，方向感很值。</li></ul><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是一个<strong>已经会推理的小模型</strong>——DeepSeek-R1-Distill-Qwen-1.5B。展开这串名字：它是把 DeepSeek 的 R1（一个擅长一步步推理的大模型）的"推理本事"蒸馏（教师大模型把解题过程喂给学生小模型模仿）进一个 15 亿参数的 Qwen 小模型里得到的。为什么用小模型？因为作者要做的是"解剖"——把训练过程中模型内部每一个数字的变化都盯住看，小模型才盯得过来。</p><p>它面前摆着四门课：<strong>数学、科学、逻辑、代码</strong>。每门课有一张考卷来打分——数学考 MATH500（一套 500 道数学题的标准考卷）、科学考 MMLU（一套覆盖几十个学科的选择题）、逻辑考 Knights and Knaves（"骑士与无赖"逻辑谜题，骑士只说真话、无赖只说假话，靠推理判断谁是谁）、代码考 LiveCodeBench（让模型写代码、拿去真跑，跑通才算对）。</p><h2 id="s4">2｜困境</h2><p>问题是这样的：你想让这个小模型<strong>四门课都会</strong>。有两种教法——</p><ul class="ls"><li><span class="lk">混着教（mixed-data）</span>把四门课的题倒进一个大锅里，一起练。</li><li><strong>一门门教（multi-stage，多阶段）</strong>：先专攻数学练一段，再专攻科学练一段，再逻辑、再代码，一段接一段。</li></ul><p>"一门门教"是很自然的做法：现实里你常常是先有了数学数据、上线；过俩月又攒了代码数据，想在原模型上再加一门。可一旦这么做，用 SFT（监督微调：把"标准答案"直接喂给模型，让它照着背、照着模仿）来教，就会撞上一堵墙——<strong>学了后一门，前一门就塌了</strong>。这有个专门的词叫"灾难性遗忘"（catastrophic forgetting）：学新的把旧的忘了，而且不是忘一点，是崩盘。</p><p>作者把这堵墙量出来了：<strong>用 SFT 一门门教，四门课平均比没训练前还低了 23.1%</strong>——不是没进步，是倒退。你越想给它多补几门，它整体越差。这对任何想"持续给模型加新技能"的产品，都是要命的。</p><h2 id="s5">3｜旧路</h2><p>以前大家怎么绕开这堵墙？答案是：<strong>别一门门教，混着教</strong>。SFT 圈子里早就形成共识——想少遗忘，就把所有任务的数据混在一起一次性练（mixed-data）。这确实能缓解遗忘，但代价很大：</p><ul class="ls"><li>你每加一门新课，就得<strong>把全部旧数据翻出来，从头再混练一遍</strong>。数据攒得越多、任务越多，这个"每次都重炼全量"的成本越吓人。</li><li>灵活性也没了：想单独调其中一门、或者临时下掉一门，做不到，牵一发动全身。</li></ul><p>所以"混着教"是个打补丁的办法——它没解释墙为什么在那，只是教你贴着墙根走，别撞上去。真正的问题一直悬着：<strong>同样是往模型里塞多门课，凭什么 SFT 会自我拆台，而 RL 好像天生不会？</strong></p><h2 id="s6">4｜转折</h2><p>作者注意到一个被大家忽略的对照：<strong>在"一门门教"这件事上，RL 的表现和 SFT 完全相反</strong>。同样多阶段、一段段来，换成 RL（强化学习：不给标准答案，让模型自己去试着答，答对了给奖励、答错了给惩罚，它自己朝"更容易拿奖励"的方向挪），结果是——<strong>四门课平均不降反升 24.9%</strong>，一门门叠上去，稳稳地涨。</p><p>一边 −23.1%，一边 +24.9%，同样的"一门门教"，就因为换了训练方式，天差地别。作者给这个现象起了名字，也是论文标题：<strong>SFT 相冲，RL 共存</strong>（SFT Conflicts, RL Coexists）。</p><p>关键的转弯在这：他们没停在"现象好神奇"，而是追问<strong>到底是模型内部什么东西不一样</strong>。于是他们把训练前后模型参数的变化（记作 ΔW，读作"delta W"，就是"这轮训练把模型内部数字改动了多少"）掏出来，一个任务一个任务地比。这一比，看见了两件反直觉的事——下一拍讲。</p><h2 id="s7">5｜解法（机理，这是全篇的核）</h2><p>把"每学一门课，模型参数往哪挪"想成<strong>一支箭</strong>：箭的方向＝往哪个方向调，箭的长度＝调多狠。四门课就是四支箭。<strong>两支箭要是指向差不多的方向，就会互相干涉</strong>——你为数学把某个参数往东拉，代码又想把它往西拉，两边打架，结果谁也没学好，这就是"相冲"。要是两支箭互相垂直（数学人话叫"正交"，orthogonal，就是两个方向井水不犯河水），那各调各的，互不打扰，这就是"共存"。</p><p>作者量出来的两件事：</p><ul class="ls"><li><strong>RL 的箭又短又互相垂直</strong>。RL 每次对参数的改动，幅度比 SFT <strong>小两个数量级以上</strong>（小到百分之一还不止）；而且不同任务的箭之间几乎不重合——相似度只有约 0.00001（10⁻⁵，等于说四门课各挪各的，互不占地方）。</li><li><strong>SFT 的箭又长又朝着同一个方向</strong>。不同任务的箭大量重叠，都想去抢同一块参数、往同一个大方向拽。于是后一门课一来，就把前一门课刚拧好的方向给拧回去了——这就是那 23.1% 的崩盘从哪来的。</li></ul><p>那<strong>为什么 RL 的箭会天生互相垂直</strong>？这才是最漂亮的一步，得把 RL 的具体做法（这里用的是 GRPO）拆开看：</p><blockquote><p><strong>GRPO 怎么工作</strong>（Group Relative Policy Optimization，组内相对策略优化）：对同一道题，让模型一口气生成一<strong>组</strong>答案（比如 8 个），这 8 个有好有坏。它不去查外部标准答案，而是<strong>拿这组自己的平均分当基准线</strong>——比组内平均好的答案，就往"多这么答"的方向推；比平均差的，就往"少这么答"的方向压。核心动作是<strong>每个答案的得分都要减掉这一组的平均分</strong>（这一步叫 advantage normalization，优势归一化）。</p></blockquote><p>关键就在这个"减掉组内平均分"。作者发现：<strong>四门课的箭里，其实都混着一段"共同的大方向"</strong>——就是那种"把话说顺、把格式摆对、语气自然"之类所有任务都需要、都会往那儿使劲的通用部分。SFT 因为是照着标准答案硬拟合，会把这段"共同大方向"原封不动地保留下来、还使劲加强，于是四门课的箭全都朝这段共同方向挤，越挤越重合，就打架了。</p><p>而 RL 那一步"减掉组内平均分"，<strong>恰好把这段共同的大方向给减没了</strong>——因为组内 8 个答案都带着同一段共同方向，一减平均，共同的部分互相抵消，<strong>剩下的只有"这道题、这门课特有"的那一点点差异</strong>。所以 RL 留下的箭，天生就是各门课自己的、互不重合的方向——正交，就是这么冒出来的。</p><p>作者还把这个直觉锁成了一条不等式（论文里的定理 4.5，"梯度干涉的上界"）。用大白话说清两种干扰的"上限由什么决定"：</p><ul class="ls"><li><strong>SFT 的干扰是"由箭有多长"决定的</strong>（论文叫 norm-limited，范数受限）——箭越长，撞得越狠。而 SFT 的箭本来就长，所以撞得凶。</li><li><strong>RL 的干扰是"由一组答案有多分散"决定的</strong>（论文叫 variance-limited，方差受限）——上限卡在"组内这几个答案彼此差多少"。组内答案越像，减掉平均后剩的越少，能造成的干扰就越小。而这段被过滤掉的，正是那段共同的大方向。</li></ul><p>一句话把核收住：<strong>RL 之所以能多任务共存，不是因为它"记性好"，而是因为它每一步都自动把"大家共用的那段"抵消掉，只留下各任务私有的、互相垂直的那一点点——所以叠再多门课也不打架。</strong></p><h2 id="s8">6｜结局（世界因此变了什么样，含最有意思的副发现）</h2><p>有了这个机理，作者顺手做了件很实用的事，叫 <strong>Parallel-RL（并行 RL）</strong>：既然 RL 每门课的箭本来就互相垂直、互不干涉，那<strong>干脆别再"一门门排队练"了——四门课各自单独用 RL 练一个小挂件（LoRA，一种只训练极少量新增参数、像给模型外挂一个小模块的轻量微调法），练完再把这几个小挂件合到一起</strong>。因为箭互相垂直，合并时几乎不打架：</p><ul class="ls"><li>最朴素的合法（直接把几个挂件加起来），能<strong>保住单门课单练时 98% 的水平</strong>。</li><li>稍微调一下的版本（Adapted Parallel-RL），合起来后<strong>平均达到单门课单练的 102.8%</strong>——注意这个数超过 100%，意思是合在一起之后，各门课不但没互相拖累，<strong>反而比各自单练还略好了一点点</strong>（等于沾了别门课的光）；比完全没训练的原模型，整体涨了 9.4%。</li></ul><p>这带来一个很爽的工程结果：加新技能不用再"把全部旧数据翻出来重炼一遍"了——<strong>新技能单独练个挂件，挂上去就行，旧的原地不动</strong>。这就是从"每次全量重炼"变成"即插即用"。</p><p><strong>最反直觉的副发现</strong>藏在一个"甜点值"里：作者发现 Parallel-RL 存在一个"探索 vs 干涉"的权衡——你让每门课自己练得越狠（探索越充分），它的箭就越可能长回去、越容易和别门课重合、越会互相干涉。他们量出一个最佳平衡点（论文里 τ≈0.65）。这句话把整篇的价值观点透了：<strong>光让单门课练到极致是不够的，甚至有害；真正决定多任务能不能共存的，是"控制住任务之间的相互干涉"这件事本身。</strong> 会不会做多技能产品的分水岭，不在每门课练多好，而在你有没有守住"井水不犯河水"这条线。</p><h2 id="s9">7｜内核</h2><p><span class="lk">带走的一颗种子</span>SFT 是"照着标准答案硬拟合"，会把所有任务共用的那段大方向越拉越死，于是多门课的调整全挤在一处、互相拆台；RL（尤其 GRPO 那种"减掉组内平均分"的做法）每一步都自动把这段共用大方向抵消掉，只留下各任务私有、互相垂直的一点点，所以能一门门叠加、共存不崩。<strong>"模型能不能持续长新本事而不忘旧的"，本质是"新旧调整的方向正不正交"的问题——而训练方式，决定了这个正交性是天生的还是要硬凑的。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 1 层——它在批判/接着谁？</strong> 它直接接的是"后训练该用 SFT 还是 RL"这场持续了两三年的争论。早期共识是 SFT 打底、RL 微调（这条线一路从 InstructGPT/RLHF 到 R1 的 RLVR）。近一两年越来越多工作发现"RL 训出来的模型更不容易遗忘、泛化更好"，但大多停在"现象观察"或"benchmark 上 RL 赢了几个点"。这篇的不同，是<strong>不满足于"RL 更好"，而去问"RL 好在参数层面到底是什么不一样"</strong>，把争论从"谁分高"推到"为什么"。</p><p><strong>第 2 层——它站在哪块地基上？</strong> 两块。一块是"多任务学习里的梯度干涉"这条老线——机器学习里很早就知道"多个任务一起训会互相拉扯梯度"，有一堆缓解办法（梯度投影、任务加权等）。这篇的新意是<strong>指出 RL 靠"优势归一化"这一步，天然地、免费地把干涉压住了</strong>，不用外挂那些缓解技巧。另一块是"RLVR 到底在模型里改了什么"这条正在发烫的可解释性线（比如"RLVR 只学主成分方向""RL 更新是稀疏的"这类近期工作），这篇给这条线添了"多任务正交性"这块新拼图。</p><p><strong>第 3 层（点到为止）——再往上是什么根问题？</strong> 根问题是<strong>持续学习（continual learning）</strong>：怎么让一个模型像人一样活到老学到老、学新的不忘旧的。人脑靠什么做到"学开车不会把说话忘了"，机器学习几十年都没根治。这篇没解决持续学习，但它给出一个很有分量的提示——<strong>答案可能不在"设计更聪明的防遗忘机制"，而在"选一种更新方向天生正交的学习方式"</strong>。方向性的启发，比一个具体技巧更值钱。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这对"模型进化逻辑"意味着什么</h2><ul class="ls"><li><strong>RL 后训练能"叠技能"，是有机理根子的，不是玄学。</strong> 你会看到越来越多前沿模型把"多能力共存"押在 RL/RLVR 而不是纯 SFT 上——这篇给了为什么：RL 的更新天生正交，所以能一门门往上摞而不塌。理解这条，你就能预判"下一代模型会怎么长"：<strong>不是靠喂更多标准答案，而是靠更多可验证奖励下的自我试错，把能力一层层正交地叠起来。</strong></li><li><strong>"遗忘"正在从"要靠技巧硬防的病"变成"选对训练范式就基本免疫的副产品"。</strong> 这是模型进化里很关键的一次视角转换——从"打补丁"转向"选对底层机制"。</li></ul><h2 id="s13">能怎么用（落到京小贝 &amp; 你的提示词）</h2><ol class="ls"><li><strong>多技能后训练的架构选择——这条最直接。</strong> 京小贝一堆技能（判断分析、事实查询、交易、诊断……）都要进模型。这篇给的信号很清楚：<ul class="sub"><li><strong>别用"多阶段 SFT"一门门补技能</strong>——那正是 −23% 崩盘的配方。要么混着 SFT，要么（更优）走 RL。</li><li><strong>认真评估 Parallel-RL 这个配方</strong>：每个技能单独用 RL 练一个 LoRA 挂件、再合并，保住 98%~103% 的单技能水平，且<strong>新增技能即插即用、不用重炼全量</strong>。对一个要持续上新技能的产品，这是省钱又省事的工程路径——值得让你的训练团队做个小规模复现验证（注意原文只在 1.5B、四门课上验过，规模要自己往上试）。</li></ul></li><li><strong>看懂"技能互相拆台"这件事的病根。</strong> 以后线上一旦出现"加了 A 技能、B 技能变差"，你脑子里要能直接映射到本文的图像：<strong>它们的更新方向重合了</strong>。这不是数据不够，往往是训练范式让不同技能去抢同一块参数。诊断方向对了，才不会瞎加数据。</li><li><strong>提示词层面的迁移直觉。</strong> 同一个道理在推理时也有影子：当你在一条提示词里塞进多个互相"抢注意力"的目标（既要严谨又要活泼又要短），模型常常顾此失彼——这和"梯度重合、互相干涉"是同构的。<strong>能拆成互不打架、各管一段的子任务/子提示，就别硬塞进一段里让它们抢方向。</strong> "正交地分工"比"一句话什么都要"更稳，这是本文给提示词工程的一句可迁移心法。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.03573">https://arxiv.org/abs/2608.03573</a></li><li>论文全文（arXiv HTML v2，含定理 4.5、Table 1/2、Parallel-RL 主结果）：<a class="src" href="https://arxiv.org/html/2608.03573">https://arxiv.org/html/2608.03573</a></li><li>质量信号 · HuggingFace 每日论文榜（当日窗口第一、30 赞）：<a class="src" href="https://huggingface.co/papers/2608.03573">https://huggingface.co/papers/2608.03573</a></li><li>关键数据出处（均来自上面全文）：多阶段 SFT −23.1% / RL +24.9%（Table 1）；单任务泛化 SFT 目标 +4.0%、其他 −5.1% vs RL 目标 +6.8% 且不伤其他（Table 2）；RL 参数更新幅度小两个数量级、跨任务 ΔW 相似度 ~10⁻⁵；Parallel-RL 保留 98%、Adapted 102.8%、比原模型 +9.4%、甜点 τ≈0.65（第 5 节）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
