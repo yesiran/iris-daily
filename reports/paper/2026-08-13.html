@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28211%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2249%22%20cy%3D%228%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.19%22%2F%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2223%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%2252%22%20cy%3D%2236%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>推理不必靠更大模型＋更长思维链——一个"像大脑"的 150M 小模型，在脑内默想着把抽象推理的性价比前沿击穿</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-13</span></div>
+  <h1 class="doc">推理不必靠更大模型＋更长思维链——一个"像大脑"的 150M 小模型，在脑内默想着把抽象推理的性价比前沿击穿</h1>
+  <div class="dateline"><span>全文 <b>5,980</b> 字</span><span>约 <b>16</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">BDH-CQ: In-Context Learning with Recurrent Latent Reasoning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.09888 (https://arxiv.org/abs/2608.09888)</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Björn Engdahl, Adrian Kosowski, Jan Chorowski, Zuzanna Stamirowska, Przemysław Uznański, Junlin Jiang, Rohan Phadke, Remigiusz Kinas, Richard Zhong</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Pathway（"后-Transformer"架构 Dragon Hatchling/BDH 的原班团队）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-10</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-13.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-13.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily 08-11 榜·803 赞（当窗口第二、机理/架构类第一）· Pathway（原创 BDH 后-Transformer 架构）· ARC-AGI-1 性价比前沿新 SOTA · Bielik+NYU 独立黑盒审计复现 29.5%</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, post-transformer, latent-reasoning, in-context-learning, reasoning, efficiency, arc-agi</span></div></div><div class="listen"><div class="listen-k">听<span>PODCAST</span></div><div><audio controls preload="metadata" src="2026-08-13.m4a"></audio><p class="cap">NotebookLM 对谈版讲解，适合通勤。</p></div></div><div class="tools"><a class="btn hot" href="2026-08-13-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：一块"会随读随变"的记忆，加一间"不出声的草稿间"</a><a class="t-h2" href="#s4">2. 困境：大模型很会"背"，却不太会"现学"</a><a class="t-h2" href="#s5">3. 旧路：两条老路，各有各的天花板</a><a class="t-h2" href="#s6">4. 转折：把地基换成"像大脑的关联记忆"，"现学"就成了一次物理状态变化</a><a class="t-h2" href="#s7">5. 解法：读题改写记忆 → 脑内默想 R 轮 → 才翻译成答案</a><a class="t-h2" href="#s8">6. 结局：它把"能力边界"画得清清楚楚——哪些现学得会、哪些学不会</a><a class="t-h2" href="#s9">7. 内核：把"现学"变成一次记忆的物理改写，把"推理"搬进不出声的潜空间——推理的前沿，除了"更大＋更长思维链"，还有"换地基"这条正交的路。</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>BDH-CQ</strong>（Pathway，2026-08-10，arXiv 2608.09888）。四条硬理由：</p><ol class="ls"><li><strong>它动的是"地基"，不是"用法"。</strong> 现在几乎所有大模型都盖在 Transformer 这一块地基上。BDH-CQ 建在 Pathway 去年 9 月那篇很出名的<strong>后-Transformer 架构 Dragon Hatchling（简称 BDH）</strong>上——那是一套<strong>模拟一大群"神经元颗粒"互相连线放电、越用连线越强（像大脑）</strong>的全新地基，去年发布时被称作"Transformer 和大脑模型之间缺失的那一环"。今天这篇是它第一次被拿去正经做<strong>推理</strong>。这正命中本 skill 选片正面清单的第一条：新架构 / 新范式。</li></ol><ol class="ls"><li><strong>它给"推理"换了个物理实现。</strong> 主流模型"想事情"是把思路一个字一个字<strong>写出来</strong>（思维链），写完读回去再接着写。BDH-CQ <strong>不写字</strong>：它在脑内一块连续的"草稿空间"里反复迭代计算 R 轮，几个候选答案能在同一块状态里<strong>并排比拼</strong>，最后才把结论翻译成答案。这是"潜空间推理"这条前沿河流里的一个新物种（我们台账里的 [[2026-06-14--switch-latent-reasoning|SWITCH]]、[[2026-06-18--loopcoder-v2|LoopCoder-v2]]、[[2026-06-30--latent-thoughts-four-axioms|潜在思维四公理]] 是同一条河的上游）。</li></ol><ol class="ls"><li><strong>它击穿了一条"性价比前沿"。</strong> 在 <strong>ARC-AGI-1</strong>（专门测"没见过的题、只给几个例子就现学现用"的抽象推理基准）上，一个只有 <strong>1.5 亿参数（150M）</strong>的配置拿到 <strong>29.5% pass@2</strong>，单题算力成本 <strong>$0.0007（不到一分钱的十分之一）</strong>。这个点<strong>越过了此前所有系统连成的"成本-准确率"前沿</strong>——同准确率档位上没有任何已知系统比它更便宜。对比 GPT-5.6 Luna（同档 34.2%、单题 $0.040）<strong>便宜约 57 倍</strong>。这命中"效率突破：让强能力变便宜"。</li></ol><ol class="ls"><li><strong>信号够硬、且有独立审计。</strong> HuggingFace Daily Papers 08-11 榜 <strong>803 赞</strong>（当窗口第二，仅次于一篇 Agent 工程论文 Ouroboros；在"真·模型机理/架构"类里是第一）；团队是原创 BDH 的 Pathway；<strong>还有一组来自 Bielik 和纽约大学的作者做了独立黑盒审计（不给模型权重）复现了 29.5%</strong>——新论文最缺的就是"别人也能重现"，这条尤其加分。</li></ol><p><span class="lk">诚实交底</span>①它赢的是<strong>性价比前沿</strong>，<strong>不是绝对准确率</strong>——29.5% 仍低于 GPT-5.6 Luna 的 34.2%，别读成"小模型吊打大模型的智商"。②150M 很小、跑的是较老的 ARC-AGI-1（不是更难的 ARC-AGI-2），是"一条更便宜的路能走多远"的概念验证，不是通用大模型的替代品。③Pathway 是要把这套架构商业化的公司，论文<strong>明确保留了确切维度、更新规则等实现细节（proprietary）</strong>——机理框架讲清了，但抠不到最底层的实现。这三条我在正文里都会摆明。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：一块"会随读随变"的记忆，加一间"不出声的草稿间"</h2><p>主角是一个奇怪的小模型 <strong>BDH-CQ</strong>。它奇怪在两点，都跟你熟的大模型不一样：</p><ul class="ls"><li>它的"记忆"不是一张越写越长的清单（Transformer 那种，把读过的每个词都存进一张表 KV cache、等着回头查）。它的记忆是<strong>一块随时间滚动更新的关联状态</strong>——你喂它一个新例子，这块状态就<strong>当场变一点</strong>，就像你听人讲话时脑子里的理解在实时刷新，而不是把每句话逐字抄下来备查。</li><li>它"想事情"不出声。普通模型推理要把中间思路<strong>一个字一个字写出来</strong>（思维链）。BDH-CQ 有一间<strong>不出声的草稿间</strong>：读完题，它在一块连续的高维草稿空间里<strong>默默迭代算几轮</strong>，中途一个字都不吐，算完才把答案翻译出来。</li></ul><p>这个小模型只有 <strong>1.5 亿参数</strong>——大概是当今前沿大模型的千分之一。它要去挑战的，是一类<strong>最考验"现学现用"的题</strong>。</p><h2 id="s4">2. 困境：大模型很会"背"，却不太会"现学"</h2><p>它要挑战的题叫 <strong>ARC-AGI</strong>（全称 Abstraction and Reasoning Corpus，抽象与推理语料；"AGI" 是这个基准起的名号）。这是研究者 François Chollet 在 2019 年专门设计出来、<strong>用来卡住大模型的</strong>一类题：</p><ul class="ls"><li>每道题给你<strong>几对"输入小方格图 → 输出小方格图"的示范</strong>（比如：一张图里蓝块变红块、另一张图里绿块变黄块……），要你<strong>自己看出背后那条隐藏的变换规则</strong>，然后对一张<strong>新的输入图</strong>套用这条规则，画出正确的输出。</li><li>关键设计：<strong>每道题的规则都不一样、而且题库刻意做得"背不到"</strong>。你没法靠"见过一万道类似题"蒙对，只能<strong>当场从这几个例子里现学出规则、再当场用</strong>。这测的是心理学说的"流体智力"——面对全新问题临场推理的能力，恰恰是大模型一直的软肋（它们特别会"背过的题型"，一到真正没见过的就露怯）。</li></ul><p><strong>这道墙为什么难越？</strong> 因为解 ARC-AGI 的主流打法，是拿<strong>又大又贵</strong>的模型 + <strong>写很长的思维链</strong>去硬算：模型要把"我猜规则是把蓝换红……不对……那可能是按位置搬……"这一长串猜测<strong>逐字写出来再读回去</strong>。这样做两个代价：一是<strong>贵</strong>（大模型 + 长输出，单题几分钱到几毛钱）；二是<strong>每一步都要过一遍"把想法翻译成词 → 吐出来 → 再读进去"的瓶颈</strong>，慢。于是 ARC-AGI 上就形成了一条大家默认的"成本-准确率前沿"：想更准，就得更贵。<strong>这篇要问的是：这条前沿是铁律吗？能不能用一条完全不同的路，把它捅穿？</strong></p><h2 id="s5">3. 旧路：两条老路，各有各的天花板</h2><ul class="ls"><li><strong>旧路 A——更大的 Transformer + 更长的思维链。</strong> 这是当下 ARC-AGI 榜单上的主力（GPT-5.6 这类）。能上分，但<strong>成本随准确率一起涨</strong>，而且推理慢（受制于"逐字吐词再读回"的瓶颈）。</li><li><strong>旧路 B——潜空间推理（不写字地想）。</strong> 学界这两年已经意识到"逐字写思维链"太浪费，开始探索让模型<strong>在内部潜空间里想、不吐词</strong>（我们台账里的 [[2026-06-14--switch-latent-reasoning|SWITCH]]、[[2026-06-18--loopcoder-v2|LoopCoder-v2]] 都是这条路）。但这些工作基本还是<strong>在 Transformer 这块地基上打补丁</strong>——比如让 Transformer 的某几层多循环几圈。地基没换，Transformer"用 KV cache 存历史、注意力回头查"的那套底层机制还在。</li></ul><p>两条旧路的共同天花板：<strong>都还站在 Transformer 上</strong>。BDH-CQ 的作者赌的是——要把 ARC-AGI 这种"现学现用"的活干得又好又便宜，也许得<strong>从地基换起</strong>。</p><h2 id="s6">4. 转折：把地基换成"像大脑的关联记忆"，"现学"就成了一次物理状态变化</h2><p>作者的关键转念来自他们自己去年那套架构 <strong>Dragon Hatchling（BDH）</strong>。BDH 不再一层层堆注意力，而是<strong>模拟一大群局部互连的"神经元颗粒"</strong>，遵循两条脑子里的老规矩：</p><ul class="ls"><li><strong>一起放电就连得更紧</strong>（这叫 Hebbian 学习，一句大白话："一起激活的神经元，它们之间的连线会加强"）；</li><li><strong>攒够刺激才发放</strong>（整合-放电，integrate-and-fire：神经元像个水杯，输入攒到阈值才"啪"地激活一次）。</li></ul><p>在这个地基上，"记忆"天然就是<strong>一块随输入不断被改写的关联状态</strong>，而不是一张外挂的查询表。作者的转折点就在这里——他们意识到：</p><blockquote><p><strong>"现学"（in-context learning，从当场给的几个例子里学）这件事，在 BDH 上可以不是"回头查例子"，而是"读例子时记忆状态被物理地改写一次"。</strong></p></blockquote><p>写成一行公式就是 <strong>S_t = U_θ(S_{t-1}, D_t)</strong>：读第 t 个示范 D_t，就把记忆状态从 S_{t-1} 更新成 S_t。作者的原话是"<strong>后来的输入所能用到的信息，取决于从更早的例子和输出里累积下来的关联</strong>"。翻译成人话：<strong>你给它看的每一个例子，都在它脑子里留下一道真实的沟壑，而不是一条待查的记录。</strong> 看完所有 K 个示范，记忆里就沉淀出一个 S_K——那就是它从这几个例子里"现学"到的那条规则的物理载体。</p><p>这一步为什么关键？因为它把"现学"从"外部查表"变成了"内部状态演化"，于是<strong>推理可以直接在这块状态里发生，不必再逐字吐词</strong>。转折就此打开了下一步。</p><h2 id="s7">5. 解法：读题改写记忆 → 脑内默想 R 轮 → 才翻译成答案</h2><p>BDH-CQ 解一道 ARC 题分三步（术语我逐个落地）：</p><p><strong>第一步 读示范、改写记忆（现学）。</strong> 把这道题的几个"输入图→输出图"示范一个个喂进去，每喂一个，记忆状态按 S_t = U_θ(S_{t-1}, D_t) 更新一次，最后得到 S_K。这里用到 BDH 的三个底层特性，我逐个拆：</p><ul class="ls"><li><span class="lk">高维正激活</span>神经元数量很多（"高维"），每个只能"正着"放电、不能取负值（像真神经元只有"发放/不发放"，没有负发放）。好处是激活天然稀疏、可读性强。</li><li><span class="lk">低秩通信</span>神经元之间<strong>不是每个都直连每个</strong>（那样太贵），而是让信息先挤过一个"窄腰"再展开——先压到很低的维度、再放大。这样传信息省算力。（"秩"你可以理解成"这条通道能同时传几路独立信息"，低秩＝窄腰、只传几路。）</li><li><span class="lk">循环关联状态</span>就是上面那块随时间滚动更新、记录"谁和谁相关"的记忆 S。</li></ul><p><strong>第二步 脑内默想 R 轮（潜空间推理）。</strong> 拿到记忆 S_K 和这道题真正要答的新输入 x⋆，先编码成一个"推理草稿" H₀ = E_θ(x⋆, S_K)；然后<strong>反复迭代 R 轮</strong>：H_{r+1} = F_θ(H_r, S_K)，一圈圈打磨这块草稿；最后解码出答案 ŷ = G_θ(H_R)。整个默想过程<strong>中间状态一个字都不翻译成语言</strong>——作者原话："<strong>中间推理状态不会被解码成语言</strong>"。为什么值得这么做？作者说得很直白：</p><blockquote><p>逐字写思维链的话，"<strong>每一个中间状态都得被投影到一个离散词表、按自回归一个个吐出来、再读回去，计算才能继续</strong>"——这是个瓶颈；在潜空间里默想就把这个瓶颈<strong>整个绕掉了</strong>。</p></blockquote><p>还有个额外好处：<strong>"一块连续的状态可以同时承载好几个活跃的假设"</strong>。写字是串行的（一次只能写一条思路），潜空间默想是并行的——几条候选规则能在同一块草稿里<strong>并排比拼</strong>，而不用一条条排队试。</p><p><strong>第三步 允许给两个答案（pass@2）。</strong> ARC-AGI 的评分允许模型对一道题给<strong>最多两个排序候选</strong>，只要有一个对就算这道题过（这就是 "pass@2" 的意思）。</p><p><span class="lk">成绩单</span>150M 参数配置，ARC-AGI-1 公开评测集（400 道题）上 <strong>29.5% pass@2</strong>，单题成本 <strong>$0.00070</strong>（按 H200 显卡每小时 $3、每题约 0.85 秒 GPU 时间算出来的）。作者强调："<strong>这个点落在此前报告的前沿之外：没有任何画在图上的系统，能在同等或更低成本下达到至少这个准确率。</strong>"——这就是"击穿性价比前沿"的确切含义。对比 GPT-5.6 Luna（Low 档，34.2%、单题 $0.040），<strong>便宜约 57 倍</strong>；哪怕算上 OpenAI 后来那次 80% 的 API 降价（官方数据还没反映），也还<strong>便宜约 11 倍</strong>。</p><h2 id="s8">6. 结局：它把"能力边界"画得清清楚楚——哪些现学得会、哪些学不会</h2><p>这篇最有意思的不是那个分数，而是作者用<strong>一批可控的"ARC 变体"小实验</strong>，把这个"现学"模型的<strong>能力边界</strong>摸了个通透。他们造了一批规则已知、难度可调的题，看它到底学会了什么：</p><p><strong>学得又快又稳的（"局部/一一对应"的规则）：</strong></p><ul class="ls"><li><span class="lk">颜色映射</span>从示范里学"这道题里蓝→红、绿→黄"这种一一对应，<strong>96/96 全对</strong>。</li><li><span class="lk">边界扩散</span>让某种颜色从边界往里蔓延固定格数，距离 2 到 8 <strong>48/48 全对</strong>。</li><li><span class="lk">复制</span>把一个图案复制到多个位置，目标从 1 个加到 4 个，<strong>48/48 全对</strong>。</li></ul><p><strong>学不会 / 会崩的（"需要有序、多步、递归"的规则）：</strong></p><ul class="ls"><li><span class="lk">排序（长度 8）</span>只有 <strong>1/24</strong> 过，连"输出尺寸对不对"都只有 3/24——<strong>几乎全崩</strong>。</li><li><span class="lk">嵌套（深度 5）</span>19/24，错的多是单格关系错位；但<strong>只要补一个刚好覆盖这个深度的示范，立刻回到 24/24</strong>。</li><li><span class="lk">组合</span>先反射再搬位 47/72；而"颜色交换"和别的操作组合起来时，<strong>0/72，一次都没组合成功</strong>。</li></ul><p>作者从这里提炼出一句对我们特别有用的规律，把"会执行"和"会外推"分开了：</p><blockquote><p>"<strong>匹配的示范能消掉深度五嵌套的失败、大幅改善长度八排序——这说明：你在现场例子里覆盖到没覆盖到，直接决定了一个学到的操作能不能外推。</strong>"</p></blockquote><p>翻译成人话：<strong>这类现学模型对"一一对应、局部、可平移复制"的规则学得极稳，但对"需要保持顺序、多步、层层嵌套"的规则很容易崩——除非你恰好给它一个结构/深度对得上的例子。会不会外推，不取决于它多聪明，取决于你给的例子有没有把那个情形罩住。</strong> 这条，等下落到思染的提示词工程时会直接变成一条可操作的纪律。</p><p><span class="lk">还有一个"别人也能重现"的结局</span>一组来自 <strong>Bielik 和纽约大学</strong>的作者做了<strong>独立黑盒审计</strong>——<strong>不给模型权重</strong>、按公开协议在 ARC-AGI-1 公开集上重跑，<strong>复现了 29.5% pass@2</strong>，还额外在 ConceptARC 和一套手工题上测了一遍。新论文最容易翻车的就是"只有自己能跑出这个数"，这条审计把可信度顶了上去。</p><h2 id="s9">7. 内核：把"现学"变成一次记忆的物理改写，把"推理"搬进不出声的潜空间——推理的前沿，除了"更大＋更长思维链"，还有"换地基"这条正交的路。</h2><p>一句话带走：<strong>当"读例子"＝"改写记忆"、"想问题"＝"在潜空间里默想"，一个千分之一大小的模型也能在'现学现用'这件事上，把又大又贵的模型逼出来的性价比前沿捅穿。它证明的不是"小模型更聪明"，而是"通往推理有不止一条路，而我们一直只重仓了其中一条（更大的 Transformer＋更长的思维链）"。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 0 层（这篇 · BDH-CQ，2026-08）</strong>：把后-Transformer 架构 BDH 第一次拿去做推理——"现学"实现为记忆状态的物理更新、"推理"实现为潜空间默想，在 ARC-AGI-1 上击穿成本-准确率前沿。</p><p><strong>第 1 层（它站在谁肩上 · Dragon Hatchling / BDH，Pathway，2025-09，arXiv 2509.26507）</strong>：同一批人去年那篇地标——"<strong>Dragon Hatchling：Transformer 与大脑模型之间缺失的一环</strong>"。它提出一套<strong>无标度、受生物启发的架构</strong>：一大群局部互连的神经元颗粒，靠 Hebbian 学习（一起放电就连得更紧）和整合-放电工作，用"推理方程 + 边重加权核"形式化。关键卖点：<strong>在同参数量（10M 到 1B）、同数据下，语言/翻译能力能和 GPT-2 架构的 Transformer 打平，同时天生带来可解释性——会自发长出"单义突触"（一条连线只管一个概念）和模块化</strong>。它想解决 Transformer 的一个老毛病：<strong>Transformer 很会匹配过去见过的模式，但"随时间把推理延伸到新情境"的能力有限</strong>（说白了就是不太会现学）。BDH-CQ 正是把这条"会现学"的潜力，兑现到 ARC-AGI 这种专测现学的题上。</p><p><span class="lk">第 2 层（这套东西的两条源头河）</span>BDH 本身是<strong>两条大河的合流</strong>——</p><ul class="ls"><li><strong>河 A：Transformer → 线性注意力 → "状态/快权重"这一脉。</strong> 注意力本质是一种"关联记忆"（拿 query 去和一堆 key-value 配对取值）；<strong>线性注意力</strong>把它改写成<strong>一个随读随更新的运行态</strong>（等价于一种 RNN / Schmidhuber 1992 的"快权重程序"、Katharopoulos 2020 的线性 Transformer）。这条河这两年在"状态空间模型 / 线性注意力复兴"里很热（我们台账里的 [[2026-07-10--sparse-delta-memory|Sparse Delta Memory]]、[[2026-06-15--minimax-sparse-attention|MiniMax 稀疏注意力]]、[[2026-07-09--hils-attention|HiLS]] 都在这条河上）。BDH 把"记忆＝一块滚动更新的关联状态"推到了极致。</li><li><strong>河 B：大脑模型这一脉。</strong> Hebbian 学习、整合-放电神经元——把"记忆是连线强弱的物理改写"这个来自神经科学的直觉，正式搬进可训练的深度模型。</li><li><span class="lk">两条注入的支流</span>①<strong>ARC-AGI / 流体智力这条河</strong>（Chollet 2019《On the Measure of Intelligence》）——刻意设计成"背不到、只能现学"的基准，正好用来检验 BDH"会现学"的主张；②<strong>潜空间推理这条河</strong>（我们台账里的 [[2026-06-14--switch-latent-reasoning|SWITCH]] / [[2026-06-18--loopcoder-v2|LoopCoder-v2]] / [[2026-06-30--latent-thoughts-four-axioms|潜在思维四公理]]）——"不写字地想"。BDH-CQ 是这条河里的新物种：<strong>别人是在 Transformer 上多循环几圈来做潜空间推理，它是直接在一块循环关联记忆里默想。</strong></li></ul><p>暗线：与昨天的 [[2026-08-12--steerling-inherently-interpretable-lm|Steerling 天生可解释]] 呼应——两者都在赌"<strong>Transformer 不是终点</strong>"、都追求"<strong>架构天生带某种好性质</strong>"（Steerling 天生可解释、BDH 天生可解释＋会现学）。为台账把"<strong>后-Transformer 新架构</strong>"这条主轴又夯实一块。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><p><strong>一句话：推理这条前沿，除了"更大模型＋更长思维链"这条我们一直重仓的路，还有"换地基"这条被低估的正交路——而且它在"现学"和"便宜"这两件事上，可能反而更强。</strong></p><p>拆三点你带走：</p><ol class="ls"><li><strong>"现学"（in-context learning）有了一个机械解释：读例子＝改写记忆。</strong> 我们平时说"few-shot 提示很神奇"，但为什么有效、什么时候失效，一直讲不太清。BDH-CQ 给了一个干净的物理图景——<strong>你给的每个例子，都在模型的关联记忆里刻下一道真实的沟壑；模型不是"回头查你给的例子"，而是"带着被这些例子改写过的脑子"去答题</strong>。这解释了它那张能力地图：局部一一对应的规则刻得进去（颜色映射 96/96），需要保持顺序/递归的规则刻不牢（长度 8 排序 1/24）。</li></ol><ol class="ls"><li><strong>"推理"不等于"写很长的思维链"。</strong> 思维链是"推理"的一种实现（把想法逐字吐出来），不是唯一实现。潜空间默想——不出声、在连续状态里并行比拼多个假设——是另一种，而且更快更省。<strong>产品世界里"推理＝贵、慢、长输出"这个默认，未来可能被这类架构改写。</strong> 值得盯。</li></ol><ol class="ls"><li><strong>不少"推理算力"可能是超配的。</strong> 150M 击穿性价比前沿这件事在提醒：<strong>要达到某个推理水平，未必需要巨大的模型＋很长的 CoT。</strong> 当然，这是在 ARC-AGI-1 这种特定题上、且绝对分不是最高——别过度外推——但方向上，"更省的推理"是真实趋势。</li></ol><h2 id="s13">能怎么用（提示词 &amp; 京小贝）</h2><ol class="ls"><li><strong>【最可直接落地】把那条"覆盖决定外推"的规律，变成一条 few-shot 纪律。</strong> BDH-CQ 的能力地图对<strong>任何</strong>靠上下文例子学的模型都是一记提醒："<strong>你在现场例子里覆盖到没覆盖到，直接决定一个操作能不能外推</strong>"，而且"<strong>只要补一个结构/深度刚好对得上的示范，深度五嵌套就从 19/24 回到 24/24</strong>"。对京小贝的可操作动作：<ul class="sub"><li>当一个任务需要<strong>保持顺序的多步推理</strong>（比如"先算可用额度→再套利率区间→再判断是否触发某条件"）或<strong>层层嵌套的条件</strong>（"如果 A 且在 B 情形下又满足 C……"）时，<strong>不要指望模型从几个泛泛的例子里自己推出这套结构</strong>——那正是它最容易崩的地方（有序/递归）。</li><li>正确做法是<strong>给一个"结构和深度都对得上"的示范</strong>：例子里的步骤数、嵌套层数，要和真实 case 罩得住的一样深；或者干脆<strong>把步骤显式拆开写进提示词</strong>，别留给它"现学"。</li><li>反过来，<strong>一一对应的映射、局部规则、可平移复制的模式</strong>，few-shot 学得极稳，可以放心交给例子、不必啰嗦。</li></ul></li></ol><ol class="ls"><li><strong>【认知升级】把"推理成本"当成一个会被架构改写的变量，而不是常数。</strong> 你在给京小贝做"要不要上更强推理模型"的成本测算时，默认公式往往是"更准＝更大模型＋更长思维链＝更贵"。BDH-CQ 是一个反例信号：<strong>性价比前沿是可以被换地基的架构捅穿的。</strong> 短期它替代不了你的主力模型，但中期，"潜空间推理 / 后-Transformer / 线性注意力"这一类会改变你产品能跑在什么样的成本-延迟-显存包络里——<strong>值得让团队留一只眼睛盯着 Pathway/BDH、状态空间、线性注意力这几条线</strong>，别把 Transformer 当成唯一未来。</li></ol><ol class="ls"><li><strong>【机理直觉】"现学＝改写记忆"给你一把新尺子看提示词。</strong> 既然上下文例子是在"改写模型当下的工作记忆"，那么：<strong>一段提示里塞进互相矛盾或结构不一致的例子，就像往同一块记忆上刻互相打架的沟壑</strong>——模型学到的是这些例子的"平均残影"，而不是你想要的那条规则。这跟前天 [[2026-08-11--sft-conflicts-rl-coexists|SFT 相冲/RL 共存]] 那条"方向重合就互相干扰"的直觉是同一味道：<strong>能拆成互不打架、结构一致的示范，就别在一句里塞一堆抢方向的例子。</strong></li></ol><ol class="ls"><li><strong>【保持清醒】这是一个"路能走多远"的概念验证，不是新大模型。</strong> 别把它讲成"150M 吊打 GPT"。它 29.5% 仍低于 GPT-5.6 Luna 的 34.2%（赢的是<strong>性价比</strong>不是<strong>绝对分</strong>）、跑的是较老的 ARC-AGI-1、且核心实现是<strong>闭源保留</strong>的。它的价值在于<strong>指出一条方向</strong>，不是给你一个能明天上线的模型。追前沿要的正是这种"看清方向、不被单一数字忽悠"的手感。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.09888">https://arxiv.org/abs/2608.09888</a> ｜ 全文 HTML：<a class="src" href="https://arxiv.org/html/2608.09888v1">https://arxiv.org/html/2608.09888v1</a></li><li>HuggingFace Daily Papers（08-11 榜，803 赞，机理/架构类第一）：<a class="src" href="https://huggingface.co/papers/2608.09888">https://huggingface.co/papers/2608.09888</a></li><li>站在其上的地标架构 · Dragon Hatchling / BDH（Pathway，2025-09）：<a class="src" href="https://arxiv.org/abs/2509.26507">https://arxiv.org/abs/2509.26507</a> ｜ 代码：<a class="src" href="https://github.com/pathwaycom/bdh">https://github.com/pathwaycom/bdh</a> ｜ alphaXiv 讨论：<a class="src" href="https://www.alphaxiv.org/overview/2509.26507v1">https://www.alphaxiv.org/overview/2509.26507v1</a></li><li>Pathway 后-Transformer 架构发布通稿（背景佐证）：<a class="src" href="https://www.businesswire.com/news/home/20251001665931/en/Pathway-Launches-a-New-Post-Transformer-Architecture-That-Paves-the-Way-for-Autonomous-AI">https://www.businesswire.com/news/home/20251001665931/en/Pathway-Launches-a-New-Post-Transformer-Architecture-That-Paves-the-Way-for-Autonomous-AI</a></li><li>关键数据佐证：29.5% pass@2 / $0.00070 单题 / 越过 ARC-AGI-1 成本-准确率前沿 / 对比 GPT-5.6 Luna（34.2%、$0.040）约 57×（降价后约 11×）——见论文摘要与正文成本分析；Bielik+NYU 独立黑盒审计复现 29.5%，另测 ConceptARC 与手工题集（见论文审计章节）</li><li>行为边界数据：颜色映射 96/96 · 边界扩散 48/48 · 复制 48/48 · 排序长度 8 仅 1/24 · 嵌套深度 5 为 19/24（补匹配示范→24/24）· 组合反射+搬位 47/72 · 颜色交换组合 0/72——见论文可控干预实验章节</li><li>诚实标注：确切维度/更新规则/实现细节被 Pathway 保留为专有（"Dimensions, exact update rules, and implementation details remain proprietary"）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
