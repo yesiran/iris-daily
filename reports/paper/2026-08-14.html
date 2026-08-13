@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28175%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2248%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.13%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%2250%22%20r%3D%2221%22%20fill%3D%22%23fff%22%20opacity%3D%220.23%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>能力不全在权重里——强模型给弱模型"搭外壳"，一分钱参数不改就把它拉近大模型</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-14</span></div>
+  <h1 class="doc">能力不全在权重里——强模型给弱模型"搭外壳"，一分钱参数不改就把它拉近大模型</h1>
+  <div class="dateline"><span>全文 <b>3,857</b> 字</span><span>约 <b>10</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">AI4AI at Test-Time: Strong-to-Weak Capability Transfer via Harnesses</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.12307</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Cheng Qian, Wenting Zhao, Liangwei Yang, Heng Wang, Jielin Qiu, Heng Ji, Silvio Savarese, Huan Wang, Shelby Heinecke</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">UIUC（Heng Ji 组）× Salesforce AI Research（Silvio Savarese 等）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-12</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-14.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-14.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers #3 · 80 upvotes（2026-08-13 榜）· UIUC×Salesforce AI Research · alphaXiv / ArxivSignals 收录 · 正踩 2026「AI4AI / harness engineering」热点</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, capability-transfer, test-time, prompt-engineering, distillation, agent, self-improvement</span></div></div><div class="tools"><a class="btn hot" href="2026-08-14-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角：一个"聪明但手抖"的小模型，和一个想帮它的大模型</a><a class="t-h2" href="#s4">2｜困境：过继能力，为什么一直是件"伤筋动骨"的事</a><a class="t-h2" href="#s5">3｜旧路：大家默认"能力＝权重里的东西"，所以只能去改权重</a><a class="t-h2" href="#s6">4｜转折：如果把"外壳"本身当成可以优化的东西呢？</a><a class="t-h2" href="#s7">5｜解法：这层"外壳"里到底装了什么</a><a class="t-h2" href="#s8">6｜结局：世界变了什么样——三个数字 + 一个最反直觉的副发现</a><a class="t-h2" href="#s9">7｜内核：能力不全在权重里，有一大块在"外壳"里——而外壳可以被 AI 自动搭</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">对你的提示词：这是一次机理级的重新定义</a><a class="t-h2" href="#s14">对京小贝：一把"成本／能力"的新钥匙</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇把一个我们习以为常的做法<strong>掉了个头</strong>，逼出一个对思染极重要的机理认知。</p><ul class="ls"><li><span class="lk">它推进了什么</span>过去"把强模型的能力搬给弱模型"（叫<strong>蒸馏 distillation</strong>），全都要<strong>改弱模型的参数</strong>、要重新训练。这篇问了个反直觉的问题——<strong>能不能一个参数都不改、在模型"答题的当下"就完成这种能力搬运？</strong> 答案是能：让一个强模型给弱模型<strong>搭一层外壳</strong>（论文叫 harness），弱模型（GPT-5.4-mini）在一组"猜别人心里怎么想"的难题上，平均正确率从 <strong>0.488 近乎翻倍到 0.912</strong>，72 次实验<strong>无一例外</strong>全部超过原始水平。</li><li><span class="lk">最狠的那一刀</span>性能提升<strong>不是</strong>来自"让弱模型多想几步、多采样几次"，而是来自"<strong>把不稳定的推理从模型手里拿走，塞进一段确定性的代码</strong>"。越是把能定死的部分定死（论文测出 determinism 占比与准确率相关系数 r=0.72），成绩越高；反过来，让模型"多检查一遍再答"这类操作，平均<strong>倒扣 0.097 分</strong>。</li><li><span class="lk">命中的质量信号</span>HuggingFace Daily Papers 当日 <strong>#3、80 赞</strong>；作者来自 <strong>UIUC（Heng Ji 组）× Salesforce AI Research（Silvio Savarese、Huan Wang、Shelby Heinecke 等）</strong>；被 alphaXiv、ArxivSignals 收录；方向正踩 2026 年最热的「AI4AI（AI 造 AI）／harness engineering（外壳工程）」这条线。</li><li><span class="lk">对思染的价值</span>它<strong>从机理上重新定义了"提示词工程"到底在干什么</strong>，还给京小贝一把新钥匙——用一个强模型自动给便宜的小模型"搭外壳"，让小模型在关键任务上逼近大模型，而不用把大模型直接搬上线。</li></ul><p>诚实交代：论文只在"心智理论"这一类任务上做了验证（作者自己列为局限），不是全领域普适结论。但它揭示的那个机理——<strong>能力有一大块不在权重里、在外壳里</strong>——足够重要，值得今天讲透。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角：一个"聪明但手抖"的小模型，和一个想帮它的大模型</h2><p>故事里有两个模型。一个是<strong>弱模型</strong>（论文叫 target，"被帮的那个"），比如 GPT-5.4-mini——便宜、快，但遇到绕弯的题就发挥不稳。另一个是<strong>强模型</strong>（论文叫 builder，"搭外壳的那个"），比如 GPT-5.5 或 Opus-4.7——贵、慢，但脑子好使。</p><p>问题来了：我们手里有个强模型，想让便宜的弱模型也能干得漂亮。<strong>怎么把强模型的本事，过继给弱模型？</strong></p><h2 id="s4">2｜困境：过继能力，为什么一直是件"伤筋动骨"的事</h2><p>行业里过继能力的标准做法叫<strong>蒸馏（distillation）</strong>——你可以把它想成"名师带徒弟"：让强模型（老师）把解题过程演示出来，逼弱模型（学生）照着学，<strong>一遍遍改学生脑子里的参数</strong>（权重），直到学生也会。</p><p>这件事的麻烦在"改参数"三个字：</p><ul class="ls"><li>要<strong>重新训练</strong>——要数据、要算力、要一轮轮跑，慢且贵。</li><li>改完就<strong>定死了</strong>——学生学会 A 类题，来了 B 类题又得再训一轮。</li><li>你<strong>动的是模型本体</strong>，风险高、不可逆，线上模型不能随便这么折腾。</li></ul><p>一句话：<strong>只要"过继能力"这件事必须落到"改权重"上，它就注定伤筋动骨。</strong></p><h2 id="s5">3｜旧路：大家默认"能力＝权重里的东西"，所以只能去改权重</h2><p>为什么非得改权重？因为一个根深蒂固的默认假设：<strong>一个模型的能力，就是它权重里存的那些东西。</strong> 想让它更强，就得往权重里"塞"更多东西——要么预训练更久，要么蒸馏、微调。</p><p>这个假设不算错，但它<strong>漏掉了一整块</strong>：模型在真实使用时，外面永远裹着一层东西——你给它的<strong>提示词</strong>、你写的<strong>判断分支</strong>（什么问题走什么处理）、你挂的<strong>工具</strong>、你做的<strong>格式约束</strong>。这层东西，论文统一叫它 <strong>harness（外壳／脚手架）</strong>。旧路把这层外壳当成"固定不变的背景板"，只盯着模型本体使劲。</p><h2 id="s6">4｜转折：如果把"外壳"本身当成可以优化的东西呢？</h2><p>作者的关键一转是：<strong>别再盯着改模型了，改它外面那层外壳。</strong></p><p>具体设定叫 <strong>strong-to-weak scaffolding（强给弱搭脚手架）</strong>：让强模型当"施工队"，专门给弱模型<strong>写一套推理时的外壳</strong>——不碰弱模型一个参数，只重新安排"弱模型怎么接到任务、怎么处理任务、怎么把答案吐出来"。</p><p>关键词是 <strong>test-time（推理时／答题的当下）</strong>：这套搬运发生在弱模型<strong>回答问题的那一刻</strong>，而不是提前训练的时候。所以它<strong>不需要任何重训</strong>——外壳写好，套上去，立刻见效。</p><h2 id="s7">5｜解法：这层"外壳"里到底装了什么</h2><p>强模型迭代打磨这套外壳的过程是这样的（<strong>5% 验证集法</strong>）：它先拿到题目规则和一小撮例题——<strong>总数据的 5%</strong>（约 195 道）当"练手卷子"（validation set，验证集）；写一版外壳，在这 195 道上试，看错哪了；根据错题改外壳；再试、再改。中位数只迭代 <strong>5 次</strong>就收手，然后把最终外壳套到<strong>从没见过的完整测试卷</strong>（3900 道）上打分。</p><p>而这套外壳里，最常出现、最管用的零件是（括号里是它在成功外壳里出现的比例）：</p><ul class="ls"><li><span class="lk">格式强制（100%）</span>逼模型按固定格式吐答案，好让程序稳稳地把答案抠出来，不再"话里带答案但抠不准"。</li><li><span class="lk">贪心解码（98%）</span>把模型的"随机性"关掉（温度调到最低），同一道题每次答得一样，不飘。</li><li><span class="lk">按题型路由（95%）</span>不同类型的问题走不同的处理管线——像分诊台，先看是哪种病，再送去对应科室。</li><li><strong>把决策写成代码（deterministic solver，54%）</strong>：<strong>这是最反直觉、也最关键的一件</strong>。凡是能用死规则算清楚的推理，就<strong>别让模型去想了，写成一段代码直接算</strong>。比如"A 没看见箱子被人动过 → 所以 A 还以为东西在老地方"这种逻辑，与其每次求模型现推（容易手抖），不如写死成一段程序。论文管这叫 <strong>deterministic offloading（把推理卸载给确定性代码）</strong>。</li><li><span class="lk">结构化抽取（51%）</span>把"谁在什么时候知道了什么"这类信念状态，显式地一条条记下来，而不是让模型在脑子里一团糊涂地过。</li></ul><p><strong>任务是什么？</strong> 作者选的考场叫 <strong>Theory-of-Mind（心智理论）</strong>——就是"推断别人心里怎么想"的能力：别人看见了什么、以为什么在哪、想干什么、甚至"A 以为 B 以为……"这种一层套一层的猜心。这是公认最考验推理稳不稳的一类题。四套卷子：BigToM、Hi-ToM（最深套到 4 层猜心、还带欺骗）、MMToM-QA、MuMA-ToM。</p><h2 id="s8">6｜结局：世界变了什么样——三个数字 + 一个最反直觉的副发现</h2><p><span class="lk">主结果</span>弱模型 GPT-5.4-mini 裸考 <strong>0.488</strong>；套上强模型搭的最好那套外壳，冲到 <strong>0.912</strong>（相对提升 87%）；就算把 72 次实验平均，也有 <strong>0.763</strong>。<strong>100% 的实验都超过裸考</strong>——不是偶尔灵光，是稳定有效。</p><p><span class="lk">反直觉副发现（本篇的灵魂）</span>这多出来的分，到底从哪来的？作者一项项拆开算，结论把很多人的直觉打翻：</p><ul class="ls"><li><strong>提升主要来自"把推理卸载给代码"</strong>。一套外壳里"能用死规则算清"的题占比越高，成绩越好（相关系数 r=0.72）。在最能规则化的 BigToM 上，最好外壳把大约 94% 的题都变成了纯代码在算，正确率直接干到 <strong>1.00</strong>。</li><li><strong>"让模型多想"几乎没用，"让模型多检查"甚至有害</strong>。逐条算各招数的净贡献：把"是/否、有没有看见"这种<strong>极性逻辑写成规则</strong>，+0.090 分；<strong>结构化抽取</strong>，+0.055 分；<strong>强制模型一步步想（forced CoT）</strong> 只有 <strong>+0.007 分</strong>（约等于零）；而<strong>加一道"让模型自我复核／仲裁再答"的关卡，倒扣 0.097 分</strong>；多给点思考 token 预算，倒扣 0.047 分。</li><li>也就是说：<strong>好外壳的价值，不在"哄模型多思考"，而在"把能定死的部分从模型手里拿走、定死"。</strong> 模型手抖的地方，别让它抖；能写成代码的，就别让它想。</li></ul><p>另外两条规律：</p><ul class="ls"><li><strong>施工队越强，外壳越好，而且单调递增</strong>。同一个强模型（Opus-4.7）把"思考力度"从低档拧到极高档，搭出的外壳成绩一路从 0.711 爬到 0.856（相关性 Spearman ρ=0.77），没有反复。</li><li><strong>越弱的模型，被外壳救得越多（"剩余空间律"）</strong>。提升幅度基本由"还剩多少提升空间（1 − 裸考分）"决定（r=0.75）。弱模型 GPT-5.4-mini 平均提 0.262；而本来就强的 Gemini-3.5-flash（裸考 0.761）只提 0.110，个别卷子甚至<strong>倒退</strong>（Hi-ToM −0.04）。作者点破了一个陷阱——<strong>过度搭外壳（over-scaffolding）</strong>：目标模型本来就会的东西，你再硬加一堆提示、路由、规则，反而<strong>破坏它原本正确的行为</strong>。</li></ul><h2 id="s9">7｜内核：能力不全在权重里，有一大块在"外壳"里——而外壳可以被 AI 自动搭</h2><p>带走这一颗种子就够了：</p><blockquote><p><strong>一个模型"实际能用出来"的能力 ＝ 权重里存的 + 外面那层外壳给的。</strong> 这两块可以分开优化。强模型能把自己的"认知结构"（怎么拆题、怎么定死、怎么路由）<strong>打包成一层外壳，一分钱参数不改就过继给弱模型</strong>。而这层外壳，现在能由 AI 自己迭代着搭出来。</p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源 3 层）</h1><p><strong>第 1 层——它直接掉头的对象：训练时蒸馏。</strong> "把强模型能力搬给弱模型"这条线，之前全在"改参数"里打转：on-policy distillation（学生一边自己答、老师一边纠）、teacher forcing（逼学生照抄老师）。我们最近讲过的 [[2026-07-15--weak-to-strong-direct-opd]]（弱到强直接蒸馏）、[[2026-07-18--seed-self-evolving-opd]]（自进化在线蒸馏）、[[2026-07-01--agents-a1-horizon-scaling]]（用蒸馏把 35B 拉到万亿级表现）都是这一路——<strong>核心动作都是改学生的权重</strong>。这篇把方向掉了个头：<strong>不改权重，改外壳，而且放到答题当下做。</strong></p><p><strong>第 2 层——更深的那条问题线："知道"和"会用"之间的鸿沟。</strong> 为什么外壳能白捡这么多分？因为模型脑子里<strong>本来就有</strong>这些能力，只是<strong>用不稳、逼不出来</strong>。这正是我们讲过的 [[2026-07-14--knowing-using-gap]]（模型"知道"却"用不出来"的机理）那条线。旧解法是重训让它"会用"；这篇给了个 test-time 的解法——<strong>与其重训，不如用外壳把已有能力逼出来、稳住</strong>。它也接着"用外部结构榨取模型能力"这一支：[[2026-07-11b--llm-as-a-verifier]]（用模型当验证器）、[[2026-06-21--fapo-autonomous-prompt-optimization]]（自动优化提示词管线）。</p><p><strong>第 3 层——时代大背景：AI4AI（AI 造 AI）与"外壳工程"。</strong> 2026 年一个明确的主旋律是"AI4AI"——让 AI 来改进 AI。我们讲过 [[2026-08-03--frontis-ma1-rsi]]（AI 递归改进机器学习工程）、[[2026-07-27--arex-rsi-deep-research]]（AI 递归改进深度研究）。这些都是"AI 去<strong>重训／重造</strong> AI"。同期 Lilian Weng 在 2026-07 专门写了《Harness Engineering for Self-Improvement》，把"外壳工程"点成自我改进的一条正路。这篇的位置很清楚：<strong>它把 AI4AI 从"训练时重造"下沉到了"推理时搭壳"</strong>——不动模型本体，成本极低，即插即用。这是自我改进谱系里最轻的一档。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><p>前沿正在把"能力"这个词<strong>重新拆账</strong>：过去默认"能力＝权重里的东西"，现在越来越看清 <strong>"可用能力 ＝ 权重 + 外壳"</strong> 是个合成量，而且<strong>外壳这一项可以被 AI 自动优化、还能在不同模型之间搬运</strong>。这意味着——<strong>提升一个 AI 系统，不一定要更大的模型或重新训练</strong>，可以让一个强模型给弱模型自动搭一层外壳。这是"自我改进"里最便宜、最快见效的一条路径，也预示着未来"模型"和"套在模型外面的系统"会被<strong>分开来各自进化</strong>。</p><h2 id="s13">对你的提示词：这是一次机理级的重新定义</h2><p>这篇几乎是给"提示词工程"做了一次拆骨手术，三条直接可用：</p><ol class="ls"><li><strong>好提示词的大头不是"让模型多想"，而是"把能定死的东西从模型手里拿走、定死"。</strong> 你的杠杆在：<strong>按问题类型分流（路由）＋ 强制输出格式 ＋ 把稳定的判断逻辑写成规则/代码</strong>，而不是堆"请你一步步仔细思考"。数据摆在这：强制思考链只值 +0.007，而把极性判断写成规则值 +0.090。</li><li><strong>"让它自我检查一遍再回答"这个流行直觉，边际收益可能为负（−0.097）。</strong> 与其加复核关卡，不如在源头把不确定性掐掉（结构化抽取、确定性求解）。多一道让模型自己拿主意的环节，常常是引入新抖动，而不是消除旧错误。</li><li><strong>警惕"过度搭壳"：强模型少加壳，弱模型多加壳。</strong> 模型本来就会的部分，你硬套提示/规则会破坏它（Gemini-3.5-flash 被搭壳搭到倒退）。判断"这块该交给模型还是该定死"——能定死的定死，定不死的（深层猜心、贝叶斯推断）才留给模型。</li></ol><h2 id="s14">对京小贝：一把"成本／能力"的新钥匙</h2><ul class="ls"><li><strong>用强模型给便宜模型自动搭壳，逼近大模型表现，而不用把大模型搬上线。</strong> 线上为省钱跑小模型时，可以离线让一个强模型（builder）给它生成一套外壳：<strong>按问题路由 ＋ 强制格式 ＋ 把金融里能规则化的判断（某些合规校验、字段抽取、风险等级分流）卸载成确定性代码</strong>。关键、稳定的那部分交给代码，模糊、开放的那部分才留给模型。既省钱，又把小模型在要害任务上的稳定性拉起来。</li><li><strong>这套外壳是一份可迭代、可复用的资产。</strong> 拿一小撮（比如 5%）真实线上样本当验证集，让强模型反复优化外壳——<strong>优化的是外壳，不是模型，不用碰线上模型本体</strong>，风险低、迭代快。外壳还能在你换底座模型时大部分沿用。</li><li><span class="lk">一条反向警示</span>别给你已经很强的主力模型无脑堆一层又一层提示脚手架，<strong>可能反而降质</strong>。对强模型，做减法；把复杂外壳留给你真正想省成本、能力有缺口的那些便宜模型。</li></ul><hr class="rule"><h1 id="s15">来源</h1><ul class="ls"><li>论文原文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.12307">https://arxiv.org/abs/2608.12307</a></li><li>论文 HTML（含全部数值与消融）：<a class="src" href="https://arxiv.org/html/2608.12307">https://arxiv.org/html/2608.12307</a></li><li>HuggingFace Daily Papers（2026-08-13 榜，#3 · 80 upvotes）：<a class="src" href="https://huggingface.co/papers/2608.12307">https://huggingface.co/papers/2608.12307</a></li><li>时代背景·外壳工程：Lilian Weng《Harness Engineering for Self-Improvement》(2026-07)：<a class="src" href="https://lilianweng.github.io/posts/2026-07-04-harness/">https://lilianweng.github.io/posts/2026-07-04-harness/</a></li><li>关键数据（均引自论文 HTML）：GPT-5.4-mini 0.488→0.912（相对+87%）、72 次实验 100% 超基线、determinism 占比与准确率 r=0.72、极性规则 +0.090 / 强制 CoT +0.007 / 复核关卡 −0.097、builder 思考力度单调 ρ=0.77、剩余空间律 r=0.75、Gemini-3.5-flash 0.761→0.871（个别倒退）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
