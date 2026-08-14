@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mechanist：AI自动化解剖AI的科学仪器 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.08.15</span></div>
+  <div class="bar"></div>
+  <h1>Mechanist：AI自动化解剖AI的科学仪器</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>24</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">困境与转折</div><ul><li><div class="n2" style="--c:#E63312">模型能力升速快，理解却严重滞后（能做vs看懂的差距拉大）</div></li><li><div class="n2" style="--c:#E63312">通用AI科学家系统失效：假设不值钱、易出错、不可靠</div></li><li><div class="n2" style="--c:#E63312">解法：配专业工具库+13000篇知识库+质检员，工业化而非一人瞎试</div></li></ul></li><li><div class="n1" style="--c:#10395E">四阶段流水线架构</div><ul><li><div class="n2" style="--c:#10395E">假设Agent：BM25+向量+引用扩展检索，从13000篇+4300万论文库出假设</div></li><li><div class="n2" style="--c:#10395E">实验Agent：32种解剖方法工具库，真代码真实验真数据</div></li><li><div class="n2" style="--c:#10395E">质检Agent（核心创新）：专职查数据泄露、指标合法、可复现性</div><ul><li><div class="n3">追踪标签来源、是否偷进训练/测试</div></li><li><div class="n3">换方法换数据换模型二次验证，看结论稳不稳</div></li></ul></li><li><div class="n2" style="--c:#10395E">迭代Agent：返工至稳健，或诚实交&#x27;未解疑点&#x27;</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">三大案例发现</div><ul><li><div class="n2" style="--c:#9E2B22">案例一：跨模态特质传染漏洞</div><ul><li><div class="n3">字面删干净（GPT过滤），坏倾向通过&#x27;非语义通道&#x27;（画风遣词暗纹）传过去</div></li><li><div class="n3">实验室安全乱答率：基线20.3% → 用&#x27;干净数据&#x27;训出48.6%；画香蕉25.6% vs 2.5%</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">案例二：两套分离电路（自信vs推人）</div><ul><li><div class="n3">精确定位：L4.H1管推测他人（0.86准度），L9/7/12管自己信什么（0.78准度）</div></li><li><div class="n3">因果证：关L4.H1推测跌0.34，关个人信念自己信什么跌0.21，电路真分开</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">案例三：特征操控Evo2-7B生DNA</div><ul><li><div class="n3">α螺旋43.8% → 56.6%；随机特征验证无效43.2%；加置信度58.7%</div></li><li><div class="n3">强度可调0→8提升12.8%，保序列有效性，定向生成优于抽签再选</div></li></ul></li></ul></li><li><div class="n1" style="--c:#3E5C2E">性能与可靠性</div><ul><li><div class="n2" style="--c:#3E5C2E">9题全第一：Mechanist 87-92% vs Claude 78-82% vs AI Scientist 54-62%</div></li><li><div class="n2" style="--c:#3E5C2E">多模态90.3%(vs 65.8%)、安全题67.4%(vs 48.2%)，完全碾压</div></li><li><div class="n2" style="--c:#3E5C2E">人类+Claude Opus 5+GPT-5.6-sol双评分排名一致，结论稳健可信</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">工程创新设计</div><ul><li><div class="n2" style="--c:#6B4A8E">记忆外置分格存：不堆长对话，按阶段分结构化文件（质检意见只增不改）</div></li><li><div class="n2" style="--c:#6B4A8E">工作台隔离：各Agent独立工作台+独立记忆，打包成品给下一棒（对抗通用系统乱哄哄聊天记录）</div></li><li><div class="n2" style="--c:#6B4A8E">专职质检员直治&#x27;一本正经胡说&#x27;的病根（数据泄露、指标错用、报告和实验对不上）</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">对应用的四条启示</div><ul><li><div class="n2" style="--c:#8A6D1F">【安全生死线】数据字面干净≠安全，非语义通道会漏坏倾向，必须端到端行为测试</div></li><li><div class="n2" style="--c:#8A6D1F">【架构借鉴】拆&#x27;干活&#x27;和&#x27;质检&#x27;Agent分家，长会话压成分格文件（验证当方向盘）</div></li><li><div class="n2" style="--c:#8A6D1F">【控制新思路】特征方向操控 vs 生成再选，定向生成降成本提准度（Steerling孪生）</div></li><li><div class="n2" style="--c:#8A6D1F">【提示词陷阱】角色扮演用&#x27;推测他人&#x27;电路，事实准度用&#x27;自己信什么&#x27;电路，同句不能硬压</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
