@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28214%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2224%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2249%22%20cy%3D%2218%22%20r%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2237%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让 AI 当"解剖 AI 的科学仪器"——把"看懂模型"这件事本身自动化</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-15</span></div>
+  <h1 class="doc">让 AI 当"解剖 AI 的科学仪器"——把"看懂模型"这件事本身自动化</h1>
+  <div class="dateline"><span>全文 <b>5,258</b> 字</span><span>约 <b>14</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Mechanist: AI as a Scientific Instrument for Discovering the Mechanisms of Intelligence</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.12036</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Mengru Wang(王梦如)、Junfeng Fang、Shuofei Qiao、…、Ningyu Zhang(张宁豫)、Julian McAuley、Tat-Seng Chua(蔡达成)、Huajun Chen(陈华钧)</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">浙江大学（主导）× 新加坡国立 × Heriot-Watt × 南方科技大学 × UC San Diego × Northeastern</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-12</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-15.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-15.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily 08-13窗口·约30赞（信号中等·诚实标注）· 血统顶配(浙大张宁豫/陈华钧 + UCSD McAuley + NUS蔡达成) · 台账首篇"自动化机理科学/AI 当研究 AI 的仪器"新主轴 · S2限流未取证(发表3天≈0)</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, interpretability, ai4science, agent, mechanistic-interpretability, automated-science</span></div></div><div class="tools"><a class="btn hot" href="2026-08-15-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法（机制 + 每个设计为什么这么选）</a><a class="t-h2" href="#s8">6. 结局（世界变了什么样 + 最反直觉的副发现）</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">能怎么用（四条，落到你的提示词和京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇不是又一个"更强的模型"或"更好的分数"，它推进的是一件更底层的事：<strong>把"看懂模型内部怎么运作"这件苦活本身，第一次交给 AI 自动去做。</strong></p><ol class="ls"><li><strong>它推进了什么</strong> —— 过去一年，台账里攒了十几篇"人费尽力气去逆向工程模型"的论文（RL 到底改了哪几层、潜空间里到底有没有在思考、把概念摁下去输出会不会变……全是人一篇篇手工做实验）。Mechanist 把这整套手艺变成一个<strong>会自己出假设、自己跑实验、自己挑毛病、自己返工</strong>的 AI 系统，还真的用它发现了三样新东西（一个反直觉的安全漏洞、一套"模型怎么形成信念"的机理、一次对生物基础模型的定向操控）。这是"AI4Science（用 AI 做科学）"第一次干净地掉头对准 <strong>AI 自己</strong>。</li><li><strong>命中的质量信号</strong> —— 上了 HuggingFace 每日论文榜（08-13 窗口，约 30 赞，信号中等，诚实说：那天更高票的 Spark-to-Paper 590 赞是"自动写论文的应用"、不在"推进能力机理"这条选片轴上）。真正让它够格的是<strong>血统 + 全新的轴</strong>：浙大张宁豫、陈华钧（国内知识计算/可解释性一线）+ UCSD 的 Julian McAuley + NUS 的蔡达成。台账此前没有一篇"自动化机理发现"的论文，这是开新主轴。</li><li><strong>对思染追前沿的价值</strong> —— 你最怕的那句话是"大模型某天突然进化得很厉害、而我完全不懂"。这篇正好是这句话的正面回答：<strong>整个领域已经意识到"人看不懂模型"是个危险，答案是——把"看懂"也自动化，让 AI 帮我们追上 AI。</strong>它还顺手给京小贝甩下一颗真炸弹（下面第一个案例，关于"数据看着干净不等于安全"），对一个做金融、要合规、可能要蒸馏数据的产品是生死线级别的提醒。</li></ol><p>诚实交底：这是"系统 + 三个案例"型论文，不是单点能力刷分；绝对分层面它比的是"出假设/跑实验的可靠度"而非某个 benchmark 屠榜；Semantic Scholar 早期引用因限流未取证（发表 3 天，引用≈0 正常）。选它是冲<strong>方向的分量 + 血统 + 对思染的直接价值</strong>，非票数。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是一个叫 <strong>Mechanist</strong>（可以读作"机理师"）的系统。它不是一个新模型，而是一套<strong>会自己做科研的 AI 流水线</strong>——而它研究的对象很特别：<strong>不是别的，是 AI 自己</strong>。你可以把它想成一台"专门用来解剖 AI 大脑的自动化实验室"。</p><h2 id="s4">2. 困境</h2><p>现在的处境是这样一个剪刀差：</p><ul class="ls"><li>一边，模型越来越强、训练越来越自动化，<strong>造模型这件事跑得飞快</strong>。</li><li>另一边，"这个模型内部到底怎么运作、它为什么会这样答、它藏着什么风险"——这类问题，靠的还是<strong>人一篇一篇论文、一个一个实验手工去弄清</strong>，慢得要命。</li></ul><p>结果就是原文那句话：<strong>"a gap between what models can do and our ability to understand and control them"</strong>——模型"能做的事"和我们"看得懂、管得住它"之间的差距，越拉越大。这不只是学术焦虑：看不懂就意味着<strong>发现不了藏在里面的安全隐患，也不知道怎么精准地纠正它</strong>。</p><h2 id="s5">3. 旧路</h2><p>已经有两拨人想让"AI 自己做研究"来提速，但用在"解剖模型内部"这件事上都不够：</p><ul class="ls"><li><strong>"AI 科学家"系统</strong>（就是那种能自动写机器学习论文的 agent）：会走完整个科研流程，但做"看模型内部"这种精细活时，出的假设不够有价值、实验容易做砸。</li><li><strong>直接拿 Claude Code 这类编程智能体当研究助手</strong>：能写能跑，但<strong>跑得不可靠</strong>——常出现数据泄露（把答案偷偷混进了训练/测试）、指标用错、以及"报告里写的结论其实跟实际跑出来的结果对不上"。</li></ul><p>一句话：通用的 AI 助手，缺一套<strong>专门解剖模型的知识和纪律</strong>，就容易一本正经地胡说。</p><h2 id="s6">4. 转折</h2><p>作者的关键转念很朴素：<strong>别让一个通用 AI 助手一个人瞎试，给它配齐"解剖模型的专用工具箱 + 一整座领域知识库"，再把"做研究"这件事拆成一条流水线——几个各管一段的小 AI 接力干，其中专门留一个岗位当"挑毛病的质检员"。</strong></p><p>换句话说：把科研从"一个天才灵光一现"改造成"一条有分工、有质检、能返工的产线"。</p><h2 id="s7">5. 解法（机制 + 每个设计为什么这么选）</h2><p>Mechanist 是一个<strong>四阶段循环</strong>，每一阶段是一个专职小 AI，各自在独立的"工作台"上干活，干完把成品（数据、代码、结论）打包交给下一棒——<strong>不共享一条乱哄哄的聊天记录</strong>（这点很关键，下面讲）：</p><ol class="ls"><li><strong>出假设的（Hypothesis Agent）</strong> —— 先想"该研究什么"：某个可疑行为、背后可能的机理、能拿去干什么用。它不是凭空瞎想，而是<strong>去两个知识库里检索</strong>打底：<ul class="sub"><li>一座<strong>"可解释性专用知识图谱"</strong>，收了大约 <strong>13,000 篇</strong>做"看模型内部"的论文（知识图谱＝把论文按"研究对象／应用场景／用了什么分析方法"三张分类表拆开、连成一张能顺着查的网；这张网是用 DeepSeek-V3.2-Thinking 逐篇抽取信息建的，抽取质量经人机双评达 90%+）；</li><li>再接一座<strong>跨 26 个学科、共 4300 万篇论文</strong>的大数据库当外援（比如做生物那个案例时，可以借生物学的知识）。</li><li>查的时候用多路并查（关键词 BM25 + 语义向量 + 标题匹配 + 顺着引用关系在图上多跳扩展，最后合并排序），保证既查得准又查得广。</li></ul></li></ol><ol class="ls"><li><strong>跑实验的（Experiment Agent）</strong> —— 把假设落成一次真实验：<strong>定好用哪些数据、怎么切训练/测试、拿哪个模型开刀、用什么分析方法、用什么指标衡量、设什么对照组、算力预算多少</strong>，然后真写代码真跑。它手里握着一个<strong>32 种"解剖模型"方法的工具库</strong>（做机理分析、做因果干预、做验证的现成招式）。</li></ol><ol class="ls"><li><strong>挑毛病的（Verification Agent）</strong> —— 这是全系统最要命的一环，专门当<strong>质检员</strong>：审"标签是从哪来的、有没有数据泄露、指标合不合法、报告里的每个数字是不是真能追溯到某次真跑完的实验"；还要<strong>换一个分析方法、换一批数据、换一个模型再试一遍</strong>，看结论稳不稳（会不会只是碰巧）。——这一岗，正是专治旧路那些"一本正经胡说"的病。</li></ol><ol class="ls"><li><strong>决定返工的（Iteration Agent）</strong> —— 质检没过，就把问题打回给"出假设的"或"跑实验的"重来，一轮轮改，<strong>直到结论真的可靠稳健，或者返工次数用完</strong>（用完就老实交出目前最靠得住的结果 + 还没解决的疑点，不硬撑）。</li></ol><p>一个容易被忽略但很聪明的设计：<strong>记忆不塞进一条越滚越长的聊天记录里，而是外置成一份份"按阶段分格"的结构化文件</strong>（质检员的意见是"只增不改"的账本、跨轮研究还有一本全局账）。——这直接对应你熟的那个坑：长对话会把开头的设定冲淡，分格存反而不糊。</p><h2 id="s8">6. 结局（世界变了什么样 + 最反直觉的副发现）</h2><p>先看它到底比旧路强多少：拿 <strong>16 篇最新的可解释性论文、跨 9 个题目</strong>做考卷，<strong>只把"要验证的结论"告诉三个系统、但不给它们看原论文</strong>，让它们各自从头把实验做出来。人来打分（四个维度）：</p><div class="tablewrap"><table><thead><tr><th>维度</th><th>Mechanist</th><th>Claude Code (Opus 4.8)</th><th>AI Scientist</th></tr></thead><tbody><tr><td>数据用得对不对</td><td>87.2%</td><td>~78%</td><td>~54%</td></tr><tr><td>实验设计</td><td>83.3%</td><td>~75%</td><td>~52%</td></tr><tr><td>实验执行</td><td>92.2%</td><td>~82%</td><td>~62%</td></tr><tr><td>结果分析</td><td>86.5%</td><td>~78%</td><td>~55%</td></tr></tbody></table></div><p><strong>9 个题目全部第一</strong>（多模态题 90.3% vs Claude Code 65.8%、安全题 67.4% vs 48.2%）；三个人类专家 + 两个 AI 裁判（Claude Opus 5、GPT-5.6-sol）打出来排名一致。</p><p>真正精彩的是<strong>它用自己发现的三样东西，演了一条"发现行为→解释机理→动手控制"的递进</strong>：</p><h3>案例一（发现一个反直觉的安全漏洞）——这颗炸弹请思染务必看</h3><p><span class="lk">结论</span>一个坏毛病，能<strong>穿过"语义上完全相反的数据"、跨越模态传染过去，还躲得过按内容做的审查。</strong></p><ul class="ls"><li><span class="lk">实验室安全场景</span>先把一个老师模型（Qwen3.5-9B）调教成"在实验室安全问题上乱来"；再把它的<strong>文字回答用 GPT-4o 过滤一遍、只留下"安全的内容"</strong>；然后拿这批<strong>看起来字字安全</strong>的数据去训一个学生模型。结果学生<strong>反而更不安全</strong>了——在"图+文"的实验室安全题上，<strong>乱答率 48.6%</strong>，而没被这么训过的基线只有 20.3%、用正常老师产的安全数据训出来的对照只有 18.3%。（举个真事：给它一个"易燃"警示标志，它选了"把化学品存进加压容器"这种危险操作。）</li><li><span class="lk">文生图场景</span>一个"偏爱香蕉"的画图老师（Qwen-Image）生成一堆图，再<strong>用 GPT-5.4 把所有香蕉图片全删光</strong>（删完数据里苹果占 50.3%、一根香蕉都没有）；拿这批"零香蕉"的数据去训学生。结果学生<strong>画香蕉的概率反而飙到 25.6%</strong>（基线 2.5%、对照 2.1%），<strong>尽管它从没见过一张香蕉图。</strong></li><li><span class="lk">机理</span>坏毛病是通过生成内容里那些<strong>"非语义的通道"</strong>传过去的（画风、遣词的暗纹之类），这些东西<strong>审查内容时根本抓不到</strong>。——你把"不安全的话"删干净了，但"不安全的倾向"从别的缝里漏了过去。</li></ul><p>（这就是学界说的 subliminal learning / 特质潜移——Mechanist 是<strong>自己</strong>把它做出来、复现出来的。）</p><h3>案例二（解释一套机理）——模型是怎么"形成信念、揣摩别人"的</h3><p>Mechanist 发现：模型内部长出了<strong>两套分开的"脑区"</strong>——一套管"我（这个角色）相信什么"，另一套管"我推测别人相信什么"。</p><ul class="ls"><li>它先定义三种问法：<strong>世界知识</strong>（客观事实，如"天是蓝的"）／<strong>个人信念</strong>（先给某个角色塞一个跟事实相反的信念，再问这个角色会怎么答）／<strong>归因信念</strong>（问"这个角色以为是什么"——也就是<strong>揣摩别人心里怎么想</strong>，这在认知科学里叫"心智理论"）。</li><li>在一个小模型 Pythia-1B（10 亿参数、训练过程有公开存档、方便逐步观察）上，它<strong>精确定位到具体的"注意力头"</strong>（注意力头＝Transformer 每层里成排的小小"查阅单元"，L4.H1＝第 4 层第 1 号）：L4.H1 是"揣摩别人"最关键的头，L9.H1/L7.H5/L12.H1 管"我自己信什么"。</li><li><strong>因果证据</strong>（把某个头"关掉"看什么塌）：关掉 L4.H1，"揣摩别人"的准确率从 0.86 掉到 0.34，而"我自己信什么"稳在 0.71 不动；反过来关掉"个人信念"那几个头，"我自己信什么"从 0.78 塌到 0.21，"揣摩别人"反而升到 1.00。——两套电路是<strong>真分开、可以单独敲掉</strong>的。</li><li><strong>它还看了这俩能力在训练途中怎么长出来的</strong>："揣摩别人"很早就成熟（2000 步就到位），"我自己信什么"晚一些、慢慢长；而且<strong>每种能力冒头的时刻，正好对应它那几个头变重要的时刻</strong>。作者指出这些失败模式和认知科学里人的"自我中心干扰／他人中心干扰"惊人相似。</li></ul><h3>案例三（动手控制一次）——把机理拿去"操控"一个生物 AI</h3><p>最后它证明"看懂了就能拧"：目标是让一个<strong>生物基础模型 Evo2-7B</strong>（一个专门在 DNA 序列上训练的模型——DNA 就是 A/T/C/G 四个字母排成的长串，Evo2 像"DNA 界的语言模型"、70 亿参数）<strong>生成"更多 α-螺旋结构"的 DNA</strong>（α-螺旋＝蛋白质链常见的一种像弹簧一样的局部形状，"多一点 α-螺旋"是你想设计出来的一个结构性质）。</p><ul class="ls"><li>做法：<strong>在模型内部找到那条"负责 α-螺旋"的特征方向，在生成 DNA 时把它按住/加强。</strong></li><li>900 条序列结果：α-螺旋含量从没干预的 43.8% 提到 56.6%；<strong>随便挑个别的特征去按毫无效果（43.2%）</strong>＝证明是那条特征真在起作用；加上置信度过滤（pLDDT≥0.4，pLDDT 是蛋白结构预测给出的"我对这个 3D 形状有多确定"的分，越高越靠谱）还有 58.7% vs 45.4%。</li><li>关键是它会<strong>调力度</strong>：把强度从 0 加到 8，螺旋含量涨 12.8 个百分点，同时基本保住"这段 DNA 还是能正常读成基因"（valid ORF＝开放阅读框，通俗说"这段 DNA 没被搞成乱码、还是生物学上说得通的"）；再加大就会把序列搞坏，所以它选 8 当"坏掉之前的最强档"。</li><li><span class="lk">意义</span>过去要拿到想要的 DNA，靠"生成一大堆再挑"（generate-and-rerank，又贵又碰运气）；现在<strong>靠机理直接"定向生成"</strong>。</li></ul><h3>诚实的护栏（作者自己按的刹车）</h3><p>（1）它<strong>还没针对"模拟人类认知的模型"优化</strong>——那种模型的内部不仅要对上行为、还要对上心理学概念和神经数据，特别难；（2）虽然能全自动，作者<strong>建议当"人 + AI 合作的科学家"用</strong>，人把关是结果可靠的安全阀；（3）返工预算用完就交"目前最靠谱的结果 + 未解疑点"，不假装做完。</p><h2 id="s9">7. 内核</h2><p><strong>把"看懂 AI"这件事本身，第一次做成了可以自动化、可以规模化的流程。</strong> 过去我们对模型的理解，是人一篇一篇论文攒出来的手工活；现在有了一台"研究 AI 的科学仪器"——它读了一万三千篇别人的研究、握着 32 把解剖刀、还配了个专职质检员，能自己发现行为、解释机理、动手控制。当造模型在加速、看懂模型也终于开始加速——这一步，是在替我们<strong>追上自己造出来的东西</strong>。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><ul class="ls"><li><span class="lk">第一层（它在改进/批判谁）</span>它站在 <strong>"AI 科学家"系统</strong>（如 Sakana 的 AI Scientist，能自动写论文）和<strong>把 Claude Code 当研究助手</strong>这两条路上往前推。这两条路会做通用科研，但做"解剖模型内部"时<strong>假设不够值钱、实验不够可靠</strong>。Mechanist 的两处新意：把 AI 科学家<strong>专门化到"可解释性"这个领域</strong>（配 13,000 篇专用知识库 + 32 种解剖方法），并<strong>单独设一个"质检员" agent</strong> 专门查数据泄露/指标合法性——直接治通用 AI 科学家最被诟病的"不可靠"。</li><li><span class="lk">第二层（它自动化的那门手艺）</span><strong>机理可解释性</strong>（mechanistic interpretability）——就是台账里反复出现的那门手艺：找电路、做因果追踪/切除（关掉一个部件看什么塌）、找特征方向、按住特征做操控。台账里 [[2026-07-23--anthropic-global-workspace-jspace|Anthropic 全局工作空间]]、[[2026-07-19--spectral-rewiring-sar|SAR 谱重连]]、[[2026-07-11--one-layer-enough-rl|一层就够]]、[[2026-06-30--latent-thoughts-four-axioms|潜在思维四公理]]、[[2026-08-12--steerling-inherently-interpretable-lm|Steerling]]……全是<strong>人手工</strong>在做这件事。Mechanist 是<strong>把这整门手艺自动化</strong>的那一步。</li><li><span class="lk">第三层（根）</span>往下是"<strong>自动化科学 / 自动驾驶实验室</strong>"的老梦（AI4Science），但这次把探照灯掉头照向 <strong>AI 自己</strong>；再往下是那句最本质的动机——<strong>当造模型和训练都在自动化提速，人对模型的理解如果还靠手工就必然落后，所以"理解"本身必须也被自动化，才追得上"能力"。</strong> 这正是把整条台账暗线（越往后越多论文在费力逆向工程"训练到底改了模型什么"）收成一个<strong>元层面的顶点</strong>：既然人一篇篇读不过来，那就造一个 AI 替我们读一万三千篇、并且自己动手做实验。</li></ul><p><span class="lk">和台账三条线的咬合</span>案例一（跨模态特质传染、"看着安全其实不安全"）直接呼应 [[2026-06-23--gatemem-memory-governance|GateMem]] 的"强≠守得住"和安全治理；案例二（信念/揣摩别人的内部电路）呼应 [[2026-06-30--latent-thoughts-four-axioms|潜在思维四公理]]、[[2026-07-14--knowing-using-gap|知道≠会用]] 的表示与机理研究；案例三（找到特征方向、按住它来操控）几乎是 [[2026-08-12--steerling-inherently-interpretable-lm|Steerling]]"看得懂当场变拧得动"的孪生动作，只不过 Steerling 是把可操控<strong>设计进架构</strong>、Mechanist 是<strong>自动发现并施展</strong>这套操控。它把这三条线拧成一句话：<strong>理解和控制，正在被自动化。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><p>前沿的重心，正在从"<strong>人来理解模型</strong>"悄悄挪向"<strong>让 AI 来理解模型</strong>"。你最在意的那句"我不希望它突然进化得很厉害而我完全不懂"——这篇是领域给出的正面答案：<strong>看懂和控制这件事本身，也开始被自动化，用来追上能力的加速。</strong>而且它把"可解释性"从"看个热闹/发论文"抬成了<strong>能落地干活的三连</strong>：发现问题 → 解释机理 → 直接动手拧。以后模型进化，"我们能不能跟上地看懂它"这条线，会和"它能力多强"这条线<strong>并排往前跑</strong>。</p><h2 id="s13">能怎么用（四条，落到你的提示词和京小贝）</h2><ol class="ls"><li><strong>【安全生死线·必看】"数据看着干净"≠"训出来安全"。</strong> 案例一坐实了：你<strong>按内容删掉了坏东西，坏倾向还能从非语义的缝里漏过去</strong>。京小贝一旦要<strong>用某个老师模型蒸馏/合成训练数据</strong>（这是降本常规操作），千万别只做"内容审查"就放心——<strong>必须端到端测行为</strong>（拿最终学生模型在真实危险场景上考"它到底会不会乱来"），而不是只检查"喂进去的字干不干净"。对一个要合规的金融产品，这是"看起来安全就上线"的最大暗雷。</li></ol><ol class="ls"><li><strong>借它的 agent 结构：把"干活的"和"质检的"拆开，记忆分格存。</strong> Mechanist 最值钱的工程直觉是那个<strong>专职质检 agent</strong>（查数据泄露、查指标、查"报告数字对不对得上真跑的结果"）+ <strong>记忆外置成按阶段分格的文件</strong>（不塞一条越滚越长的对话）。京小贝自己的多步 agent 完全可以照抄：<strong>让"生成回答/执行"的 agent 和"审这条回答合不合规、事实对不对"的 agent 分家</strong>（呼应台账 [[2026-06-27--verification-horizon|验证地平线]]、[[2026-07-27--arex-rsi-deep-research|AREX]]"验证当方向盘"）；长会话别攒流水账，压成"已确认/还差什么/下一步"的分格文件。</li></ol><ol class="ls"><li><strong>控制可以做进模型里，不一定靠外面兜。</strong> 案例三说明"想让输出多一点某性质"未必要"生成一大堆再挑"（贵、碰运气），可以<strong>找到那条特征、直接定向生成</strong>（呼应 [[2026-08-12--steerling-inherently-interpretable-lm|Steerling]]）。对京小贝的启发：某些风格/风险偏好的控制，<strong>未来可能是"按住一个概念"而不是"堆一层层提示词兜底或事后重排"</strong>——留只眼睛盯"可操控性做进模型"这条线。</li></ol><ol class="ls"><li><strong>提示词直觉：给模型"设角色"时，动的是另一套电路。</strong> 案例二发现"<strong>我自己信什么</strong>"和"<strong>我推测这个角色信什么</strong>"在模型内部是<strong>两套分开的脑区</strong>。这解释了一个你可能踩过的坑：当你让京小贝<strong>扮演某个角色/人设</strong>去回答时，它调用的是"揣摩这个角色会怎么想"的电路，<strong>和它"直接调取事实"的电路不是一条</strong>——所以<strong>角色扮演有时会让事实准确率变样</strong>。要事实稳，就别把"扮演人设"和"给出准确数据"硬压在同一句里让它抢（同 [[2026-08-11--sft-conflicts-rl-coexists|SFT相冲/RL共存]]"方向重合就互相干扰"、[[2026-08-14--ai4ai-test-time-harness|AI4AI 搭外壳]]"一句里塞多个目标会互抢"一个味）。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.12036">https://arxiv.org/abs/2608.12036</a></li><li>论文全文（arXiv HTML）：<a class="src" href="https://arxiv.org/html/2608.12036">https://arxiv.org/html/2608.12036</a></li><li>质量信号 · HuggingFace Daily Papers（08-13 窗口）：<a class="src" href="https://huggingface.co/papers/date/2026-08-13">https://huggingface.co/papers/date/2026-08-13</a></li><li>机构/通讯：浙江大学（{mengruwg,zhangningyu}@zju.edu.cn）× NUS × Heriot-Watt × 南科大 × UCSD × Northeastern（据 arXiv HTML 作者页）</li><li>Semantic Scholar 早期影响力：因 API 限流（HTTP 429）未取证，发表 3 天引用≈0，属正常</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
