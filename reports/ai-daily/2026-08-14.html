@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28269%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2237%22%20r%3D%2221%22%20fill%3D%22%23fff%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2237%22%20r%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.13%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2219%22%20r%3D%2211%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20260814-AI日报 · </title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted)}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r"> · </span></div>
+  <h1>20260814-AI日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>24</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">覆盖方向：OpenAI/GPT · Google/DeepMind/Gemini · Anthropic/Claude · 中国AI（字节/豆包/Seed/DeepSeek/智谱/MiniMax/通义）· AI芯片/NVIDIA/算力 · AI政策/监管 · AI投融资</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>DeepSeek 正式发布 V4-Pro，并大幅上调 API 价格——中国大模型"价格战"时代或就此翻篇</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>智谱发布 GLM-5.3：号称"编程能力最强的开源模型"，性能逼近 Fable 5</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Anthropic 给所有 Claude 输出加"隐形水印"，并把 Claude Code 默认切到 Auto Mode</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>谷歌上线 Gemini 3.7 Flash：更便宜的编程/智能体"主力马"，恰逢 DeepMind 大重组</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>苹果为中国市场自研大模型，由阿里巴巴协助——首家获北京批准提供自有 AI 模型的外企</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>DeepSeek 正式发布 V4-Pro，并大幅上调 API 价格——中国大模型"价格战"时代或就此翻篇</h3><p class="lp">DeepSeek 8 月 14 日正式发布旗舰模型 <strong>V4-Pro（GA 版本代号 DeepSeek-V4-Pro-0813）</strong>，主打<strong>智能体（agent）能力</strong>——工具调用、执行代码、多步骤自动完成任务；同时宣布对 V4-Pro 与 V4-Flash 两档全面提价，并首次引入<strong>高峰/低谷分时计价</strong>。据 <a class="src" href="https://www.caixinglobal.com/2026-08-14/tech-brief-aug-14-deepseek-launches-v4-pro-and-raises-api-prices-by-as-much-as-1100-102474222.html">Caixin 财新（8-14）</a> 报道，峰值档相比旧价最高上调可达约 <strong>1,100%</strong>（缓存命中 0.3 元/百万 tokens、未命中 9 元、输出 27 元，低谷时段减半）；<a class="src" href="https://asia.nikkei.com/business/technology/artificial-intelligence/deepseek-releases-official-v4-pro-model-with-sharply-higher-user-prices">Nikkei（8-14）</a> 称最终定价"比此前预告高出近 5 倍"；<a class="src" href="https://www.engadget.com/2236912/deepseek-ai-models-get-four-times-pricier/">Engadget（8-14）</a> 概括为 API 价格约上调 4 倍。</p><p class="lp">- <strong>为什么重要</strong>：DeepSeek 过去的招牌就是"极致便宜"，是把中国乃至全球大模型 API 价格打下来的那条鲇鱼。如今它主动把旗舰价往上抬（尤其把 Pro 定位成"用得起就说明值得付溢价"的高端档），本质是承认：真正强的 agent 模型跑起来算力成本高，靠低价换量的打法撑不住旗舰。</p><p class="lp">- <strong>意味着什么</strong>：这是一次风向标——如果连 DeepSeek 都开始为"能力"收溢价、并用分时计价来平峰填谷（像电价一样管理算力负载），说明中国厂商正从"比谁便宜"转向"比谁能把 agent 能力变现"。同日智谱发 GLM-5.3、阿里预告 Qwen3.8-27B（见下），三巨头一个月内密集迭代，价格与能力同时上探。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>智谱发布 GLM-5.3：号称"编程能力最强的开源模型"，性能逼近 Fable 5</h3><p class="lp">8 月 14 日，智谱（港股 <strong>2513.HK</strong>）正式发布新一代基座模型 <strong>GLM-5.3</strong>，总参数约 <strong>7430 亿</strong>。关键点：<strong>不换基座</strong>（与 GLM-5.2 同底），全部提升来自"后训练 Scaling"——用数十倍规模的长程任务环境、更丰富的环境类型、超长后训练时间把模型智能上限往上顶。据 <a class="src" href="https://www.ithome.com/0/989/689.htm">IT之家（8-14）</a> 与 <a class="src" href="https://finance.sina.com.cn/tech/digi/2026-08-14/doc-ininhhrs2630952.shtml">新浪科技（8-14）</a>，GLM-5.3 内部体感评测较 5.2 提升约 <strong>50%</strong>，在 Terminal Bench 3.0、Agents' Last Exam(CLI) 等公开基准上拿到<strong>开源第一</strong>，编程与智能体能力"接近 Fable 5"；<a class="src" href="https://www.163.com/dy/article/L4A8QOUM055284JB.html">网易/新京报贝壳（8-14）</a> 特别提到其<strong>涌现出网络安全能力</strong>。开源权重预计发布约两周后（<strong>8 月底</strong>）放出，需先完成安全评估加固（<a class="src" href="https://juejin.cn/post/7673696068215439412">掘金技术解读，8-14</a>）。</p><p class="lp">- <strong>为什么重要</strong>：GLM-5.3 证明了一件事——<strong>不训练新基座、纯靠后训练 Scaling，也能把开源模型的编程/agent 能力推到接近闭源前沿</strong>。这对"是不是每次进步都要重新烧一遍预训练"的行业假设是个反例，也降低了追赶前沿的门槛。</p><p class="lp">- <strong>意味着什么</strong>：智谱刚在港股上市（36氪称其为"从清华实验室走出来的千亿科技独角兽"），但发版当天股价却"冰火两重天"下挫（<a class="src" href="https://www.163.com/dy/article/L4A588JK0519848A.html">网易，8-14</a>）——技术登顶与资本市场情绪脱节，说明市场对国产大模型"能不能赚到钱"仍高度存疑，跟第 1 条 DeepSeek 涨价其实是同一个焦虑的两面。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Anthropic 给所有 Claude 输出加"隐形水印"，并把 Claude Code 默认切到 Auto Mode</h3><p class="lp">8 月 14 日 Anthropic 宣布：<strong>Claude 生成的所有文本与代码，都会在模型层嵌入机器可读的隐形水印</strong>，复制粘贴后仍会跟随、部分编辑后仍可能留存，目的直指欧盟《AI 法案》对 AI 生成内容标注的要求（<a class="src" href="https://www.thehindu.com/sci-tech/technology/anthropic-watermarking-claude-ai-content-explained/article71339909.ece">The Hindu，8-14</a>、<a class="src" href="https://www.geeky-gadgets.com/claude-ai-invisible-watermarks/">Geeky Gadgets，8-14</a>）。同日，Anthropic 把 <strong>Claude Code 的默认权限模式改为 "Auto Mode"</strong>（Pro/Max/Team 新会话默认自动放行工具调用，用分类器实时筛查风险动作，取代逐条人工确认）（<a class="src" href="https://developmentstoday.com/ai-robotics/anthropic-claude-code-auto-mode-default-2026">Developments Today，8-14</a>）。</p><p class="lp">- <strong>为什么重要</strong>：这是头部前沿实验室里较早把"内容溯源"做进模型底层的动作——<strong>合规从"外挂检测"变成"产品自带属性"</strong>。同时 Auto Mode 默认化意味着"让 agent 自己跑、别老打断"正在成为行业默认姿态。</p><p class="lp">- <strong>意味着什么</strong>：水印引发了版权/隐私争议（"人写的到哪一步算 AI 写的"），Anthropic 当天还专门澄清（<a class="src" href="https://www.digitaltoday.co.kr/en/view/93531/anthropic-clarifies-after-claude-watermark-controversy-over-ai-labeling">Digital Today，8-14</a>）。一边是监管倒逼透明，一边是产品放手让 agent 自主执行——<strong>"可追溯"与"更自动"这两股力量同时加速</strong>，是接下来最值得盯的张力。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>谷歌上线 Gemini 3.7 Flash：更便宜的编程/智能体"主力马"，恰逢 DeepMind 大重组</h3><p class="lp">8 月 14 日，Google DeepMind 推出面向编程与 agent 任务的 <strong>Gemini 3.7 Flash</strong>，距上一版 3.6 Flash 仅约三周；皮查伊称其为"以极高性价比提供性能的主力马（workhorse）"（<a class="src" href="https://explainx.ai/blog/gemini-3-7-flash-vs-grok-4-6-vs-sonnet-5-vs-gpt-5-6-comparison-august-2026">explainX，8-14</a>、<a class="src" href="https://en.cryptonomist.ch/2026/08/14/gemini-3-7-flash-ai/">Cryptonomist，8-14</a>）。背景是谷歌刚宣布 DeepMind 史上最大规模的组织重组（原始日期 <strong>8-13</strong>）：CTO/首席 AI 架构师 <strong>Koray Kavukcuoglu 升任 GDM 高级副总裁</strong>，统管 Gemini 模型研发、前沿研究与 Gemini App/开发者团队（<a class="src" href="https://blog.google/company-news/inside-google/message-ceo/next-chapter-ai-momentum/">Google 官方博客，8-13</a>），外界解读为谷歌"收紧对 DeepMind 的控制、集中火力追赶 OpenAI 和 Anthropic"（<a class="src" href="https://en.sedaily.com/international/2026/08/14/google-tightens-grip-on-deepmind-as-it-trails-in-ai-race">Seoul Economic，8-13/14</a>）。</p><p class="lp">- <strong>为什么重要</strong>：Flash 这条"便宜快"线三周一迭代，直接压向 DeepSeek/智谱/OpenAI 的中小档位；而它落地的时点，正卡在谷歌用组织手术"逼 DeepMind 全力押 Gemini"之后。</p><p class="lp">- <strong>意味着什么</strong>：模型迭代节奏正被组织意志和竞争焦虑推着走——<strong>产品发版和权力重组是同一件事的两面</strong>：谷歌承认自己落后，于是用更快的低价迭代 + 更集权的研发指挥来抢时间。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>苹果为中国市场自研大模型，由阿里巴巴协助——首家获北京批准提供自有 AI 模型的外企</h3><p class="lp">据 <a class="src" href="https://www.reuters.com/business/retail-consumer/apple-trains-its-own-ai-model-china-market-with-alibabas-support-sources-say-2026-08-14/">路透社独家（8-14）</a>，苹果没有沿用第三方模型，而是<strong>为中国市场训练了自己的大语言模型</strong>，并在阿里巴巴协助下落地 Apple Intelligence。<a class="src" href="https://thenextweb.com/news/apple-china-ai-model-alibaba-qwen">The Next Web（8-14）</a> 称苹果是<strong>首家获北京批准、在中国大陆提供自有专有 AI 模型的外国公司</strong>；<a class="src" href="https://www.benzinga.com/markets/tech/26/08/61201134/apple-makes-major-ai-strategy-shift-in-china-develops-own-llm-with-alibabas-support-in-bid-to-counter-huawei-report">Benzinga（8-14）</a> 指其意在对抗华为、扳回中国市场。</p><p class="lp">- <strong>为什么重要</strong>：中国对算法/大模型审批一向严格，"外企自有模型获批上架"是罕见口子；而苹果选择自研+阿里做本地合规与基建伙伴，是一条"既要合规、又不想把大脑完全交给别人"的折中路线。</p><p class="lp">- <strong>意味着什么</strong>：这既是苹果中国 AI 战略的关键落子，也让<strong>阿里成为外企进入中国 AI 市场的"守门人+基建方"</strong>——地缘政治、监管与商业绑定在同一笔交易里。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 24 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">收入跑通率突破 $40B、逼近 IPO（原始报道 8-13，8-14 全网铺开）</strong>据 <a class="src" href="https://www.bloomberg.com/news/articles/2026-08-13/openai-s-revenue-run-rate-tops-40-billion-ahead-of-ipo">Bloomberg（8-13 首发）</a> 及 <a class="src" href="https://www.pymnts.com/news/artificial-intelligence/2026/openais-revenue-run-rate-tops-40-billion-as-ipo-nears/">PYMNTS（8-14）</a>、<a class="src" href="https://qz.com/openai-annualized-revenue-40-billion-ipo-081426">Quartz（8-14）</a>，OpenAI 年化收入跑通率已超 <strong>400 亿美元</strong>，较 2025 年底约翻一倍，主要由 AI 编程工具和企业服务驱动，为 IPO 铺路。</p></div><div class="srow"><p><strong class="st">换帅：CRO 上任不足一年离职（原始日期 8-13）</strong>首席营收官 <strong>Denise Dresser（前 Slack CEO）</strong>任职约 8–9 个月后离任，由 <strong>Wiz 前总裁兼 COO Dali Rajic</strong> 接任（<a class="src" href="https://openai.com/index/dali-rajic-chief-revenue-officer/">OpenAI 官方，8-13</a>、<a class="src" href="https://techcrunch.com/2026/08/13/openai-hires-new-cro-as-executive-shake-up-continues/">TechCrunch，8-13</a>、<a class="src" href="https://www.cnbc.com/2026/08/13/openai-denise-dresser-executive-exits.html">CNBC，8-13</a>）；8-14 有跟进解读（<a class="src" href="https://www.gurufocus.com/news/9035042/openais-leadership-shakeup-denise-dreese-steps-down-dali-rajic-takes-the-helm">GuruFocus，8-14</a>）。</p></div><div class="srow"><p><strong class="st">产品：ChatGPT 打通 Google Drive 在线编辑（8-14）</strong>据 <a class="src" href="https://www.explainx.ai/blog/chatgpt-google-docs-sheets-slides-integration-august-2026">explainX（8-14）</a>，即日起 ChatGPT 可直接打开并<strong>内联编辑</strong> Drive 里的 Google 文档/表格/幻灯片，不必离开对话窗口。</p></div><div class="srow"><p><strong class="st">相关背景（8-13）</strong>OpenAI 联手 Cerebras 预览 <strong>Ultrafast 模式</strong>，让 GPT-5.6 Sol 提速至约 750 tokens/s、约 14 倍（<a class="src" href="https://openai.com/index/previewing-gpt-5-6-sol/">OpenAI，8-13</a>、<a class="src" href="https://www.kucoin.com/news/flash/openai-and-cerebras-launch-ultrafast-mode-for-gpt-5-6-sol-14x-faster-than-standard">KuCoin，8-14 转发</a>）；此前一周 OpenAI 还在测试"ChatGPT 内投放广告"。</p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong>Gemini 3.7 Flash 发版（8-14）</strong>、<strong>DeepMind 重组（8-13）</strong>：见"今日要闻"第 4 条。</p></div><div class="srow"><p><strong class="st">Sergey Brin 加压（8-14）</strong>据 <a class="src" href="https://www.thestreet.com/technology/sergey-brin-just-set-bold-new-ai-goal-for-google">TheStreet（8-14）</a>，布林近月持续施压核心 AI 员工"全力押注 Gemini"，被视为此次 DeepMind 大重组的动因之一。</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">隐形水印 + Claude Code Auto Mode 默认化（8-14）</strong>见"今日要闻"第 3 条。</p></div><div class="srow"><p><strong class="st">自托管环境公测（8-14）</strong>Claude Code 推出<strong>自托管运行环境</strong>公测，Team/Enterprise 可在自有基础设施上跑会话，支持内网访问、自定义工具与合规控制（<a class="src" href="https://releasebot.io/updates/anthropic/claude">Releasebot，8-14</a>）。</p></div><div class="srow"><p><strong class="st">IPO/估值（8-14 报道）</strong>有报道称 Anthropic 投资人瞄准潜在 IPO 的 <strong>2 万亿美元估值</strong>（<a class="src" href="https://www.hokanews.com/2026/08/anthropic-targets-2t-valuation-ahead-of.html">HOKANEWS，8-14</a>）；另有 8-13 消息称其已启动 pre-IPO 早期投资人沟通。此类估值为传闻/目标，尚待官方确认。</p></div></div><div class="sector"><div class="sector-h">中国 AI（字节 / 豆包 / Seed / DeepSeek / 智谱 / MiniMax / 通义）</div><div class="srow"><p><strong>DeepSeek V4-Pro 发版+涨价（8-14）</strong>、<strong>智谱 GLM-5.3（8-14）</strong>：见"今日要闻"第 1、2 条。</p></div><div class="srow"><p><strong class="st">通义 Qwen（预告 8-13，落地 8-15）</strong>阿里在 ModelScope 挂出倒计时，将于 <strong>8 月 15 日零点开源</strong> <strong>Qwen3.8-27B</strong>（主打可本地部署的 open-weight）（<a class="src" href="https://finance.biggo.com/news/b3b5cb0c-d942-401f-ba61-2923b0c81857">BigGo Finance，8-13</a>）。</p></div><div class="srow"><p><strong class="st">MiniMax（8-14 公告）</strong>MiniMax Group（港股 00100）宣布将于 <strong>8 月 26 日</strong>港股收盘后发布 2026 年中期业绩（<a class="src" href="https://aijourn.com/minimax-to-report-2026-interim-financial-results-on-august-26-2026/">The AI Journal，8-14</a>）；同期 MiniMax Music 3 文本生成音乐模型在开发者社区流传试用。</p></div><div class="srow"><p><strong class="st">字节 / 豆包 / Seed</strong>8-14 无明确原发新品公告；近期主线仍是 Seedance 视频模型迭代（2.x 系列，强调原生音画共生、屏蔽好莱坞 IP 未授权使用）与 Seed 2.1 Turbo 编程 agent，属背景动态。</p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">Feynman 平台提前爬坡、倒逼台积电（8-14）</strong>据 Digitimes 报道（<a class="src" href="https://www.benzinga.com/markets/tech/26/08/61201714/nvidias-next-gen-feynman-ai-platform-is-ramping-up-forcing-tsmc-to-race-ahead">Benzinga，8-14</a>），在 Vera Rubin 进入量产爬坡的同时，英伟达已把研发与供应链资源向下一代 <strong>Feynman</strong> 平台倾斜，促使台积电抢跑 <strong>2nm 与先进封装</strong> 产能（预期 2028 年推出）。</p></div><div class="srow"><p><strong class="st">拥抱开源、黄仁勋"免费 AI 利好卖芯片"（8-14）</strong>英伟达推出轻量级开源模型、配套软件与产业合作，黄仁勋主张"AI 更开放会加速创新、拉动 GPU 需求"（<a class="src" href="https://www.benzinga.com/markets/tech/26/08/61205810/nvidia-says-free-ai-is-great-for-chips-jensen-huangs-open-source-bet-could-fuel-gpu-demand">Benzinga，8-14</a>）。</p></div><div class="srow"><p><strong class="st">$500B 算力融资平台的市场反应（事件源自 8-10，反应 8-14）</strong>英伟达 8-10 与 <strong>Apollo、BlackRock、Blackstone、Brookfield、Goldman Sachs、KKR</strong> 六大机构签 MOU，拟撬动逾 <strong>5000 亿美元</strong> 第三方资本为 AI 基础设施融资（<a class="src" href="https://nvidianews.nvidia.com/news/nvidia-partners-with-apollo-blackrock-blackstone-brookfield-goldman-sachs-and-kkr-to-establish-ai-compute-infrastructure-financing-platforms-to-mobilize-over-500-billion-of-third-party-capital">英伟达官方，8-10</a>）。8-14 成为私募信贷市场的焦点话题——把"算力"当作类似商业地产/收费公路的可抵押资产来加杠杆（<a class="src" href="https://www.933thedrive.com/2026/08/14/private-credit-roundup-nvidias-half-trillion-for-chips-financing-plus-others/">Reuters via 933 The Drive，8-14</a>、<a class="src" href="https://www.bloomberg.com/news/articles/2026-08-14/nvidia-s-500-billion-plan-envelops-wall-street-in-its-ai-frenzy">Bloomberg，8-14</a>）。</p></div><div class="srow"><p><strong class="st">出口管制/安全（8-14）</strong>乌克兰情报称在俄新型空射巡航导弹中发现 <strong>NVIDIA Jetson Orin 模块</strong>，英伟达已回应（<a class="src" href="https://hothardware.com/news/nvidia-responds-after-ai-chip-found-inside-russian-stealth-missile">HotHardware，8-14</a>）——再度点燃 AI 芯片流向与管制话题。</p></div></div><div class="sector"><div class="sector-h">AI 政策 / 监管</div><div class="srow"><p><strong class="st">欧盟《AI 法案》进入实操执法（8-14 报道）</strong>针对聊天机器人、深度伪造、AI 生成内容的<strong>透明度/标注</strong>要求已进入强制期（透明度条款自 8-2 起可执行，现有系统机器可读标注最迟 12-2），直接催生了 Anthropic 当日的水印动作（<a class="src" href="https://www.sdexcourier.com/eu-ai-regulations-enforcement.html">SDEX，8-14</a>、<a class="src" href="https://www.softwareimprovementgroup.com/blog/eu-ai-act-summary/">SIG《AI 法案》摘要 8 月更新，8-14</a>）。</p></div><div class="srow"><p><strong class="st">中国 AI 治理框架成形（8-14）</strong>有分析梳理近期政策要点——强化 AI 技术监测、预警机制与应急响应，并对 <strong>AI agent</strong> 提出"安全可控、标准化开发应用"的指引（<a class="src" href="https://techedgeai.com/china-pushes-ai-governance-as-adoption-and-model-development-accelerate/">TechEdge AI，8-14</a>）。</p></div><div class="srow"><p><strong class="st">美国（背景）</strong>AI 立法仍以州为主、并受加州做法影响（<a class="src" href="https://www.politico.com/story">Politico，8-14</a>）。</p></div></div><div class="sector"><div class="sector-h">AI 投融资</div><div class="srow"><p><strong class="st">Databricks $5B / $190B（原始日期 8-13）</strong>Databricks 周四（8-13）完成 <strong>50 亿美元</strong> 融资，估值约 <strong>1900 亿美元</strong>（较半年前 1340 亿大幅跳升），Coatue 领投，Blackstone、MGX、T. Rowe Price 系、新投资方 Sixth Street Growth 等参与（<a class="src" href="https://www.cnbc.com/2026/08/13/databricks-funding-round-190-billion-valuation.html">CNBC，8-13</a>）；8-14 为报道高峰。</p></div><div class="srow"><p><strong class="st">Meshy ~$400M / $1.5B（8-14）</strong>生成式 3D 创业公司 Meshy 完成近 <strong>4 亿美元</strong> B 轮，估值约 <strong>15 亿美元</strong>，面向游戏、3D 打印与机器人（<a class="src" href="https://theaisoftwarereport.com/meshy-raises-nearly-400-million-at-a-1-5-billion-valuation/">The AI &amp; Software Report，8-14</a>）。</p></div><div class="srow"><p><strong class="st">Silicon Data $30.5M A 轮（8-14）</strong>做 AI 算力定价与基准的 Silicon Data 完成 <strong>3050 万美元</strong> A 轮首关，Valor Atreides AI Fund 领投，CME、DRW、Samsung、VanEck 等参投（<a class="src" href="https://www.hpcwire.com/off-the-wire/silicon-data-raises-30-5m-for-ai-compute-pricing-and-benchmarks/">HPCwire，8-14</a>）。</p></div><div class="srow"><p><strong class="st">Cognition/Devin ~$40B 估值洽谈（原始 8-13）</strong>AI 编程 agent 公司 Cognition 就新一轮融资洽谈，估值或达 <strong>400 亿美元</strong>、拟募资超 10 亿，Devin 年收入目标约 10 亿（<a class="src" href="https://enterpriseai.economictimes.indiatimes.com/news/industry/ai-startup-cognition-in-new-funding-talks-at-40-billion-value/133238268">Economic Times，8-13/14</a>）。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"></ul>
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
