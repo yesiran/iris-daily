@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28121%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2247%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2214%22%20r%3D%2216%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2248%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.11%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型每生成一个字，都把自己最完整的那份"想法"扔了——这篇把那根断掉的线接回去</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-16</span></div>
+  <h1 class="doc">模型每生成一个字，都把自己最完整的那份"想法"扔了——这篇把那根断掉的线接回去</h1>
+  <div class="dateline"><span>全文 <b>3,735</b> 字</span><span>约 <b>10</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Full-bandwidth transformer</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.08888 (https://arxiv.org/abs/2608.08888)</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Xi Wang, Ziyang Cai, Zheng Zhan, Harry Dong, Ying Fan, Gustavo de Rosa, Tim Pearce, John Langford</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">微软研究院 Microsoft Research（含 John Langford / Tim Pearce / Gustavo de Rosa；用 Phi-4 数据训练）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-09</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-16.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-16.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily（8/14 榜在列，10 赞，偏弱，诚实说明）· 作者与机构分量顶级（MSR，John Langford 是在线学习/强化学习元老）· Semantic Scholar 引用 0（发表 7 天，正常）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, latent-reasoning, test-time-compute, transformer</span></div></div><div class="tools"><a class="btn hot" href="2026-08-16-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法（机制 + 每个设计选择的理由）</a><a class="t-h2" href="#s8">6. 结局（世界变了什么 + 反直觉副发现）</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇推进的是 <strong>Transformer 这个底座架构本身</strong>，而且切口极干净：自回归模型（GPT 那一类逐字往外蹦的模型）每生成一个字，内部算到最顶层会得到一份很丰富的"内部想法"（上千个数字），<strong>可它算完这一步就把这份想法直接扔了</strong>——真正传回底层、参与下一个字计算的，只有从这份想法里挑出来的那一个字。一个字能携带的信息只有十几个比特，被扔掉的那份想法是上千个浮点数。这篇（Full-bandwidth transformer）就是<strong>把那份被扔掉的想法原样接回下一步</strong>，让模型"不出声也能接着往深里想"，而且几乎不加计算成本、不改架构。</p><p>选它有三个理由：<strong>（1）它命中了最前沿的一条线</strong>——"潜在推理 / test-time compute（推理时多花算力换更强）/ 为什么模型必须写 chain-of-thought（把思路一步步说出来）才更会算"，这条线直接决定下一代 reasoning 模型往哪进化。<strong>（2）信号上要诚实</strong>：HuggingFace 榜上它赞数不高（约 10 赞），但作者是<strong>微软研究院</strong>，含 <strong>John Langford</strong>（在线学习、上下文老虎机、Vowpal Wabbit 的元老级人物）、Tim Pearce、Gustavo de Rosa，训练用的是微软自家 Phi-4 的数据——机构与作者的分量，远比赞数更能说明含金量；引用数为 0 只是因为发表才 7 天。<strong>（3）对思染直接有用</strong>：它把"模型为什么必须把思路说出来才能接着想"这件事讲到了底，直接关系到你对 reasoning 模型的判断、对 CoT 提示词本质的理解、以及"让它想多久/想多深"这类提示设计。</p><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>自回归 Transformer——就是 GPT 这一类"一个字一个字往外蹦"的语言模型——在<strong>生成下一个字那一刻</strong>的内部计算循环。</p><h2 id="s4">2. 困境</h2><p>模型内部算东西，是沿两个方向走的，把它想成一张网格：</p><ul class="ls"><li><span class="lk">横向（跨字方向）</span>生成第 t 个字时，靠"注意力"这个机制，它能回头看到前面所有的字。这个方向信息很宽，作者叫它"full-bandwidth（满带宽）"——想看多远看多远。</li><li><span class="lk">纵向（深度方向）</span>对当前这个字，模型从底层往上一层层算（这个模型 24 层）。算到<strong>最顶层</strong>，得到一份 1536 个数字组成的"隐藏状态（hidden state）"——你可以理解成模型此刻对"下面该说什么、我心里怎么想的"的<strong>完整内部判断</strong>。</li></ul><p>问题出在纵向、而且是<strong>步与步之间</strong>那一段。生成完第 t 个字之后，那份顶层的完整判断<strong>被直接丢掉</strong>。唯一传回最底层、进入第 t+1 步计算的，是从这份判断里"采样（sample，按概率抽一个）"出来的<strong>那一个字</strong>。</p><p>一个字能携带多少信息？= log₂(词表大小)。词表几万个词，也就十几个比特（bit，信息量的最小单位，一个比特＝一次是/否）。而被扔掉的那份顶层判断，是<strong>上千个浮点数</strong>。所以：横向带宽很宽，纵向"步与步之间"这条反馈通道<strong>极窄</strong>——像一个人脑子里想了一大段，但每次只能从嘴里挤出一个词传给下一秒的自己。</p><p><span class="lk">后果是致命的</span>模型任何"没说出口"的中间思考，下一步根本读不到，更没法在更深的层里接着加工。它想接着往深里想，<strong>唯一的办法就是把中间结论"说出来"、变成一个字</strong>——这正是为什么 reasoning 模型要一步步写出 chain-of-thought（把推理过程逐字写出来）的底层原因：<strong>出声，是它把想法送回栈底、重新获得计算深度的唯一通道。</strong> 不出声，就只能每一步从头重算。</p><h2 id="s5">3. 旧路</h2><p>之前大家怎么绕这个窄通道？四条路，各有代价：</p><ul class="ls"><li><strong>写出来（Chain-of-Thought，Wei 2022）</strong>：把中间想法逐字写成文本。有效，但占字数、慢，而且强迫把连续、模糊的"想法"压成一个个离散的词。</li><li><strong>用向量代替字（Coconut、Soft Thinking，2024–2026）</strong>：不写真词，用连续向量当"想法"往下传。绕开了离散瓶颈，但<strong>改动了模型生成的东西本身</strong>，也更难监督训练。</li><li><strong>在一步内多转几圈（Universal Transformer → Loop Transformer → 台账 [[2026-06-18--loopcoder-v2|LoopCoder-v2]]）</strong>：把整个网络在生成一个字的过程里重复跑几遍，硬加深度。有效，但<strong>每个字的计算量翻倍</strong>——转 L 圈就贵 L 倍。</li><li><strong>最早的反馈尝试（Feedback Transformer，Fan 2020）</strong>：第一个提出"把顶层状态反馈回去"。方向对，但它的训练必须<strong>一个字一个字顺着来</strong>，没法并行，<strong>规模上不去</strong>——这是它没能流行的死穴。</li></ul><h2 id="s6">4. 转折</h2><p>关键的想法（insight）是两句话：</p><p><strong>第一，拓宽这条纵向反馈通道，其实不用改架构——只要把上一步顶层那份隐藏状态，原样喂回下一步的输入就行。</strong></p><p><strong>第二，怎么喂，有讲究。</strong> 不能简单相加。因为如果是"新字的嵌入 + 旧的隐藏状态"这种加法，模型会学会走捷径——把旧状态当噪声忽略掉，照样能训得下去，反馈就白加了。作者的做法是：<strong>让那份隐藏状态走"内容通道"（真正被往下算的主体），让新采样出来的字只当一个"闸门（gate）"去调制它</strong>。这样一来，模型要是丢掉了隐藏状态，<strong>连输入都没了</strong>——它被逼着必须用这份反馈。</p><h2 id="s7">5. 解法（机制 + 每个设计选择的理由）</h2><p><strong>具体怎么融合（latent feedback，潜在反馈）</strong>：用一个"门控线性单元（GLU，Gated Linear Unit）"。翻成大白话就是：</p><blockquote><p>下一步的输入 =（上一步顶层隐藏状态，先过一个矩阵变换）<strong>逐元素相乘</strong> sigmoid（这一步采样出的字的嵌入，先过另一个矩阵变换）</p></blockquote><ul class="ls"><li>"sigmoid（S 型函数）"把后面那项压到 0~1 之间，当<strong>开关/阀门</strong>用：某个维度接近 0 就关掉、接近 1 就放行。</li><li>"逐元素相乘"就是一一对应地乘。所以那个字在这里的角色，是<strong>决定放哪些、挡哪些</strong>的闸门；真正被送下去继续算的主体，是那份隐藏状态。</li><li>成本极小：只多两个 1536×1536 的矩阵乘法，每个字额外算力 <strong>不到 1%</strong>；"KV 缓存"（模型存历史用的缓存）和标准架构<strong>完全不动</strong>。</li></ul><p><strong>它换来了什么（可达性 reachability 扩大）</strong>：标准情况下，第 t 步、第 ℓ 层，只能读到"更早的字、更低的层"。加了潜在反馈之后，<strong>连最底层（第 0 层）都能读到完整的、已经加工过的历史</strong>。用作者的话：<strong>没说出口的计算，重新回到栈底，拿到一份新的"深度预算"接着算。</strong></p><p><strong>怎么训练还能并行？（这是全篇最巧的工程点）</strong></p><p>反馈天生是"这一步依赖上一步"的顺序依赖，顺序依赖就没法并行——而并行（"teacher forcing"，一次把整句话所有位置同时算）正是 Transformer 能训得快的命根子。他们的解法叫"<strong>分多趟（multi-pass）</strong>"：</p><ul class="ls"><li><span class="lk">第 1 趟</span>就是标准训练，纯用字的嵌入，一次算完整句。</li><li><span class="lk">第 2 趟起</span>每个位置的输入，用<strong>上一趟已经算完</strong>的顶层状态去融合，再算一遍整句。</li><li>关键：因为第 k 趟只依赖第 k−1 趟<strong>已经完成</strong>的结果，所以每一趟内部对所有位置<strong>仍然是并行的</strong>。顺序代价只付在"趟数"上（跑 k 趟 ≈ k 倍计算），<strong>不是</strong>付在句子长度上。</li><li>而且是<strong>渐进日程（scheduled）</strong>：绝大部分训练用单趟，训练中后期才掺入两趟、三趟。这意味着可以<strong>从一个现成的标准预训练模型出发</strong>，需要时才加反馈趟的成本。</li></ul><p><strong>一个反直觉的稳定性发现（全文最精彩的细节之一）</strong>：只用"单趟 + 两趟"混着训，模型<strong>没法外推</strong>——反馈一旦超过训练时见过的深度，就发散，验证损失往上飘、隐藏状态数值来回震荡。但只要在训练里<strong>掺进 3% 的"三趟"批次</strong>，整个系统的性质就变了：反馈映射从"发散"变成"收缩到一个不动点（fixed point，反复迭代会稳定停在的那个值）"，能稳定外推到<strong>1000 趟</strong>。<strong>3% 的样本，改变了整个动力学。</strong></p><h2 id="s8">6. 结局（世界变了什么 + 反直觉副发现）</h2><ul class="ls"><li><span class="lk">规模</span>10 亿参数（1B）模型，训 4000 亿（400B）token。</li><li><span class="lk">等于白赚约 1.5 倍数据</span>加了潜在反馈后，用同样的数据，达到"多训约 50% 数据"才能到的水平。（预填充阶段用两趟，甚至接近"2 倍数据"的效果。）</li><li><span class="lk">落到能力</span>指令微调后，10 亿参数的模型在 GSM8K（小学数学应用题）从 62.9% 基线 → 67.9%；HumanEval（代码生成）从 37.2% 基线 → 45.9%；MBPP（代码）逼近<strong>5 倍参数</strong>的 1T 基线。</li><li><span class="lk">最有意思的副发现——推理反而变短</span>base 模型开了潜在反馈后，推理轨迹<strong>变短</strong>。同一道 Math-500 题，标准解法要写 326+ 个字，潜在反馈<strong>不到 10 个字</strong>就解出来，且准确率相当或更高——因为它可以"<strong>在心里（潜空间）想</strong>"，不必把每一步都说出来。（诚实交底：这个"变短"的好处在<strong>指令微调后消失了</strong>，因为微调数据全是"话痨式"的长 CoT，又把模型拉回逐字念。）</li><li><span class="lk">机制被坐实</span>状态跟踪任务上，标准模型的第 0 层探针几乎读不到全局状态（接近瞎猜）；加一步反馈后，第 0 层探针准确率飙到 <strong>99.6% / 100%</strong>——直接证明"底层确实拿到了全局信息"，不是玄学。</li><li><span class="lk">白捡的好处</span>哪怕最后用标准方式解码（推理时<strong>不开</strong>反馈），只要<strong>训练时</strong>用了多趟目标，模型也比纯单趟基线强——说明多趟训练像一种"逼隐藏状态变得更可复用"的辅助监督。</li></ul><h2 id="s9">7. 内核</h2><p>自回归模型每生成一步，都把自己算出来的最丰富的那份"想法"扔了，只留一个字传给下一步；它想接着深想，就只能"说出来"。<strong>Full-bandwidth transformer 把那份被扔掉的想法原样接回下一步——让模型不出声也能接着想，几乎不加成本，还等于白赚约 1.5 倍数据。</strong></p><p>一句话：<strong>给模型的"内心独白"接上了一根一直断着的线。</strong></p><h1 id="s10">来龙去脉（倒读溯源）</h1><p><strong>第 1 层——它直接改进/批判谁。</strong> 最直接的祖先是 <strong>Feedback Transformer（Fan et al. 2020）</strong>：第一个提出把顶层表示反馈回去，但训练必须逐字顺序、规模上不去。本篇用"多趟并行训练"解决了它的可扩展性死穴，并做到了 400B token 规模。同代对手也一一被比下去：<strong>PonderLM-2（2025）</strong> 思路类似但把输入长度翻倍、KV 缓存也翻倍；<strong>Latent Recurrent Transformer / T²MLR（2026）</strong> 都要加不少参数或改架构。本篇"<strong>几乎不加参数、不改架构、KV 缓存不变</strong>"是它的差异化卖点。</p><p><strong>第 2 层——这条问题线是什么。</strong> 本质是"<strong>如何让模型在不说话的情况下也能进行更深的计算</strong>"，即"<strong>潜在推理（latent reasoning）/ 隐式思考</strong>"这条线。它分三股，都在回答同一个问题——"字"这个"离散的、每步只有十几比特"的瓶颈，能不能绕过去：</p><ul class="ls"><li>把字换成连续向量（Coconut、Soft Thinking）；</li><li>在一步内把网络多转几圈加深度（Universal Transformer → Loop Transformer → 台账 [[2026-06-18--loopcoder-v2|LoopCoder-v2]]，以及 [[2026-06-14--switch-latent-reasoning|SWITCH 潜在推理]]、[[2026-08-13--bdh-cq-in-context-latent-reasoning|BDH-CQ 递归潜在推理]]）；</li><li><strong>在步与步之间接一条反馈通道（本篇这一股）</strong>。</li></ul><p><strong>第 3 层——再往上的思想根。</strong> 是 <strong>chain-of-thought（Wei 2022）</strong> 揭示的那个基本事实：把中间步骤写出来，模型就更会算。但它顺带暴露了一个代价——<strong>模型必须"出声"才能"深想"</strong>。整条潜在推理线，包括本篇，都是在偿还 CoT 欠下的这笔"必须出声"的税。本篇的独特之处，是把这笔税还得最便宜：不改架构、不加算力、还倒赚数据效率。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><strong>这一步，前沿往哪挪了。</strong> 这两年 reasoning 模型变强，主要靠"想得更多（test-time compute）"，但目前"想"几乎等于"多写字"（更长的 CoT）。这篇指出一个更本质的方向：<strong>让模型在潜空间（不出声的内部状态）里增加"有效深度"，把"思考"和"吐字"解耦。</strong> 它是"把 test-time compute 从'横向多写字'挪到'纵向多轮潜在反馈'"的一个干净样本——几乎零推理开销、不改架构、还能白赚数据效率。<strong>结论：下一代模型很可能"想得更深，但说得更短"，推理不再必然等于长输出。</strong></p><p><strong>怎么用（落到你的提示词和京小贝）：</strong></p><ol class="ls"><li><strong>重估"推理长度 = 聪明"这个直觉。</strong> 你现在在提示词里"逼模型写更长的推理链"能提分，底层原因是：写出来是它唯一的深想通道。一旦模型有了潜在反馈这类机制，"输出越长越聪明"会松动——<strong>评估一个模型别只看它话多不多，要看答案质量</strong>。这也解释了为什么有些新模型输出更短反而更准。</li></ol><ol class="ls"><li><strong>修正对 CoT 提示的心智模型。</strong> CoT 之所以有效，底层不是"让它显得在思考"，而是"<strong>把隐藏计算搬回一个能被后面接着深加工的位置</strong>"。所以你写 CoT 提示时，真正在帮模型做的是"把中间态显式化、好让后面接着加工"。据此可以更有的放矢：<strong>在需要"承前启后再算一步"的地方设中间步骤，而不是无脑加"请一步步思考"</strong>（呼应台账 [[2026-08-14--ai4ai-test-time-harness|AI4AI 推理时搭外壳]] 里"强制 CoT 边际收益近乎为零"的发现）。</li></ol><ol class="ls"><li><strong>盯住这条线，作为"reasoning 变便宜"的一个可能拐点。</strong> 如果未来底座支持这类"潜在反馈"，<strong>同样的推理质量可以用更短输出达成——直接降 token 成本和延迟</strong>。对京小贝这种要在成本/延迟约束下上线 reasoning 能力的产品，这是值得长期关注的技术方向：它不是"把模型做更大"，而是"让同样大的模型把算力用得更深"。</li></ol><h1 id="s12">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2608.08888">https://arxiv.org/abs/2608.08888</a> （Full-bandwidth transformer，Microsoft Research，2026-08-09）</li><li>全文（HTML）：<a class="src" href="https://arxiv.org/html/2608.08888">https://arxiv.org/html/2608.08888</a></li><li>信号佐证（HuggingFace Daily 8/14 榜在列、约 10 赞）：<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a></li><li>引用/元数据（Semantic Scholar，citationCount=0，publicationDate 2026-08-09）：<a class="src" href="https://api.semanticscholar.org/graph/v1/paper/arXiv:2608.08888">https://api.semanticscholar.org/graph/v1/paper/arXiv:2608.08888</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
