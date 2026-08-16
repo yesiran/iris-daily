@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2835%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2213%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2240%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型"想在刀刃上"——不是想得更多，而是把算力挪到最有希望的那半句推理上</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-17</span></div>
+  <h1 class="doc">让模型"想在刀刃上"——不是想得更多，而是把算力挪到最有希望的那半句推理上</h1>
+  <div class="dateline"><span>全文 <b>3,994</b> 字</span><span>约 <b>11</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Thought-Level Beam Search for Reasoning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.08020</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Lijie Yang, Hongyin Luo, Jiawei Zhao, Tri Dao, Ravi Netravali</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">普林斯顿大学 · MIT CSAIL · Meta AI（Tri Dao 的 Dao AI Lab）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-08（v2 2026-08-11）</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-17.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-17.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">COLM 2026 接收（顶会）· Tri Dao 组（FlashAttention/Mamba 作者）· HuggingFace Daily Papers 在榜（约10赞，偏弱但顶会+血统补上）· 开源(Dao-AILab GitHub)</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, reasoning, test-time-compute, inference, search</span></div></div><div class="tools"><a class="btn hot" href="2026-08-17-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源，3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 + 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选的是 <strong>Gambit：思维级束搜索（Thought-Level Beam Search for Reasoning）</strong>，理由三条：</p><ol class="ls"><li><strong>它推进的是当下最烫的一条能力轴——"推理时算力怎么花"</strong>。现在的推理模型（会写长长一段"思考过程"再答题的那种）靠的是<strong>推理时多花算力</strong>（test-time compute，也就是答题时让它多想几遍）来提分。但这套办法正在撞天花板：论文实测，用一张当前最强的 NVIDIA B300 显卡，给<strong>一道</strong> AIME-2025 竞赛题跑 512 遍推理，要花好几个小时，最难的题照样答错。这篇把问题从"<strong>该花多少</strong>算力"直接改写成"<strong>该把算力花在哪</strong>"——是对整条"推理 scaling"路线的重新定位，不是刷零点几个点。</li></ol><ol class="ls"><li><strong>信号：顶会 + 顶级血统</strong>。已被 <strong>COLM 2026</strong>（Conference on Language Modeling，专做语言模型的顶级会议）接收；作者是 <strong>Tri Dao 的组</strong>——就是写出 FlashAttention、Mamba 的那位（现在人人都在用的显存高效注意力就是他搞的），合作者含 MIT CSAIL 的 Hongyin Luo、Meta AI 的 Jiawei Zhao（GaLore 作者）。HuggingFace 社区票数只有约 10（偏弱，我如实标注），但这类"系统效率向"的推理论文本就不靠票数出圈，顶会接收 + 这个班底已经足够说明分量。</li></ol><ol class="ls"><li><strong>对思染直接有用</strong>。它讲的是一件你每天都在做、但没被点破的事：<strong>你让模型"多想几遍取最好"时，绝大多数算力都浪费在互不相干、各自撞南墙的独立尝试上</strong>。这篇给出一个更聪明的花法（发现一段有希望的半截推理，就从它身上分叉出多个后续，而不是每次从头再来），能直接改你的提示词策略和你对京小贝"推理成本 vs 质量"这个旋钮的判断。</li></ol><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是<strong>一个正在答一道难题的推理模型</strong>，和它背后那台正在冒烟的显卡。模型属于"会先写一大段思考、再给答案"的那一类（业界叫 LRM，large reasoning model，大型推理模型；你可以理解成"答题前先在草稿纸上演算很久的模型"，OpenAI o 系列、DeepSeek-R1 都是）。它面前是一道 AIME（美国高中数学竞赛）级别的难题。</p><h2 id="s4">2｜困境</h2><p>想让这种模型更准，现在几乎只有一招：<strong>同一道题让它并行想很多遍，最后投票取多数</strong>。这招有个名字叫<strong>自洽（Self-Consistency）</strong>——sample 一堆互相独立的解题过程，谁的答案出现次数最多就选谁。听起来朴素有效，问题是<strong>贵到离谱</strong>：</p><ul class="ls"><li>每一遍"想"都是几万字的长推理，要占一大块显存（专业叫 <strong>KV-cache</strong>，键值缓存——模型每读一个字都要把它算出来的中间结果存住备用，想得越长、并行越多，这块缓存就吃得越狠，直到把显存塞爆）。</li><li>论文原话的数字：<strong>一张 B300，给一道 AIME-2025 题跑 512 遍，要几个小时，最难的还是错</strong>。</li></ul><p>更扎心的是：这 512 遍里，<strong>绝大多数从一开头就走错了岔路</strong>，却还各自吭哧吭哧把几万字写完——算力全烧在注定错的路上。所以作者说，这条路已经<strong>边际收益递减</strong>了：再往上堆遍数，提升越来越小，成本越来越疯。</p><p><span class="lk">核心症结一句话</span>算力不是不够，是<strong>花在了错的地方</strong>。</p><h2 id="s5">3｜旧路</h2><p>第一波想省钱的人给出的办法叫<strong>减枝（subtractive pruning，代表工作 STEP、DeepConf）</strong>：既然大多数尝试早早就走歪，那就<strong>在半路上把明显没希望的那几遍掐死</strong>，别让它们白写完。怎么判断"没希望"？——不用等它写完，直接<strong>读它此刻的内部状态</strong>（模型算每一步时脑子里那串数字，叫隐状态 hidden state）来打个分，分低的就砍。</p><p>这一步是对的，但它留了个大窟窿：<strong>砍完之后那块算力就空着了</strong>。本来 GPU 上并行跑 64 条，砍掉 32 条，就只剩 32 条在跑，<strong>显卡有一半在闲置</strong>（作者叫这个"hardware starvation，硬件挨饿"）。而且——你只是把差的删掉了，<strong>没有把好的放大</strong>：最后剩下的答案分布，跟没砍之前基本还是一个样子，等于白忙。</p><p><span class="lk">旧路的死穴</span>只会做减法（删掉坏的），不会做加法（放大好的），于是删一半、闲一半。</p><h2 id="s6">4｜转折</h2><p>作者的关键一转：<strong>为什么砍掉坏的之后，不立刻从"好的"身上再长出新的来？</strong></p><p>他们盯住了一个被忽视的事实（这是全文最反直觉、也最能一秒讲明白的地方）——见论文 Figure 2：拿一道最难的 AIME-2025 题，<strong>与其从头独立采样 64 遍，不如先找到那条最有希望的"半截推理"，然后就从这半截往后分叉出 64 个不同的续写</strong>。结果：</p><ul class="ls"><li>独立采样 64 遍：多数答错，还烧掉双倍 token。</li><li>从好前缀分叉 64 遍：<strong>答对了，而且只花了大约一半的算力</strong>。</li><li>更极端的例子：AIME-25 第 12 题，独立采样正确率 <strong>1.6%</strong>；改成"从好前缀分叉"，正确率飙到 <strong>39.1%</strong>。</li></ul><p>为什么差这么多？因为一道难题，<strong>难就难在前半程能不能建立起正确的思路框架</strong>。一旦某条推理侥幸把前半程铺对了，正确答案其实"近在咫尺"——这时候最聪明的做法不是重开一局赌运气，而是<strong>站在这个已经铺好的好开头上，多试几种收尾</strong>。而且从同一个前缀分叉，那段共同的前缀<strong>只算一次</strong>（KV-cache 直接复用），分叉的边际成本极低。</p><h2 id="s7">5｜解法</h2><p>于是有了 <strong>Gambit</strong>（这个词本义是国际象棋里的"弃兵开局"——先舍一步、换更大主动权，暗合它"主动砍掉差的换取集中兵力"的思路）。核心机制叫<strong>思维级束搜索</strong>，拆开讲：</p><ul class="ls"><li><span class="lk">什么叫"一个思维（thought）"</span>模型的长推理里，天然用<strong>空行（<code>\n\n</code>，双换行）</strong>隔成一段一段。作者就把两个空行之间的一小段当作一个"思维步"。整条推理 = 一串思维步。</li><li><strong>束搜索（beam search）是什么</strong>：这是个老概念，原来用在翻译里——生成时不只保留一条最优路径，而是<strong>同时保留最有希望的 K 条</strong>（这 K 条叫一个"束/beam"），边走边淘汰。经典束搜索是<strong>逐字</strong>比较，Gambit 把它抬高到<strong>逐"思维步"</strong>比较——不纠结每个字，而是每隔一段看一次"哪条推理整体更靠谱"。</li><li><span class="lk">怎么判断哪条靠谱</span>沿用减枝派 STEP 的那把"尺子"——一个<strong>很轻的探针（2 层 MLP，一个巴掌大的小网络）</strong>，读某条推理当前的<strong>隐状态</strong>（内部那串数字），吐出一个 0~1 的分，估计"这条现在走在通往正确答案的路上吗"。（他们还额外训了一个"看全程历史"的升级版打分器，见下文结局。）</li><li><strong>锦标赛式的"砍一批、长一批"（zero-sum prune-and-branch，零和地砍与分叉）</strong>：始终维持固定 C 条推理在跑（占满显卡）。每隔 Δ=200 个 token 开一次"锦标赛"：按分数排名，<strong>最差的 K 条掐死，同时从最好的 K 条各分叉出一条新的</strong>。砍几条就补几条，<strong>显卡永远满载，且补上来的都是从好苗子长出来的</strong>。这就同时补上了旧路的两个窟窿：不闲置、且主动放大好的。</li><li><strong>两个防翻车的小设计</strong>（很关键，否则会崩）：<ul class="sub"><li><strong>预热门槛（warmup，w=12000 token）</strong>：一条推理必须自己先长够 12000 token，才有资格被当作"好苗子"去分叉。否则某条只是<strong>开头运气好</strong>、还没露出破绽，就被疯狂复制，会引发"一窝蜂全押一条早期幸运儿"的崩塌（cascade collapse，级联坍缩）。</li><li><span class="lk">幽灵推理（ghost trace）</span>显存不够时被临时踢出的那条，<strong>不占缓存、但在逻辑树上还挂着</strong>——把"逻辑上有哪些推理"和"物理上谁占着显存"解耦，防止显存一紧张就贪婪乱分叉。</li></ul></li><li><span class="lk">收尾投票</span>所有跑完的推理，各自的答案<strong>按自己的分数加权投票</strong>（score-weighted majority vote）——不是简单谁多谁赢，而是<strong>越靠谱的票越重</strong>。论文的图里，最终以 ∑分 1.78 vs 1.43 选出正确答案 29。</li></ul><h2 id="s8">6｜结局</h2><p>在 3 个不同大小的模型（Qwen3-4B-Thinking、DeepSeek-R1-8B、Phi-4-14B）× 5 个硬基准（AIME-25/26、HMMT-24/25、GPQA-Diamond）上，<strong>同样的硬件预算下</strong>：</p><ul class="ls"><li><span class="lk">准确率</span>比减枝派最高再涨 <strong>+6.7%（HMMT-24 绝对分）、+3.3%（AIME-25）</strong>；用它自训的"全程打分器"时，DeepSeek-R1-8B 在 AIME-25 上 <strong>+5.2%</strong>、HMMT-24 上 <strong>+7.7%</strong>。</li><li><span class="lk">吞吐</span>完成推理的速度 <strong>&gt;2 倍</strong>（0.216 vs 0.098 条/秒）。</li><li><span class="lk">省钱</span>总 token 消耗最多<strong>砍掉 68.5%</strong>（Phi-4 在 HMMT-25：1.75M vs 自洽的 5.56M）。</li><li><span class="lk">额外开销</span>这套"打分 + 管树"的调度只占 <strong>0.97%</strong> 的墙钟时间——<strong>99% 的时间显卡还是在纯算</strong>，几乎白送。</li></ul><p><strong>最反直觉的副发现</strong>（这条最有嚼头）：省了 68.5% 的 token，墙钟时间却没省这么多。为什么？作者一查发现是<strong>分布被搬动了</strong>——减枝派因为老早掐死一堆，跑完的推理都偏短（中位数 16.5K token）；Gambit 边砍边补，<strong>跑到终点的那些推理反而系统性更长</strong>（中位数 35.8K），但<strong>每条自己新写的"独有 token"更少</strong>（5.2K vs 独立采样的 14.5K）——因为好前缀被大家复用了。一句话：<strong>Gambit 把"探索一条新路"的边际成本压到极低，于是它敢让推理走得更深，而不是更浅</strong>。这恰恰说明它不是靠偷懒省钱，是靠"复用好开头"把每一分算力用在了刀刃上。</p><h2 id="s9">7｜内核</h2><p><strong>推理模型的下一步，不在"想得更多"，而在"想在刀刃上"。</strong> 模型算每一步时脑子里的那串隐状态，本身就藏着"我这条路靠不靠谱"的信号；把这个信号读出来，就能在半路上决定：这条掐了、那条值得从它身上再长几条。<strong>算力是稀缺的注意力，谁能把它实时挪到最有希望的那半句推理上，谁就赢。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源，3 层）</h1><p>这篇不是凭空冒出来的，它站在一条"推理时怎么花算力"的问题线的最新一格上。从近往远倒着看：</p><ul class="ls"><li><span class="lk">第 1 层｜它直接改进/批判谁</span><strong>减枝派 STEP（Liang et al., 2026）与 DeepConf</strong>。这波人第一个想到"读隐状态、半路掐死没希望的推理"来省钱。Gambit <strong>直接复用了 STEP 那把打分尺子</strong>（公平对比：用同一把尺子，只换调度策略），但指出它"只减不加、砍完闲置"的死穴，补上"从好前缀分叉"这一步。同层还有它要取代的老王——<strong>自洽 Self-Consistency（Wang et al., 2023）</strong>：独立采样 N 条、多数投票，是"推理时多花算力"最经典的实现，也是被这篇按在地上摩擦的基线。</li></ul><ul class="ls"><li><span class="lk">第 2 层｜它继承又重塑了哪条线</span><strong>基于搜索的推理</strong>，代表是 <strong>思维树 Tree-of-Thoughts（ToT）</strong> 和 <strong>蒙特卡洛树搜索（MCTS）式推理</strong>。这些早就想到"把推理做成一棵可以剪枝、可以扩展的树"。但它们的扩展是<strong>异步、按价值一枝一枝展开</strong>的，跟现代 LLM"<strong>同步、大批量</strong>一起算"的推理方式<strong>天生打架</strong>（GPU 喜欢一整批一起跑，最烦你这枝停一下、那枝等一下）。Gambit 的贡献正是把"树搜索"<strong>改造成硬件对齐的样子</strong>——同步的、批量的、砍几条补几条的零和调度，让搜索第一次能在现代推理引擎上跑得飞快。</li></ul><ul class="ls"><li><span class="lk">第 3 层｜这条线的根</span><strong>思维链（Chain-of-Thought, Wei et al., 2023）+ 推理时算力 scaling</strong>。整个"让模型先写一大段思考再答题、并靠推理时多花算力提分"的范式（OpenAI o1、DeepSeek-R1 引爆），是这一切的地基。以及更老的根——<strong>束搜索本身</strong>，一个来自机器翻译时代的经典解码算法，被这篇从"逐字"抬升到"逐思维步"，老树发新芽。</li></ul><blockquote><p>一条线读下来：<strong>先有"让模型多想"（CoT + test-time scaling）→ 发现"傻多想太贵"（自洽撞墙）→ 第一波省钱"砍掉差的"（STEP 减枝，但闲置一半）→ 这篇"砍掉差的、同时放大好的"（Gambit，把老的树搜索做成硬件跑得动的样子）。</strong> 每一格都在回答同一个越来越精细的问题：算力有限，到底该花在哪。</p></blockquote><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型往哪进化了</h2><p>前沿正在从"<strong>把训练做大</strong>"悄悄挪向"<strong>把推理时的思考，花得更聪明</strong>"。这篇给出一个很干净的信号：<strong>模型内部的隐状态里，本来就带着"我这条路对不对"的自我评估信号</strong>——只要一个巴掌大的探针就能读出来。于是模型开始具备一种雏形能力：<strong>在思考的半路上判断自己有没有走偏，并把算力实时挪到更有希望的那条路上</strong>。这是通往"模型自己管理自己的思考预算"的一小步。你要的那种"同步理解模型进化逻辑"，这就是一格：进化不只发生在权重里（训练），也越来越多发生在<strong>推理时的算力调度</strong>里。</p><h2 id="s13">能怎么用（提示词 + 京小贝）</h2><ol class="ls"><li><strong>"分叉好前缀" &gt; "从头重采样"——这是可以直接搬进提示词的策略</strong>。当你让模型对一个难问题多给几个答案取最优时，别每次都让它从零开始重想。<strong>先拿到一段你满意的"半截推理/思路框架"，再把这个前缀塞回去，让它基于这个开头给出多个不同的续写/收尾</strong>。你等于免费继承了那个好开头，模型只需在"最后一公里"上试探——又快又准。论文里 1.6% → 39.1% 的跳变，本质就是这件事。</li></ol><ol class="ls"><li><strong>"该花多少"改成"该花在哪"——这是产品层的旋钮认知</strong>。京小贝面对的 query 有难有易。与其对所有 query 一律"深度推理"（贵）或一律"快答"（不准），不如借这篇的思路：<strong>用一个极轻的信号先判断"这条 query 值不值得多想"，把宝贵的推理算力集中到真正的难题/高价值咨询上</strong>。test-time compute 不是一个"开/关"，是一个<strong>可以按 query 动态分配</strong>的预算。</li></ol><ol class="ls"><li><strong>加权投票 &gt; 数票</strong>。当你用"多次采样取多数"来提升稳定性时，别简单数哪个答案出现次数多，<strong>按每个答案的置信/质量信号加权</strong>——越靠谱的票越重。这在需要可靠性的金融问答里尤其值：多数不等于正确，加权能把"人多但都错"的陷阱躲开。</li></ol><ol class="ls"><li><span class="lk">成本认知</span>这篇实测"同等甚至更高准确率下省 68.5% token"意味着——<strong>深度推理正在变便宜到能规模化部署</strong>。对京小贝这种要控成本的产品，"让模型多想"的性价比正在快速改善，值得重新评估"哪些环节现在可以上推理模型了"。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文：Thought-Level Beam Search for Reasoning，arXiv:2608.08020（v2, 2026-08-11）<a class="src" href="https://arxiv.org/abs/2608.08020">https://arxiv.org/abs/2608.08020</a></li><li>PDF 正文（含 Algorithm 1、Table 1/2、Figure 2/4 的数字均出自此）：<a class="src" href="https://arxiv.org/pdf/2608.08020">https://arxiv.org/pdf/2608.08020</a></li><li>信号佐证 · 顶会 + 开源仓库：Dao-AILab GitHub，"[COLM 2026] Thought-level beam search for parallel reasoning via hardware-aware pruning and adaptive compute reallocation" <a class="src" href="https://github.com/Dao-AILab">https://github.com/Dao-AILab</a></li><li>信号佐证 · 社区榜：HuggingFace Daily Papers（2026-08-14 窗口在榜，约 10 赞）<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a></li><li>溯源引用（论文内）：STEP（Liang et al., 2026，隐状态早期打分/减枝）· Self-Consistency（Wang et al., 2023）· Tree-of-Thoughts（Yao et al.）· Chain-of-Thought（Wei et al., 2023）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
