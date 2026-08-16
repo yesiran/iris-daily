@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28187%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23b45309%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23292018%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2256%22%20cy%3D%2240%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2223%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.30%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23fffbeb%22%3E%E6%80%9D%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-W33 认知迭代复盘</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 认知迭代</span><span class="r">2026-08-17</span></div>
+  <h1 class="doc">2026-W33 认知迭代复盘</h1>
+  <div class="dateline"><span>全文 <b>5,936</b> 字</span><span>约 <b>15</b> 分钟</span><span>章节 <b>5</b></span></div>
+  <div class="mast-bar"></div>
+  
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">一、本周认知主线</a><a class="t-h2" href="#s2">二、认知迭代</a><a class="t-h2" href="#s3">三、反复出现但没动手的念头</a><a class="t-h2" href="#s4">四、本周资产入库清单</a><a class="t-h2" href="#s5">五、下周一个建议</a></nav>
+    <main><blockquote><p>原料：本周对话会话 40+ 个（金融日报×6、AI 日报×6、paper-daily×7、董琳知识库维护、A 股日报回填批次等定时任务已剔除），真人深度会话五路深读：财富 short 提示词（7 个会话跨 6 天、三次删库重做）、保险 know-how→提示词体系（双模型对照实验）、SFT 亲手实训 + AI 产品经理专业地图、交易量监控事故 + 沪深300 深夜课、王者荣耀决策器。知识库 inbox 本周<strong>零进水</strong>（上周刚恢复的管道又断了，最后一条停在 8-8）。
+硬事实先摆：财富提示词从 18,137 字符砍到 8,350；保险分诊台换了一次轴；你第一次亲手把一个模型训崩了自己的电脑；三次深夜删库重做，删完最短 13 分钟就重开新会话。</p></blockquote><h2 id="s1">一、本周认知主线</h2><p>上周的体检报告说：京小贝的病不是回复写得不好，是一次说满 1483 字让第二轮在结构上就不存在。这周你把这份诊断变成了手术——而且五条战线其实在做同一道题：<strong>一个懂行的人，怎么把自己的判断做成一个没耐心、不懂行的普通人一屏之内接得住、还愿意追问下一句的形状。</strong> 财富小贝的答案是 short 版三件套（单逻辑链路 + 埋在正文逻辑卡点的钩子 + 溯源）；保险小贝的答案是分诊台（按 query 的中心切成品/人/条款）加"给用户搭梯子"；培训课的答案是那句收口——"精通 AI 是在场的对齐，驾驭 AI 是不在场的对齐"；连王者荣耀工具都是同一道题（选人只有几十秒，所以只输出一段话）。而为了配得上"不在场的对齐"这五个字，你自己往下钻了一层：第一次亲手做 SFT（监督微调——给模型一堆"题目+标准答案"，让它照着标准答案改自己脑子里的参数），用一次整机崩溃重启和八个翻车换来了参数层的手感。上周是"感觉退场，模型上场"；这周是<strong>认知退到幕后，形状走上前台——你调的已经不是内容对不对，是内容被接住的概率。</strong></p><h2 id="s2">二、认知迭代</h2><p><strong>1. 回复的信息结构：从"多角度覆盖=专业"到"主逻辑只有一个，其余分层放门后"【工作线最大，三次推倒重来】</strong></p><ul class="ls"><li>之前：信息角度铺得全才显专业——这是 W29 以来财富产线的隐含审美，老版 judgement 提示词 18,137 字符就是它的物证。</li><li>现在：一套完整的"形状学"立起来了。①<strong>金线</strong>："就像一堆逻辑沙子，只有一个是金子……主逻辑应该就 1 个，然后传导作用比较多"（冯唐的金线原理被你搬进了产线）；给 AI 式面面俱到起了病名——"AI 目前回复都像<strong>隔层纱</strong>，就是感觉说很多角度，但是不直接解决问题"。②<strong>议论文不是故事</strong>："故事的特点就是依赖用户从头读到尾……我们很难要求用户跟我们从头读到尾"，结论先行，且"'黄金的短期方向，今晚8点半揭晓'从第一句开始就已经错了——走势8点半揭晓，算什么结论"（你亲手写了 CPI 三分支的标准答案示范什么叫结论）。③<strong>信息不是砍少，是分层</strong>：正文只放主逻辑第一层；二级逻辑做成 next-query 钩子，而且钩子必须开在<strong>逻辑卡点</strong>上不是结尾上——"用户还没有信服你的逻辑，他上来不会先说去看数据，他得先完全搞明白再说"；溯源（回复引用的资讯带上原文链接，最多 5 个）给第三条路——因为"如果你完全不懂一个标的的逻辑，那你要么只能无脑相信我，要么就无脑不信，这中间是没有什么过渡的"，钩子和溯源是同一枚硬币：一个接住"我还想懂"，一个接住"凭什么信你"。④<strong>排序变了</strong>："不追求绝对的严谨，优先保证用户可以读完"——正确性还是大于一切，但严谨的铺陈让位给完读。</li><li>被什么改变：8-11 你贴出线上五张真实截图（opus4.8 的提示词经 SFT 蒸到一个 270 亿参数的通义开源模型后的实际输出）——"方方面面的信息都讲了，但是没有清晰的主线和观点，用户一扫而过无法形成有效的认知"。</li><li>过程里三次自我修正值得单独记：①"我怕我一说好，所有这种类型的开头都是这种结构"（8-11，给好评会污染泛化——见第 7 条）；②"我感觉我又犯了一个错误……<strong>我又开始写小作文了</strong>"（8-12 凌晨——8 分钟前你刚论证完"议论文要分论点支撑"，自己当场推翻，因为分论点一铺开就又是小作文）；③ 8-16 凌晨收工前："我确实没有把上下文传给你。这块我还没想好要怎么弄"——你意识到整周可能都在用空上下文评判模型输出，也许冤枉了它。这条没闭环，进了第三节。</li><li>硬事实：一周三次删库重做（8-13 删 judgement-short、8-14 删 raise-safe-short——"这次我们做的不好需要考虑重新做了，你先负责相当于回滚"、8-15 删 mainline），全部发生在深夜，最短删完 13 分钟重开新会话。这不是迭代，是抹掉重来——你对"形状不对"的容忍度是零。</li></ul><p><strong>2. "解释过去 ≠ 预测未来"：从一次抓错升级成产线病例【工作线】</strong></p><ul class="ls"><li>之前：把"为什么涨"讲清楚就算尽责。</li><li>现在："他到底是在解释过去为什么在涨，还是在说未来为什么会涨？这是两个话题……值不值得买，预测是核心，过去的涨幅只能是辅助。"配套的还有一刀砍向自我对冲："你讲了一个你认为看涨，又讲了很多原因可能出错，你让用户怎么看"——风险披露降级为"观察哨"，不是免责声明；以及"你不需要对你的判断负责任，你需要像很多财经大V一样，给出明确<strong>可验证</strong>的观点"（你自己都承认"我也判断不了半导体的泡沫会不会炸"，所以追求的不是判断对，是判断可证伪）。</li><li>被什么改变：同一个错三天翻车两次（8-13 首次抓到，8-16 复现），最后写进 raise-safe-short 提示词——"病例四：把履历当预测（真实翻车）"。注意你的处理链：错误 → 命名 → 病例入库。这本身就是评测资产的长法，见第三节第 1 条。</li></ul><p><strong>3. 保险分诊轴换轴：从"离交易远近"到"query 的中心落在品/人/条款"【产线架构】</strong></p><ul class="ls"><li>之前：8-11 你自己提出四档分诊，按"用户 query 离可能完成交易的远近"切——起点是那句"我觉得现在<strong>一个提示词是解决不了保险所有的问题的</strong>"（触发：用 reply-3 批量跑 12 条 demo，人工标注发现问题成片，比如"一篇限教一两个点"的规则形同虚设、一篇塞了六个教学点 1337 字）。</li><li>现在：8-13 一条 query 分错（"想了解京东好药保2026版的适合人群"被送去做人的宏观配置）逼出换轴——"购买语气不该是分类依据，<strong>query 的中心才是</strong>"。品在中心→recommend；人在中心→配置方案；条款在中心→客观事实。配两条边界规则："适合人群"不算客观核实；品人同句看答案落点（"给我妈看看这款适合她吗"落在品，"给我妈配点保险"落在人）。</li><li>为什么这步重要：分类依据从"猜用户意图走到哪一步"（心理量，只能猜）换成"答案该落在哪个对象上"（语法量，可判定）——错了能归因，规则能回归测试。这是本周架构层面最硬的一步，和 W30 财富线 classifier 的"判断权重新分配"是同一条脊椎。</li></ul><p><strong>4. "专业且通俗"被重新定义；"中立"被切成两半【保险线】</strong></p><ul class="ls"><li>之前：通俗 = 把行业词换成生活化比喻。AI 照此产出"这份保险真正要干活的年纪""这扇门一旦关上"。</li><li>现在：你判它不合格——"我感觉你对于专业且通俗的理解是有问题的。完全可以说：保险保障的是低概率发生但是发生后损失巨大的场景——这样说不是更专业但是也算通俗吗。"通俗被重新定义为<strong>行业的词 + 一步解释 + 一个数字</strong>：用户能拿着这个词去翻条款、问客服（这是 W30"教真词不造词——真词他带得走"的落地深化）；比喻不许单飞，专业说法必须同句在场。同周另一刀砍向"中立"：东南亚旅游险那单，外部注入缺"每档保障内容"，模型就甩出三档价目表让用户自己挑，被你批"你为什么不能直接帮用户选择呢，你反思一下"→ 新规矩：<strong>null 不许编，但 null 也不等于弃权</strong>——默认判决走通识（常规行程默认基础档），缺的字段降级成下单前的一句核对。中立是立场不是姿态："小贝的目标是慢慢陪用户成长能买到适合自己的产品"，任务优先，教育跟随、润物细无声。</li><li>被什么改变：两篇具体的不合格回复，各自撞在"通俗"和"中立"被执行过头的地方。</li></ul><p><strong>5. SFT 亲手翻车，换来三块参数层的认知【培训线最大】</strong></p><ul class="ls"><li>之前：SFT 是产线上别人做的一环——财富线早就在跑"opus4.8 生成 → SFT 蒸到 270 亿参数开源模型"，但你没亲手碰过参数。你自己交底："因为我以前也没调过，所以我也想一边玩一边体验这个过程。"</li><li>现在，三块用崩溃换来的认知：①"<strong>聊得动 ≠ 训得动</strong>"——第一个选的 20 亿参数小模型聊天只吃 1.2GB 内存，一开始训练每一步要吃 28GB（训练时要存海量中间草稿），把 36GB 的 MacBook 整机干到崩溃重启（你的原话："我32g的内存，到底是怎么回事……你日志打的也不记录时间，我都没法看。<strong>差评</strong>。"）；换成另一个 17 亿参数模型后每步只吃 4.4GB——选模型先查训练支持成熟度，不是看跑分和聊天手感。②"<strong>提示词是租，训练是买</strong>"——你截图追问"为什么他会说他是京小贝，你已经 sft 完成了吗？"，扒开发现只是代码里垫了一句身份提示词：租来的身份每次开机要重新念一遍，训练是把身份焊进参数。你当场把这个坑设计成学员的课堂第一个实验。③"<strong>模型的行为是训练数据分布的镜子</strong>"——训完后壳像九分瓤像一分：emoji 分节、招牌话术逐字复刻，具体事实全部现编；"北方华创来一万"被痛快受理（真京小贝必须拒绝股票），因为 400 条教学数据里拒绝股票的示范只有 1 条。这条反过来解释了你的生产系统为什么必须靠工具现场查数——SFT 管风格，不管知识。</li><li>附带一课（8-16 自学训练数据结构）：<strong>训练时不是所有字都参与学习</strong>——系统提示词、用户问题、工具返回都只当"题面"，模型只从 assistant 的输出里学。顺手还扒出自家训练数据三个质量问题（检索没给对内容模型硬答对了——"这条路走多了就是幻觉的温床"；一个定义了却 0 次调用的工具在 1694 行里白占地方；规则措辞和数据实况脱节）。</li><li>被什么改变：为设计培训第二课"模型体验与 SFT 实践"，你把自己放进学员位置先跑了一遍，并两次否掉"直接给学生成品"——"我会自己做一套，让他们也跟着做一套……我想教的是<strong>调试模型的方法</strong>"。</li></ul><p><strong>6. 均线认知翻转：从"均线有引力"到"均线是价格的回声"【个人投资线】</strong></p><ul class="ls"><li>之前的隐含直觉：5 日均线跌破 20 日均线之后，"后面的能量该往上走了"——均线像一条有力量的橡皮筋。</li><li>现在：8-13 深夜你自己把移动平均的机制说出口——"每一天都相当于增加了今天的收盘价，去掉了 5 天前一天的收盘价"——说出口的那一刻橡皮筋直觉自动瓦解：明天均线往哪走，一半在今天就被那个"即将被扔掉的旧数"写死了；均线是价格的影子，不是引力源。金叉死叉同理：滞后的回执，不是预言，而且要看成色（连续温和上涨爬过去的算数，单日暴涨一步跳过去的是冒名顶替——正好解释了你观察到的 AppLovin"金叉当天大涨、5 天转死叉"）。</li><li>附带一记清醒剂：你把富途牛牛 AI 报告里的"低估"读成了"重仓抄底"，被指出<strong>这四个字对方报告里没有，是你自己加上去的</strong>。AI 给的是读数，人脑会自动升档成指令——这条对你自己的量能日报同样成立：绿色卡片头"建仓档"，在你脑子里会不会自动变成"该买了"？</li><li>被什么改变：8-13 白天你刚修完量能日报<strong>静默停摆 5 个交易日</strong>的事故（项目放在桌面，macOS 的隐私授权把定时任务拦在门外，你是靠"怎么这几天没推送了"才发现的——<strong>用于决策的信号系统，没有失效告警等于没有系统</strong>）；当晚 22:46 就开新会话问沪深300 一个月怎么估，逼出明确观点（跌破 4543 判断作废的可证伪结构），最后把 Tushare 数据源写进全局记忆"以后我们用数都可以从这看"。从"我有数据了"跨到"那我怎么判断"，一天完成。</li></ul><p><strong>7. example 是让模型"得意忘形"的过程——反模板焦虑被两条产线同时验证【强化】</strong></p><ul class="ls"><li>判断：好 example 的价值在背后的逻辑，模型只会抄表面——"这个 example 是让它<strong>得意忘形</strong>的一个过程"（"得意"取自你的口头禅"得我真意，忘我言语"——要它得的是意，忘的是形）。</li><li>双线证据：财富线 8-11 预感（"我怕我一说好，所有开头都变成这种结构"）→ 8-13 被打脸坐实：提示词里带了 7 月 CPI 的 example，数据早已公布，模型还在对用户说"今晚公布"→ 立规：强时效行情不进提示词，领域方法论改为动态注入。保险线同周同款：提示词内置弹药库带了点名产品的费率，和自己定的"产品详情只许来自外部注入"红线打架 → 绝对价格换成倍数规律（"60 岁保费常见是 30 岁的 5~8 倍"——任何一款医疗险的费率表都是这条曲线）。</li><li>这条从 W30 的"example 引导过强是 AI 味病根"、W31 的骰子契约一路长过来，本周第一次在两条产线被事实各自验证一遍。标注强化。</li></ul><p><strong>8. AI 产品经理的专业地图立起来了："精通 AI 是在场的对齐，驾驭 AI 是不在场的对齐"【培训线，新框架】</strong></p><ul class="ls"><li>框架是你 8-12 一次性交底的：两条可判真假的标准（精通 AI：你+AI = 你上一级的生产力；驾驭 AI：用户无需门槛即可直接使用你的 AI 满足需求），从"精通"到"驾驭"能力项从 4 项长到 7 项——同名的四项（理解模型/问题/认知/模式）全部升维，再新增理解用户、理解 know-how（"学习 know-how 后有效指导模型改变输出的概率分布"）、理解内容（内容七性，且七性被翻成七个能答是/否的验收问题——"形容词没法验收，写不进验收表的标准等于没有标准"）。</li><li>承重梁是"在场/不在场"：你自己用 AI，跑偏了当场拉回来，凭手感就够；用户用你的 AI，你不在场，所有慢思考必须提前写进产品，一次写好、百万次成立——手感必须变成原理和图纸。</li><li>立据用的是你自己的产品：京小贝一天真实漏斗——2-3 万人点进，1500 人主动打字，平均 1.7 轮对话；竞品蚂小财也是 1.7 轮。"用户不会写提示词，不会给上下文，甚至说不清自己想要什么。而你的一切专业，最终都要通过 AI，说给他听。"</li><li>为什么放进认知迭代：它把你本周所有产线动作（short 版、分诊台、搭梯子）统一成了一个可教的理论——你这周在财富线三次删库、在保险线逐句批改，全是在把"在场时的手感"翻译成"不在场时的图纸"。58 页 PPT 一天落地（8-12），配了可再生成的脚本。</li></ul><h2 id="s3">三、反复出现但没动手的念头</h2><ol class="ls"><li><strong>品味 → 评测资产：第四周点名，但这周它自己长出了半个身子。</strong> W30 提出、W31 最后通牒、W32 头号建议，本周仍无显式评测集。但看看你这周实际做的事：保险线把同一份任务书 40 秒内分叉喂给两个模型做受控对照（各产出一版提示词）、评测一律开干净会话跑固定 query、12 条 demo 判例回流成分类器内置判例、财富线把翻车命名成"病例四"写进提示词、两处放话要公开发布 Claude vs GPT-5.6 评测（原话给出了评测哲学："核心是开始理解人类的偏好，而不是那种推理难题"）。<strong>评测行为已经遍地都是，缺的只是一个把它们收进去的可复用容器。</strong>它不再是"该开始做"，是"该把散件拧成一台机器"。</li><li><strong>保证续保 20 年的溢价：两个信源差一个数量级，你采用了没验证的那个。</strong> 8-10 你自派的调研结论：同口径下无系统性溢价，40 岁以下长期产品反而便宜两成（"锁的是续保资格，不是价格"）；40 分钟后保险专家朋友的访谈说：贵 40-50%。你把 40-50% 写进了提示词。两者方向一致（都指向选保证续保），数量级冲突未裁决——而"预算有限时优先升级保证续保而不是 0 免赔"这条产线建议的说服力，就建立在这个数字上。一下午能裁决的悬案。</li><li><strong>知识库管道：上周刚恢复进水，本周整周零进水【第三次点名，且恶化】。</strong> inbox 最后一条停在 8-8。本周真正的重资产——保险 know-how.md、财富 short 全家桶、SFT 教学实验室、58 页专业地图 PPT、样本拆解教具——全部住在项目目录，库里一页未沉。W31"内容不走管道"、W32"管道通了主动脉绕行"、本周"管道又干了"。</li><li><strong>给调试环境喂真实上下文（本周出现两次，第二次你自己点破）。</strong> 8-13 你提出"把领域方法论作为动态上下文注入"；8-16 凌晨你承认"我确实没有把上下文传给你……这块我还没想好要怎么弄"。三次推倒重来里有多少成本来自用空弹夹测真枪，值得算一算——这条直接接到下周建议。</li></ol><h2 id="s4">四、本周资产入库清单</h2><blockquote><p>知识库 inbox 本周摄入：<strong>0 条</strong>。以下全部【库外】，住在项目目录。</p></blockquote><ul class="ls"><li>【库外】财富 short 全家桶：wealth-judgement-short（8,350 字符，老版 18,137）、raise-safe-short（含"病例四：把履历当预测"）、给不带 short 的 judgment/judgment-raise 反哺溯源能力（≤5 条），全部进 GitHub wealth-reply-skill 仓</li><li>【库外】保险提示词体系：保险know-how.md（两份 PDF 汇成单一元认知文档，"不要大幅改写我的文字……我后续需要让模型去学习这些风格"）、insurance-analysis-reply-1/2/3（双模型对照产物）、insurance-reply-classifier（品/人/条款分诊台）、insurance-reply-recommend，GitHub insurance-reply-skill 仓</li><li>【库外】SFT 教学实验室 sft-lab/：17 亿参数模型 + 苹果自家训练框架的 LoRA 微调（只训 0.3% 旁路参数，产出几十 MB 补丁）、生产数据蒸馏/缩编脚本（1694 条 → 400 条教学集）、双模型对战脚本、五层防崩保险、README 三条血泪教训；另有样本拆解教具 5 件套</li><li>【库外】《驾驭AI：AI 产品经理的专业地图》58 页 PPT + 可再生成脚本（8-12 一天）</li><li>【库外】王者荣耀开局阵容决策器（本地网站：英雄数据库 + 结构化规则分析，只在你的 4 英雄池内给建议，8-16 一天建成；同题让 GPT-5.6 跑了横评）</li><li>【库外】ai-history 网站上公网（复用 aidelphi.cn 服务器挂新子域名 + HTTPS，8-13）</li><li>【库外】量能日报事故修复（macOS 隐私授权拦截 launchd，静默停摆 5 个交易日）+ 8-07~8-14 结构化 A 股日报回填；Tushare 数据源写入全局记忆（8-14，"以后我们用数都可以从这看"）</li></ul><h2 id="s5">五、下周一个建议</h2><p><strong>给 short 版搭一个"真实上下文回放"调试台——它同时就是欠了四周的评测集 v1。</strong></p><p>具体做法：从线上抓 10-20 份真实的注入上下文（资讯 + 行情 + 持仓，脱敏后存成文件），配上你这周反复用的固定 query；以后调试一律喂真上下文，不再空弹夹测真枪。然后把你这周手写的判例装进去当验收清单：病例四（履历当预测）、AI 味黑名单（"断了新燃料""两条腿""确实能打"）、next-query 必须开在逻辑卡点、溯源不超 5 条、结论先行三刻度（三秒拿到判断、十秒走完主线、一屏之内读完）。每出一版新提示词，先过一遍回放台再谈感觉。</p><p>为什么是它：① 它直接解你 8-16 凌晨那个没闭环的自省——"我确实没有把上下文传给你，这块我还没想好"，这是你自己点的题；② 三次推倒重来的成本里很可能有一部分来自评判环境失真——回放台能把"模型不行"和"我没喂料"分开，下次删库之前先归因；③ 它就是第四周点名的那个评测资产，只是这次不用从零写标准——你这周的批改本身就是标准，装进容器就能对每一版提示词回归跑分，顺手把"Claude vs GPT-5.6 公开评测"的三次宣言变成可执行的第一步。做窄一点：只做财富 short 一条线，两天能立起来。</p><hr class="rule"><p><em>本周最大的认知迭代：给 AI 式面面俱到定了病名（隔层纱）、开了刀方——主逻辑只有一个（金线），信息不是砍少而是分层：正文放判断，钩子开在逻辑卡点，溯源给"不用无脑信我"的台阶；为了这个形状你一周三次深夜删库重做。同一周，你第一次亲手把模型训崩了电脑，换来"提示词是租、训练是买、模型行为是训练数据分布的镜子"三块参数层的手感——上面那套形状学是给用户修梯子，下面这三块是知道梯子钉在什么墙上。</em></p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
