@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2829%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2252%22%20cy%3D%2236%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2250%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.23%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把"记住"和"思考"拆成两个器官——模型不再靠啰嗦的思维链反复翻自己的记忆</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-18</span></div>
+  <h1 class="doc">把"记住"和"思考"拆成两个器官——模型不再靠啰嗦的思维链反复翻自己的记忆</h1>
+  <div class="dateline"><span>全文 <b>4,052</b> 字</span><span>约 <b>11</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Intern-S2-Mobius: Foundation Model with Decoupled Knowledge and Reasoning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.14290</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Intern-S2-Mobius Team（Kai Chen、Ning Ding 等 40+ 人）</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">上海人工智能实验室（Shanghai AI Laboratory / InternLM 团队）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-14</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-18.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-18.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily #4 · 29 赞 · 上海AI实验室（InternLM）· 权重已开源（HF internlm/Intern-S2-Mobius）· 新架构而非模型报告 · 1.6×数据效率 / ~4×推理提速</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, knowledge-reasoning-separation, latent-reasoning, efficiency, memory</span></div></div><div class="tools"><a class="btn hot" href="2026-08-18-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 + 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选这篇，是因为它动的是<strong>架构最底层的一块砖</strong>——不是把已有能力用得更好，而是重新问了一句"一个模型该怎么摆放'它知道的东西'和'它思考的过程'"。</p><ol class="ls"><li><span class="lk">它推进了什么</span>标准 Transformer 里，"存知识"和"做推理"是焊死在一起、一层压一层往上流的。Mobius 把这两件事拆成两个独立器官——一个所有推理层共用的"知识仓库"，和一组反复回仓库取货的"推理工"。这是<strong>新架构 / 新范式</strong>，正好踩在选片正面清单的第一条上。</li><li><span class="lk">命中的质量信号</span>HuggingFace 当日榜 #4、29 赞（当天榜首是一篇蹭"AI 换脸视频"社会热点的检测评测，靠话题性拿高票，不是能力前沿，已排除）；作者是<strong>上海人工智能实验室 InternLM 团队</strong>（做 Intern-S 系列科学多模态大模型的前沿组）；<strong>权重已在 HuggingFace 开源</strong>（<code>internlm/Intern-S2-Mobius</code>），不是纸上谈兵。</li><li><span class="lk">对思染追前沿的价值</span>这篇给了一个<strong>能力便宜化的机理性答案</strong>——同样的分数，训练少喂 1/3 数据、回答快约 4 倍、思维链短到原来的 1/5。更关键的是它把"思维链为什么啰嗦"讲穿了：模型写一长串废话，一部分是在<strong>用文字把自己脑子里的知识一遍遍捞出来</strong>。这个视角能直接改你写提示词和设计京小贝的方式。</li></ol><p>诚实交代：这不是当日票王，票数中等；它的部分机理作者自己也承认"还没完全说清"（见下文局限）。但方向的重量、开源的诚意、和"拆开知识与推理"这条正在升温的研究线，足够让它成为今天这一篇。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是一个叫 <strong>Mobius（莫比乌斯）</strong> 的新模型骨架，和它背后的一个老问题：<strong>一个大模型，到底该把"它记得的事"和"它当下的思考"放在哪、怎么连？</strong></p><p>先把两个零件用大白话安顿好，后面全靠它俩：</p><ul class="ls"><li><span class="lk">FFN（前馈网络）</span>Transformer 每一层里的一块"查表器"。学界这些年发现，它干的活其实很像一本<strong>字典 / 一个仓库</strong>——你把一个模式递进去，它把对应存着的"事实"递回来。<strong>模型"知道什么"，大体就存在这些 FFN 里。</strong> 你可以就把它当成模型的"记忆仓库"。</li><li><strong>Self-Attention（自注意力）</strong>：另一块零件，让句子里每个词去看其他所有词、决定谁重要、把信息重新拼一遍。<strong>"把已知的东西组合起来往下推"这件事，主要发生在这里。</strong> 你可以就把它当成模型的"推理工人"。</li></ul><p>一个普通 Transformer，就是"查表器 + 推理工"这两块，一层、一层、又一层地叠上去，几十层摞成一根柱子。</p><h2 id="s4">2. 困境</h2><p>这根柱子有个焊死的毛病：<strong>知识和推理被捆在同一层里，而且信息只能从下往上单向流。</strong></p><p>拆开说这句话的害处（这是全篇的痛点，务必讲透）：</p><ul class="ls"><li>每一层都是"先经过这一层的推理工，再经过这一层的查表器"，一层的产出喂给上一层。于是——<strong>浅层的思考只够得着浅层仓库里的知识，深层的推理工只能加工从下面一路传上来的知识</strong>。想让"很深的思考"用上"存在浅层的某个事实"？中间隔着几十层，够不着。</li><li>结果模型被逼出一个笨办法：<strong>把知识用文字"吐"出来，再当输入重新读一遍</strong>。这就是我们熟悉的<strong>思维链（Chain-of-Thought，简称 CoT——就是模型把解题过程一步步写成大白话）</strong>。很多时候它写的一长串，不是在"想"，而是在<strong>把自己仓库里的东西反复捞出来摆到台面上，好让后面的层能看见</strong>。</li><li>代价：一道很简单的题也啰嗦一大篇，又慢又贵；而且靠"堆更多层、更多数据"往上顶的老路（scaling，规模化）已经<strong>明显撞到天花板，边际收益越来越薄</strong>。</li></ul><p>一句话困境：<strong>模型想得越深，越够不着自己记得的东西，只能靠啰嗦的自言自语来回搬运——慢、贵、还快撞墙。</strong></p><h2 id="s5">3. 旧路</h2><p>之前大家怎么缓解？三条路，各有各的不够：</p><ul class="ls"><li><strong>把思维链写得更长更巧</strong>（test-time compute，让模型多花点"思考时间"）：治标。它没解决"知识够不着"这个结构病，只是让模型更卖力地搬运，越搬越长。</li><li><strong>潜空间推理</strong>（latent reasoning，让模型在自己的数字向量里默默想、不一定写成字，代表如 COCONUT、循环 Transformer——本库里的 [[2026-06-18--loopcoder-v2]]、[[2026-08-13--bdh-cq-recurrent-latent-reasoning]] 都在这条线上）：方向对，但多半是<strong>在旧骨架上外挂一个训练技巧</strong>，反复把整根柱子从头到尾再跑一遍，很重。</li><li><strong>外接检索</strong>（RAG，把知识放到模型外面的数据库、用时再搜回来）：把知识挪出去了，但知识和推理仍是"两套系统隔空喊话"，接缝多、延迟高，模型内部那套"够不着自己知识"的老毛病一点没变。</li></ul><p>共同的没解决：<strong>没人从骨架层面，把"知识存在哪、推理怎么取"这件事重新设计一遍。</strong></p><h2 id="s6">4. 转折</h2><p>作者转的这个弯，一句话：<strong>别再让每一层各管一小块记忆——把所有层的 FFN 拆下来、并成一个"全体推理工共用的大仓库"，然后让推理工随时回去取货。</strong></p><p>关键 insight 有两层：</p><ul class="ls"><li><strong>知识要横着摊平、共享</strong>，而不是竖着捆在各层。原来每层一个小 FFN 仓库；现在把这些 FFN 的参数<strong>横向拼成一个统一的"知识向量数据库"</strong>（知识向量＝把一条事实编码成的一串数字），任何一个推理层都能直接去这个大仓库里查任何知识。</li><li><strong>推理要能回头取货</strong>，而不是只能等下面传上来。作者加了<strong>反向残差连接（backward residual connection——让很深的推理层可以直接伸手够到浅层存的知识）</strong>，把"信息只能从下往上"这道单行道打通成双向。</li></ul><p>"够不着自己知识"这个病根，就是被这两刀切掉的。</p><h2 id="s7">5. 解法</h2><p>把转折落成能跑的机器，Mobius 做了这几件事（术语都就地讲）：</p><ol class="ls"><li><span class="lk">一个共享知识仓库 + 一组推理工</span>所有 FFN 合成一个大的知识向量库；若干个 Self-Attention 层当"推理工"。推理工不再一层层老实往上爬，而是<strong>用自己的隐藏状态（hidden state，就是模型内部那串还没变成文字的数字草稿）当"购物车"，反复回大仓库里取所需的知识向量，取回来接着想</strong>。想几轮，再一次性把好几个字一起吐出来。</li><li><span class="lk">仓库太大就学 MoE 的省电法</span>知识全摊平后仓库巨大，一次全点亮太费电。于是借<strong>MoE（Mixture of Experts，混合专家——一次只点亮庞大参数里的一小片，用哪块调哪块）</strong>的分块思路，每次只激活需要的那一小格。这样"知识可以做得很大"和"跑起来别太贵"就不打架了。</li><li><span class="lk">把"想"搬进潜空间</span>推理主要在隐藏状态这层"数字草稿"上迭代，而不是每一步都翻译成文字再读回来。这就是为什么它的思维链能短这么多——<strong>能在脑子里悄悄想完的，就不写出来了</strong>。作者强调这是<strong>"原生长在骨架里"的能力</strong>，不是外挂训练技巧。</li></ol><p>（名字"Mobius / 莫比乌斯"作者没明说，直觉上呼应那条"绕回去、正反面连成一体"的莫比乌斯环——把原来单向的信息流接成了能回头的回路。这层是我的推测，不是论文原话。）</p><h2 id="s8">6. 结局</h2><p>拆开之后，世界（至少这几个数字）变了样：</p><ul class="ls"><li><span class="lk">同样聪明，少喂 1/3 数据</span>一个 70 亿参数（7B）模型从零训练，要达到和普通 Transformer 一样的考试分数（MMLU，一套跨学科选择题基准），Mobius <strong>只用了对方 62.6% 的训练数据</strong>——作者叫它 <strong>1.6× 数据效率</strong>（同样的分，数据省掉约三分之一）。</li><li><span class="lk">回答快约 4 倍、短到 1/5</span>把一个已经练好的 350 亿参数 Qwen3.5-35B 继续按 Mobius 结构训一训，<strong>端到端回答速度快了近 4 倍</strong>，而且分数不降反升——MMLU-Pro 89.05 对 85.31、AIME 2026（奥数题）95.31 对 92.08。有个案例最直观：一道线性代数题，Qwen 写了 <strong>2364</strong> 个词元（token，模型处理文字的最小单位）来解，Mobius 只写 <strong>516</strong> 个就解完了，<strong>约五分之一的篇幅、一样的答案</strong>，省的全是"重复推导、反复自检"那些废话。</li><li><strong>最反直觉的副发现</strong>（往往最有意思）：作者拿放大镜去看"为什么 Mobius 的思维链能短这么多"，结果<strong>自己也没完全看清</strong>——他们诚实写道：还不敢断定 Mobius 到底是"真找到了一种更高效的思考方式"，还是"只是投机取巧地把某些题绕过去了"。也就是说，<strong>"把知识和推理拆开"确实带来了肉眼可见的提速和数据效率，但它省下来的那部分到底是'真本事'还是'抄近道'，连造它的人都还在验证。</strong> 这个诚实的空白，反而是这篇最值得记住的地方。</li></ul><h2 id="s9">7. 内核</h2><p><strong>思维链的啰嗦，一半是模型在'用嘴巴当搬运工'，把自己记得的东西一遍遍捞到台面上——因为它内部的结构让深处的思考够不着自己的记忆。当你把'记忆仓库'和'推理工人'拆成两个器官、让推理工随时回仓库取货，模型就不必再靠自言自语来回搬运：同样的聪明，能更省数据地学、更短更快地答。</strong></p><p>一句话带走：<strong>下一代模型进化的一个方向，是把"知道"和"思考"从焊死的一根柱子，拆成可以各自生长、彼此调用的两个部件。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p>顺着"它在批判谁、这条线怎么长到今天"往回挖三层：</p><p><strong>第 1 层——它直接改的是谁？</strong> 直接改的是<strong>标准 Transformer 里"层层绑定的 FFN"</strong>。Mobius 的全部动作，都是冲着"知识被捆死在各层、信息只能单向上流"这个具体结构去的：把 FFN 拆下来共享、加反向连接让深层够得着浅层知识。批判对象非常具体，不是泛泛喊"Transformer 不行"。</p><p><strong>第 2 层——它站在谁的肩膀上？</strong> 两股前人成果：</p><ul class="ls"><li><strong>"FFN 其实是模型的记忆库"这个认识</strong>（Geva 等人 2020 年前后的经典发现：Transformer 的前馈层像一堆"键—值记忆"，存着事实）。Mobius 敢把 FFN 单独拎出来当仓库，前提就是先有人证明了"知识主要住在 FFN 里"。</li><li><strong>潜空间 / 循环推理这条线</strong>（Universal Transformer → COCONUT → 循环 Transformer，本库 [[2026-06-18--loopcoder-v2]] 讲循环圈数的收益、[[2026-08-13--bdh-cq-recurrent-latent-reasoning]] 讲隐状态里的迭代推理）。Mobius 把这些人"外挂式"的潜空间推理，改造成<strong>长在骨架里的原生能力</strong>。</li></ul><p><strong>第 3 层——它属于哪股更大的暗流？</strong> 属于<strong>"把知识从推理里剥出来"这股正在升温的研究current</strong>。同期一批工作都在敲同一个点：用认知科学的"双系统"给 LLM 拆知识与推理（arXiv 2507.18178）、把知识注入和推理解耦（2506.00536）。再往上接到本库 [[2026-07-14--memorized-knowledge-generalization]]（"死记的知识为什么不会举一反三"）——那篇说的病，Mobius 用架构给了一种解法：如果知识和推理本就是两个部件，也许就能各自更新、互不拖累。往旁边看，它和 <strong>MoE（把知识稀疏地分格存放）</strong>、<strong>RAG（把知识放到模型外面）</strong> 是三种"给知识安家"的不同答案：MoE 把知识摊进稀疏参数、RAG 搬到模型外、<strong>Mobius 则是在模型内部专门盖了一间共享仓库</strong>。</p><p>一句话脉络：<strong>从"发现知识住在 FFN 里"，到"想在潜空间里更省地推理"，再汇入"把知识与推理彻底拆开"这股暗流——Mobius 是这三条线交汇处，第一个把它做成原生骨架、还开源了权重的尝试。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><ul class="ls"><li><strong>规模化撞墙后，架构创新回来了</strong>。过去几年"加数据、加参数、加层"这条路边际收益变薄，Mobius 代表另一种突围：<strong>不加料，改摆放</strong>——把知识与推理的空间结构重排，就换来 1.6× 数据效率和 ~4× 提速。这是"让强能力变便宜"的<strong>机理性</strong>突破，不是调参。你追前沿时，值得把"架构怎么摆放知识"单独立成一条观察线。</li><li><strong>"知识可更新、推理可复用"的雏形</strong>。知识与推理一旦拆开，逻辑上就通向一个很诱人的未来：<strong>换掉仓库里的知识，不必重训推理引擎</strong>。这对任何要长期维护、知识频繁变动的产品都是结构性利好——虽然这篇还没做到"热插拔知识"，但方向已经指在那儿。</li></ul><h2 id="s13">能怎么用（提示词 + 京小贝）</h2><ol class="ls"><li><strong>提示词：把"喂知识"和"派任务"这两件事，在你的 prompt 里也物理分开。</strong> 这篇最能迁移的洞见是——<strong>CoT 的一部分啰嗦，是模型在用文字把自己的知识捞出来</strong>。反过来讲：<strong>你越是把该用的知识（政策条款、产品规则、案例）干净地直接喂给它，它就越少需要靠自言自语去"回忆"，思维链更短、更准、更省 token。</strong> 具体做法：prompt 里划出清晰的"【已知事实/上下文】"块和"【你的推理任务】"块，别让模型在一段话里又回忆又推理搅在一起。这基本就是 Mobius 在模型内部干的事，你在外部用提示词结构复刻一遍。</li><li><strong>京小贝：知识层和推理层，最好也是两套可分别治理的系统。</strong> 京小贝这类金融信贷助手，命门是<strong>知识必须准（监管口径、利率、准入规则，错一条是事故）</strong>、<strong>推理必须稳（额度/资格判断的逻辑链）</strong>。Mobius 的隐喻直接落地：<strong>把"权威知识库（RAG / 结构化规则）"和"推理策略"当两个部件分开建、分开更新</strong>——监管一变只动知识库、不碰推理逻辑；推理逻辑迭代时也不必担心污染事实。既降幻觉，又好维护。</li><li><strong>成本与延迟：短思维链是可以"设计"出来的，不只是抠 prompt。</strong> "同一道题 516 vs 2364 token"提醒你——<strong>回答的长度/成本，很大程度由'模型要不要靠文字搬运知识'决定</strong>。在京小贝里，对那些知识明确、只需套规则的高频问题，把知识前置喂足、引导它别展开长篇推导，能实打实压掉延迟和调用成本。</li><li><span class="lk">一条认知锚</span>以后看新模型，多问一句——<strong>它把"知道"和"思考"是焊在一起，还是拆开了？</strong> 拆开的方向（Mobius、MoE 记忆化、原生潜空间推理）大概率是接下来一段时间"能力变便宜"的主战场之一。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2608.14290">https://arxiv.org/abs/2608.14290</a> （Intern-S2-Mobius: Foundation Model with Decoupled Knowledge and Reasoning，2026-08-14）</li><li>全文（HTML）：<a class="src" href="https://arxiv.org/html/2608.14290v1">https://arxiv.org/html/2608.14290v1</a></li><li>开源权重：<a class="src" href="https://huggingface.co/internlm/Intern-S2-Mobius">https://huggingface.co/internlm/Intern-S2-Mobius</a> （上海AI实验室 InternLM）</li><li>信号佐证：HuggingFace Daily Papers 2026-08-18 榜 #4 / 29 赞 <a class="src" href="https://huggingface.co/papers/date/2026-08-18">https://huggingface.co/papers/date/2026-08-18</a></li><li>研究脉络佐证：<ul class="sub"><li>FFN=键值记忆：Geva et al., "Transformer Feed-Forward Layers Are Key-Value Memories"</li><li>解耦知识与推理（双系统）：<a class="src" href="https://arxiv.org/abs/2507.18178">https://arxiv.org/abs/2507.18178</a></li><li>解耦推理与知识注入：<a class="src" href="https://arxiv.org/abs/2506.00536">https://arxiv.org/abs/2506.00536</a></li><li>本库相关：[[2026-06-18--loopcoder-v2]]、[[2026-08-13--bdh-cq-recurrent-latent-reasoning]]、[[2026-07-14--memorized-knowledge-generalization]]</li></ul></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
