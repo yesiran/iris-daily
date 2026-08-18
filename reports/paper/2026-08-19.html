@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28283%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2210%22%20r%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.27%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2217%22%20r%3D%2223%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2251%22%20r%3D%2222%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.30%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>给大模型配一个"知道自己有多没底"的评估脑，它就从"会写字"升级成"会发现</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-19</span></div>
+  <h1 class="doc">给大模型配一个"知道自己有多没底"的评估脑，它就从"会写字"升级成"会发现</h1>
+  <div class="dateline"><span>全文 <b>4,468</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Large Discovery Models: Empirically-grounded Model-Based Open-Ended Search</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.15669</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zhongwei Yu, Yan Song, Xue Yan, Anjie Liu, Xingyu Lu, Yihang Chen, Huichi Zhou, Siyuan Guo, Luoyang Sun, Sihan Chen, Xiangning Yu, Jun Wang（通讯）</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">UCL 伦敦大学学院（Jun Wang 组）等</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-16</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-19.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-19.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily #3 · 47赞（08-18窗口） · UCL Jun Wang 组（多智能体RL/LLM智能体老牌实验室） · 新范式非benchmark · S2未索引（发表3天≈0正常，如实标注） · 无会议接收（预印本）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, discovery, active-learning, uncertainty, ai4science, agent</span></div></div><div class="tools"><a class="btn hot" href="2026-08-19-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1｜主角</a><a class="t-h2" href="#s4">2｜困境</a><a class="t-h2" href="#s5">3｜旧路</a><a class="t-h2" href="#s6">4｜转折</a><a class="t-h2" href="#s7">5｜解法</a><a class="t-h2" href="#s8">6｜结局</a><a class="t-h2" href="#s9">7｜内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型往哪进化了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 UCL Jun Wang 组的 <strong>Large Discovery Model（LDM，大发现模型）</strong>，理由三条：</p><ol class="ls"><li><strong>它推进的能力前沿是"发现"本身</strong>——不是"把已知问题答得更好"，而是"在molecule（分子）、protein（蛋白质序列）、program（程序）这类无边无际的可能空间里，高效搜出人和老办法找不到的好东西"。台账里的自主研究智能体（[[2026-06-12--arbor-htr|Arbor]]、[[2026-07-27--arex-rsi-deep-research|AREX]]）是"编排一堆智能体走流程"；LDM 不一样，它去修<strong>模型本身的一个根子毛病</strong>：大模型很会生成点子，但让它给自己的点子打分、说"我有多确定"，尤其对它没见过的新点子，它经常胡乱自信。LDM 把这颗坏掉的"自评脑"换成一个会诚实说"我心里没底"的独立评估器。这是机理层的补丁，不是流程层的拼装。</li><li><span class="lk">质量信号</span>HuggingFace Daily Papers 上 47 赞、排在 08-18 窗口第 3 位（社区每天投票筛过的重要论文榜）；作者是 UCL 的 Jun Wang 组——做多智能体强化学习、LLM 智能体的老牌实验室；三个真实领域（神经网络训练、抗体设计、分子优化）都拿到硬结果。<strong>诚实交底</strong>：这是发表 3 天的预印本，还没有会议接收，Semantic Scholar 也还没收录（引用≈0 是正常的），所以我不是靠引用选它，是靠"方向 + 机理 + 社区热度"。</li><li><span class="lk">对思染的价值</span>LDM 的核心心法——"别信生成器对自己的打包票，给它配一个会报告'我有多确定'的独立打分器，再按'可能好 + 我没底'去花昂贵的真实测试预算"——几乎是照着京小贝这类信贷风控产品的痛点写的。它同时是一把"模型正往哪进化"的认知锚。</li></ol><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1｜主角</h2><p>主角是一台<strong>想当"发现引擎"的大模型</strong>。</p><p>它面对的活儿叫"discovery（发现）"：给定一个又贵又慢才能验证好坏的目标（比如"这个分子药效好不好""这套神经网络初始化训得快不快"），要在一个<strong>大到穷举不完、还很有结构</strong>的可能空间里，搜出最好的那个。这个可能空间，论文叫 <strong>open-ended hypothesis space（开放式假设空间）</strong>。把这三个词拆到底：</p><ul class="ls"><li><strong>假设空间</strong> = 所有候选答案摆在一起的那个集合。搜分子，它就是"所有能合法画出来的分子结构"；搜蛋白质，就是"所有氨基酸排列"；搜程序，就是"所有能写出来的代码"。</li><li><strong>开放式</strong> = 这个集合大到你这辈子数不完，而且没有边界——永远能再造一个新的没人见过的候选。类比：像"所有可能的乐高搭法"，无穷无尽。</li><li><strong>有结构</strong> = 它不是一锅随机噪声，好东西附近往往还有好东西，差一点点的改动可能让结果天差地别。所以瞎猜不行，得有章法地搜。</li></ul><h2 id="s4">2｜困境</h2><p>撞的墙是：<strong>真实的"验证一个候选到底好不好"这件事，又贵又慢。</strong></p><p>做一次湿实验测抗体结合、跑一次完整训练看收敛速度——每验一个候选都要花真金白银和大把时间。于是你根本没法把空间里的候选一个个都试过去，<strong>你的"真实测试"次数是被严格限量的</strong>。这就逼出一个要命的问题：<strong>下一枪，到底打向哪个候选?</strong> 打错了就白烧一次昂贵预算。解不好，发现效率就低到没法用。</p><h2 id="s5">3｜旧路</h2><p>之前有两条路，各有各的死穴。</p><p><strong>旧路 A：让大模型自己反思（LLM-only reflection）。</strong> 就是让 LLM 生成一批候选，再让它自己看着结果"反思、改进、再生成"，一圈圈迭代。听着聪明，但有个隐藏的坑：<strong>LLM 对自己点子的好坏判断、对自己有多确定的判断，都不可靠——尤其对它没见过的新点子。</strong> 原文点破："LLMs generate diverse candidates but lack uncertainty quantification to guide search toward high-value regions"（大模型能生成五花八门的候选，却没有"不确定性量化"这把尺来把搜索引向高价值区域）。说人话：它经常对一个其实很糟的新点子拍胸脯说"这个行"，于是反复在原地打转、重复采样、错过真正的好矿脉。</p><p><strong>旧路 B：经典 Bayesian optimization（贝叶斯优化，简称 BO）。</strong> 这是统计学里搜昂贵目标的老武器，原理很对——它会训一个"替身打分器"，不但猜每个候选多好，还给出"我对这个猜测有多确定"，然后专挑"可能好、而且我还没底"的地方去试。问题是它的经典实现（用 Gaussian process 高斯过程当替身）<strong>扛不住又大又有结构的空间</strong>：分子、程序这种候选没法简单塞进它的数学框架，维度一高就跑不动。原文："Standard BO struggles with high-dimensional design spaces and expensive likelihoods"（标准 BO 在高维设计空间和昂贵似然面前吃力）。</p><p>一句话总结旧路的两难：<strong>LLM 会生成、但不会判断自己的不确定；BO 会判断不确定、但生成不了复杂候选。</strong> 一个有嘴没脑，一个有脑没嘴。</p><h2 id="s6">4｜转折</h2><p>作者的关键一转：<strong>把这两个残废各取所长，缝成一个整体。</strong></p><p>让 LLM 当"生成器"（它天生就擅长在分子、程序这种大而有结构的空间里造候选、改候选）；另配一个<strong>Bayesian non-parametric reward surrogate model（贝叶斯非参数奖励代理模型）</strong>当"评估脑"，专门补上 LLM 缺的那块——<strong>校准过的不确定性</strong>。这个又长又拗口的名字，逐词拆开就很朴素：</p><ul class="ls"><li><strong>surrogate（代理 / 替身打分器）</strong>：真实测试太贵，先训一个便宜的"替身"来猜每个候选大概多好，用它筛掉绝大多数，只把最值得的少数送去做真实测试。</li><li><span class="lk">reward（奖励）</span>这里就是"候选有多好"的那个分。</li><li><span class="lk">Bayesian（贝叶斯）</span>这个替身不只吐一个分，还吐一句"我对这个分有多大把握"。对见过很多类似东西的，它说"我挺确定"；对从没见过的新候选，它诚实说"我心里没底"。这个"心里没底"有个正式名字叫 <strong>epistemic uncertainty（认知不确定性）</strong>——因为<strong>没见过</strong>而不确定，不是因为世界本身随机。</li><li><strong>non-parametric（非参数）</strong>：这个替身不提前把自己的复杂度写死，数据来得越多，它就长得越复杂、越贴合。类比：不是提前画一条固定形状的曲线硬套数据，而是让曲线随数据自己生长。</li></ul><p>转折的内核一句话：<strong>大模型缺的不是创造力，是"知道自己有多不知道"这块自知之明——那就外接一个专门管自知之明的脑子给它。</strong></p><h2 id="s7">5｜解法</h2><p>整套 LDM 是一个<strong>一圈一圈转的循环</strong>（论文叫 recurrent architecture，这里的 recurrent 就是"重复转圈"，不是 RNN 那种循环神经网络）。一圈是这样的：</p><ol class="ls"><li><span class="lk">提议</span>把"发现记忆"里目前最好的几个候选摆给 LLM 看，让它照着这些已验证好用的方向，生成一批新的候选变体。</li><li><span class="lk">打分 + 报不确定</span>替身评估脑给每个新候选算两个数——预测的好坏分，和"我对这个分多没底"。</li><li><span class="lk">算"该不该试"的分</span>这是全篇的心脏，叫 <strong>acquisition / uncertainty-aware value（该试哪个的评分规则）</strong>。它不是只看预测分，而是 <strong>"预测分 + 一个'这里我没底、可能藏着惊喜'的加分"</strong>（形式上就是 <code>值 = 预测奖励 + β × 不确定性</code>）。这正是"探索 vs 利用"的权衡：<ul class="sub"><li>只挑预测分最高的（<strong>利用</strong>）→ 会早早卡死在一个小山头，因为模型只敢在它熟的地方转。</li><li>给"我没底但可能好"的地方加分（<strong>探索</strong>）→ 才敢翻过熟悉的山头，去够那些没人踩过、可能更高的峰。</li></ul></li><li><span class="lk">真测</span>按这个分排序，只把最值得的少数几个，送去做那个又贵又慢的<strong>真实测试</strong>（湿实验/完整训练），拿到货真价实的结果。</li><li><span class="lk">记 + 学</span>把新的好候选和真实分数塞进<strong>发现记忆</strong>（discovery memory，一个不断更新的小本子，记着到目前为止最好的候选和分数）；同时拿这条新的真实观测去更新替身评估脑，让它下一圈猜得更准、"没底"的判断更靠谱。</li><li><strong>回到第 1 步</strong>，转下一圈。</li></ol><p>关键设计理由：<strong>发现记忆和替身脑是"每来一个新的真实观测就更新"的</strong>（原文：discovery memory 与 surrogate "continually updated as each new experimental observation arrives"）。也就是说，它边搜边学，越搜越懂这个空间长什么样、哪儿还没探、哪儿藏着好东西。整台机器是把"经典贝叶斯优化那套有原则的探索"，第一次稳稳架到了"LLM 能生成复杂候选"的肩膀上。</p><h2 id="s8">6｜结局</h2><p><strong>解出来，世界变了这些样</strong>（以下都是论文摘要里逐字给的硬数，是三个不同领域、和"只让 LLM 反思"或"传统统计搜索"这两类基线比）：</p><ul class="ls"><li><strong>神经网络训练</strong>（搜"怎么设置能训得又快又好"）：把 <strong>validation BPB 往下压的幅度，是基线的 2.4 倍</strong>。拆一下 <strong>BPB（bits per byte，每字节比特数）</strong>：它是衡量语言模型训得好不好的一把尺 = 模型对每一字节文本"有多惊讶"，越低说明越会预测下一段文字、训得越好。"2.4× 的下降幅度" = 同样的评估预算下，LDM 把这个惊讶度往下压得比基线狠 2.4 倍。</li><li><strong>抗体设计</strong>（搜"哪条抗体序列抓目标抓得最紧"）：<strong>binding energy 相对降低 18.2%</strong>。<strong>binding energy（结合能）</strong> = 抗体抓住目标（比如病毒表面某个点）抓得多紧，越低（越负）抓得越牢、越可能成药。降 18.2% = 抓得比最好的旧方法紧了近两成。</li><li><strong>分子优化</strong>（同时优化溶解度、成药性等好几个互相打架的目标）：<strong>多目标综合表现相对提升 60% 以上</strong>。</li></ul><p><span class="lk">最反直觉、也最值得记的那颗副发现</span>作者发现，<strong>如果去掉那个"不确定性加分"、改成纯挑预测分最高的候选，机器反而更快陷进一个浅浅的小山头出不来</strong>。也就是说——<strong>在发现这件事上，"我不确定、去看看"比"我觉得这个最好、就它了"更重要</strong>。凭空的自信是发现的敌人；诚实的"没底"反而是把你带向新大陆的指南针。这颗种子直接解释了为什么"只让 LLM 反思"（旧路 A）会原地打转：它太自信，从不给自己留"我可能错、该去探探别处"的余地。</p><h2 id="s9">7｜内核</h2><p><strong>给大模型外接一个"知道自己有多没底"的评估脑，它就从一个'会生成'的嘴，变成一台'会发现'的引擎。</strong> 发现的瓶颈从来不是缺点子，而是缺一个能诚实告诉你"这个方向我心里有没有底、值不值得下注一次昂贵测试"的指南针——LDM 把这根指南针，第一次稳稳装到了 LLM 身上。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读 3 层）</h1><p><strong>第 1 层——它直接改的是谁。</strong> 一手批"只让 LLM 反思/自评"这条路（propose-refine 自迭代，毛病是 LLM 对自己不确定的判断不可信）；一手接"经典贝叶斯优化 BO"（高斯过程 + expected improvement，原则对但扛不住分子/程序这种大而有结构的空间）。LDM = 把 BO 的"有原则地探索未知"嫁到 LLM 的"能生成复杂候选"上，让两个残废合成一个整体。</p><p><strong>第 2 层——它站在哪条大线上。</strong> 这是"<strong>把 AI 变成发现/搜索引擎</strong>"这条线。旁边站着两拨人：evolutionary search（遗传算法、CMA-ES）——给的是无导向的多样性（会乱变异，但不会学着往好处变）；以及 AI4Science 那一脉（AlphaFold → 生成式分子/蛋白设计）。这条线上所有人反复撞的同一堵墙是：<strong>在astronomically 大的空间里，昂贵的验证预算到底该花在哪。</strong> LDM 的答卷是：用校准过的不确定性当分配预算的准绳。它和台账里的自主研究智能体是互补的——[[2026-06-12--arbor-htr|Arbor]]（假设树让科研智能体越做越懂）、[[2026-07-27--arex-rsi-deep-research|AREX]]（会自己审自己、抓"发现难验证易"不对称的递归自改进研究员）是在<strong>流程/智能体编排</strong>层做文章；LDM 是在<strong>模型核心机制</strong>层做文章——补上"模型不知道自己不知道"这个根子毛病。</p><p><strong>第 3 层——根在哪。</strong> 根是决策论里最老的两个问题：<strong>explore-vs-exploit（探索还是利用）</strong>，和 <strong>calibrated uncertainty（校准的不确定性）</strong>——从 multi-armed bandit（多臂老虎机：面前一排老虎机，钱有限，是继续拉那台已知回报不错的，还是去试试没拉过、可能更好也可能更差的）到 active learning（主动学习：标注预算有限，机器主动挑"最该问人"的样本去标）都在问同一件事。LDM 的独家贡献，是<strong>把校准的认知不确定性第一次带给了 LLM 生成器</strong>，让"生成→判断→下注"这整个闭环，终于有了一根值得信的指南针。它也和台账的自进化/验证档（[[2026-06-09--openskill|OpenSkill]] 自造验证锚点、[[2026-07-27--arex-rsi-deep-research|AREX]] 验证级递归自改进）呼应：大家都在补"AI 怎么在没有现成答案时判断自己做得对不对"这一课，LDM 补的是其中最底层的一环——<strong>校准的不确定性</strong>。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型往哪进化了</h2><p><strong>从"会回答"迈向"会发现"。</strong> 前沿的重心正在从"把已知问题答得更漂亮"，挪到"在人看不完的巨大空间里，主动搜出人和老办法都找不到的好东西"。而卡住这条路最硬的那块石头——<strong>模型对没见过的新候选，不知道自己有多不确定</strong>——正是 LDM 这一篇撬动的。记住这个坐标：<strong>发现能力的瓶颈不是生成力，是校准的自知之明。</strong> 以后看 AI4Science、看 AlphaEvolve 式的算法发现、看自主研究智能体，都可以用这把尺去量：它是不是解决了"模型怎么知道自己该往哪下注"。</p><h2 id="s13">能怎么用（提示词 &amp; 京小贝）</h2><ol class="ls"><li><strong>"生成器 + 校准过的批判器"是可直接搬的架构模式。</strong> LDM 的第一原理是：<strong>别让同一个 LLM 既出结论、又给自己的结论打包票</strong>——它对自己没见过的情况经常胡乱自信。对京小贝这类信贷风控：当 LLM 说"这个申请人能批"时，那份自信恰恰是 LDM 警告的"不可信自评"。正解是<strong>外挂一个独立的、会报告'我有多确定'的评估器/校准分</strong>，别只看结论看信心。（这一点和台账 [[2026-07-27--arex-rsi-deep-research|AREX]] 的"模型自评置信度可信度需要单独校准"是同一道理的两面。）</li></ol><ol class="ls"><li><strong>不确定性 → 分流。</strong> 把"我有多没底"这个信号做成一道分诊闸门：<strong>高置信直出、中置信再补一轮材料或调更强模型、低置信转人工</strong>。金融场景里答错很贵，这道基于"模型对自己有多确定"的安全阀，是一道便宜又硬的护栏。</li></ol><ol class="ls"><li><strong>昂贵评估预算的分配律——花在"可能好 + 我没底"的地方。</strong> 人工复审、真实放款、线上 A/B，全是又贵又慢的"真实测试"，预算天然有限。LDM 的心法直接可迁移：<strong>别把这些贵测试浪费在你已经很确定的样本上，集中砸到"既可能高价值、又心里没底"的地方</strong>——那里才藏着你现在还看不见的收益/风险。这是任何"贵测试预算有限"的产品都适用的资源分配原则。</li></ol><ol class="ls"><li><strong>提示词层的小手势：给模型留"我可能错"的余地。</strong> 那颗反直觉副发现（纯挑最自信的答案反而陷进浅坑）提醒：一味让模型"给我一个最确定的答案"，会让它在自己熟的小山头里打转、错过更好解。在需要探索/找方案的任务里，显式让它<strong>列出几个候选并各自标注把握程度、点出自己最没底的地方</strong>，往往比逼它"直接给最优解"更容易翻过山头。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.15669">https://arxiv.org/abs/2608.15669</a></li><li>论文 PDF：<a class="src" href="https://arxiv.org/pdf/2608.15669">https://arxiv.org/pdf/2608.15669</a></li><li>质量信号 · HuggingFace Daily Papers（08-18 窗口，47 赞 / #3）：<a class="src" href="https://huggingface.co/papers">https://huggingface.co/papers</a></li><li>作者机构佐证 · Jun Wang（UCL 伦敦大学学院，多智能体RL/LLM智能体）：<a class="src" href="https://arxiv.org/pdf/2608.15669">https://arxiv.org/pdf/2608.15669</a></li><li>关联台账：[[2026-06-12--arbor-htr]]（假设树自主科研）、[[2026-07-27--arex-rsi-deep-research]]（发现-验证不对称的递归自改进）、[[2026-06-09--openskill]]（自造验证锚点的自我进化）</li></ul><blockquote><p>诚实标注：本篇为 2026-08-16 发表的预印本，尚无会议接收；Semantic Scholar 当日未收录（发表 3 天引用≈0 属正常），故选片不依赖引用数，依据为方向（把 AI 变成发现引擎）+ 机理创新（给 LLM 外接校准不确定性）+ 社区热度（HF#3/47赞）+ 机构分量（UCL Jun Wang 组）。抗体/分子/训练三项硬数取自论文摘要逐字数据；机制细节（<code>值=奖励+β×不确定性</code> 的采集函数、发现记忆条件化）为对论文方法的转述。</p></blockquote></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
