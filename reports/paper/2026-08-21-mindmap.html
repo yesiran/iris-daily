@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多模型互批：无标答下的推理自我进化 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.08.21</span></div>
+  <div class="bar"></div>
+  <h1>多模型互批：无标答下的推理自我进化</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>27</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">困境：模型推理的天花板</div><ul><li><div class="n2" style="--c:#E63312">强化学习依赖标准答案（RLVR）</div><ul><li><div class="n3">机器能核对的奖励</div></li><li><div class="n3">一旦模型超过人类判断力即失效</div></li></ul></li><li><div class="n2" style="--c:#E63312">自己批自己导致崩溃</div><ul><li><div class="n3">p&lt;0.5的任务会收敛到0准确率</div></li><li><div class="n3">自我强化陷阱：重复既有偏见</div></li></ul></li></ul></li><li><div class="n1" style="--c:#10395E">核心转折：互批vs自批</div><ul><li><div class="n2" style="--c:#10395E">从自批到换人批：切断自循环</div><ul><li><div class="n3">模型A由邻居B的多数答案评分</div></li><li><div class="n3">每个模型都不给自己发糖</div></li></ul></li><li><div class="n2" style="--c:#10395E">&quot;错得各不相同&quot;是灵魂</div><ul><li><div class="n3">多样化同伴群（diverse cohort）</div></li><li><div class="n3">同家族模型互批等于白花钱</div></li></ul></li></ul></li><li><div class="n1" style="--c:#9E2B22">实现机制：Co-RL设计</div><ul><li><div class="n2" style="--c:#9E2B22">环形批改+GRPO优化</div><ul><li><div class="n3">每个模型答K遍，取多数答案</div></li><li><div class="n3">组内相对策略优化</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">三个差异来源</div><ul><li><div class="n3">不同家族（通义/羊驼/Phi）</div></li><li><div class="n3">不同大小（大小模型配对）</div></li><li><div class="n3">问法变化（同题不同场景）</div></li></ul></li></ul></li><li><div class="n1" style="--c:#3E5C2E">理论支撑：数学保证</div><ul><li><div class="n2" style="--c:#3E5C2E">Cohen&#x27;s κ量化独立性</div><ul><li><div class="n3">不同家族κ=0.31-0.42（低=独立）</div></li><li><div class="n3">同家族κ=0.51-0.58（高=相似）</div></li></ul></li><li><div class="n2" style="--c:#3E5C2E">Theorem 1：p_A+p_B&gt;1收敛全对</div><ul><li><div class="n3">互补率升至31%（同家族23%）</div></li><li><div class="n3">两个平庸但独立判断者优于自检</div></li></ul></li></ul></li><li><div class="n1" style="--c:#6B4A8E">实证成果：效果验证</div><ul><li><div class="n2" style="--c:#6B4A8E">无标准答案涨幅（3-8.6%文本/2.3-7.2%多模态）</div><ul><li><div class="n3">7个测试集（GSM8K/MATH/HumanEval等）</div></li><li><div class="n3">追平有标签的RLVR做法</div></li></ul></li><li><div class="n2" style="--c:#6B4A8E">击败自批方案（TTRL/Intuitor/RENT）</div><ul><li><div class="n3">vs CoMAS：62.97% vs 58.94%</div></li><li><div class="n3">用更少模型、无需额外裁判</div></li></ul></li></ul></li><li><div class="n1" style="--c:#8A6D1F">京小贝应用：六个落地指引</div><ul><li><div class="n2" style="--c:#8A6D1F">纠正自洽投票误区</div><ul><li><div class="n3">同模型多次采样错法相同</div></li><li><div class="n3">需要跨模型多样性</div></li></ul></li><li><div class="n2" style="--c:#8A6D1F">跨家族验证而非自检</div><ul><li><div class="n3">风控/金额决策用不同家族模型</div></li><li><div class="n3">量化&quot;一起错&quot;的比例（κ检查）</div></li></ul></li><li><div class="n2" style="--c:#8A6D1F">避免自循环陷阱</div><ul><li><div class="n3">模型自评/合成数据自筛有风险</div></li><li><div class="n3">引入独立的异质检查者</div></li></ul></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
