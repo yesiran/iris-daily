@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28265%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2220%22%20r%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.26%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2247%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2239%22%20r%3D%2221%22%20fill%3D%22%23fff%22%20opacity%3D%220.30%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>当人类改不动卷子了——让一群"想法不一样"的模型互相批改，推理能力照样自己长出来</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-21</span></div>
+  <h1 class="doc">当人类改不动卷子了——让一群"想法不一样"的模型互相批改，推理能力照样自己长出来</h1>
+  <div class="dateline"><span>全文 <b>4,510</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Co-RL: Unsupervised Reasoning Emerges from Diverse Cohort in Multi-agent RL</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.17253 （https://arxiv.org/abs/2608.17253）</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Yunhao Yang, Yuexin Bian, Yunjie Tian, Di Fu, Tianjin Huang, Yuanyuan Shi, Ziang Xiao, Nuno Vasconcelos, Yijiang Li</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">UC San Diego（加州大学圣地亚哥分校，主）+ Johns Hopkins（约翰霍普金斯）等</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-18（第二版 08-19）</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-21.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-21.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 当日第 5 · 80 赞（推理方向当日最高；那天榜首 Zetta 有 186 赞，是很强的一天）· UCSD/JHU · 学科 cs.LG/cs.AI/cs.CV</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, reasoning, rl, multi-agent, self-improvement, scalable-oversight</span></div></div><div class="tools"><a class="btn hot" href="2026-08-21-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：一个"想继续变聪明、却快没老师可拜"的大模型</a><a class="t-h2" href="#s4">2. 困境：模型越强，越没人能给它批卷子</a><a class="t-h2" href="#s5">3. 旧路：让模型"自己给自己批卷子"——结果越批越偏，最后崩了</a><a class="t-h2" href="#s6">4. 转折：换一群"错得不一样"的人来互相批</a><a class="t-h2" href="#s7">5. 解法：机制 + 为什么这么设计</a><a class="t-h2" href="#s8">6. 结局：完全没有标准答案，推理还是涨了——而且追平了"有标准答案"的做法</a><a class="t-h2" href="#s9">7. 内核（走出门带走的那颗种子）</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层：这个能力是怎么一步步长出来的）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">能怎么用（提示词 + 京小贝 + 认知）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇解决的是"模型进化"最要命的一个天花板问题：<strong>训练大模型推理，现在最强的办法（强化学习）几乎都要靠"标准答案"当奖励——可是当模型某天在某个任务上比人还强，谁来给它出标准答案、谁来批卷子？</strong> 答案是没人。这篇论文给出一个真能跑通、还有数学证明的出路：<strong>别让模型自己批自己（会越批越偏、最后崩掉），而是找一群"脑子长得不一样"的模型互相批改；只要这群模型"错得各不相同"，互相批出来的分数就比自己批自己更靠谱，推理能力就能在完全没有标准答案的情况下自己涨上去。</strong></p><p>三个理由让它今天值得点开：</p><ol class="ls"><li><strong>它推进的能力是"脱离人类监督继续变强"</strong>——这是当前最前沿的一条线（业内叫"可扩展的监督"/"自我提升"），直接关系到"模型会不会某天进化到我们既看不懂也管不住"。</li><li><span class="lk">信号够硬</span>HuggingFace 每日论文榜当日第 5、80 个赞（是那天推理方向最高的，而那天是很强的一天，榜首有 186 赞）；作者来自加州大学圣地亚哥分校，通讯里有 Nuno Vasconcelos 这种老牌视觉/机器学习教授坐镇。</li><li><span class="lk">能直接落到思染手上</span>它把"多模型集成为什么有用、什么时候没用"讲透了，可以直接改进京小贝里"多模型交叉验证"的做法，也能纠正一个很常见的误区——<strong>同一个模型问很多遍再投票（自洽），其实经常是白花钱</strong>。</li></ol><p>诚实交代：这是篇 8 月 18 号的新论文，引用数≈0（正常，新论文都这样），我用的是社区投票榜 + 机构 + 论文本身的理论强度来判断，不是靠引用。今天的 8-21 当日榜在这个点还没生成完，我从最近窗口（8-18～8-20）里选了这篇没讲过、且方向最前沿的。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：一个"想继续变聪明、却快没老师可拜"的大模型</h2><p>故事的主角，是任何一个正在用"强化学习"练推理的大模型（比如会做数学题、写代码的那种）。</p><p>先把"强化学习"这个词当场拆开：它不是让模型背答案，而是<strong>让模型自己去试，试对了给它一颗糖（奖励），试错了不给糖</strong>，模型为了多拿糖，慢慢学会"怎么想才容易对"。这几年大模型推理能力的暴涨（会一步步推导、会自我检查），主力功臣就是这套"试对给糖"的训练。</p><p>但这套办法有个隐藏的前提：<strong>得有人能判断"这次到底对没对"，糖才发得出去。</strong> 数学题好办——答案能算、能对照标准答案，对就是对。业内给这种"答案能被机器核对"的奖励起了个名字叫 <strong>RLVR</strong>，全称是 Reinforcement Learning with Verifiable Rewards，直译就是"用能核实的奖励做强化学习"。</p><h2 id="s4">2. 困境：模型越强，越没人能给它批卷子</h2><p>问题来了。RLVR 的糖，全靠"能核对答案"。可现实里有两种情况会让糖发不出来：</p><ul class="ls"><li><strong>有些任务根本没有唯一标准答案</strong>（写一段有说服力的分析、判断一个开放问题的推理好不好），机器没法自动打勾。</li><li>更要命的是——<strong>当模型在某个方向上练得比人还强，人类已经没能力可靠地判断它对不对了。</strong> 你给一个比你会做题的学生批卷子，你怎么批？</li></ul><p>这就是天花板：<strong>你能给模型"喂"的能力，被"你自己能不能判断对错"卡死了。</strong> 一旦模型逼近甚至越过人类的判断力，这条最有效的训练路就断了粮。这不是遥远的哲学问题——数学证明、复杂代码、长链条推理，已经开始出现"模型给的过程人类得费半天劲才验得动"的情况。所以"怎么在没有标准答案的时候还能继续练"，是决定模型能不能再往上走一大截的关键闸门。</p><h2 id="s5">3. 旧路：让模型"自己给自己批卷子"——结果越批越偏，最后崩了</h2><p>聪明人早就想到一条捷径：<strong>既然没人批，那让模型自己批自己。</strong></p><p>具体做法有个名字叫"自奖励"（self-rewarding）。最典型的一种叫 <strong>TTRL</strong>（Test-Time Reinforcement Learning，"考试时强化学习"）：对一道没答案的题，让模型自己答很多遍（比如答 8 遍），<strong>哪个答案出现次数最多，就当它是"对的"</strong>，然后奖励那些答到这个多数答案的尝试。这叫"多数投票当伪标准答案"——"伪"就是"假装的、非官方的标准答案"。</p><p>听着挺自洽，但它有个致命的自我强化毛病，论文里把它拆得很清楚，甚至给了数学证明：</p><blockquote><p><strong>模型只要一开始在这道题上就偏（正确率低于一半），"自己批自己"会让它越练越错，最后正确率掉到 0。</strong>（论文的 Proposition 2：如果初始正确率 p(0) &lt; 1/2，那么训练下去 p(t) → 0。）</p></blockquote><p>为什么？因为"自己批自己"的奖励方向，永远是<strong>"把我现在最常给的那个答案，练得更常给"</strong>——它分不清那个最常给的答案到底对不对。你要是本来就常给错的，它就把你往更错里推。现实中表现出来就是三种崩法：奖励的波动突然归零（模型对所有题给一样的分，学不动了）、答案越写越短最后退化成一两个字、或者干脆训练发散炸掉。<strong>一句话：一个人关在屋里自我洗脑，只会把偏见越洗越深。</strong></p><h2 id="s6">4. 转折：换一群"错得不一样"的人来互相批</h2><p>作者的转弯点，说破了特别朴素：<strong>自己批自己会陷进自己的偏见，那就别自己批——找别人批。而且这个"别人"，脑子得跟你长得不一样。</strong></p><p>关键洞察有两层：</p><ul class="ls"><li><span class="lk">第一层，换人批</span>不是模型 A 用自己的多数答案奖励自己，而是<strong>用模型 B 的多数答案，去奖励模型 A</strong>。A 永远不参与给自己发糖。这一下就把"自我强化的死循环"从根上切断了——你没法再靠"重复自己"来骗到糖，因为发糖的标准来自另一个脑子。</li><li><strong>第二层，也是真正的灵魂——批卷子的人得"错得不一样"</strong>：如果找来的模型 B 跟 A 是一个模子刻出来的（同一个家族、同样的训练数据），那它俩会在同样的题上犯同样的错，B 批 A 等于换个马甲自己批自己，没用。<strong>只有当 B 在 A 犯错的地方恰好是对的、A 在 B 犯错的地方恰好是对的，两个人凑一起才比一个人强。</strong></li></ul><p>这第二层就是论文标题里那个词——<strong>diverse cohort，"多样化的同伴群"</strong>。cohort 就是"一起受训的一群"，diverse 就是"各不一样"。整篇论文的名字 Co-RL，Co 是 cooperative（合作的）也是 cohort（同伴群），RL 是强化学习——<strong>合起来就是"一群合作的、各不相同的模型一起做强化学习"</strong>。</p><h2 id="s7">5. 解法：机制 + 为什么这么设计</h2><p>拆成三块讲，每个术语当场落地。</p><p><strong>(a) 互相批的具体动作。</strong> 把好几个模型摆一圈（论文里最少两个，也做了三个的）。对每道没答案的题：每个模型都答 K 遍（比如 8 遍），各自数出自己的"多数答案"。然后<strong>排成一个圈发糖：模型 n 的糖，由它前面那个邻居 n-1 的多数答案决定</strong>——你这遍答的，如果跟邻居 n-1 的多数答案一样，得 1 分（糖），不一样得 0 分。反复强调的那句话是：<strong>"每个模型都不给自己的批改标准做贡献"</strong>，糖的标准永远来自别人。这些分数再喂进一个叫 <strong>GRPO</strong> 的强化学习算法（Group Relative Policy Optimization，"组内相对策略优化"，简单说就是"在同一组答案里比谁比谁好，谁高于平均就往谁那边学"——这是 DeepSeek 那批推理模型用的主流算法），把"得分"变成"往哪个方向改模型"。</p><p><strong>(b) "错得不一样"从哪来——三个来源。</strong> 论文特意造出三种差异：</p><ul class="ls"><li><span class="lk">不同家族</span>比如让 Qwen（通义千问）和 Llama（Meta 的羊驼）和 Phi（微软的）互相批。不同家族的模型，词表、结构、预训练用的语料都不一样，天生错法不同。</li><li><span class="lk">不同大小</span>大模型和小模型配一对，两者擅长和翻车的题不一样，能互相补。</li><li><span class="lk">换个说法出题</span>给一个模型原版数学题，给它的搭档一道"意思一样、场景重写过"的同题（答案不变，故事换掉），逼它们别只会背某种题面。</li></ul><p><strong>(c) 为什么"不一样"就管用——有数学撑腰。</strong> 论文用一个统计指标 <strong>Cohen's κ</strong>（读作"卡帕"，一个衡量"两个批卷人除去瞎蒙的运气之外，到底有多一致"的数，越低越说明两人真的想法独立）来量：</p><ul class="ls"><li>不同家族配对，κ 只有 0.31–0.42（很低＝错得很不一样，独立）；</li><li>同家族配对，κ 高到 0.51–0.58（错得很像，凑一起没啥用）。</li><li>还有个"互补率"：<strong>恰好只有一个人做对</strong>的比例，从同家族的约 23% 涨到不同家族的约 31%——互补率越高，两人凑一起能救回的题越多。</li></ul><p>最漂亮的是那条定理（Theorem 1）：<strong>两个模型只要在一道题上"正确率之和大于 1"（p_A + p_B &gt; 1，也就是俩人合起来这道题多半有人能对），一起练下去两个都会收敛到全对。</strong> 而"错得不一样"正是让"合起来大于 1"这个条件在更多题上成立的原因——它把"能一起练好"的题的范围，直接扩大了。对照第 3 拍里"自己批自己 p&lt;0.5 就崩到 0"，你能清楚看到差别：<strong>一个人偏了只会更偏；两个错法不同的人凑一起，能互相把对方从坑里拉出来。</strong></p><h2 id="s8">6. 结局：完全没有标准答案，推理还是涨了——而且追平了"有标准答案"的做法</h2><p>世界变成什么样：</p><ul class="ls"><li><span class="lk">纯文字的大模型</span>在 7 个测试集（小学数学 GSM8K、竞赛数学 MATH-500、写代码 HumanEval 等）上，平均涨 <strong>3.0%–8.6%</strong>，全程<strong>没用一个标准答案</strong>。</li><li><strong>看图做题的多模态模型（VLM，Vision-Language Model，视觉语言模型）</strong>：在 4 个多模态数学测试上涨 <strong>2.3%–7.2%</strong>。</li><li><strong>打过一圈"自己批自己"的老办法</strong>（TTRL、Intuitor、RENT）：Co-RL 比它们再高 0.8–2.0 个点，而且——<strong>它追平甚至超过了"有真标准答案发糖"的监督做法</strong>。也就是说，不给标准答案，练出来的效果跟给了标准答案差不多。</li><li>对比另一种多智能体做法 CoMAS：Co-RL 平均 62.97% vs 58.94%，<strong>还只用了一半的模型、且不需要额外训练一个专门的"裁判"</strong>。</li></ul><p>最反直觉、也最值得记住的一条副发现：<strong>"错得不一样"这件事本身，比"每个模型有多强"更关键。</strong> 你与其找两个都很强但错法雷同的模型，不如找两个各有短板、但短板不重叠的模型——后者互相批出来的效果更好。这跟很多人对"集成就是把强的堆一起"的直觉正相反。</p><h2 id="s9">7. 内核（走出门带走的那颗种子）</h2><blockquote><p><strong>当没人能给模型批卷子时，出路不是让它自己批（会越批越偏、崩掉），而是找一群"错得各不相同"的模型互相批——差异本身就是免费的、可靠的监督信号。推理能力可以在完全没有标准答案的情况下，靠"彼此的不一致"自己长出来。</strong></p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层：这个能力是怎么一步步长出来的）</h1><p><strong>第 0 层｜RLVR，"用能核实的奖励做强化学习"（当下主流地基）。</strong> DeepSeek-R1 那一代推理模型的核心训练法：答对（答案能被机器核对）就发糖。威力巨大，但被一句话卡死——<strong>"我们必须能核对答案"</strong>。本知识库此前的 [[2026-08-04--rlvr-to-rlsvr]]（把任务改造成"自己能验证"的形式）、[[2026-06-11--drpo]]、[[2026-07-13--up]] 都是在这条线上打磨"发糖"的规则。</p><p><strong>第 1 层｜自奖励 / 免标签强化学习（想挣脱标准答案）。</strong> TTRL、Intuitor、RENT 这批：把标准答案拿掉，让模型用"自己的多数投票 / 自己的信心"当糖。方向对，但撞上"自我强化崩溃"——一个人自我洗脑越洗越偏（就是本文第 3 拍拆的那个 p&lt;0.5 → 0）。</p><p><strong>第 2 层｜多智能体 / 同伴群 → 今天这篇 Co-RL。</strong> 把"自己给自己发糖"升级成"错法不同的一群人互相发糖"，并且第一次<strong>把"差异"本身当成对抗崩溃的核心武器</strong>，还给了数学证明（Theorem 1）。相邻的 CoMAS 也走多智能体，但要额外养一个裁判、用更多模型；Co-RL 更省、更狠。</p><p><span class="lk">再往上一层的大主题</span>这整条线属于"<strong>可扩展的监督 / 超越人类监督的自我提升</strong>"——当模型强到人类改不动卷子，怎么让它继续变强。它跟本库里"模型自我进化"那一串是同一片森林：[[2026-06-09--openskill]]（自我进化的智能体）、[[2026-08-04--rlvr-to-rlsvr]]（自己造可验证奖励）、[[2026-07-15--direct-opd]]（弱教强）。Co-RL 是这片森林里很实在的一步：<strong>它没有停在"让模型自己想办法"，而是指出——想突破人类天花板，缺的不是更多人类标注，而是更多"错得不一样"的批改者。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><p>前沿的"发糖方式"正在发生一次转移：<strong>从"跟人类能核对的答案学"（RLVR），往"跟彼此的分歧结构学"（同伴群互批）挪。</strong> 这句话背后是一个很重的判断——<strong>下一个能力台阶的瓶颈，可能不是"再标注更多人类数据"，而是"凑出一群错得足够不一样的模型"。</strong> 差异，第一次被当成一种可以设计、可以度量（用 κ、用互补率）、可以规模化的"训练燃料"。这是"模型如何在超过人类判断力之后继续变强"这道大题的一块能落地的拼图——不再是纯理论口号，而是有代码、有证明、有涨点的实证。</p><h2 id="s13">能怎么用（提示词 + 京小贝 + 认知）</h2><ol class="ls"><li><strong>纠正一个常见误区：同一个模型问很多遍再投票（自洽 self-consistency），经常是白花钱。</strong> 因为一个模型的错是"相关的"——它每次都用同一套偏见，往往错在同一个地方，投一百遍还是那个错。这篇论文等于给了理论依据：<strong>要靠投票提可靠性，就得让投票者"错得不一样"。</strong> 对京小贝里任何"多次采样再投票"的环节，先问一句：我这是在制造真正的多样性，还是在给同一个偏见反复盖章？</li></ol><ol class="ls"><li><strong>需要稳的答案时，做"跨家族"交叉验证，别做"同款自查"。</strong> 风控判断、合规口径、金额相关的结论——与其让一个强模型自查三遍，不如把同一个问题丢给<strong>不同家族</strong>的模型（比如一个通义、一个别家的），拿"跨模型是否一致"当置信度。论文数据摆在这：跨家族配对的"恰好一个对"的互补率明显更高，交叉验证真能救回更多错。<strong>同家族两个模型互相验，等于花两份钱买一份几乎一样的判断。</strong></li></ol><ol class="ls"><li><strong>偷一个可直接落地的产品指标：量一量你的模型们"是不是错在同一个地方"。</strong> 论文用 Cohen's κ 和互补率来衡量"两个批改者到底多独立"。你完全可以把它变成京小贝的一个内部体检项：<strong>统计你在集成/交叉验证里用的两个模型，有多大比例是"一起错"的。</strong> 如果它俩几乎总是一起对、一起错（κ 很高），说明你的集成没买到任何东西，该换一个错法不同的搭档进来。</li></ol><ol class="ls"><li><strong>警惕产品里一切"模型给自己打分/自己造数据自己筛"的自循环。</strong> 自动评测（让模型当裁判评自己的输出）、合成数据自过滤（模型造数据再自己判好坏留下来）——这些本质都是"自己批自己"，天然带着本文证明过的"自我强化崩溃"风险：越滚越偏，还看不出来。解药是同一个：<strong>塞一个"独立、且构造上就不一样"的检查者进去</strong>（换个家族的模型、或换个完全不同的验证维度），别让系统关起门来给自己盖章。</li></ol><ol class="ls"><li><strong>一条可以随身带走的判断直觉——"p_A + p_B &gt; 1"。</strong> 两个平庸但独立的判断者，合起来能收敛到对；一个自信但有偏的判断者，只会把偏见做实。设计任何"审核 / 复核 / 验证"链路时，宁可要<strong>两个各有短板但短板不重叠</strong>的检查者，也别迷信一个"看起来最强"的单点自检。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文（arXiv abstract）：<a class="src" href="https://arxiv.org/abs/2608.17253">https://arxiv.org/abs/2608.17253</a></li><li>论文全文（HTML，方法/定理/结果表出处）：<a class="src" href="https://arxiv.org/html/2608.17253v2">https://arxiv.org/html/2608.17253v2</a></li><li>信号佐证 · HuggingFace Daily Papers（当日榜、80 赞、UC San Diego 归属）：<a class="src" href="https://huggingface.co/papers/date/2026-08-21">https://huggingface.co/papers/date/2026-08-21</a> （当日实际展示 08-20 榜）</li><li>论文页（HuggingFace）：<a class="src" href="https://huggingface.co/papers/2608.17253">https://huggingface.co/papers/2608.17253</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
