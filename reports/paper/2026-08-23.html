@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28166%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2252%22%20cy%3D%2227%22%20r%3D%2223%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2216%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2247%22%20r%3D%2226%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.25%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>智能体的训练场不该是死的——给旧环境套一层"能诊断你弱点"的壳，还不让你作弊</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-23</span></div>
+  <h1 class="doc">智能体的训练场不该是死的——给旧环境套一层"能诊断你弱点"的壳，还不让你作弊</h1>
+  <div class="dateline"><span>全文 <b>4,969</b> 字</span><span>约 <b>13</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">EnvHarness: Awakening Static Worlds for Agent Learning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.19880</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Chengsong Huang, Zifeng Wang, Rujun Han, Jun Yan, Yanfei Chen, ..., Tomas Pfister, Chen-Yu Lee</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Google Cloud AI Research × 圣路易斯华盛顿大学(WashU) × 北卡罗来纳大学教堂山分校(UNC)</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-20</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-23.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-23.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily #1 · 245 赞（约第二名 2 倍）· Google Cloud AI Research · 开源(github.com/google-research/envharness) · Semantic Scholar 早期影响力接口本次限流未取到(论文仅 3 天，引用≈0，此信号本就无效)</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, agent, reinforcement-learning, environment-scaling, curriculum, self-improvement</span></div></div><div class="tools"><a class="btn hot" href="2026-08-23-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝 &amp; 认知）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 Google 这篇 <strong>EnvHarness</strong>，因为它精准戳中了 2026 年智能体训练的<strong>头号瓶颈</strong>：不是模型不够大、也不是算力不够，而是<strong>训练场（环境）不够用、而且是死的</strong>。</p><ol class="ls"><li><span class="lk">它推进了什么</span>过去一年大家已经会"自动生成新环境"来喂智能体，但这条路撞墙了——生成管线换个领域就得重写，用大模型当裁判又贵又不靠谱，而且生成出来的环境<strong>依旧是静态的</strong>（跟死的一样，智能体变强后它没东西可教了）。EnvHarness 换了个思路：<strong>不造新世界，给旧世界套一层可编程的"壳"</strong>，这层壳能专门诊断"这个智能体现在在哪儿卡壳"，然后针对性地把环境改造成能治它这个弱点的样子——而且<strong>原来那个可信的评分裁判一分不动</strong>。这是"环境如何 scale"这条前沿线上一个干净、可复用的机理性进展。</li><li><span class="lk">命中的质量信号</span>HuggingFace Daily Papers <strong>当窗口第 1 名，245 赞</strong>（约是第二名的两倍，是个地标级的票数）；作者主力来自 <strong>Google Cloud AI Research</strong>（Tomas Pfister、Chen-Yu Lee 组），一作 Chengsong Huang 是 WashU 博士生在 Google 实习期间做的；<strong>全套开源</strong>（代码 + 项目主页）。（Semantic Scholar 的早期影响力接口今天被限流没取到，但论文才 3 天、引用本就≈0，这个信号对新论文本来无效，用 HF 榜 + 机构 + 开源三条足以判定。）</li><li><span class="lk">对你追前沿的价值</span>这篇让你看清"模型往哪进化"的一个关键转向——<strong>从"scale 模型/数据"转到"scale 环境/经验"</strong>，而且真正的窍门不是"环境越多越好"，是"环境要会<strong>自适应地盯着智能体的弱点变难</strong>"。这套"观察失败→诊断弱点→定向加难→用可信裁判验收"的闭环，可以直接映射到你给京小贝做能力提升和评测集迭代的方法论上。</li></ol><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是<strong>一个正在学本事的 LLM 智能体</strong>，和它脚下那片<strong>训练场（environment）</strong>。</p><p>先把"环境"这个词落地：一个智能体要学会做事——网页里点来点去、代码库里改 bug、Excel 里填表——它靠的不是背书，而是<strong>在一个能跟它互动的场子里反复试</strong>。这个场子给它出任务、根据它的动作改变状态、最后判它做成没做成。这个"场子"就是环境。论文用一个五元组把它写清楚：<code>E = (状态空间, 动作空间, 观测空间, 状态转移函数, 奖励, 初始状态)</code>——其中<strong>奖励是由一个"裁判(verifier)"给出的</strong>，裁判就是那段"判断任务到底完成没完成"的地面真值逻辑（比如 SWE-bench 里，你改完代码，跑一遍单元测试通过没通过，测试就是裁判）。</p><h2 id="s4">2. 困境</h2><p>问题是：<strong>这些训练场全是人手一行行硬编码搭出来的，而且是死的。</strong></p><p>死在两处，两处都致命：</p><ul class="ls"><li><strong>它瞎，看不见你的弱点</strong>。同一个场子，不管来的是菜鸟智能体还是高手智能体，它的表现一模一样——它不知道"你这个智能体恰恰是'遇到关着的抽屉就不会先开再拿'这一步过不去"，也就没法专门在这个点上多练你。</li><li><strong>你一旦学会它就没东西可教了</strong>。智能体把场子里现有的任务都解出来之后，这个环境对它的价值就归零了——它"被智能体甩在身后"了。</li></ul><p>而人手搭一个新场子（把互动逻辑和裁判都硬编码出来）<strong>极贵</strong>。这就形成一个死结：智能体想继续变强，就得有源源不断、而且越来越难、还专治它当前弱点的新环境；可环境恰恰是最贵、最难量产的东西。<strong>在 2026 年，环境（而不是模型或算力）成了智能体继续变强的瓶颈资源。</strong></p><h2 id="s5">3. 旧路</h2><p>过去一年的主流解法是"<strong>自动生成新环境</strong>"（automated environment generation，如 GenEnv、VeriEnv、SWE-smith 这些工作）——用程序或大模型批量造出新任务、新场景来喂智能体。这条路能 scale，但有两个甩不掉的毛病：</p><ul class="ls"><li><span class="lk">管线是领域专用的</span>给"网页导航"造环境的那套流水线，搬不到"工具调用"上去，每个领域都得从头搭。</li><li><span class="lk">裁判又贵又不可靠</span>新造的环境，它的"判对错"裁判往往也是让大模型顺手生成的——大模型当裁判会判错，于是实践里只能<strong>大量超量生成、再重手筛掉一堆</strong>，即便这样也没法保证剩下的裁判是对的。裁判一旦不可信，奖励信号就是脏的，训出来的智能体可能是在"讨好一个错裁判"。</li></ul><p>更根本的是——<strong>就算你生成出来了，这些新环境本身还是静态的</strong>，绕了一大圈，第 2 拍那两个死穴（瞎、会过时）一个没解决。</p><h2 id="s6">4. 转折</h2><p>作者的关键 insight，是把眼光从"环境"这一侧，挪到了<strong>智能体这一侧一个已经被验证成功的老套路上，然后把它镜像过来</strong>。</p><p>这个老套路叫 <strong>agent harness（智能体外壳/线束）</strong>。它落地讲是这样：现在把一个冻住不动的大模型变成一个能干活的自主智能体，靠的不是重新训练模型，而是在模型外面<strong>套一层软件壳</strong>——给它接上工具(tools)、记忆(memory)、执行循环(loops)。<strong>智能体 = 冻住的模型 + 外壳</strong>。这层壳不动一根模型权重，却给模型平添了它本来没有的能力。这已经是 Anthropic、OpenAI 这一年来做智能体的标准打法。</p><p>作者的转折就一句话，但极漂亮——<strong>智能体-环境是一个闭环的两端；既然"给冻住的模型套壳"能把它升级成智能体，那"给冻住的环境套壳"就该能把死环境升级成活的、可定制的环境。</strong> 对称地：<strong>定制环境 = 静态环境 + EnvHarness（环境外壳）</strong>。</p><p>一个词点透：不要再去<strong>造新世界</strong>了，去给<strong>旧世界套一层壳</strong>。壳只在"接口层"上动手脚（改它 <code>reset</code>/<code>step</code>/<code>观测</code> 这几个标准出入口），底下那个环境的模拟器内核<strong>一个字节都不改</strong>。而这带来一个白送的、极关键的好处——<strong>因为你只在外面动，底下那个人手搭的、可信的裁判逻辑被原封不动继承下来了</strong>。你没法通过"偷偷把环境改简单"来骗高分，因为最终判你成没成的，还是那个没被碰过的老裁判。</p><h2 id="s7">5. 解法</h2><p>解法分两半：<strong>壳长什么样（EnvHarness）</strong> + <strong>谁来自动套壳（EnvRigger）</strong>。</p><h3>半边一：三种壳组件（EnvHarness）</h3><p>一个"壳组件"数学上就是一个<strong>与领域无关的环境变换 <code>w</code></strong>：吃进一个环境 <code>E</code>，吐出一个改造过的环境 <code>E' = w(E)</code>。论文给了三种具体的壳，全部用同一个 ALFWorld 例子演示——任务是"<strong>把一个干净的杯子放到桌上</strong>"（默认版本简单到杯子就摆在明面上，一放就结束）：</p><ul class="ls"><li><span class="lk">Stage（改初始状态）</span>在开局前，先替智能体把环境的初始状态摆布一番。例子：壳先执行一串动作"拿起杯子 → 打开抽屉 → 把杯子放进抽屉 → 关上抽屉"——<strong>把杯子藏起来了</strong>。于是智能体开局面对的不再是"伸手就拿"，而是"得先满屋子找、还得想到去开关着的抽屉"。反过来，Stage 也能"提前把杯子洗好"，替智能体完成前置子目标、把任务变短变易。<strong>一句话：它调你的起跑线。</strong></li><li><span class="lk">Contract（改互动规则）</span>它重写"动作空间 / 状态转移 / 观测"这三样中的一样或几样。例子：把房间描述<strong>只截前两句</strong>给智能体看（逼它在多步里自己拼出空间地图，这叫部分可观测）；或者，<strong>在智能体没拿着杯子时就禁掉"清洗杯子"这个动作</strong>（逼它先把东西拿到手）；或者删掉"瞬移导航"这种高级快捷指令，逼它一步步走、一步步搜。<strong>一句话：它改你能用的招和世界的反应，常用来堵掉你偷懒的捷径。</strong></li><li><span class="lk">Chain（串接多个环境）</span>把当前环境和另一个环境用一套组合逻辑接成一个更长的复合环境。例子：在同一间屋子里，在"放杯子"之后<strong>再追加一个"热一个土豆并放到台面上"</strong>，只有两件事都被裁判判成才算通关。<strong>一句话：它把任务的地平线往后拉，逼你把目标扛过"本来会停下"的那个点（练长程坚持）。</strong></li></ul><p>三种壳共享同一套标准接口，所以能<strong>自由叠加</strong>（把 Stage、Contract、Chain 套在一起）；而且叠的<strong>顺序不能换</strong>（先藏杯子再截观测 ≠ 先截观测再藏杯子），嵌套次序决定了最终长成什么样。</p><h3>半边二：自动套壳的机器（EnvRigger）</h3><p>壳本身是"跟具体智能体无关"的通用变换，但<strong>该给某个智能体、某个任务套哪几层壳</strong>，必须看这个智能体当下的具体表现。这个"看菜下饭"的活儿，由 <strong>EnvRigger</strong> 自动化。关键：<strong>它把智能体当成一个黑盒</strong>——不拆模型权重、不看内部，只看它的输入输出轨迹。四步成环（Observe → Diagnose → Write → Validate）：</p><ol class="ls"><li><span class="lk">Observe（观察）</span>让智能体在原始任务上先跑一批，把成功和失败的轨迹都收上来。失败的暴露弱点，成功的划出边界（哪些能力已经稳了、从哪儿开始崩）。</li><li><span class="lk">Diagnose（诊断）</span>分析轨迹，找<strong>病根</strong>——是反复原地打转（死循环）？是读不懂长观测？是误解了工具的约束？论文给的活例子：智能体反复"拿杯子 → 无效动作 → 拿杯子 → 又无效（死循环）"，病根是<strong>它没意识到要从一个关着的容器里拿东西，得先把容器打开</strong>。诊断还决定改造方向：智能体在挣扎 → 给它搭台阶、把任务简化；智能体已经 100% 通关 → 说明环境太仁慈、逼不出它的潜在毛病 → <strong>反过来把环境加难</strong>。</li><li><span class="lk">Write（写壳）</span>根据诊断，合成一个或几个针对性的壳组件。上面那个例子里，它写了一个 <strong>Contract</strong>：当抽屉关着时，拦截"拿杯子"这个动作并回一句反馈"<strong>先把容器打开！</strong>"。</li><li><span class="lk">Validate（验收）</span>把候选壳套上去，让智能体在改造后的环境里<strong>重新跑一批新轨迹</strong>。看成功率、看失败分布——好就<strong>接受</strong>，太难解不动就<strong>拒绝</strong>，信号不到位就<strong>打回 Write 重修</strong>，直到通过或修改预算耗尽。通过的壳才正式并入 EnvHarness。（验收后那个例子：智能体变成"拿杯子 → 先把容器打开！→ 开抽屉 → 成功 → 拿杯子 → 成功"，弱点被治好了。）</li></ol><p>把这四步<strong>反复循环</strong>，就得到本文最重要的那个词——<strong>智能体与它的环境"共同进化(co-evolution)"</strong>：智能体每变强一点，环境就诊断出它新的弱点、把自己改得更能治这个新弱点；如此往复，形成一套<strong>永不过时的自适应课程表</strong>。</p><h2 id="s8">6. 结局</h2><p>在 <strong>5 个基准、4 个领域</strong>上验证（ALFWorld 具身、WebArena 网页、SWE-bench Verified 改代码、OfficeQA + SpreadsheetBench 办公自动化）。为了公平，<strong>EnvRigger 和被训的智能体用的是同一个模型底座</strong>（ALFWorld/WebArena 用 Gemini-3.1-Flash-Lite，其余用 Gemini-3.5-Flash）——这样一来，涨的分<strong>不可能来自"偷偷蒸馏了一个更强的外部模型"</strong>，只能来自环境本身变好。</p><p>结果：</p><ul class="ls"><li><span class="lk">技能学习(SL)</span>在 EnvHarness 环境里练出来的智能体，比在原始环境里练的，<strong>在留出任务上最高 +9.0 分</strong>（ALFWorld），而且<strong>少用 9.8% 的交互步数</strong>（更强还更省）。</li><li><span class="lk">强化学习(RL)</span>EnvHarness 定制的环境给出<strong>更好的优化信号</strong>，策略最高 <strong>+6.5 分</strong>。</li><li><span class="lk">规模曲线（最有力的一张图）</span>在 SWE-bench Verified 上，给同样的"环境预算"，<strong>真实环境和生成环境很快就涨到头、拉平了</strong>（约 51%），而 <strong>EnvHarness 随环境数量增加持续往上爬</strong>（到 300 个环境时约 54%）。原因正是它每一轮都盯着<strong>新</strong>弱点，而不是把智能体已经会的东西重复喂一遍。</li></ul><p><strong>最反直觉的副发现</strong>（这条你要记住）：<strong>从静态环境里提炼技能，有时会把智能体越练越差。</strong> 在 SpreadsheetBench 上，从没改造过的原始环境里学到的"技能"，成绩反而<strong>掉到"什么技能都不给"的裸智能体之下</strong>（45.9 &lt; 46.4）；在 SWE-bench 上则是把执行轨迹拖得更长。换句话说——<strong>盲目地"多收集轨迹、多攒技能"不是好事，静态环境会教给你一堆没用甚至有害的经验。</strong> 环境必须持续对准新弱点，"学"才是正收益。</p><h2 id="s9">7. 内核</h2><p><strong>别再费力去造新世界了。给旧世界套一层会"诊断你弱点、还不许你作弊"的壳——让训练场跟着智能体一起进化，弱点在哪，环境就把火力对准哪。</strong> 智能体那侧靠"模型+外壳"变强，环境这侧同样靠"静态环境+外壳"变活；两侧一起套壳、闭环共进，才是让智能体一直变强的可持续动力。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源）</h1><p><strong>第 1 层：它在改进谁。</strong> 直接对手是过去一年的"<strong>自动生成环境</strong>"路线（GenEnv、VeriEnv、SWE-smith 等）。那条线的信念是"环境不够就再生成一批新的"；EnvHarness 的反驳是——生成管线换领域就废、LLM 当裁判又脏又贵、而且生成出来的<strong>还是死环境</strong>。它的替代主张是"<strong>不生成、只包裹</strong>"：套壳复用旧环境，白继承旧裁判（可信、免费），并且让壳自适应地对准弱点。它还借了另一侧的成熟范式——<strong>agent harness（智能体=冻结模型+外壳，Anthropic/OpenAI 2025-2026）</strong>——把"套壳升级、不动内核"这个已被验证的打法，镜像到了环境这一端。</p><p><strong>第 2 层：这条问题线怎么长到今天。</strong> 更深的背景，是大模型学习的"燃料"正在换代：从<strong>预训练时代"啃海量静态文本"</strong>，转向<strong>智能体时代"在可互动的环境里攒经验"</strong>。当静态文本这口井被抽得差不多了，前沿的稀缺资源就从"数据"变成了"环境/经验"——<strong>环境荒，就是新时代的数据荒</strong>。于是一整簇工作都在攻"如何 scale 环境/经验"，你的台账里这一簇最近就有好几篇同源的：</p><ul class="ls"><li><span class="lk">EnvACE（2026-08-10）</span>让智能体在脑内建一个世界模型来"排练"环境动态——把环境<strong>内化进模型</strong>。EnvHarness 恰是它的对偶：不内化，而是<strong>改造外部环境</strong>。一内一外，正好两条腿。</li><li><strong>RST（2026-08-08，长程终端任务的递归合成）</strong>：合成的是<strong>任务/数据</strong>；EnvHarness 合成的是<strong>环境的改造壳</strong>。层次不同，同属"给智能体造练兵场"这条大线。</li></ul><p><span class="lk">一句话串起来</span>预训练啃完了静态文本 → 智能体时代要啃"经验"，可经验得有环境来产 → 环境成了新瓶颈 → 有人去内化环境(EnvACE)、有人去合成任务(RST)、有人去生成新环境(GenEnv 一路)，而 <strong>EnvHarness 给出的答案是：把旧环境套壳、让它诊断弱点并与智能体共同进化——用最小的工程代价，把"死训练场"变成"永不过时的自适应课程表"。</strong></p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><ul class="ls"><li><strong>主线从"scale 模型/数据"多挪出一条"scale 环境/经验"。</strong> 你盯模型参数和数据量之外，现在要多盯一个变量：<strong>智能体是在什么样的环境里练出来的</strong>。下一代强智能体（编码 agent、电脑操作 agent、你的京小贝式业务 agent）的能力差距，会越来越多地来自<strong>训练环境的质量与自适应性</strong>，而不只是底座模型谁更大。</li><li><strong>"自适应课程"这个机理是关键。</strong> 真正的窍门不是"环境越多越好"，而是"环境会不会盯着智能体<strong>当前</strong>的弱点动态变难"。静态环境（哪怕很多个）会拉平、甚至教坏；只有<strong>诊断弱点→定向加难→共同进化</strong>的环境才能让能力持续往上爬。这解释了为什么有些团队"数据/环境堆了很多，智能体却不涨了"。</li></ul><h2 id="s13">能怎么用（提示词 &amp; 京小贝 &amp; 认知）</h2><ol class="ls"><li><strong>把评测集从"静态题库"升级成"会盯你弱点的活考场"。</strong> 你给京小贝做 eval 时，别老拿同一批固定 case 反复测——那正是论文说的"静态环境会拉平、甚至越练越差"。照搬 EnvRigger 的四步闭环：<strong>观察线上/评测里它在哪类问题上崩 → 诊断病根（是漏读长上下文？是误解业务约束？是走了个投机捷径？）→ 合成一批专治这个弱点的更难变体 → 但始终留一个可信的地面真值裁判来验收</strong>。这套"针对弱点造题、但不放松裁判"的做法，能让评测集持续产出有效信号，而不是刷一个虚高的通过率。</li><li><strong>"套壳、不动内核"是个可迁移的产品心法。</strong> 论文的骨架——<strong>能力 = 冻结的底座 + 一层可编程外壳</strong>——两侧都成立：智能体侧靠"模型+工具/记忆/循环"，训练/评测侧靠"静态任务+定制壳"。对京小贝，这意味着能力提升的很多杠杆<strong>不在等一个更强的基座模型</strong>，而在你能不能把两侧的"外壳层"做厚做巧（工具、记忆、以及给它造练兵场/考场的定制层）。</li><li><strong>Stage / Contract 直接给你两条提示词与评测设计技巧</strong>：<ul class="sub"><li><strong>Contract 的"堵捷径"</strong>——当你想真正测/逼出模型的某项硬能力时，<strong>主动删掉它的拐棍</strong>。比如想考它的多步推理，就在提示里禁掉"直接给答案"的捷径、要求它必须逐步暴露中间态；想考它的检索理解，就把资料"只给前两段"逼它自己补全。堵掉捷径，能力才藏不住。</li><li><strong>Stage 的"调起跑线"</strong>——同一个任务，通过预置初始状态可造出难易两版：藏起关键信息=加难（练鲁棒），预先完成子目标=减难（缩短程）。做能力评估或数据构造时，用它系统性地铺出难度梯度。</li></ul></li><li><strong>记住那条反直觉警告，别踩坑：</strong> <strong>盲目"多收集轨迹、多攒技能/记忆"可能把 agent 越搞越差</strong>（静态环境会喂给它没用甚至有害的经验）。京小贝若上"从历史对话里自动攒经验/技能"这类机制，务必配一个"这条经验到底有没有对准真实弱点、有没有被可信裁判验证过"的过滤闸，否则攒得越多、退化越狠。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文：<a class="src" href="https://arxiv.org/abs/2608.19880">https://arxiv.org/abs/2608.19880</a> （EnvHarness: Awakening Static Worlds for Agent Learning，2026-08-20）</li><li>PDF：<a class="src" href="https://arxiv.org/pdf/2608.19880">https://arxiv.org/pdf/2608.19880</a></li><li>代码开源：<a class="src" href="https://github.com/google-research/envharness">https://github.com/google-research/envharness</a></li><li>项目主页：<a class="src" href="https://www.envharness.com/">https://www.envharness.com/</a></li><li>信号佐证：HuggingFace Daily Papers 当窗口 #1 · 245 赞 <a class="src" href="https://huggingface.co/papers/2608.19880">https://huggingface.co/papers/2608.19880</a></li><li>机构：Google Cloud AI Research（通讯作者 chenyulee@google.com、zifengw@google.com）× WashU（一作 chengsong@wustl.edu 实习期间完成）× UNC</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
