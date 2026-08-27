@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2843%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2249%22%20cy%3D%2213%22%20r%3D%2211%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2237%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.24%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>同一个模型换一种语言就变笨——"技能"不是语言无关的抽象量，它被"用哪种语言思考"绑住了；而换掉思考用的语言能把大半损失捞回来</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-28</span></div>
+  <h1 class="doc">同一个模型换一种语言就变笨——"技能"不是语言无关的抽象量，它被"用哪种语言思考"绑住了；而换掉思考用的语言能把大半损失捞回来</h1>
+  <div class="dateline"><span>全文 <b>4,839</b> 字</span><span>约 <b>13</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Skill Issue: Are Skills Language-Invariant in LLMs?</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.25832</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Bobby Cheng, Adam Gaber, Zhengyuan Liu, Catherine Arnett, Omer Goldman, Cheston Tan, Leshem Choshen</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">A*STAR CFAR（新加坡）× Weizmann Institute（以色列）× MIT-IBM Watson AI Lab × University of Cambridge × EleutherAI</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-26</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-28.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-28.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily 2026-08-27 榜 #2 · 421 赞（当日仅次于一篇刷屏的长时视频生成 1960 赞，为"真·能力理解/机理分析"类第一）· 作者含 Leshem Choshen(MIT-IBM/Weizmann)、Cheston Tan(A*STAR CFAR)、Catherine Arnett(EleutherAI) · cs.CL/cs.AI/cs.GT/cs.LG · S2 早期引用未取证(发表约2天≈0，接口429限流)</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, multilingual, interpretability, evaluation, reasoning, science-of-llm</span></div></div><div class="tools"><a class="btn hot" href="2026-08-28-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局：世界变成什么样</a><a class="t-h2" href="#s9">7. 内核（带走的那颗种子）</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这对"模型进化逻辑"意味着什么</a><a class="t-h2" href="#s13">能怎么用（京小贝是纯中文产品，这几条可以直接落）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>《Skill Issue: Are Skills Language-Invariant in LLMs?》</strong>（技能问题：大模型的"能力"是语言无关的吗？），一句话：<strong>它用一个干净得几乎无懈可击的实验，掀翻了一个我们几乎所有人默认的假设——"模型的推理能力是一坨语言无关的抽象量，换语言只是在输入输出层翻译一下"。真相是：同一个模型、同一个对手、同一套规则，只是把界面语言从英语换成希伯来语，它的实际棋力就会明显下降；更关键的是，只要把它"心里推理用的语言"换回强语言，被丢掉的能力能捞回近九成。</strong></p><p>三点为什么是今天这篇：</p><ol class="ls"><li><strong>它推进的是"我们对模型的理解"，不是刷分。</strong> 过去讲多语言差距，大家归因于"知识不均"（事实更多存在英语里）。这篇第一次把<strong>技能（skill）</strong>从知识里干净剥出来单独量化——用"自我对弈、同一个模型两边都是它、只有语言这一个变量变"来隔离，证明技能本身也不是语言无关的。这是对"能力到底是什么"的认知往前挪了一步，命中选片正面清单里的"揭示模型内在机理/能力的机制解释"。</li><li><strong>信号够硬。</strong> HuggingFace Daily 当窗口 421 赞、榜 #2（榜首是一篇蹭热度的视频生成，不在选片轴），是当天"真·机理/能力分析"类第一；作者阵容是多语言 + 可解释性圈的实力组（Weizmann/MIT-IBM 的 Leshem Choshen、A*STAR CFAR 的 Cheston Tan、EleutherAI 的 Catherine Arnett、剑桥的 Omer Goldman）。</li><li><strong>对思染直接是生死相关。</strong> 京小贝是<strong>纯中文</strong>产品。这篇给了两个可当天用的结论：其一，中文界面 ≠ 拿到英文级的推理技能，必须专门测中文下的"技能"而不是看翻译过来的 benchmark；其二，一个具体的提示词杠杆——<strong>让模型用它最强的语言在心里推理、再用中文出结论</strong>，在空间/结构类任务上把损失捞回了 ~89%。而且它还发现 <strong>Qwen、Ministral 在中文上能逼近英文水平</strong>（Gemma 不行），这直接影响选型。</li></ol><p><span class="lk">诚实交底</span>这是一篇<strong>行为层面的实证分析</strong>，不是掏内部电路的机理可解释性（它证明"现象存在且可测量"，没证到神经元级别的"为什么"）；测的三个模型都是 3–4B 的小模型（为了跑得起 50 万+局对弈）；发表约 2 天，还没有引用沉淀（Semantic Scholar 接口 429 限流，未取证，正常）。这些不削弱它的核心洞察，但要摆在明面上。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是一个我们天天用、却从没真正验过的<strong>默认假设</strong>：<em>"大模型的能力（会不会推理、会不会下棋、会不会算）是一坨语言无关的东西。你用中文问、用英文问、用阿拉伯语问，只是换了个'翻译外壳'，里面那个'会思考的核'是同一个。"</em> ——这篇论文要拿这个假设开刀。台上还有三个陪练：三个开源小模型 <strong>Gemma-4-E4B-it、Qwen3-4B、Ministral3-3B-Instruct-2512</strong>（都是 3–4B，选小是为了能跑得起五十多万局游戏）。</p><h2 id="s4">2. 困境</h2><p>大家早就知道大模型<strong>"知识"在不同语言里不均</strong>——同一个事实，它用英语答得出、用斯瓦希里语就抓瞎，因为训练语料里英文事实多得多。但有个更深的问题一直没人干净地回答：</p><blockquote><p><strong>"技能"呢？会不会推理、会不会做多步规划、会不会在信息不全时下注——这种"怎么想"的能力，到底是不是语言无关的？还是说，换个语言，模型连"怎么想"这件事本身都变差了？</strong></p></blockquote><p>（这里把两个词落地。<strong>知识</strong>＝存在脑子里的事实，"法国首都是巴黎"。<strong>技能</strong>＝一套操作流程，"给我一个残局，我能算出该走哪步"。你可以知识很多但技能很差，也可以反过来。）</p><p>这个困境为什么难解：你没法直接问"模型在中文里的推理技能有多强"，因为任何跨语言测试都被两样东西污染——<strong>知识不均</strong>（英语里知道的事实多）和<strong>翻译腔</strong>（题目翻译得好不好、有没有翻错）。你测出来的差距，分不清是"它笨了"还是"它只是不知道这个事实/题目翻歪了"。<strong>技能和知识、和翻译质量，全搅在一起。</strong></p><h2 id="s5">3. 旧路</h2><p>旧办法是<strong>翻译版 benchmark</strong>：把 MMLU、GSM8K 这类考卷翻译成几十种语言（比如 Global-MMLU），看模型在各语言上的分数。问题有三：</p><ul class="ls"><li><strong>知识和技能混在一起</strong>——一道题答错，是因为不会推理，还是因为不知道那个事实？分不清。</li><li><strong>翻译本身引入噪声</strong>——题目翻得好不好直接影响分数，你测的一半是翻译质量。</li><li><strong>是静态考卷</strong>——只看最终答对没答对，看不到"它在过程中的哪一步、以什么方式垮掉"。</li></ul><p>所以旧路能告诉你"中文分比英文低 8 分"，但<strong>没法回答"这 8 分里有多少是技能真的退化了"</strong>。</p><h2 id="s6">4. 转折</h2><p>作者转过的这个弯，漂亮在<strong>用"游戏自我对弈"把语言变成唯一的自变量</strong>。核心构造：</p><blockquote><p><strong>让同一个模型，自己跟自己下棋。两个实例，一个用英语界面看棋盘、另一个用希伯来语界面看棋盘。模型是同一个、对手是它自己、规则一样、棋盘状态一样、能走的招一样、连棋盘上的数字和坐标符号、落子的语法都一模一样——唯一不同的，只有那段"文字描述"用的是哪种语言。</strong></p></blockquote><p>这一下就把前面三个污染源全干掉了：</p><ul class="ls"><li><strong>知识不均？</strong> 不存在——两边是同一个模型，脑子里的知识完全一样。</li><li><strong>翻译腔？</strong> 被压到最小——数值、棋盘符号、动作语法跨语言完全一致，只有解说文字变。</li><li><strong>静态？</strong> 不——自我对弈是动态博弈，能看谁赢、赢多少、走了多少非法招、下注风格怎么变。</li></ul><p>于是"英语实例 vs 希伯来语实例"谁赢，<strong>只可能来自语言对'同一个模型如何把能力发挥出来'的影响</strong>。这就是把技能从知识里干净剥离的手术刀。他们为此给 <strong>TextArena</strong>（一个用文字游戏做自我对弈评测的开源框架）做了个多语言扩展。</p><h2 id="s7">5. 解法</h2><p><strong>测什么、怎么测（术语全落地）：</strong></p><ul class="ls"><li><span class="lk">8 种语言</span>英语、阿拉伯语、德语、西班牙语、法语、希伯来语、马来语、中文。（故意混了拉丁字母 / 非拉丁字母、高资源 / 低资源，好拆变量。）</li><li><strong>6 个游戏</strong>，每个考一种不同的技能：<ul class="sub"><li><strong>Nim（尼姆取子）</strong>——数学/算法知识（这游戏有已知的必胜公式，考"知不知道且用不用得出最优解"）。</li><li><strong>Tic Tac Toe（井字棋）</strong>——空间推理。</li><li><strong>SimpleTak</strong>——空间推理 + 规划。</li><li><strong>Colonel Blotto（布洛托上校）</strong>——资源分配 + 同时决策（双方同时把兵力分到几个战场，比谁分得妙）。</li><li><strong>Kuhn Poker（库恩扑克）</strong>——不完全信息 + 虚张声势（信息不全时该不该诈唬）。</li><li><strong>Iterated Prisoner's Dilemma（重复囚徒困境）</strong>——重复博弈 + 合作。</li></ul></li><li><span class="lk">规模</span>每个语言对、每种角色分配跑 400 局，每个"模型×游戏"组合 28,800 局，总计 <strong>50 万+局</strong>对弈。足够把偶然性磨平。</li></ul><p><span class="lk">衡量的指标</span>胜负差（margin，赢多少/输多少）、非法招率（invalid actions，模型有多少次给出违规操作）、以及策略倾向（比如诈唬频率、开局走法）。</p><p><strong>最关键的第二个实验（这是全篇最有用的一招）</strong>：把"<strong>界面语言</strong>"和"<strong>推理语言</strong>"拆开。让模型看棋盘时用一个<strong>弱</strong>语言（比如德语），但<strong>命令它"用指定的语言来推理"</strong>（换成英语），看能不能把损失捞回来。这一步直接检验：损失到底发生在"读题"环节，还是"心里想"这个环节？</p><h2 id="s8">6. 结局：世界变成什么样</h2><p><strong>主结果——技能确实随语言剧烈波动：</strong></p><ul class="ls"><li>同一个模型，换语言实际棋力明显不同。<strong>英语普遍最强，希伯来语普遍最弱</strong>，三个模型都这样。<strong>Qwen 的语言等级差最陡</strong>，Gemma 相对最稳。（来源：论文摘要 + 正文结果段）</li><li>差距最大的游戏是 <strong>Colonel Blotto（胜负差跨语言极差 1.07）</strong>，最小的是 <strong>Kuhn Poker（0.13）</strong>——越是需要显式多步空间/资源推理的游戏，语言影响越大；越靠概率直觉的，语言影响越小。</li><li><span class="lk">空间推理的垮法还带语言指纹</span>井字棋/SimpleTak 里，英语界面的败局在行、列、对角线上分布比较均匀；而<strong>阿拉伯语、希伯来语这类非拉丁文字界面，败局系统性地偏向"列"和"对角线"</strong>——某些空间轴上它就是看不清了。</li><li><span class="lk">策略风格也跟着语言变</span>库恩扑克里，同一个模型拿最烂的牌时的<strong>诈唬率，在不同语言间差了 2 倍以上</strong>（Qwen）。换个界面语言，它的"性格"从保守变激进。</li><li><span class="lk">知识在，但被语言锁住了</span>Nim 这种有标准必胜解的游戏，Qwen 和 Ministral 在阿拉伯语/希伯来语下，"提到最优策略""走对最优第一步""胜率"三项<strong>全线暴跌</strong>——但<strong>当模型自己在推理中途蹦回拉丁字母时，那套知识又回来了</strong>。这是最强的一个"tell"：<strong>知识是有的，是界面语言在门口把它拦住了。</strong></li></ul><p><span class="lk">第二个实验的战果（提示词金矿）</span>把界面留在弱语言、强制模型用强语言推理——</p><ul class="ls"><li><strong>德语界面→英语推理（Gemma 玩井字棋）</strong>：从 μ=−0.22（输）翻到 μ=+0.20（赢），<strong>捞回了可达差距的 89.4%</strong>。</li><li><strong>德语界面→英语推理（Gemma 玩 SimpleTak）</strong>：从 μ=−0.21 到 μ=+0.05，<strong>捞回 60.5%</strong>。</li><li><strong>但库恩扑克上，恢复有限且非单调</strong>——说明语言影响发生在决策的<strong>多个</strong>阶段，不是换个推理语言就能一键全治。</li></ul><p>结论：<strong>这些游戏里很大一部分语言损失，发生在模型"心里推理"那一段，而且可以通过选对推理语言捞回来。</strong></p><p><strong>最反直觉的三个副发现（往往最有意思）：</strong></p><ol class="ls"><li><strong>不是语料多少的问题，是"字母家族"的问题。</strong> 马来语（拉丁字母、网络文本很少）在每个模型上都<strong>打赢</strong>希伯来语（网络文本更多）。纯"数据频率"解释不了——<strong>从高资源的拉丁字母语言那里，技能会顺着"同款字母"迁移过来</strong>。</li><li><strong>中文解耦了"数据量"和"实际技能"。</strong> 中文网络文本约是英语的 1/20，但 <strong>Qwen 和 Ministral 在中文上做到了逼近英文的胜负差</strong>，而 Gemma 却贴着零。<strong>同样的数据可得性，落在不同模型上，兑现出的实际技能天差地别</strong>——训练配方（谁在中文上下了功夫）比语料总量更决定命运。</li><li><strong>benchmark 高 ≠ 跨语言稳。</strong> Gemma 的 Global-MMLU 平均分最低，但跨语言方差最小（最稳）；Qwen 平均分最高，但方差最大（最不稳）。<strong>"考得高"和"跨语言一致"是两条独立的轴。</strong></li></ol><h2 id="s9">7. 内核（带走的那颗种子）</h2><blockquote><p><strong>大模型的"技能"不是一坨语言无关、外面套翻译壳的抽象核。同一个模型在不同语言里有不同的实际技能；更露馅的是，它在不同"推理语言"里也不一样——能力，部分地被"它拿哪种语言思考"绑住了。知识跨语言不均是老知识；这篇干净地证明了：技能也跨语言不均，而且这是通往'真正多语言模型'路上一块可测量的大石头。</strong></p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 1 层——它在改进/批判谁？</strong> 它批的是<strong>翻译版 benchmark 那套多语言评测范式</strong>（Global-MMLU 之流），以及"多语言差距 = 知识不均"这个主流归因。旧范式把知识、技能、翻译质量搅在一起，只能给你一个总分差，回答不了"技能本身退化了没有"。这篇用<strong>自我对弈隔离单一变量</strong>，把技能从知识里剥出来单测——这是一次<strong>方法论上的转身</strong>：从"翻译静态考卷"转到"同模型自博弈的动态隔离实验"。它扩展的底座是 <strong>TextArena</strong>（游戏化 LLM 自我对弈评测）。</p><p><strong>第 2 层——它坐在哪条河上？</strong> 坐在<strong>"大模型内部其实在用一门主导语言思考"</strong>这条线上。此前有一批工作（如 Wendler 等 2024《Do Llamas Work in English?》用 logit-lens 发现模型的中间"概念空间"是英语中心的）指出：模型无论输入什么语言，内部可能先经过一个"英语/概念枢纽"再翻译出去。<strong>这篇是那条"内部枢纽语言"假说在"外部实际行为"上的兑现证据</strong>——不只是内部表示偏英语，连<strong>打出来的棋力</strong>都随语言变，且能被"指定推理语言"这个旋钮调动。它同时接上"语言中性子空间/多语言表示对齐"那一脉。</p><p><strong>第 3 层——根在哪？</strong> 根是一个更大的暗流，也正是本台账反复出现的主题：<strong>能力不是一个干净的抽象量，它总要通过某种"载体"才能被兑现出来，而载体会重塑能力本身。</strong> 这里的载体是语言；在别处是提示词格式、是分词方式、是思维链用哪种语言写。这跟台账里 [[2026-08-18--mobius-decoupled-knowledge-reasoning|Mobius（把知识和推理在模型内部拆开）]] 是硬币两面——Mobius 说"知识 vs 推理在模型里可分离"，这篇说"知识 vs 技能在语言维度上可分离"；也跟 [[2026-08-16--full-bandwidth-transformer|Full-bandwidth Transformer]]（思维链必须"出声"才能深想，是载体带宽的限制）、[[2026-08-14--ai4ai-test-time-harness|AI4AI 搭外壳]]（强制 CoT 收益近零、真正的增益来自把计算卸载到确定性外壳）同一个大方向：<strong>"怎么表达/路由计算"决定了"能算出什么"。</strong> 这篇把这条暗流拉到了"语言"这个最基础的载体上。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这对"模型进化逻辑"意味着什么</h2><ul class="ls"><li><strong>"多语言能力"没被"英语推理 + 翻译壳"解决，它是一个独立的、没打通的前沿。</strong> 业界默认"把英文推理做强，外面包一层翻译就行"——这篇证明那是幻觉：<strong>技能本身是语言绑定的</strong>，真正的多语言模型需要"技能平价（skill parity）"，而这还没做到。下一步模型进化的一个隐形战场，是让能力在语言之间不掉。</li><li><strong>"推理语言"是一个能力旋钮，不是化妆。</strong> 换掉思考用的语言能捞回近九成损失——这说明<strong>思维链用哪种语言写，是一个可以主动调的能力变量</strong>。未来模型/产品很可能会显式地"选一门最强的语言在心里推理、再用用户语言输出"。</li><li><span class="lk">认知锚</span>以后看任何"多语言/中文能力"的宣传，先问一句——<strong>它测的是知识、还是技能？是翻译版考卷、还是隔离了单一变量的实测？</strong> 分不清这两者的多语言评分，参考价值要打折。</li></ul><h2 id="s13">能怎么用（京小贝是纯中文产品，这几条可以直接落）</h2><ol class="ls"><li><strong>别默认"中文界面 = 拿到了英文级的推理技能"。</strong> 哪怕模型"知道"答案，它在中文下的<strong>实际推理技能</strong>在多步/结构化/对抗信息类任务上可能更弱。<strong>要专门测中文下的"技能"</strong>（用真实业务的多步判断题自测），而不是看翻译过来的 benchmark 分。<strong>好消息</strong>：这篇发现 <strong>Qwen、Ministral 在中文上能逼近英文水平</strong>（Gemma 不行）——所以<strong>选型上，中文母语强的底座（如 Qwen 系）大概率带来更好的技能平价</strong>，这是京小贝选模型的一条硬依据。</li></ol><ol class="ls"><li><strong>提示词杠杆：让模型用它最强的语言"在心里推理"，再用中文出结论。</strong> 论文的干预实验在空间/结构类任务上靠"只换推理语言"捞回了 ~89% 的损失。落到提示词，对<strong>高难度、多步、结构化</strong>的查询可以试： &gt; "这是一道需要严谨多步推理的问题。你可以先用你最擅长的语言在内部完成推理，<strong>最终只用中文</strong>给出结论和理由。"</li></ol><p><strong>注意边界</strong>（诚实）：这招<strong>不是万能</strong>——在不完全信息类任务（如概率下注、博弈）上恢复有限且非单调。所以是<strong>按任务类型 A/B 测</strong>，不是无脑全量加。</p><ol class="ls"><li><strong>"它好像忘了一条规则"——先怀疑是语言把知识锁住了，而不是知识缺失。</strong> Nim 实验里，模型明明"知道"必胜解，却被界面语言在门口拦住，直到它自己蹦回拉丁字母才想起来。<strong>如果京小贝在中文下"忘了"一条它在英文下明显知道的规则/政策，这很可能是"语言访问失败"而不是"知识空洞"</strong>——对策是<strong>推理语言路由</strong>（让它换语言想一下），而不是急着去做微调补知识（那是治错了病）。</li></ol><ol class="ls"><li><strong>选型看"跨语言一致性"，别只看榜单分。</strong> benchmark 高 ≠ 跨语言/跨措辞稳。对一个<strong>单语言（中文）产品</strong>，你要的是<strong>在各种问法下都稳</strong>的模型，而不是平均分最高但方差大的。把"同一问题换几种问法/口径，答案稳不稳"作为选型验收项。</li></ol><ol class="ls"><li><strong>偷这套"隔离单一变量"的评测设计（研究品味）。</strong> "同一个模型自己跟自己比，只改一个变量、其余全钉死"——这是隔离任何单因素影响的干净模板。做提示词/产品 A/B 时可以照抄：想量化"提示词格式 A vs B 的纯效果"，就让模型在其余全相同的条件下自博弈，把"格式"当成唯一自变量，避开知识/难度/随机性的污染。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2608.25832">https://arxiv.org/abs/2608.25832</a> —《Skill Issue: Are Skills Language-Invariant in LLMs?》，提交 2026-08-26，cs.CL/cs.AI/cs.GT/cs.LG。</li><li>论文全文（arXiv HTML，用于抽取模型/语言/游戏/数值/干预实验细节）：<a class="src" href="https://arxiv.org/html/2608.25832">https://arxiv.org/html/2608.25832</a></li><li>信号佐证：HuggingFace Daily Papers（2026-08-27 榜）<a class="src" href="https://huggingface.co/papers/2608.25832">https://huggingface.co/papers/2608.25832</a> —— 421 赞、当窗口榜 #2（榜首为长时视频生成 2608.23383，1960 赞，属刷屏应用不在选片轴）。</li><li>作者/机构：A*STAR CFAR（Cheston Tan、Zhengyuan Liu、Bobby Cheng）× Weizmann Institute（Leshem Choshen、Adam Gaber）× MIT-IBM Watson AI Lab（Leshem Choshen）× University of Cambridge（Omer Goldman）× EleutherAI（Catherine Arnett）。</li><li>相关脉络：TextArena（游戏化 LLM 自我对弈评测框架，本文的多语言扩展底座）；"模型内部用英语枢纽思考"线（Wendler et al. 2024《Do Llamas Work in English?》）。</li><li>早期影响力：Semantic Scholar <code>arXiv:2608.25832</code> 于 2026-08-28 查询返回 429 限流，未取到 influentialCitationCount（发表约 2 天，引用≈0，属正常）。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
