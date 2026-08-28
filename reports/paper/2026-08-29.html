@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2846%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%229%22%20r%3D%2218%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2215%22%20r%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.17%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>没有标准答案，模型也能自己练——秘诀是"信错不信对</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-08-29</span></div>
+  <h1 class="doc">没有标准答案，模型也能自己练——秘诀是"信错不信对</h1>
+  <div class="dateline"><span>全文 <b>3,301</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">TTPO: Test-Time Policy Optimization</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.27448（https://arxiv.org/abs/2608.27448）</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Aozhe Wang, Zhengxi Lu, Jianze Wang, Shangke Lv, Ying Liu, Weiming Lu, Jun Xiao, Yueting Zhuang, Hua Yang, Qianglong Chen, Yongliang Shen（通讯）</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">浙江大学（庄越挺 / 陆炜明 / 沈永亮 组）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08（HuggingFace Daily Papers 2026-08-29 上榜）</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-08-29.html">https://yesiran.github.io/ai-paper-daily/reports/2026-08-29.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily 约60赞（当日推理/训练方法类前列）· 浙大沈永亮组（延续 TPO、Test-Time RL 系列）· 首次做到"零标签的测试时训练"追平"有标准答案的自蒸馏</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, test-time-training, reasoning, self-improvement, rl</span></div></div><div class="tools"><a class="btn hot" href="2026-08-29-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 2–3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这对"模型进化逻辑"意味着什么</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝）</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇讲的是一件听起来不可能的事：<strong>给模型一堆连答案都没有的题，它自己练一练，就变强了</strong>——而且强到跟"有标准答案在旁边盯着教"几乎一样好（Qwen3-1.7B 在竞赛级数学上从 38.0% 提到 45.2%，五个竞赛榜上追平了用真答案训练的方法）。</p><p>选它有三个理由：</p><ol class="ls"><li><strong>它推进的是"模型进化"最核心的那条线</strong>——从"多花点算力想一想"（test-time compute，o1 那一路）往前挪到"模型真的能在用的时候把自己练强"（test-time learning）。这是"部署后还能自己变好"这件事的一块关键拼图。</li><li><span class="lk">机理特别干净、特别可复述</span>整篇的钥匙就一句反直觉的观察——<em>"跟大多数人不一样的那个人，几乎总是错的；至于大多数人本身对不对，反而说不准。"</em> 错的信号比对的信号更可靠。这种"一句话就能砸下一颗钉子"的洞察，正是值得你带走的。</li><li><span class="lk">信号扎实、不是蹭热点</span>来自浙大沈永亮组，他们有一整条"测试时优化"的研究脉络（TPO、靠区域一致性做测试时强化学习等），TTPO 是这条线的最新一环；HF 当日约 60 赞，在推理/训练方法类里居前。不是刷 benchmark 涨零点几个点的水货，而是把一个"以前做不到"的事（零标签的测试时训练）第一次做到了追平有标签。</li></ol><p>诚实说一句：它的点赞数（约 60）不如今天榜首的世界模型论文（Zero-WAM 127 赞），但那类"世界模型/具身"方向最近台账里已经讲得很密（PhiZero、Kairos、Orca、RxBrain、EnvACE、EnvHarness）。TTPO 的机理更锋利、离你的提示词与产品判断更近，所以今天选它。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>一个已经会做题、但"一到没人给答案的新题就没法再进步"的大语言模型（论文里主要用 Qwen3-1.7B、Qwen3-8B 这些开源模型做实验）。它面前摆着一沓竞赛级数学题——<strong>只有题面，没有标准答案</strong>。</p><h2 id="s4">2. 困境</h2><p>最近让模型数学能力猛涨的两套后训练打法，都有一个共同的命门：<strong>都得有标准答案</strong>。</p><ul class="ls"><li>一套叫 <strong>RLVR</strong>（Reinforcement Learning with Verifiable Rewards，带可验证奖励的强化学习）：让模型把题做一遍，拿标准答案一对，做对了就给它"加分"、做错了"扣分"，模型顺着分数往"更容易做对"的方向调。——要标准答案才能判对错。</li><li>另一套叫 <strong>OPSD</strong>（On-Policy Self-Distillation，在线自蒸馏）。"蒸馏"这个词落地讲：本来是"用一个更强的老师模型的输出，去教一个学生模型"；"自蒸馏"就是<strong>没有外部老师，模型自己当自己的老师</strong>——它把同一道题做很多遍（这些草稿叫 rollout，就是"一次完整的解题尝试"），挑出<strong>做对的那几遍</strong>，然后回过头把自己往"照着这些对的草稿写"的方向拉。——挑"哪几遍是对的"，还是得靠标准答案。</li></ul><p>命门就在这："得有标准答案"意味着<strong>只能在训练时、在有标注的数据上练</strong>。可模型真正要面对的，是部署之后源源不断涌进来的、<strong>没人给过答案</strong>的新题（TTT，Test-Time Training，测试时训练——指模型在真正用它的那批数据上现学现调，而不是只靠出厂前练好的本事）。没有答案，上面两套打法直接失灵。模型只能"冻在出厂状态"，用得再多也不会自己变强。</p><h2 id="s5">3. 旧路</h2><p>有个最自然的补丁：<strong>没有标准答案，就用"投票"造一个假答案</strong>。 让模型把同一道题做很多遍，看这些草稿里<strong>哪个最终答案出现得最多</strong>，就把"票数最多的那个答案"当成标准答案（这叫 majority vote / self-consistency，多数投票 / 自洽性——早就是提示词里常用的技巧：多采样几次、少数服从多数）。然后就当它是真答案，套上面 RLVR/OPSD 去练。</p><p><strong>这条路很脆。</strong> 关键问题：<strong>万一多数派本身就投错了呢？</strong> 那这个"假答案"就是错的，模型会被它带着，一整道题、每一个字（token）都往错的方向拉——<strong>一次投错，满盘皆输</strong>。越难的题，多数派投错的概率越高，补丁越不靠谱。</p><h2 id="s6">4. 转折</h2><p>作者盯着"投票到底错在哪"看，发现了一个<strong>不对称</strong>的现象，这是全篇的钥匙：</p><blockquote><p>把草稿分成两拨——<strong>"跟多数派一致"的</strong> 和 <strong>"跟多数派唱反调"的</strong>。
+<strong>那些唱反调、跟大伙儿答案不一样的草稿，几乎总是错的</strong>——而且，<em>不管这一次多数派本身投得对不对</em>，反调草稿该错还是错。</p></blockquote><p>换句话说：</p><ul class="ls"><li>"跟多数派一致"是个<strong>不可靠的好信号</strong>——因为多数派可能整体就错了，跟着它可能一起错。</li><li>但"跟多数派唱反调"是个<strong>可靠的坏信号</strong>——落单的那个，基本就是走错了。</li></ul><p><strong>错的信号，比对的信号更可靠。</strong> 你不一定知道"大家的答案对不对"，但你几乎可以肯定"跟大家不一样的那个，是错的"。这就是那颗种子。</p><h2 id="s7">5. 解法</h2><p>既然两个方向的信号"可信度不对称"，那就<strong>别对称地用它们</strong>。TTPO（Test-Time Policy Optimization，测试时策略优化）的设计就是照着这个不对称来的，两条支路：</p><ul class="ls"><li><strong>一致的草稿 → 用自蒸馏（OPSD）轻轻往里拉。</strong> 因为"跟多数一致"只是个弱的好信号（多数可能错），所以只温和地朝它靠，不下死手。</li><li><strong>反调的草稿 → 用 Grouped RL 明确地往外推。</strong> "Grouped RL"落地讲：把一组草稿放一起比较、给每个算个相对好坏，然后对差的那些施加"负梯度"——就是让模型<strong>降低以后再写出这种反调草稿的概率</strong>，把它往外推。因为"唱反调=错"是个强的坏信号，所以这一推是理直气壮的。</li></ul><p>光这样还不够精细，作者又加了一层<strong>逐字挑选</strong>（token-level selection），让每条支路只在"该用力的字"上用力：</p><ul class="ls"><li><span class="lk">自蒸馏那条</span><strong>已经写对、已经收敛的字就别再反复拉了</strong>（模型早会了，再拉是浪费，还可能过拟合），把力气省下来。</li><li><span class="lk">强化学习那条</span><strong>只惩罚"自信地写错"的字</strong>——模型很笃定却错了的地方才推它一把；那些它本来就没把握、犹犹豫豫的字先放过，免得误伤。</li></ul><p>最后还有个自我加速的循环：<strong>多数投票路由（majority-vote routing）会随着模型变强而变准</strong>——模型越练越对，它投出来的"假答案"就越接近真答案，自监督的信号就越紧，练得就越好。一个正向滚雪球。</p><p>整套下来，<strong>全程不碰一个标准答案</strong>，纯靠"模型自己吵出来的共识 + 那个可靠的坏信号"，就把自己练强了。</p><h2 id="s8">6. 结局</h2><ul class="ls"><li><span class="lk">零标签，追平有标签</span>完全不用标准答案，TTPO 在五个竞赛级数学 benchmark 上，<strong>追平了用真答案监督的 OPSD</strong>。这是最反直觉、也最重的一条——"没有答案的自学"逼平了"有答案的受教"。</li><li><span class="lk">实打实的涨点</span>Qwen3-1.7B 在测试时训练下从 <strong>38.0% → 45.2%</strong>；在"不开思考模式"（non-thinking，即不写长推理链、直接给答案）的设定下，涨幅达到 <strong>+25.2% 到 +36.4%</strong>——说明它补的不只是"想得更长"，而是实打实地把模型的答题能力练上去了。</li><li><span class="lk">能跨任务迁移</span>在一批题上这么自练出来的本事，换到别的任务上依然管用，不是只会背这几道题。</li></ul><h2 id="s9">7. 内核</h2><p><strong>你不一定能信"大家说的是对的"，但你几乎总能信"跟大家不一样的是错的"。</strong> 抓住这个不对称——温柔地信"对"、坚决地拒"错"——一个模型就能在没有任何标准答案的地方，用自己吵出来的共识把自己教强。这，就是"模型在用的时候自己变强"往前迈的一步。</p><hr class="rule"><h1 id="s10">来龙去脉（倒读 2–3 层）</h1><p><strong>第 1 层——它直接改进谁？</strong> 它改进的是"<strong>用多数投票当假答案来做测试时训练</strong>"这个朴素补丁。那个补丁的病是"投错就满盘皆输"，TTPO 用"信错不信对"的不对称把病治了。</p><p><strong>第 2 层——它站在谁的肩膀上？</strong> 两块基石：</p><ul class="ls"><li><strong>RLVR / OPSD</strong> 这一整套"后训练把推理能力练强"的范式（近一年让数学、代码推理猛涨的主力打法）——TTPO 借用了它们的机器（蒸馏 + 分组强化学习），只是把"标准答案"这个零件换成了"投票共识 + 可靠的负信号"。</li><li><strong>自洽性 / 多数投票</strong>（self-consistency，2022 年起就是提示词里的经典技巧：多采样、取众数）——TTPO 把它从"推理时挑答案的技巧"升格成"训练时的监督信号来源"，并诚实地指出它当监督用时的脆弱，再对症下药。</li></ul><p><strong>第 3 层——这条河更上游是什么？</strong> 是整个 <strong>test-time（测试时）</strong> 大潮：先是 <strong>test-time compute</strong>（o1/o3 那一路：部署时多花算力"想一想"就更强，但模型权重没变）；再往前就是 <strong>test-time learning / test-time training</strong>（部署时模型<strong>真的改自己</strong>）。作者所在的浙大沈永亮组本身就有一条测试时优化的支流——TPO（Test-Time Preference Optimization，靠文字反馈在推理时对齐）、靠"区域一致性"做测试时强化学习的 GUI 定位工作，思路一脉相承：<strong>当没有标准答案时，就从"一致性/共识"里榨出监督信号</strong>。TTPO 是这条支流里把"零标签也能练到追平有标签"坐实的一环。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这对"模型进化逻辑"意味着什么</h2><ul class="ls"><li><span class="lk">进化坐标又往前挪了一格</span><code>训练时练好→冻结部署</code>（老范式）→ <code>部署时多想一想</code>（test-time compute，o1）→ <strong><code>部署时把自己练强</code>（test-time learning，今天这篇）</strong>。TTPO 证明了"<strong>零标签的自我提升，能追平有标签的受教</strong>"。这是"模型部署后还能持续变好、而且不需要人去标注答案"这件事的一个硬证据。往前看，这条线通向的是<strong>在真实流量里自己越用越强</strong>的模型。</li><li><span class="lk">关键机制值得记住</span>驱动这种自我提升的，不是什么神秘力量，就是<strong>"共识 + 一个可靠的负信号"</strong>。模型自己采样、自己吵、自己拒掉离群的错——一个能自洽评估的模型，就能给自己造监督。这也解释了为什么"会推理的模型"能自我进化：它内部已经有了判断"哪个不对"的能力。</li></ul><h2 id="s13">能怎么用（提示词 &amp; 京小贝）</h2><ul class="ls"><li><strong>提示词层面——把"分歧"当成比"共识"更强的信号</strong>：你早在用自洽性（多采样取众数）。TTPO 给了一个更锋利的用法：<strong>一个答案如果孤零零地跟其它采样都不一样，它大概率是错的</strong>——这是一个<strong>不需要标准答案、几乎零成本的"红旗"信号</strong>。以后做需要高可靠性的推理，可以多采几条，然后<strong>重点盯"离群"的那条并把它剔掉</strong>，而不是只数谁票多。信"错"比信"对"稳。</li><li><strong>京小贝产品层面——把线上没标注的流水变成"自练燃料"</strong>：京小贝每天面对海量<strong>没有标准答案</strong>的真实用户问题。TTPO 这套思路给了一条谨慎可行的路：<strong>用模型自己对同一类问题的多次采样共识来做弱监督，只坚决地惩罚"自信地跑偏"的那类回答</strong>（可靠的负信号），温和地强化共识回答。这样能在<strong>不请人标注</strong>的前提下，让线上模型在自己的真实分布上慢慢自校准。落地要点：<strong>别全信共识（多数可能整体偏）</strong>，主要吃"离群即错"这个稳信号来做过滤/纠偏。</li><li><span class="lk">认知边界层面</span>当有人说"我们的模型能在线自我进化"时，你现在能追问到底——<strong>它靠的是什么监督信号？是真有反馈闭环（可验证奖励/工具结果），还是靠自洽共识？如果是共识，有没有处理'多数派整体投错'这个脆弱点？</strong> 这几个问题能一秒分辨"真自进化"和"营销话术"。</li></ul><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文（arXiv）：<a class="src" href="https://arxiv.org/abs/2608.27448">https://arxiv.org/abs/2608.27448</a></li><li>HuggingFace Daily Papers（2026-08-29，约 60 赞）：<a class="src" href="https://huggingface.co/papers/2608.27448">https://huggingface.co/papers/2608.27448</a></li><li>作者机构佐证（沈永亮 @ 浙江大学）：<a class="src" href="https://openreview.net/profile?id=~Yongliang_Shen1">https://openreview.net/profile?id=~Yongliang_Shen1</a></li><li>研究脉络佐证——同组测试时优化系列：Test-Time Preference Optimization（TPO）<a class="src" href="https://arxiv.org/abs/2501.12895">https://arxiv.org/abs/2501.12895</a> ；Test-Time RL for GUI Grounding via Region Consistency（AAAI，沈永亮组）<a class="src" href="https://ojs.aaai.org/index.php/AAAI/article/view/40314">https://ojs.aaai.org/index.php/AAAI/article/view/40314</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
