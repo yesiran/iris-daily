@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>游戏引擎驱动的世界模型自进化 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.08.31</span></div>
+  <div class="bar"></div>
+  <h1>游戏引擎驱动的世界模型自进化</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>20</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题诊断：世界模型为何进步慢</div><ul><li><div class="n2" style="--c:#E63312">根本瓶颈不是数据/算力，是缺便宜可信的「裁判」</div></li><li><div class="n2" style="--c:#E63312">只有CLIP/FVD等模糊代理指标，有噪声偏见易被钻空子</div></li><li><div class="n2" style="--c:#E63312">导致「不可验证税」：堆数据、堆算力、堆人工标注</div></li></ul></li><li><div class="n1" style="--c:#10395E">对标启示：代码智能体为何能起飞</div><ul><li><div class="n2" style="--c:#10395E">有编译器/测试作自动裁判：密集、便宜、不会骗人</div></li><li><div class="n2" style="--c:#10395E">双重验证：机器判结构对不对＋人判有没有用</div></li><li><div class="n2" style="--c:#10395E">这套打法叫RLVR（用可验证奖励做强化学习）</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">解决方案：游戏引擎作为世界模型裁判</div><ul><li><div class="n2" style="--c:#9E2B22">引擎可自动核对：碰撞/物理/导航/脚本能否运行</div></li><li><div class="n2" style="--c:#9E2B22">既便宜（同计算顺手评）又难骗（基于事实非表象）</div></li><li><div class="n2" style="--c:#9E2B22">结合人的最终判断，形成RLHEV框架</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">执行机制：AWoMo和UWDP打造数据引擎</div><ul><li><div class="n2" style="--c:#3E5C2E">AWoMo五步：提议→渲染→验证→修复→复核</div></li><li><div class="n2" style="--c:#3E5C2E">UWDP录成「状态-动作-检查-复核」轨迹，含「为什么批/否」</div></li><li><div class="n2" style="--c:#3E5C2E">数据变干活副产品，非额外标注</div></li><li><div class="n2" style="--c:#3E5C2E">「奖励阶梯」递进：加载→物理→功能→可玩性</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">验证结果：小规模pilot的正向信号</div><ul><li><div class="n2" style="--c:#6B4A8E">UnitySceneBench 200例：主分0.681、泛化0.25→0.75</div></li><li><div class="n2" style="--c:#6B4A8E">跨引擎迁移正向：Unity→Unreal 0.25→0.35</div></li><li><div class="n2" style="--c:#6B4A8E">具身学习增益：MuJoCo +48.43%</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">理论内核：反馈通道决定域的进步速度</div><ul><li><div class="n2" style="--c:#8A6D1F">有便宜裁判的域（游戏/代码/数学）能低成本随算力扩张</div></li><li><div class="n2" style="--c:#8A6D1F">没有的域被锁在「像但不对」天花板，只能人工堆</div></li><li><div class="n2" style="--c:#8A6D1F">验证器要「活的」：能随生成器进化，不能冻住</div></li><li><div class="n2" style="--c:#8A6D1F">杠杆在反馈通道，不在架构本身</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
