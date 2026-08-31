@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>滑动窗口击败线性化：免费基线全面吊打花钱方案 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.09.01</span></div>
+  <div class="bar"></div>
+  <h1>滑动窗口击败线性化：免费基线全面吊打花钱方案</h1>
+  <p class="meta"><b>5</b> 条主线 · <b>25</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题背景</div><ul><li><div class="n2" style="--c:#E63312">注意力成本危机</div><ul><li><div class="n3">成本平方增长、KV缓存爆炸、长上下文用不起</div></li></ul></li><li><div class="n2" style="--c:#E63312">线性化研究线兴起</div><ul><li><div class="n3">SUPRA/LoLCATs/Mamba-in-Llama把历史压缩成固定小状态</div></li><li><div class="n3">诱人假设：保留聪明脑子、只换便宜心脏</div></li></ul></li></ul></li><li><div class="n1" style="--c:#10395E">对比的两条方案</div><ul><li><div class="n2" style="--c:#10395E">花钱方：后训练线性化</div><ul><li><div class="n3">把预训练模型续训成线性注意力/状态空间模型</div></li><li><div class="n3">历史压缩成固定小状态（摘要式记忆）</div></li></ul></li><li><div class="n2" style="--c:#10395E">免费方：滑动窗口+沉降点</div><ul><li><div class="n3">SWA：只看最近W个字，成本被钉死常数</div></li><li><div class="n3">沉降点：永远保留开头几个字（模型天然聚焦）</div></li><li><div class="n3">推理时改遮罩、零训练、无二次伤害</div></li></ul></li></ul></li><li><div class="n1" style="--c:#9E2B22">实验验证</div><ul><li><div class="n2" style="--c:#9E2B22">短上下文能力</div><ul><li><div class="n3">SWA恢复原模型99%分数（MMLU等6大基准）</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">长上下文真本事</div><ul><li><div class="n3">大海捞针4K：SWA 17-23% vs LoLCATs 5.8%</div></li><li><div class="n3">整体领先线性化2-10倍（含BABILong推理）</div></li><li><div class="n3">跨11个基座验证（Phi-1.5到Llama-70B）</div></li></ul></li></ul></li><li><div class="n1" style="--c:#3E5C2E">成功失败的机理</div><ul><li><div class="n2" style="--c:#3E5C2E">线性化为何输</div><ul><li><div class="n3">压缩历史必丢精确调取远处细节能力</div></li><li><div class="n3">后训练破坏原模型学到的注意力模式</div></li><li><div class="n3">摘要式记忆天生做不好逐字查询</div></li></ul></li><li><div class="n2" style="--c:#3E5C2E">SWA为何赢</div><ul><li><div class="n3">虽看得少但用精确注意力（无近似无压缩）</div></li><li><div class="n3">大多答案在最近+开头几个沉降字</div></li></ul></li></ul></li><li><div class="n1" style="--c:#6B4A8E">范式转变与应用</div><ul><li><div class="n2" style="--c:#6B4A8E">便宜长上下文只剩两条正道</div><ul><li><div class="n3">原生便宜：从头训MiniMax/Mamba等</div></li><li><div class="n3">免费滑动：SWA+沉降点并接受中间被扔</div></li></ul></li><li><div class="n2" style="--c:#6B4A8E">反直觉核心</div><ul><li><div class="n3">笨办法赢、完全免费</div></li><li><div class="n3">整条线性化研究线被免费小技巧吊打</div></li><li><div class="n3">领域漏洞：没人认真跟强基线对照</div></li></ul></li><li><div class="n2" style="--c:#6B4A8E">产品与提示词实践</div><ul><li><div class="n3">技术评审：任何花活都先赢傻瓜基线</div></li><li><div class="n3">开头有沉降点超额权重，核心指令放最前</div></li><li><div class="n3">长记忆强基线：最近N轮+开头锚已足够</div></li></ul></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
