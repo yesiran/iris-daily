@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28228%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2222%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2216%22%20r%3D%2219%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.21%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大模型教小模型'可能根本没在教——让小模型变强的，是它自己把没把握的话删掉</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-02</span></div>
+  <h1 class="doc">大模型教小模型'可能根本没在教——让小模型变强的，是它自己把没把握的话删掉</h1>
+  <div class="dateline"><span>全文 <b>4,669</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Does On-Policy Distillation Really Distill? From Noisy Teacher to Self-Improvement</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2608.31046</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Yi Ding, Ruqi Zhang</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Purdue University（普渡大学 计算机系，Ruqi Zhang 组）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-08-31</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-02.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-02.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily 2026-09-01 榜 #1 · 88 赞（当日唯一破 80 的机理类论文，压过一堆视频生成产品贴）· 普渡 Ruqi Zhang（概率机器学习/可信 AI 方向助理教授）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, post-training, distillation, rl, self-improvement, interpretability, science-of-llm, entropy, reasoning</span></div></div><div class="tools"><a class="btn hot" href="2026-09-02-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读三层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步，模型进化往哪挪了</a><a class="t-h2" href="#s13">怎么用（提示词 &amp; 京小贝）</a><a class="t-h2" href="#s14">诚实标注</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇是 HuggingFace 当日榜第一（88 赞，是唯一一篇票数破 80 的"机理分析"类论文，把一堆视频生成、场景建模的产品贴全压在下面）。它干的事，是把 2025 年以来最火的一种"让模型变强"的后训练手法——<strong>on-policy distillation（在线蒸馏，下面全展开讲）</strong>——直接掀了底：作者用实验证明，这套"大模型当老师、逐字教小模型"的方法，<strong>老师给的指导有一半是噪声，而且老师越大噪声越多</strong>；真正让小模型变强的，根本不是老师教的东西，而是<strong>小模型把自己没把握、概率最低的那些词压下去</strong>——这件事压根不需要老师。顺着这个机理，他们做了个<strong>完全不用老师</strong>的新方法 OPSA，反而比原来用老师的还强（在 AIME24 数学竞赛题上，1.7B 的小模型平均分从 13.44 冲到 48.85，涨了 263%，比用老师的版本还高 16.77 分）。</p><p>为什么这篇值得思染点开：它命中的是"模型到底怎么在后训练里变聪明"这条最核心的认知线。市面上所有"我们从更大的模型蒸馏出一个便宜小模型"的说法，这篇给了你一把手术刀去看它——<strong>很多所谓的"蒸馏/教学"，本质是模型在自我打磨，老师只是个昂贵的、还很吵的中间商</strong>。这对你判断供应商的模型、判断"要不要为大老师付溢价"、以及理解"reasoning 能力到底长在哪"，都是直接的弹药。信号偏学术（普渡一个高校组，非工业大厂），但机理杀伤力足、榜单认证够硬，选它。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>主角是一个<strong>小模型</strong>（论文里主要是 Qwen3-1.7B，17 亿参数的开源模型）和它头顶上那个<strong>大老师模型</strong>（Qwen3 的 4B / 30B / 235B 几档）。故事的舞台叫<strong>后训练（post-training）</strong>——模型预训练完、已经会说话之后，再单独训一轮，专门把它的"推理能力"（做数学题、写代码这类需要一步步想的活）往上顶。</p><p>先把两条"顶推理"的主流路子摆清楚，后面全靠它俩：</p><ul class="ls"><li><strong>RLVR（Reinforcement Learning with Verifiable Rewards，带可验证奖励的强化学习）</strong>：让模型自己把一道数学题从头做到尾，做完拿标准答案一对，对了给一个"好"、错了给一个"不好"。问题是——一道题几百个字（token，模型吐字的最小单位），最后只换来一个笼统的好/不好。信号太稀了，模型不知道是哪一步走对了、哪一步走错了。这叫<strong>稀疏奖励</strong>。</li><li><strong>On-policy distillation（在线蒸馏，OPD）</strong>：换个思路。还是让小模型（学生）自己把题做出来，但这回请一个更大的模型（老师）来，<strong>逐字打分</strong>——学生写的每一个词，老师都表个态："这个词该多说点"或"这个词该少说点"。这样每个字都有指导，信号密得多。这套方法 2025 年被 Thinking Machines Lab（Kevin Lu 那篇 "On-Policy Distillation" 博客）复刻 Qwen3 的配方带火，卖点是<strong>又便宜又密</strong>：花强化学习一个零头的算力，拿到逐字的稠密指导。当时所有人默认的前提是——老师在把自己的知识、自己的判断，一个字一个字灌给学生。</li></ul><p>这篇论文要问的，就是这个默认前提：<strong>老师真的在教吗？</strong></p><h2 id="s4">2. 困境</h2><p>问题出在一个被所有人忽略的细节：<strong>老师打分的那些句子，是学生写的，不是老师自己写的。</strong></p><p>这叫"对老师来说是 off-policy（离策略）的"——把这个词拆开：一个模型有它自己的说话习惯（它的"策略"），如果句子是它自己顺着习惯写出来的，就是"on-policy（在策略上）"；如果句子是别人（这里是学生）写的、不合它自己的习惯，那就是"off-policy（离策略）"。老师现在要对一堆"不是自己会写的句子"逐字打分。</p><p>那老师这个逐字的分，到底靠不靠谱？没人验证过。大家只看最后学生变强了，就默认"是老师教得好"。可万一老师对这些陌生句子的打分本身就是乱的呢？那学生变强的真正原因，就得重新查了。这就是全篇的困境：<strong>我们用了一套自以为"老师在传授知识"的方法，却从没检查过老师那张嘴说的是不是人话。</strong></p><h2 id="s5">3. 旧路</h2><p>先说清老师是怎么"打分"的，不然后面看不懂。OPD 给每个词算一个数，叫<strong>advantage（优势值）</strong>，公式很简单：</p><blockquote><p>优势值 = log( 老师觉得这个词的概率 ÷ 学生觉得这个词的概率 )</p></blockquote><p>拆开说：老师和学生对"下一个字该是什么"各有一套概率。如果<strong>老师觉得这个词比学生更该出现</strong>（比值大于 1，取对数是正数）→ 优势值为正 → 训练时把这个词的概率<strong>往上推</strong>；如果<strong>老师觉得这个词比学生更不该出现</strong>（比值小于 1，对数是负数）→ 优势值为负 → 把这个词的概率<strong>往下压</strong>。</p><p>所以旧路的整套逻辑是：<strong>老师逐字告诉学生"这个字多说、那个字少说"，学生照做，就学到了老师的本事。</strong> 大家信这套，是因为它确实管用（学生分数确实涨），而且比 RLVR 便宜。没人往下追一层问"这些正负号到底对不对"。</p><h2 id="s6">4. 转折</h2><p>作者做了一件很朴素的事：<strong>拿标准答案去核对老师的打分。</strong></p><p>他们定义了什么叫"老师打错了（噪声）"——很直接：如果一道题学生<strong>做对了</strong>，老师却给某些词打了负分（"这词少说"）；或者一道题<strong>做错了</strong>，老师却给正分（"这词多说"）——这就是老师的指导和"到底对不对"这个铁事实<strong>打架</strong>了，是噪声。</p><p>一测，结果吓人：</p><ul class="ls"><li>4B 的老师，噪声率 <strong>30.6%</strong>；</li><li>30B 的老师，<strong>34.7%</strong>；</li><li>235B 的老师（最大最强那个），<strong>50.6%</strong>——<strong>一半的打分是错的</strong>。而且这个最大的老师，有约 <strong>98%</strong> 的词都被它打了负分，几乎不管学生写得对不对，它一律说"你这词不该说"。</li></ul><p>这是第一个反直觉点：<strong>老师越大、越"聪明"，它逐字打的分反而越吵、越不可靠。</strong> 为什么？因为老师越强，它自己的说话习惯离学生越远，看学生写的每句话都觉得"这不是我会说的"，于是一律标成"不该说"。它不是在针对性地教，它只是在表达"你写的和我不一样"。</p><p>第二个更狠的转折：作者把噪声<strong>留着</strong>训一遍、又把噪声<strong>去掉</strong>训一遍——<strong>学生最后的成绩几乎一样。</strong> 也就是说，老师那些"打对了"的指导，压根不是学生变强的原因；那些"打错了"的噪声，也没把学生带偏。学生对老师说什么，基本免疫。</p><p>那学生到底靠什么变强的？</p><h2 id="s7">5. 解法</h2><p>作者顺着"到底哪些词在起作用"往下挖，挖到了底：</p><p><strong>真正起作用的，全是那些"学生自己都觉得概率很低"的词（low log-probability tokens，低概率词，可以理解成模型嘴里的"口误候选"——它自己都没多大把握要不要吐出来的词）。训练的作用，就是把这些低概率的尾巴词往下压。</strong></p><p>他们做了个决定性的实验来证明：<strong>把老师那套复杂的正负优势值全扔掉，改成一个固定的数——对"概率最低的那 20% 的词"一律给 −0.5（就是"往下压一点"），别的什么都不做。结果：和完整的、请老师逐字打分的 OPD 一样好。</strong></p><p>反过来，如果给固定的<strong>正</strong>优势值（一律"往上推"），模型 40 步内就崩了（policy collapse，策略崩溃——概率分布被推烂，输出退化）。</p><p>这就把真相锤死了：<strong>OPD 这套方法，干的活其实就是"把模型自己没把握的尾巴词压下去"。这件事根本不需要老师。</strong> 老师是个昂贵的、还有一半时间在乱说的中间商，它偶然做对的，只是"给低概率词发负号"这一件小事——而这件事用一个常数就能替代。</p><p>看清了机理，作者做了个不用老师的新方法，叫 <strong>OPSA（On-Policy Self-Adaptation，在线自适应）</strong>：全程没有老师，只用模型<strong>自己的不确定度</strong>来决定压哪些词、压多狠。核心是一条"随熵自适应的负优势值"公式：</p><blockquote><p>每个位置的优势值 = −1/2 − (这个位置的熵 − 最小熵) ÷ [2 ×(最大熵 − 最小熵)]</p></blockquote><p>把里面的<strong>熵（entropy）</strong>展开：熵就是"模型在这个位置有多犹豫"。如果它几乎笃定下一个字是什么，熵低；如果它在好几个字之间摇摆、拿不定主意，熵高。这个高熵的犹豫位置，正是推理的<strong>岔路口（forking token，分叉词）</strong>——模型在这儿决定往哪个方向想。</p><p>这条公式的意思就是：<strong>所有词都压一点（都给负号），但模型越犹豫的地方压得越狠。</strong> 效果是：在岔路口，把那些没把握的尾巴选项压掉，把概率重新集中到几个靠谱的主力候选（head tokens，头部词）上——等于帮模型在每个决策关口把"想岔了的可能"提前剪掉，同时又不至于把选择全砍光、让输出变得死板（不塌缩多样性）。</p><h2 id="s8">6. 结局</h2><p>不用老师的 OPSA，反而全面赢过用老师的 OPD：</p><ul class="ls"><li><strong>Qwen3-1.7B</strong>（17 亿参数小模型）在 <strong>AIME24</strong>（2024 年美国数学邀请赛，高难度数学竞赛题，reasoning 模型的硬标尺）上：<ul class="sub"><li><strong>Avg@32</strong>（跑 32 次取平均正确率，衡量稳定实力）：13.44 → <strong>48.85</strong>，涨了 <strong>35.41 分，相对提升 263%</strong>；</li><li><strong>Pass@32</strong>（32 次里只要蒙对一次就算过，衡量能力上限）：40.00 → <strong>80.00</strong>，翻倍；</li><li>AIME25 相对涨 264%，HMMT25（哈佛-麻省理工数学竞赛）相对涨 307%。</li></ul></li><li><strong>比用老师的 OPD 还高 16.77 分</strong>（AIME24 Avg@32，Qwen3-1.7B）。</li><li>换更大的模型也成立：Qwen3-4B 在 AIME24 上涨 38.75 分，Qwen3.5-9B 涨 11.46 分。</li><li>跨领域也成立：不光数学，代码题（MBPP+）和知识问答（GPQA-Diamond，博士级难题）上也一致提升——说明学到的是真本事，不是只会做数学。</li></ul><p>最反直觉的副发现，值得单独记一笔：<strong>老师越大越蠢（在"逐字教学"这件事上）。</strong> 我们的常识是"请最强的模型当老师肯定最好"，这篇证明恰恰相反——235B 那个最强老师，逐字打分有一半是错的、98% 的词无脑打负分。因为它离学生太远，看什么都觉得"不对"。<strong>"用最大的模型当老师"这条几乎所有人默认的做法，在逐字蒸馏这里是错的。</strong></p><h2 id="s9">7. 内核</h2><p><strong>一大类"大模型手把手教小模型"的方法，可能根本没在教。让小模型变强的，是它自己把没把握的话删掉——一种自我打磨。老师（乃至奖励信号）常常只是个触发器，甚至是个吵闹的中间商。一旦你看穿真正的机理是"压掉高熵岔路口的尾巴词"，你就能不用老师、只用模型自己的犹豫度，把这件事做得更好、更便宜。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读三层）</h1><p><strong>第一层——它在改写谁：on-policy distillation（在线蒸馏）本身。</strong> 这套方法 2025 年由 Thinking Machines Lab（Kevin Lu 那篇被广泛传播的博客 "On-Policy Distillation"）复刻 Qwen3 的配方带火，定位是"比 RLVR 便宜、比传统离线蒸馏更贴合学生自己的分布"的稠密后训练法，一年内衍生出一堆 "Rethinking / Revisiting / Entropy-Aware OPD" 的跟进工作（社区已有 awesome-on-policy-distillation 清单在追它的失败模式：不稳定、多样性塌缩、分词器不匹配）。这篇不是又提一个改进，而是回头质疑整条路的<strong>因果解释</strong>——"老师在传授知识"这个大家默认的故事是假的。</p><p><strong>第二层——它站在谁肩上：高熵"分叉词"驱动推理这条线。</strong> 2025 年那篇 "Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning"（arXiv 2506.01939，NeurIPS 2025，Qwen 的 Shenzhi Wang 等）发现：一条推理链里只有约 20% 的高熵词（"分叉词"）几乎贡献了 RLVR 的全部收益，其余 80% 低熵词训了反而掉分。OPSA 那条"随熵自适应、越犹豫压得越狠"的公式，就是这条洞见的直接后代——只不过它用"压尾巴"的方式，把火力对准了同一批高熵岔路口。</p><p><strong>第三层——底下那股暗流：后训练到底是"注入新知识"还是"擦亮已有的能力"。</strong> 这是台账里反复出现的母题：从 [[2026-07-15--direct-opd|Direct-OPD]]、[[2026-07-18--seed-self-evolving-distillation|SEED 自进化蒸馏]]、[[2026-07-24--swe-pruner-pro|SWE-Pruner「模型自己早就知道」]]、到 [[2026-07-22--understanding-reasoning-pretrain-posttrain|理解推理：从预训练到后训练]]、再到 [[2026-08-29--ttpo-labelfree-test-time|TTPO 无标签测试时训练]]——一条越来越清晰的暗线是：<strong>很多后训练（RL / 蒸馏）的收益，可能主要是在"唤醒并锐化模型预训练时就已潜藏的能力"，而不是从外部灌进新东西。</strong> 这篇是这条暗线上一个特别锋利、特别可证伪的机理证据：连"老师逐字教"这么像"外部注入"的场景，扒开看也是学生在自我锐化。</p><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这一步，模型进化往哪挪了</h2><p>前沿反复在确认一件反常识的事：<strong>"后训练让模型更聪明"，很多时候不是"给它灌新知识"，而是"在它自己犹豫的决策点上，把分布锐化一下"。</strong> 奖励也好、老师也好，常常只是个扳机，真正的能量来自模型内部本就有的分布。这篇把这条认知推到一个很硬的边界——连"大模型逐字教小模型"这种最像"传道授业"的设定，机理上也是学生在删自己的口误。你以后再读到任何"我们用 RL / 蒸馏把模型顶上去了"，都该多问一层：<strong>它是真学到了新东西，还是把本来就会、只是没把握的东西锐化出来了？</strong> 这个追问，会让你对"模型能力从哪来"的判断，比大多数人深一层。</p><h2 id="s13">怎么用（提示词 &amp; 京小贝）</h2><p><strong>1. 判断"蒸馏/大老师"的成本叙事——最直接的弹药。</strong> 以后有供应商跟你说"我们从一个更大的模型蒸馏出这个便宜小模型，效果几乎追平"，你心里要有这篇当尺子：<strong>小模型的那部分提升，很可能是它自我打磨就能拿到的，那个"大老师"的溢价可能被高估了。</strong> 更进一步——"用最大的模型当老师最好"这条直觉在逐字蒸馏里是错的（老师越大逐字打分越吵）。这直接影响你对"要不要为更大的教师模型/更贵的蒸馏管线付钱"的判断：先问对方，收益到底来自老师的知识，还是来自"压低尾巴"这件不用老师也能干的事。</p><p><strong>2. reasoning 能力长在"高熵岔路口"——提示词的机理靠山。</strong> 这篇最可迁移的一个原子认知是：<strong>模型的推理本事，集中兑现在那些它最犹豫的分叉位置</strong>（要往哪个方向想的一瞬间）。这解释了为什么"让它先想再答、别逼它一上来就给结论"（think step by step、先列选项再定）真的有用——你是在给它保留在岔路口从容选择的空间；也解释了为什么把提示词模板卡得太死、逼它早早收敛，反而会掐掉它在关键岔路的推理。（诚实说：这是从训练机理外推到提示的启发，不是论文直接结论；但方向是稳的——决策关口给空间，别在高熵处硬压。）</p><p><strong>3. 便宜的强推理，比"必须靠大老师"的叙事更可得。</strong> 一个 1.7B 的小模型，只靠"用自己的熵压尾巴"，AIME24 就能从 13 分冲到 49 分。对京小贝这种要控成本、又想要靠谱推理的产品，这是个乐观信号：<strong>小模型的推理天花板，可能被"你得蒸馏个大老师"的主流说法压低了</strong>。选型时值得把"经过这类自适应后训练的小模型"也放进候选，别默认只有大模型能推理。</p><p><strong>4. 一个方法论的迁移：先核对"老师/奖励"本身对不对，再信它。</strong> 这篇最聪明的动作，是拿铁事实（标准答案）去核对"指导信号"本身的可靠性，结果发现指导有一半是噪声。这个动作可以搬到你的产品评估里：<strong>任何一个你用来"教"或"打分"模型的信号（人工标注、规则、评委模型），先反过来验证它自己准不准，再决定要不要信它。</strong> 很多时候你以为在"用高质量信号训练/评估"，其实那个信号本身就吵。</p><h2 id="s14">诚实标注</h2><ul class="ls"><li>这是<strong>行为层 + 训练动力学层</strong>的实证（噪声率、消融、固定优势值替换），不是打开神经元看内部电路的机理证明；"OPD ≈ 自我锐化"是强有力的机理性解释，但作者主要靠"替换实验证明老师可被常数替代"来支撑，属于机制推断而非因果电路。</li><li>模型规模集中在 1.7B–9B 的 Qwen3 系列，是否在几百 B 的大模型上同样成立，论文没证。</li><li>发表约 2 天，Semantic Scholar 早期引用未取证（接口 429 限流；新论文引用≈0 属正常）。信号偏学术（普渡单一高校组），不是工业大厂背书——但榜单认证（HF 当日 #1）和机理锋利度足够硬。</li></ul><hr class="rule"><h1 id="s15">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2608.31046">https://arxiv.org/abs/2608.31046</a> （PDF：<a class="src" href="https://arxiv.org/pdf/2608.31046">https://arxiv.org/pdf/2608.31046</a> ｜ HTML：<a class="src" href="https://arxiv.org/html/2608.31046v1">https://arxiv.org/html/2608.31046v1</a>）</li><li>HuggingFace Daily 2026-09-01 榜单（#1，88 赞）：<a class="src" href="https://huggingface.co/papers/date/2026-09-01">https://huggingface.co/papers/date/2026-09-01</a></li><li>作者 Ruqi Zhang（Purdue CS）：<a class="src" href="https://www.cs.purdue.edu/people/faculty/ruqiz.html">https://www.cs.purdue.edu/people/faculty/ruqiz.html</a> ｜ <a class="src" href="https://ruqizhang.github.io/">https://ruqizhang.github.io/</a></li><li>溯源一层 · On-Policy Distillation（Thinking Machines Lab, Kevin Lu, 2025）：<a class="src" href="https://thinkingmachines.ai/blog/on-policy-distillation/">https://thinkingmachines.ai/blog/on-policy-distillation/</a></li><li>溯源二层 · Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective RL（arXiv 2506.01939, NeurIPS 2025）：<a class="src" href="https://arxiv.org/abs/2506.01939">https://arxiv.org/abs/2506.01939</a></li><li>OPD 跟进工作清单（失败模式/成功条件）：<a class="src" href="https://github.com/chrisliu298/awesome-on-policy-distillation">https://github.com/chrisliu298/awesome-on-policy-distillation</a></li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
