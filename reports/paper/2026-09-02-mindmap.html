@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大模型教小模型的真相：自我锐化，非传道授业 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026.09.02</span></div>
+  <div class="bar"></div>
+  <h1>大模型教小模型的真相：自我锐化，非传道授业</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>20</b> 个知识点 — 结构由 NotebookLM 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">现象与困境</div><ul><li><div class="n2" style="--c:#E63312">On-Policy Distillation (OPD)：老师逐字打分、学生照做</div><ul><li><div class="n3">小模型自己写答案，大老师对每个词评打正负优势值</div></li></ul></li><li><div class="n2" style="--c:#E63312">隐形假设从未验证</div><ul><li><div class="n3">所有人默认老师在&quot;教&quot;，但老师对非自己风格的句子打分本身靠谱吗</div></li></ul></li></ul></li><li><div class="n1" style="--c:#10395E">核心发现：老师其实很吵</div><ul><li><div class="n2" style="--c:#10395E">逐字打分大量出错</div><ul><li><div class="n3">4B老师30.6%噪声、30B老师34.7%、235B老师50.6%（最强反而最吵）</div></li><li><div class="n3">235B无脑对98%词打负分，是在说&quot;你写的和我不一样&quot;而非&quot;这词错了&quot;</div></li></ul></li><li><div class="n2" style="--c:#10395E">去噪实验推翻了&quot;老师在教&quot;</div><ul><li><div class="n3">去掉噪声训练和保留噪声训练，学生最终成绩几乎相同</div></li><li><div class="n3">说明老师的复杂打分信号根本没被学生用上</div></li></ul></li></ul></li><li><div class="n1" style="--c:#9E2B22">真正起作用的机理</div><ul><li><div class="n2" style="--c:#9E2B22">低概率词是全部答案</div><ul><li><div class="n3">学生自己犹豫（低概率）的词才是训练真正对着的目标</div></li></ul></li><li><div class="n2" style="--c:#9E2B22">固定常数击败复杂打分</div><ul><li><div class="n3">对最低概率20%的词固定给-0.5负值，效果与逐字优势值相同</div></li><li><div class="n3">说明&quot;老师的智慧&quot;可被&quot;一条常数&quot;替代，根本没老师什么事</div></li></ul></li></ul></li><li><div class="n1" style="--c:#3E5C2E">OPSA：不用老师的自适应压低</div><ul><li><div class="n2" style="--c:#3E5C2E">核心：随熵自适应的负优势值</div><ul><li><div class="n3">所有词都压一点，但高熵岔路口压得最狠</div></li><li><div class="n3">熵高=模型犹豫=决策分叉点，压低那些没把握的尾巴选项</div></li></ul></li><li><div class="n2" style="--c:#3E5C2E">锐化而非塌缩</div><ul><li><div class="n3">在关键决策点收敛概率到靠谱主力候选，保留多样性不死板</div></li></ul></li></ul></li><li><div class="n1" style="--c:#6B4A8E">实验结果：小模型不再需要大老师</div><ul><li><div class="n2" style="--c:#6B4A8E">1.7B模型AIME24数学竞赛</div><ul><li><div class="n3">OPD版13.44分 → OPSA版48.85分，涨263%（35.41分绝对值）</div></li><li><div class="n3">不仅超越用老师的OPD（高16.77分），还在HMMT上涨307%</div></li></ul></li><li><div class="n2" style="--c:#6B4A8E">跨领域跨模型一致性</div><ul><li><div class="n3">4B模型涨38.75分、9B模型涨11.46分，数学、代码、问答全面改善</div></li><li><div class="n3">反证：学到的是真本事，不是数学题特有的模式</div></li></ul></li></ul></li><li><div class="n1" style="--c:#8A6D1F">后训练本质与蒸馏重评</div><ul><li><div class="n2" style="--c:#8A6D1F">后训练≈锐化已有能力，非注入新知识</div><ul><li><div class="n3">小模型预训练时就有，后训练只是在犹豫的岔路口更狠地删掉口误</div></li><li><div class="n3">奖励、老师常是触发器而非知识源</div></li></ul></li><li><div class="n2" style="--c:#8A6D1F">打破&quot;最大老师最好&quot;的直觉</div><ul><li><div class="n3">235B老师逐字打分50%噪声，不是最好而是最吵的中间商</div></li><li><div class="n3">蒸馏成本叙事需重塑：不确定老师溢价是否真实</div></li></ul></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: NotebookLM</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
