@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28360%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2222%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2242%22%20r%3D%2213%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让同一叠层多走一遍——在"预算完全对齐"下证明"循环深度"是省算力的真架构，而不是偷偷多花算力</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-03</span></div>
+  <h1 class="doc">让同一叠层多走一遍——在"预算完全对齐"下证明"循环深度"是省算力的真架构，而不是偷偷多花算力</h1>
+  <div class="dateline"><span>全文 <b>3,943</b> 字</span><span>约 <b>10</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">SMELT: Scaling Laws for Compute-Matched MoE Looped Transformers</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2609.01343</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Shaowen Wang, Ge Zhang, Kairong Luo, Yuhao Wu, Shaofan Liu, Jiaheng Liu, Wenhao Huang, Shen Yan, Jian Li</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">ByteDance Seed（含高校合作者）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-01</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-03.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-03.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily 2026-09-02 批次 #3 · 68 赞（票数在其上的仅两篇且都是纯应用——教育学生模拟 391、自动驾驶 335，故本篇＝当日'能力机理'轴第一）· ByteDance Seed（Ge Zhang / Wenhao Huang / Jiaheng Liu 等）· 循环变换器 2025-26 撞车赛道（LoopLM、Loop the Loopies!、Residual Scaling of Looped 三组独立收敛＝真前沿佐证）· S2 尚无记录（发表≈2 天≈0 正常）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, scaling-laws, looped-transformer, moe, latent-reasoning, test-time-compute</span></div></div><div class="tools"><a class="btn hot" href="2026-09-03-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这对"模型进化逻辑"意味着什么</a><a class="t-h2" href="#s13">能怎么用（提示词 &amp; 京小贝产品判断）</a><a class="t-h2" href="#s14">诚实交底（边界）</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天选 <strong>SMELT</strong>，因为它把一个正在升温、但一直"证不实"的前沿方向第一次钉死了：<strong>循环变换器（looped transformer，同一叠网络层让数据来回走两遍，而不是只走一遍）到底是真本事，还是只是偷偷多烧了算力？</strong></p><ul class="ls"><li><span class="lk">它推进了什么</span>过去所有说"循环有用"的论文，都是在"模型大小一样"下比的——但循环会让每个字多算一遍，等于悄悄多花了算力（FLOPs，处理一个字要做多少次乘加运算）。ByteDance Seed 这篇做了最狠的对照：<strong>每字算力、参数总量、KV 缓存（推理时占显存最多的东西）三样全部严格对齐</strong>，在这种"一分钱便宜都不许占"的条件下，循环依然赢——省 6.8%–18% 训练算力，且优势在代码任务、长文本、多示范样例上最大。它还给出了机理解释（第二遍会堵住"注意力黑洞"）。这就把"循环深度"从玄学变成了一条<strong>可测量、可外推的新 scaling 轴</strong>。</li><li><span class="lk">命中的质量信号</span>HuggingFace Daily 2026-09-02 批次第 3 名、68 赞（比它票高的两篇 StudentSim 391、Qwen-Drive 335 都是纯应用，本篇是当天"能力机理"赛道最高）；来自 ByteDance Seed 这样的前沿实验室；而且同期至少三组人马（LoopLM、"Loop the Loopies!"、"Residual Scaling of Looped Transformers"）独立往"循环+MoE"这个方向收敛——<strong>多组撞车，正是真前沿的标志</strong>。</li><li><span class="lk">对思染追前沿的价值</span>这是"模型怎么变强"最本质的资源问题。除了"把模型做大"（宽度/参数）和"喂更多数据"，现在冒出<strong>第三个旋钮：让模型对同一份表示多算几遍（深度复用 / latent 潜空间里的反复思考）</strong>。它跟你熟的"思维链 / test-time compute（推理时多花算力）"是同一家人，但做进了架构里、永远在线。读完你会对"下一代模型凭什么在同样成本下更会推理"多一层手感——而且能直接落到提示词（示范样例、长上下文）和产品成本判断（KV 缓存）。</li></ul><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>一叠标准的 Transformer 层，和一个念头：<strong>能不能让数据在同一叠层里来回走两遍，用"多算一遍"换"更会想"，而不是傻乎乎地再堆更多层、买更多参数？</strong> 这个念头叫<strong>循环变换器（looped transformer）</strong>——把同一套零件（同一批网络层的参数）重复用两次。研究者想知道：这到底值不值。</p><h2 id="s4">2. 困境</h2><p>麻烦在于<strong>没人把这笔账算干净过</strong>。你让一叠层多走一遍，天然就多做了一遍乘加运算——每个字的算力（FLOPs）涨了。于是所有"循环有用"的实验都有个洗不掉的嫌疑：<strong>它赢，到底是因为"来回走两遍"这个结构真的聪明，还是仅仅因为它偷偷多花了算力？</strong> 只要不把算力摁住来比，这个问题就永远悬着。而这不是学究抠字眼——它决定一件大事：<strong>如果循环只是"多花算力换成绩"，那不如老老实实把这份算力拿去做更大的模型；只有当循环在"一分钱不多花"的条件下还赢，它才配当一条新的架构路线。</strong></p><h2 id="s5">3. 旧路</h2><p>过去主要两条老路，都不够：</p><ul class="ls"><li><strong>老路 A：把模型做大。</strong> 参数越多越强，但成本、显存跟着涨。近几年靠 <strong>MoE（Mixture-of-Experts，专家混合：一层里塞很多个"专家"小网络，每个字只激活其中几个）</strong> 缓解了一点——参数总量可以很大，但每个字只用一小撮专家，所以"胖但省电"。可 MoE 加的是<strong>宽度</strong>（更多并行容量／记忆），不直接给你<strong>更深的一步步推演</strong>。</li><li><strong>老路 B：循环，但比得不公平。</strong> 之前的循环研究大多在"模型大小一样"下比，等于默认放行了循环偷来的那点额外算力。所以结论总是"看起来有用"，但没人敢说它在真实预算下也划算。</li></ul><p>一句话：一边是"只会变宽不会变深"，一边是"变深了但赖账不认多花的钱"。</p><h2 id="s6">4. 转折</h2><p>作者的关键转念是：<strong>别再比"模型多大"，改成把三样预算全焊死了比。</strong> 具体焊死三样——</p><ol class="ls"><li><strong>每字算力（per-token FLOPs）</strong>：处理一个字要做多少次乘加，两个架构必须几乎一样（控在 ~4% 以内）。</li><li><span class="lk">参数总量（非嵌入参数）</span>循环那半截层被复用了，省下的参数额度必须还回去（控在 ~1% 以内）。</li><li><span class="lk">KV 缓存</span>生成时每个读过的字都要缓存一份"键/值"避免重算，这是<strong>推理时吃显存最多的东西、服务成本的大头</strong>——也必须对齐（~4% 以内）。</li></ol><p>只有这三样全一样，比出来的差别才干净地归给"架构本身"。这一步等于把裁判的秤校到零误差，再让两个选手上台。</p><h2 id="s7">5. 解法</h2><p>在这个苛刻天平上，作者试出一个配方，取名 <strong>SMELT</strong>（Sparse MoE Transformer, middle layers <strong>L</strong>oop <strong>T</strong>wice——稀疏专家变换器，中间那半截层循环两遍）：</p><ul class="ls"><li><strong>只循环中间那一半层，走两遍（r=2）</strong>。为什么是中间、为什么只两遍：中间层负责的是"把信息揉来揉去"的核心加工，最值得多算一遍；开头（识字）和结尾（出答案）循环收益低。走两遍够本，走三四遍性价比掉下来。</li><li><span class="lk">怎么把预算还回去</span>既然复用了半截层、省了参数，就(a) 把隐藏维度 H 收窄一点，把每字算力压回基线；(b) 多加几个专家，把收窄丢掉的参数补回来；(c) 调头的大小和 GQA 共享比例，让 KV 缓存不涨；(d) 循环那段里每次残差更新按 1/r 缩放，免得"走两遍"把信号累加爆掉。——一整套精算，就为守住"三样全等"。</li><li><span class="lk">怎么量化输赢</span>给基线和 SMELT 各自拟合一条 <strong>Chinchilla scaling law（DeepMind 2022 的经验公式：固定算力预算下，损失会降到多少、参数和数据怎么配比最优；好处是能外推"再多花 10 倍算力损失降多少"）</strong>。比的是两条曲线谁更陡——曲线的陡峭程度叫<strong>前沿指数 γ，γ 越大，同样多花算力、损失掉得越快</strong>。</li></ul><h2 id="s8">6. 结局</h2><p>在"一分钱便宜都没占"的前提下，SMELT 依然全面赢，而且赢在意味深长的地方：</p><ul class="ls"><li><span class="lk">省算力</span>前沿指数 γ 从基线 0.237 抬到 0.250——损失随算力掉得更快，<strong>在计算最优前沿上省 6.8%–18% 的训练算力</strong>（算力越大省得越多，外推到更大规模可到 ~20%+）。</li><li><span class="lk">下游比"损失"预测的还好</span>验证损失只降一点，但真实任务上赢更多——<strong>"下游优势超出验证损失能解释的部分，而且模型越大这超出越大"</strong>。最猛的是<strong>代码（Code）任务，省约 20.4% 算力</strong>，数学/理科、金融次之。</li><li><span class="lk">两个反直觉副发现（最有意思）</span><ul class="sub"><li><strong>优势随"文本更长、示范更多"放大。</strong> 在最长的几档文档上，SMELT 的收益是最短档的 <strong>1.52 倍</strong>（而单纯堆参数几乎是 1.0 倍，不放大）；示范样例从 0 个加到有示范，领先从 0.9 个百分点拉到 1.9 个百分点，一直撑到 8 个示范。<strong>也就是说：越是要"读很多、参照很多例子再动脑"的场景，多走一遍越值。</strong></li><li><strong>机理：第二遍堵住了"注意力黑洞"。</strong> 模型有个坏毛病叫 <strong>attention sink（注意力黑洞）</strong>：不管内容是什么，都把一大坨注意力倒给开头第一个字，当"泄压阀"用（StreamingLLM 那篇 2023 年发现的）。SMELT 发现——<strong>第二遍走的时候，这个黑洞几乎消失，注意力被重新导向真正相关的内容字</strong>。而且很妙：两遍看的字几乎一样、Query/Key 也几乎没变，<strong>变的是 Value</strong>——说明第二遍不是推倒重来，是在第一遍的基础上"精修一遍、把注意力从垃圾桶挪回正题"。这很可能就是它更会"看例子学"（in-context learning）的物理原因。</li></ul></li></ul><h2 id="s9">7. 内核</h2><p><strong>"变强"不止"变大"这一条路。</strong> 让同一叠层对同一份表示多算一遍（深度复用 / 在潜空间里反复想一遍），是一条<strong>在严格预算下依然划算的独立 scaling 轴</strong>；它和 MoE（变宽）不冲突，可以叠着用。而且它天生偏爱那些"要读很多、参照很多、一步步推演"的任务——这恰恰是当下最想要模型变强的地方。带走一句话：<strong>下一代模型会越来越多地把算力花在"对同一份内容多想几遍"，而不只是"塞进更多参数"。</strong></p><hr class="rule"><h1 id="s10">来龙去脉（倒读 3 层）</h1><p><strong>第 1 层——它在改进谁：</strong> 直接对手是 <strong>2025–2026 这一整条"循环语言模型"河</strong>。近一年至少三组人在推：</p><ul class="ls"><li><strong>LoopLM / "Scaling Latent Reasoning via Looped Language Models"（2025-10）</strong>——用循环让 1.4B/2.6B 小模型追平 4B/8B，主打"潜空间里的推理"；</li><li><strong>"Loop the Loopies!"（2607.16051）</strong>——明确提出"循环架构必须能和 MoE 一起 scale，不能只在稠密模型上玩"；</li><li><strong>"On the Residual Scaling of Looped Transformers"（2606.18524）</strong>——研究循环时残差怎么稳。</li></ul><p>SMELT 的独特贡献＝<strong>第一个把"每字算力＋参数＋KV 缓存"三样全焊死、在 MoE 上做完整 scaling law 对照</strong>，一举回答了这条河一直没证实的问题："循环是真架构优势，还是只是多花算力？"——<strong>多组独立撞向同一方向，本身就是"这是真前沿"的强佐证。</strong></p><p><strong>第 2 层——更上游的两个根：</strong></p><ul class="ls"><li><strong>循环这个念头本身</strong>来自 <strong>Universal Transformers（Dehghani 等 2018/2019）</strong> 和 <strong>ALBERT 的跨层参数共享</strong>——"把同一叠层重复用"是老想法，但当年缺算力预算学、缺 MoE、缺严格的对照方法论，没长成。</li><li><strong>量尺</strong>来自 <strong>Chinchilla scaling law（Hoffmann 等 2022）</strong>——正是"固定算力最优配比"这套方法论，让今天能把"循环省了多少算力"精确到百分之几并外推。</li></ul><p><strong>第 3 层——根上的那个问题：</strong> 整条河的根，是前沿最核心的资源账——<strong>怎么用同样多的算力买到更多能力？</strong> 只有两个大旋钮：<strong>把模型做大（宽度／参数，MoE 是省电版），或让它对同一份内容想得更久（深度／每字多算）。</strong> 你熟的<strong>思维链（chain-of-thought）/ test-time compute</strong> 是把"多想"摊在 token 序列上（横着来回，用文字草稿反复想）；<strong>循环是把"多想"摊在表示层里（竖着来回，在潜空间里反复想）</strong>。SMELT 证明了这条"竖着多想"的路，即便把算力摁死也有更好的 scaling 指数，且恰好在需要推理和看例子的地方最灵——<strong>这就是"模型进化"往深度／潜空间推理这一侧又实打实挪了一步。</strong></p><blockquote><p>呼应台账：与近期架构/推理线相连——[[2026-09-01--swa-beats-linear-attention]]（注意力机制的取舍）、[[2026-08-16--full-bandwidth-transformer]]（信息带宽）、[[2026-08-13--bdh-cq-recurrent-latent-reasoning]]（循环潜空间推理，与本篇同一"潜空间反复想"家族）；也与 test-time compute / 自我改进那条河（[[2026-08-29--ttpo-test-time-policy-optimization]] 等）在"把算力花在多想一步"上同源，只是 SMELT 把它做进了架构而非推理时。</p></blockquote><hr class="rule"><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">这对"模型进化逻辑"意味着什么</h2><ul class="ls"><li><strong>多了一个 scaling 旋钮，而且被证明"真省钱"。</strong> 以前你脑子里模型变强的账本大概是"更大 + 更多数据"。现在加一条：<strong>深度复用（同一叠层多走一遍 / 潜空间里反复想）</strong>，在严格预算下就是更划算，还能和 MoE 叠着用（宽 × 深）。前沿正在从"堆参数"转向"同样成本下让模型对同一份内容多想几遍"。</li><li><strong>它和"推理/思维链"是一家人，但更底层。</strong> 思维链是推理时用文字草稿多想（横向、看得见、按 token 计费）；循环是架构里天生多想（纵向、在潜空间、按每字算力计费、永远在线）。理解这一点，你就能看懂未来模型"更会推理"可能来自两处：显式的 test-time compute，和隐式的架构级循环——<strong>很可能两者会合流</strong>。</li></ul><h2 id="s13">能怎么用（提示词 &amp; 京小贝产品判断）</h2><ol class="ls"><li><strong>示范样例的价值可能是"超线性"的，且与架构有关。</strong> SMELT 最硬的发现之一：<strong>优势随"示范更多、上下文更长"放大</strong>（长文档 1.52×，示范从 0→有让领先翻倍）。落到你的提示词：<strong>别吝啬 in-context 示范和结构化长上下文</strong>——在具备强潜空间推理能力的新模型上，多给几个"输入→输出"对照、多喂相关材料，回报不是线性叠加而是被架构放大。反过来，评估一个新模型强不强，可以专门测"加示范/加长上下文时它涨得快不快"。</li><li><strong>越"要一步步推演"的任务，越吃这条红利。</strong> 收益最大在<strong>代码、数学、结构化解析</strong>（括号匹配那类）。京小贝里凡是<strong>多步推理、结构化流程、需要"读一堆再算"的任务</strong>（风控规则链、额度测算、多条件资质判断），最该优先上具备循环深度的模型，性价比杠杆最大。</li><li><strong>"注意力黑洞"给提示词一个反直觉提醒。</strong> 模型会把一坨注意力无脑倒给开头第一个字（泄压阀）。这解释了为什么<strong>单纯把重要信息堆在最前面并不总灵</strong>——开头的注意力被这个黑洞扭曲了。SMELT 的"第二遍精修、把注意力从垃圾桶挪回正题"也侧面印证了一个实操直觉：<strong>让模型"再看一遍/复述关键约束再作答"往往能提升 grounding（贴着材料答）</strong>，因为它模拟了那"第二遍"的注意力重定向。</li><li><strong>成本/服务判断：循环是"不涨显存也能变强"的招。</strong> SMELT 全程焊死 <strong>KV 缓存</strong>——它涨的是每字算力（可控、可批处理摊薄），不涨那个最贵的显存缓存。对产品成本决策的启发：<strong>评估一个模型贵不贵，别只看参数量，要分开看"每字算力"和"KV 缓存"</strong>；循环这类架构是"在不撑爆显存的前提下买质量"，在长上下文、高并发的 to-C 场景（京小贝对话）里，这正是成本最敏感的那根弦。</li></ol><h2 id="s14">诚实交底（边界）</h2><ul class="ls"><li>实验规模到 <strong>54B 非嵌入参数（四档 MoE，稀疏度约 85%–97%）</strong>、单一内部语料，<strong>没验到千亿级前沿</strong>；再大规模的省算力数字是外推，置信区间会变宽。</li><li>"第二遍堵注意力黑洞"是在小样本上的机理观察，是<strong>很有说服力的相关性解释，不是因果铁证</strong>——可搬走的是"深度复用会重定向注意力"这个心智模型，不是把某个数字当定律。</li><li>最难那一档数据上省算力出现了未解释的反转，作者自己承认没说清——<strong>方向确凿，细节仍在长。</strong></li></ul><hr class="rule"><h1 id="s15">来源</h1><ul class="ls"><li>论文原文（arXiv abs）：<a class="src" href="https://arxiv.org/abs/2609.01343">https://arxiv.org/abs/2609.01343</a></li><li>论文 HTML 全文（配方/scaling law/机理细节）：<a class="src" href="https://arxiv.org/html/2609.01343">https://arxiv.org/html/2609.01343</a></li><li>信号佐证 · HuggingFace Daily Papers（2026-09-02 批次，#3 · 68 赞）：<a class="src" href="https://huggingface.co/papers/2609.01343">https://huggingface.co/papers/2609.01343</a> ；ByteDance Seed 提交：<a class="src" href="https://huggingface.co/ByteDance-Seed">https://huggingface.co/ByteDance-Seed</a></li><li>研究河佐证 · 循环语言模型撞车：LoopLM《Scaling Latent Reasoning via Looped Language Models》 <a class="src" href="https://arxiv.org/html/2510.25741v1">https://arxiv.org/html/2510.25741v1</a> ；《Loop the Loopies!》 <a class="src" href="https://arxiv.org/html/2607.16051">https://arxiv.org/html/2607.16051</a> ；《On the Residual Scaling of Looped Transformers》 <a class="src" href="https://arxiv.org/html/2606.18524">https://arxiv.org/html/2606.18524</a></li><li>上游脉络：Universal Transformers（Dehghani 2018/2019）；Chinchilla scaling law（Hoffmann 2022）；attention sink（StreamingLLM, Xiao 2023）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
