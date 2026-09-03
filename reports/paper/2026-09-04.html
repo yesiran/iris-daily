@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28211%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2225%22%20r%3D%229%22%20fill%3D%22%23fff%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2223%22%20cy%3D%2211%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.24%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型其实早知道自己该看哪儿——把"省注意力"从外部猜测，改成让模型在思考里自己声明</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-04</span></div>
+  <h1 class="doc">模型其实早知道自己该看哪儿——把"省注意力"从外部猜测，改成让模型在思考里自己声明</h1>
+  <div class="dateline"><span>全文 <b>4,599</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Language Models Can Control Their Own Attention</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v">2609.02737</span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Namgyu Ho, Huzama Ahmad, Woosung Koh, Se-Young Yun (KAIST AI); Tal Schuster, Cicero Nogueira dos Santos (Google DeepMind, 通讯)</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">KAIST AI × Google DeepMind</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-02</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-04.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-04.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 2026-09-03 上榜（~47 赞）· KAIST AI × Google DeepMind · 零训练即可用（off-the-shelf 模型）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, architecture, attention, efficiency, long-context, sparse-attention, interpretability, test-time</span></div></div><div class="tools"><a class="btn hot" href="2026-09-04-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角</a><a class="t-h2" href="#s4">2. 困境</a><a class="t-h2" href="#s5">3. 旧路</a><a class="t-h2" href="#s6">4. 转折</a><a class="t-h2" href="#s7">5. 解法</a><a class="t-h2" href="#s8">6. 结局</a><a class="t-h2" href="#s9">7. 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读溯源 · 3 层）</a><a class="t-h1" href="#s11">对思染:模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">这一步往哪进化了</a><a class="t-h2" href="#s13">能怎么用(落到你的提示词和京小贝)</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><p>今天这篇 <strong>《Language Models Can Control Their Own Attention》（Declarative Attention，简称 DA）</strong> 之所以值得你点开，是因为它在一个我们已经追了两个月的老问题上，掀开了一条全新的路子：<strong>让长上下文变便宜</strong>——但它的走法跟我们之前讲过的都不一样。</p><ul class="ls"><li><span class="lk">它推进了什么机理</span>过去让注意力"省着算"的所有办法，都是在模型<strong>外面</strong>加一个工具去猜"这一步该看哪几段"。这篇的洞见反过来——<strong>模型自己其实早就知道该看哪儿</strong>（它的注意力本来就只集中在极少数词上），那就别让外部工具去猜，直接<strong>让模型在它的思考文字（chain-of-thought）里把"我现在要看哪一块"说出来</strong>，推理引擎照着这句话去跳过其余的缓存。这是把"稀疏注意力"从<strong>外部近似</strong>变成<strong>模型自述</strong>，作者称之为"注意力的一条新轴"（a new axis of sparse attention）。</li><li><span class="lk">命中的质量信号</span>登上 HuggingFace Daily Papers（2026-09-03，约 47 赞）；作者来自 <strong>KAIST AI 与 Google DeepMind</strong>（通讯作者 Cicero Nogueira dos Santos、Tal Schuster 都是 DeepMind 做长上下文/检索的资深研究员）。upvotes 不算爆表，但这篇是<strong>机理型</strong>而非刷分型——正好是本档追的"能力/机理往前拱"，不是"把已知能力用得更好"。</li><li><span class="lk">对你追前沿的价值</span>这篇几乎是为"提示词工程师"量身定的一课。它证明了一件事——<strong>你在提示里怎么组织信息、让模型显式声明它要关注哪一块，会直接改变模型真实读取了多少上下文、以及它读得准不准</strong>。而且它零训练、直接在现成的 Gemma / Qwen 上就能跑出来，意味着这套"让模型自报注意力"的思路，今天就能变成你写提示词的一种结构。</li></ul><p>诚实交代：这是滚动日选里从 2026-09-03 的 HF 榜挑的，窗口很新（论文 9 月 2 日刚挂出）。upvotes 不是当日最高（当日最高是 357 赞的 Repo-To-Skill，但那篇按其自己的说法是"把 GitHub 仓库蒸馏成技能库"的工程流水线，属于本档反面清单里的"纯工程/应用"，故不选它）。DA 的分量在机理，不在热度。</p><hr class="rule"><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角</h2><p>一个正在跟你聊长对话的大语言模型。它面前摆着一份<strong>超长的上下文</strong>——可能是 100 万个词的对话历史、一整个代码仓库、一摞财报。你现在问它："我们前面提到的那个成立年份是多少？"</p><h2 id="s4">2. 困境</h2><p>要回答这一句，模型得付出一笔<strong>大得离谱、而且完全隐形的账</strong>。</p><p>先把一个词落地：<strong>KV cache（键值缓存）</strong>。模型每读过一个词，都会给这个词算出一份"随身档案"存下来——档案里记着"这个词是什么、它跟前面哪些词有关系"。100 万个词的对话，就是 100 万份档案堆在那儿。</p><p>再落地<strong>全局注意力层（global attention）</strong>：模型每要吐出<strong>一个</strong>新字，标准做法是把这 100 万份档案<strong>从头到尾翻一遍</strong>，算一遍"这次我该重点看哪几份"，然后才决定下一个字。注意——是<strong>每吐一个字</strong>都要把全部档案翻一遍。回答里有 200 个字，就是把 100 万份档案翻了 200 遍。</p><p>这个"翻一遍全部"的工作量，学术上写成 <strong>O(N)</strong>：N 是档案数量，翻一遍的力气跟 N 成正比；上下文越长，每个字越慢、越贵、越耗显存。这就是长上下文一直贵、一直慢的病根。</p><p>而最扎心的地方在于：模型<strong>真正用到的</strong>其实只有那少数几份档案（比如"Acme 公司 2011 年成立"那一段）。它翻了 100 万份，只为找出那 3 份。<strong>99.99% 的力气是白费的。</strong></p><h2 id="s5">3. 旧路</h2><p>大家当然早就想省这笔钱，方向都是"别每次都翻全部，只翻相关的几份"——这类办法统称<strong>稀疏注意力（sparse attention）</strong>。但"哪几份相关"你得先知道，于是分两代旧路：</p><ul class="ls"><li><span class="lk">第一代·静态拍脑袋</span>用固定规则猜。比如 StreamingLLM 只保留"最开头几份 + 最近几份"，H2O（Heavy-Hitter Oracle）保留"历史上被关注最多的几份"。问题：这些规则<strong>跟你这次问什么无关</strong>。你问的细节要是恰好在中间、又不是热门词，就被丢了 → 答错。</li><li><span class="lk">第二代·外部打分器</span>训一个便宜的小工具，每一步<strong>先快速扫一遍全部档案、给每份粗略打个相关分</strong>，挑高分的翻（Quest、DeepSeek 的原生稀疏注意力等属于这代，也是我们 6 月讲过的 [[2026-06-10--flashmemory-lsa]] 那条线）。它比拍脑袋准多了。<strong>但有个绕不过去的死结</strong>：为了给全部档案打分，这个"扫一遍全部"本身<strong>还是 O(N)</strong>——你只是把"翻全部"换成了"扫全部再打分",每一步的全量代价并没有真正消掉。作者原话点破："this extrinsic scoring still incurs O(N) per step"（这种外部打分每一步仍然是 O(N)）。</li></ul><h2 id="s6">4. 转折</h2><p>作者问了一个近乎天真、却一剑封喉的问题：</p><blockquote><p><strong>"wouldn't the model already know which parts of the context are relevant?"</strong>
+（模型自己难道不是<strong>早就知道</strong>上下文里哪几块相关吗？）</p></blockquote><p>想想第二拍那个事实：模型的注意力本来就<strong>天然集中在极少数词上</strong>。既然它心里已经有数，那我们前面所有的功夫——训外部打分器、每步扫全部去逼近一张"该看哪儿"的掩码——<strong>都是在从模型的隐藏状态里去猜一个模型本来就知道的答案</strong>。</p><p>那就别猜了。<strong>直接让模型把答案说出来</strong>。</p><h2 id="s7">5. 解法</h2><p>这就是 <strong>Declarative Attention（声明式注意力，DA）</strong>：一套"让模型在自己的思考文字里，声明这一步要看哪块"的协议。零训练，现成模型直接用。</p><p><strong>先把长上下文切块、编号。</strong> 把上下文按约 2048 个词切成一段段"chunk（块）"，切的时候优先在自然边界下刀（段落 → 换行 → 句号 → 从句 → 词），每块给个编号。相当于给这 100 万词的档案库贴上"第 1 块、第 2 块……"的书签。</p><p><strong>再让模型在推理时用三种"标签"声明模式</strong>，写法像 XML、也像它平时调工具（tool call）时吐的结构化标记：</p><ul class="ls"><li><code>&lt;global&gt;…&lt;/global&gt;</code>——<strong>导航模式</strong>：这句话我要纵览全局，全部块都看。（用来"先扫一眼、定位到底该看哪块"。）</li><li><code>&lt;focus magic_chunks="2"&gt;…&lt;/focus&gt;</code>——<strong>聚焦模式</strong>：我只看第 2 块，其余一律不看。注意是<strong>按编号点名</strong>，不是按内容再搜一遍。</li><li><code>&lt;local&gt;…&lt;/local&gt;</code>——<strong>本地模式</strong>:上下文一块都不看，只顺着我自己刚写的输出往下算（比如做个纯算术：2011 − 2003 = 8）。</li></ul><p>一个真实例子长这样（模型自己吐出来的思考流）：</p><div class="codewrap"><pre><code>&lt;global&gt;我需要找到成立年份……&lt;/global&gt;
+&lt;focus magic_chunks="2"&gt;"Acme Corp 成立于……"&lt;/focus&gt;
+&lt;local&gt;2011 - 2003 = 8 年。&lt;/local&gt;</code></pre></div><p><strong>推理引擎顺着这句话跳过缓存。</strong> 引擎里有个"DA 状态机"，默认从 global 开始，一边读模型吐出的字、一边解析这些标签的模式切换——<strong>解析方式跟解析工具调用一模一样</strong>。一旦发现模型进了 <code>&lt;focus magic_chunks="2"&gt;</code>,它就在底层（vLLM 的 KV 缓存块表，粒度 16–32 个词一块）<strong>只保留第 2 块对应的缓存、把其余全部跳过不读</strong>。而且这套改写是嵌在标准高效内核（FlashAttention）之上的，所以省下来的是<strong>真金白银的读取量</strong>，不是账面数字。</p><p>一句话抓住内核：<strong>"By deriving the attention mask directly from the model's generated reasoning trace, rather than approximating it via hidden activations, our approach eliminates the selection cost entirely."</strong>（把"该看哪儿"的掩码<strong>直接从模型写出来的推理文字里读出来</strong>，而不是从隐藏激活里去近似它,于是那笔"挑选成本"被彻底消掉了。）——O(N) 的全量扫描只在模型<strong>主动声明 global</strong> 的少数几步才发生，不再是每一步的固定开销。</p><h2 id="s8">6. 结局</h2><p>在 <strong>15 个长上下文任务</strong>上（上下文长度从 6400 词一直到 107 万词，涵盖大海捞针、多文档问答、代码仓库问答、长对话历史、剧本填空等），<strong>零训练</strong>直接在现成模型上跑：</p><ul class="ls"><li><span class="lk">Gemma-4-31B</span>解码时真正读取的注意力 token <strong>减少 52.0%</strong>，准确率只掉 <strong>1.27 个百分点</strong>。</li><li><span class="lk">Qwen-3.6-27B</span>注意力 token <strong>减少 31.1%</strong>，准确率掉 <strong>2.75 个百分点</strong>。</li></ul><p>（"减少 52%"意味着这份 100 万词的缓存，一多半的读取被合理跳过了，而答对率几乎没动。）</p><p><strong>三个反直觉的副发现，才是这篇真正好玩的地方：</strong></p><ol class="ls"><li><strong>越大的模型，用它越不亏。</strong> 从 4B 到 31B，准确率的损失<strong>随规模稳步缩小</strong>——"DA benefits directly from model capability"。原因很实在：这套玩法要求模型<strong>自己判断该看哪块并准确点名</strong>,越聪明的模型这件事做得越对。这跟很多效率技巧"模型越大越难套"正好相反:<strong>DA 是搭着能力涨的,不是跟能力抢的。</strong></li></ol><ol class="ls"><li><strong>短板不在"省",在"听不听话"。</strong> 作者定义了一个"聚焦成功率"（focus 调用有没有点到一个有效的块编号）:Gemma-4-31B、Qwen-3.6-27B 都是 <strong>99%</strong>;但小模型 Gemma-4-E4B 只有 <strong>58%</strong>。小模型答崩,不是因为省得太狠,是因为它<strong>根本没学会好好遵守这个声明协议</strong>——点错块、乱声明,然后就看错了地方。"能力"在这里具体化成了"守协议的纪律"。</li></ol><ol class="ls"><li><strong>省下来的东西,顺手还能被人看懂。</strong> 做过一个消融(DA-no-mask):只用 DA 那套"分块 + 声明"的提示格式、但<strong>不真的去跳过缓存</strong>(仍看全部)。结果——<strong>光是这套提示格式本身几乎无损</strong>(Gemma 上和原始持平,Qwen 上只差 0.69pp);真正带来省钱、也带来那点准确率代价的,是"按声明跳过缓存"这个动作(加上掩码后,相对不加掩码又砍掉 71.1% / 46.5% 的读取量)。更妙的是作者点出:<strong>"The tokens that make it auditable are the same tokens that drive the KV reads"</strong>——让你能审计"模型到底看了哪块"的那些标签,和真正驱动缓存读取的,是<strong>同一批 token</strong>。也就是说,效率和可解释性,头一回从<strong>同一个机制</strong>里长出来。</li></ol><h2 id="s9">7. 内核</h2><p>带走这一颗种子:</p><blockquote><p><strong>过去我们默认"模型该看哪儿"是个要从外部去猜、去近似的东西;这篇说,那个答案模型本来就有,你只要给它一个格式、让它在思考里说出来,就行了。</strong> 当模型能把"我现在要关注哪一块"当成一个可声明、可解析、可审计的动作——注意力从一个隐藏在权重里的、每步全量的黑箱开销,变成了模型推理链条上一个<strong>显式的、由它自己掌控的决策</strong>。作者管这叫"system-2 form of sparse attention"(<strong>慢想型的稀疏注意力</strong>):模型不再是被动地被一层注意力扫过,而是<strong>在自己的输出里,一边推理一边决定该看什么</strong>。</p></blockquote><hr class="rule"><h1 id="s10">来龙去脉（倒读溯源 · 3 层）</h1><p><strong>这一篇（第 0 层）</strong>:DA——让模型在 chain-of-thought 里用类工具调用的标签,<strong>内在地、显式地</strong>声明该看哪块上下文,引擎照着跳过缓存。</p><p><strong>它在改进谁(第 1 层)</strong>:<strong>外部打分型稀疏注意力</strong>——Quest、DeepSeek 原生稀疏注意力这一代。它们每步用一个便宜的代理分数去<strong>逼近</strong>"该看哪儿"的掩码,已经很准,但"给全部打分"本身还是 O(N)。这正是我们 6 月讲过的 [[2026-06-10--flashmemory-lsa]](推理侧的前瞻稀疏注意力)所在的那条线。DA 的突破是把"从隐藏状态里近似猜"换成"从模型的输出文字里直接读",把这笔全量选择成本彻底删掉。</p><p><strong>再往上(第 2 层)</strong>:<strong>静态启发式的稀疏/KV 淘汰</strong>——StreamingLLM(注意力汇聚点 + 最近窗口)、H2O(留历史高关注的"重击手"token)。它们用"最近""历史最热"这类固定规则拍脑袋决定留哪些缓存,好处是零成本,坏处是<strong>跟你这次问什么无关</strong>,一旦细节冷门就丢。第 1 层的"外部打分"就是为了修这个"query 无关"的毛病而生。</p><p><strong>根上(第 3 层的两条河汇流)</strong>:</p><ul class="ls"><li>一条河是 <strong>Transformer 长上下文那笔 O(N²) / 每步 O(N) 的注意力天价</strong>——整个"让注意力对长文本变便宜"的十年研究(从最早的稀疏 Transformer 到今天的原生稀疏训练,如我们讲过的 [[2026-06-15--minimax-sparse-attention]] 训练侧原生稀疏、[[2026-09-01--swa-beats-linear-attention]] 滑窗)。</li><li>另一条河是 <strong>chain-of-thought(让模型在自己的输出里显式推理)+ tool use(从模型生成中解析出结构化的动作/标签)</strong>。</li><li><strong>DA 的novel move,是把这两条本来各走各的河汇到一起</strong>:它不再把"稀疏注意力"当成一个纯系统/内核层面的优化,而是把它抬升成模型<strong>推理动作的一部分</strong>——用"让模型思考、并把决定说出来"这条河,去解"让注意力变便宜"这条河的老问题。这正是本档反复看到的大势:<strong>越来越多本属于"训练/系统底层"的东西,正在被搬到"模型的推理链条上",变成模型可以自己决策、且我们看得见的动作</strong>(和 [[2026-08-30--zero-wam-in-context-world-action]] 把世界模型搬进上下文、[[2026-06-16--mragent-reconstructive-memory]] 把检索改成"边想边取"是同一股风)。</li></ul><hr class="rule"><h1 id="s11">对思染:模型进化 &amp; 怎么用</h1><h2 id="s12">这一步往哪进化了</h2><p>把 DA 放进你脑子里那条"模型进化"的线上,它标记了一个很清晰的方向转弯:</p><p><strong>能力,正在从"藏在权重里、我们只能从外部近似"的黑箱,变成"模型在推理链条上显式声明、我们能看能控"的动作。</strong> 注意力是模型最核心、最"底层"的机制之一,过去它是一层每步全量扫过的固定运算;DA 证明,连注意力这种东西,都能被拆成"让模型自己一边想一边声明该看哪儿"。这背后是一个更大的判断:<strong>模型今天已经足够聪明,很多我们以为"必须由外部系统替它决定"的事(该看哪段、该调哪个工具、该记什么),其实可以交还给模型自己在思考里做主——而且它做得更准、还顺带可解释。</strong> 这条"能力内化 + 决策显式化"的路,是本档这两个月反复撞见的主旋律。</p><p>而且注意那个"<strong>越大越不亏</strong>"的规律:DA 是搭着模型能力一起涨的技巧,不是跟能力抢资源的妥协。这类"随 scale 变好"的方法,往往才是会长期留下来的——因为下一代模型只会让它更好用。</p><h2 id="s13">能怎么用(落到你的提示词和京小贝)</h2><ol class="ls"><li><strong>"让模型先声明再作答"可以直接变成你的提示结构。</strong> DA 最朴素的启发:<strong>先让模型显式说出"我要依据哪一部分来回答",再让它回答</strong>。哪怕你不碰底层缓存,光这个"先分块编号、再让模型点名它要依据第几块"的提示格式,本身就几乎无损(消融里 DA-no-mask 证明了这点),而且<strong>副产品是一份可审计的依据清单</strong>——模型答错时,你一眼能看出它是"看错了地方"还是"看对了地方但推错了"。这对京小贝这种<strong>必须能追溯"答案依据了哪条政策/哪笔流水"</strong>的金融场景,价值极高:把"依据哪一段"变成模型输出里一个明确的、可核对的字段。</li></ol><ol class="ls"><li><strong>长上下文里,别指望模型默默找对——给它"书签"和"点名"的能力。</strong> 当你往京小贝塞进一大段用户历史、多份政策文档时,与其让它在一大坨里自己捞,不如<strong>在提示里就把材料分块标号</strong>,并要求它回答时先声明"依据第 X 块"。这既降低它在长文里"看串了"的概率,也让你能定位它的注意力落点。DA 说明:<strong>模型对"我该看哪块"的自我判断,在大模型上已经相当可靠(99% 聚焦成功率)</strong>——你要做的是给它一个说出来的格式。</li></ol><ol class="ls"><li><strong>把"可解释"和"省成本"当成同一件事来设计,而不是两件对立的事。</strong> DA 最漂亮的一点是:让它便宜的机制,和让它可审计的机制,是同一个。你在设计京小贝的提示/流程时,可以刻意追求这种"一石二鸟"的结构——<strong>让模型把关键决策(依据哪条、调哪个工具、走哪个分支)显式吐成结构化标记</strong>,这份标记既是给下游系统的指令(省得再猜),也是给风控/合规的审计轨迹。别把"让它解释一下"当成额外负担,好的结构能让解释和效率是一回事。</li></ol><ol class="ls"><li><strong>一句提醒:这套只在够强的模型上成立。</strong> 小模型守不住协议(58% 聚焦成功率就会答崩)。所以"让模型自己声明/自己做主"这类玩法,是<strong>跟着你用的模型能力涨的</strong>——在弱模型上硬套会翻车,在强模型上才解锁。选型时把这条记进去:越是想让模型"自己管自己",越要给它配够强的底座。</li></ol><hr class="rule"><h1 id="s14">来源</h1><ul class="ls"><li>论文原文(arXiv abs):<a class="src" href="https://arxiv.org/abs/2609.02737">https://arxiv.org/abs/2609.02737</a></li><li>论文 HTML 全文:<a class="src" href="https://arxiv.org/html/2609.02737v1">https://arxiv.org/html/2609.02737v1</a></li><li>信号佐证 · HuggingFace Daily Papers(2026-09-03 榜单,约 47 赞):<a class="src" href="https://huggingface.co/papers/2609.02737">https://huggingface.co/papers/2609.02737</a></li><li>作者与机构:Namgyu Ho / Huzama Ahmad / Woosung Koh / Se-Young Yun(KAIST AI);Tal Schuster / Cicero Nogueira dos Santos(Google DeepMind,通讯) — 见 arXiv 论文页作者栏</li><li>对照(未选的当日最高赞,纯工程流水线):Repo-To-Skill(2609.02749,357 赞)<a class="src" href="https://huggingface.co/papers/2609.02749">https://huggingface.co/papers/2609.02749</a></li><li>相关脉络(本知识库已讲):[[2026-06-10--flashmemory-lsa]]、[[2026-06-15--minimax-sparse-attention]]、[[2026-09-01--swa-beats-linear-attention]]、[[2026-08-30--zero-wam-in-context-world-action]]、[[2026-06-16--mragent-reconstructive-memory]]</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
