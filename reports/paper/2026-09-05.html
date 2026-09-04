@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28132%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2229%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2253%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>编译器长出了优化档：难到快编译器编不出的模糊函数，花一分钟训练也能编成能用的本地神经工件——0.6B 小模型语义准确率从 22% 抬到 84%</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-05</span></div>
+  <h1 class="doc">编译器长出了优化档：难到快编译器编不出的模糊函数，花一分钟训练也能编成能用的本地神经工件——0.6B 小模型语义准确率从 22% 抬到 84%</h1>
+  <div class="dateline"><span>全文 <b>4,639</b> 字</span><span>约 <b>12</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Compile by Training: Turning Natural-Language Specifications into Local Neural Functions</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.04199">https://arxiv.org/abs/2609.04199</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Yuntian Deng, Pengyu Nie, Stuart Shieber</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">滑铁卢大学 × 哈佛大学（Yuntian Deng 组，Stuart Shieber 是其哈佛博导；与 07-04 PAW、06-08 Code2LoRA 同一血脉）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-03</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-05.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-05.html</a></span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HuggingFace Daily Papers 当窗口 #1 · 207赞（约为第 3 名 1.3 倍、榜上最高）· 滑铁卢×哈佛（Yuntian Deng / Stuart Shieber）· 是 07-04 台账 [[2026-07-04--paw-program-as-weights]] 的同组直系续作 · 已上线公开交互服务 · S2 发表 2 天 429 未取证（引用≈0 正常）</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, paradigm, efficiency, peft, local-inference, prompt-as-source-code, distillation, synthetic-data</span></div></div><div class="tools"><a class="btn hot" href="2026-09-05-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一拍 · 主角</a><a class="t-h2" href="#s4">二拍 · 困境</a><a class="t-h2" href="#s5">三拍 · 旧路</a><a class="t-h2" href="#s6">四拍 · 转折</a><a class="t-h2" href="#s7">五拍 · 解法</a><a class="t-h2" href="#s8">六拍 · 结局</a><a class="t-h2" href="#s9">七拍 · 内核</a><a class="t-h1" href="#s10">来龙去脉（倒读 3 层）</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><h1 id="s1">推荐理由</h1><ol class="ls"><li><strong>它把一个刚开的新范式从"能不能编译"推进到"编译得好不好"</strong>：07-04 台账的 PAW（Program-as-Weights，程序即权重）第一次把"提示词编译成一次成型、终身本地免费运行的神经工件"这根轴立了起来——但那是个<strong>只有一档的编译器</strong>：一次前向传播、几秒钟出结果，遇到真正难的模糊函数就编出个基本不能用的废件（在难例子集 FuzzyBench-Hard 上一个精确匹配都没有、语义准确率仅 22.4%）。今天这篇（同一个 Yuntian Deng 组）给这台编译器装上了"优化档"：难的规格就多花编译时算力，让教师模型现造训练样本、再真刀真枪训练那片适配器，语义准确率直接抬到 <strong>83.6%</strong>。追前沿追的就是看一条线怎么长——PAW 立轴、这篇把轴变成了一根可调的"速度↔质量"旋钮。</li><li><span class="lk">信号扎实</span>HuggingFace Daily Papers 当窗口第一名，<strong>207 赞</strong>（当日榜上最高、约为第 3 名的 1.3 倍）；作者滑铁卢大学 Yuntian Deng（以"把思维链内化进隐层"系列知名，也是 06-08 Code2LoRA 和 07-04 PAW 的通讯）＋哈佛 Stuart Shieber（计算语言学老教授、Deng 的博导）；论文已把编译器挂成一个公开可交互的在线服务。发表 2 天，Semantic Scholar 引用≈0（正常，且今天 429 限流未取证——不靠引用数选片）。</li><li><span class="lk">对思染直接命中</span>京小贝管线里那批"按 token 付费的模糊小函数"（意图分类、工单路由、格式修复、query 改写、日志告警），PAW 给的是"快但飘"的编译路，这篇给的是<strong>为真正要紧的那些函数准备的"-O2 优化路"</strong>——花一分钟编译时算力，把难函数编成能用（83.6%）、能冻结、能版本管理的本地工件。而且它揭示了一条对写提示词/造数据都有用的规律：<strong>编译质量 = 你的规格质量 + 教师造的示例质量</strong>；教师配置也有讲究——纯用弱教师(GPT-5.4-mini)造数据仅 0.746，掺入约三分之一强教师(GPT-5.5)样本后跳到 0.851（论文没有报告"纯用强教师"这一档对照，严格说只证明了"混合≫纯弱"，还不能断言"混合＞纯强"，下文如实标注）。</li></ol><h1 id="s2">七拍故事</h1><h2 id="s3">一拍 · 主角</h2><p>主角是一批<strong>"编不出来"的规格</strong>。上一篇 PAW 里，开发者用一句自然语言写下一个模糊函数的规格（"把这段格式坏掉的地址标准化""判断这条日志要不要报警"），PAW 的编译器一次前向传播就把它翻译成一小片 LoRA 权重（先拆词：LoRA＝Low-Rank Adaptation，低秩适配，给冻结模型外挂的一小片可插拔"补丁参数"，运行时把补丁输出加到原模型上从而改变行为，因为用两张窄表相乘代替一张大表，所以小到能当文件传），挂到一个 6 亿参数的小解释器上就能永久本地运行。大部分规格这样就够了。但总有一批规格——逻辑绕、边角多、一句话根本说不周全——快编译器编出来的工件基本是废的。这批"难规格"就是本篇的主角。</p><h2 id="s4">二拍 · 困境</h2><p>难在哪、利害在哪？作者把 PAW 处理不好的那些规格单独拎出来，组成一个<strong>难例子集 FuzzyBench-Hard</strong>（定义就是"快编译器 PAW 在上面一个精确匹配都产不出"的那部分规格）。快编译器在这个子集上的语义准确率只有 <strong>22.4%</strong>——五次里错四次。也就是说，PAW 立起来的"编译一次、终身本地跑"这个漂亮范式，对<strong>恰恰最需要它的那批硬骨头函数</strong>，交付的是一个能装、能跑、但答案基本不对的空壳。范式有了，但天花板卡在"简单的能编、难的编成废件"这道坎上。解不了它，"提示词有编译器"这句话就只对简单函数成立。</p><h2 id="s5">三拍 · 旧路</h2><p>绕开这道坎，此前只有两条都不痛快的路。<strong>第一条：认命继续调远程大模型</strong>——每个输入都发一趟 API 请求。这正是 PAW 一开始要消灭的四笔烂账：贵（按 token 计费）、慢且断网即死、行为不可复现（供应商静默升级导致线上行为漂移）、软件不再自包含。<strong>第二条：给这个难函数单独做一次完整微调</strong>——行为能固化，但你手上根本没有这个函数的训练数据（模糊函数的定义就是写不出规则、也没现成标注），而且为"修一种地址格式"单独收数据、开 GPU、调超参，把一个"函数"硬生生变成一个"项目"，成本高到没人干。一条太贵太飘，一条门槛太高，难规格就这么悬着。</p><h2 id="s6">四拍 · 转折</h2><p>作者的关键一转：<strong>编译器凭什么只能有一档速度？</strong> 现实里的编译器（比如 gcc）都有优化开关——<code>-O0</code> 图快、不做优化，<code>-O2</code> 慢一点但把代码优化到能用。PAW 那台"一次前向传播出 LoRA"的快编译器，本质是 <code>-O0</code>：摊销（amortize，把每次都要付的钱改成一次性预付）到极致、几秒出件，但不为任何单个规格额外花力气。那难规格就走 <code>-O2</code>：<strong>在编译时多投入算力，专门为这一个规格现造训练数据、再把适配器真正训一遍</strong>。花钱的重活仍然全压在"编译一次"里，日常运行照样本地、免费、离线——只是这一次的编译，从"3.5 秒的一次前向"变成"50.9 秒的一轮训练"。用一分钟编译时间，换一个真能用的函数。</p><h2 id="s7">五拍 · 解法</h2><p>系统叫 <strong>compile by training（编译即训练）</strong>，它和 PAW 共用同一套运行时（同一个解释器、同一种程序格式、同一个调用接口），只把"编译"这一步换成一轮真训练。三个零件：</p><ul class="ls"><li><strong>紧凑解释器（compact interpreter）</strong>：一个<strong>冻结不动</strong>的 Qwen3-0.6B（通义千问最小档，6 亿参数），所有编译出来的函数共用这一个底座——像一个 CPU 跑无限多个软件。</li><li><span class="lk">适配器（adapter）</span>每个规格一片自己的 <strong>LoRA</strong>（秩 rank-64、alpha-16）。这片 LoRA 加上一段编译器生成的提示词脚手架，就是这个规格编译出来的完整"程序"。</li><li><span class="lk">编译时怎么训（本篇的核心动作）</span>① <strong>教师造数据</strong>——把自然语言规格交给教师模型，让它们照规格现编出一批结构化的（输入, 输出）JSON 样本，作为这个函数的合成训练集（模糊函数没有现成标注，就让强模型当场造）；关键发现之一：教师配置有讲究——同等规模(3600条)下，纯用弱教师(GPT-5.4-mini 单独造全部样本)语义准确率（论文记作 LEM——用模型判断输出与标准答案语义是否一致、不苛求逐字相同）只有 <strong>0.746</strong>；换成 GPT-5.4-mini 和 GPT-5.5 按 <strong>2:1</strong> 混合供给监督后跳到 <strong>0.851</strong>（论文没有报告"纯用强教师 GPT-5.5"这一档对照数字，严格说这证明的是"混入强教师样本比纯弱教师好"，还不能断言"混合比纯用强教师更好"）。② <strong>暖启动</strong>——不从零开始，直接<strong>拿 PAW 快编译器那一次前向传播预测出的 LoRA 当训练起点</strong>（"uses the amortized prediction as a starting point"），再在合成数据上继续优化。③ <strong>专属优化</strong>——就在这个规格的合成样本上训练这片 LoRA，把纯文字给不了的细粒度行为压进权重里。训完，这片 LoRA＋脚手架就是一个可存储、可版本管理、可像普通软件一样组合调用的本地神经函数，运行时甩掉所有教师、零 API。</li></ul><h2 id="s8">六拍 · 结局</h2><ul class="ls"><li><span class="lk">主结果</span>在快编译器全军覆没的 FuzzyBench-Hard 上，编译即训练拿到 <strong>83.6% 语义准确率</strong>，对比 PAW 快编译器的 22.4%——<strong>绝对高出 0.612（61 个百分点）</strong>。那批"能装能跑但答案不对"的空壳，现在真能用了。</li><li><span class="lk">代价明码标价</span>这份准确率来自更贵的编译时间——<strong>50.9 秒</strong>（B300 GPU 上）对快编译器的 <strong>3.5 秒</strong>。这正是范式的核心卖点：<strong>把一分钟砸在"编译一次"里，换来的函数此后终身本地、免费、离线运行</strong>，均摊到成千上万次调用后每次近乎零成本。</li><li><span class="lk">数据规模的账</span>合成样本从 1440 条（LEM 0.821）加到 2400 条（0.836）后<strong>先撞平台期</strong>（3600 条仍 0.836），一直堆到 7200 条才又跳到 <strong>0.866</strong>——不是线性给钱线性涨，中间有一段花钱不见效的平台，堆够量才再上一个台阶。</li><li><span class="lk">落地是真的</span>编译器已挂成一个<strong>公开可交互的在线服务</strong>；三个演示——一个能跨多站点操作的网页助手、一个用自然语言控制的 3D 虚拟形象、一个英语↔"Claudish"（Claude 内部行话，作者的彩蛋）双向翻译器——都是由编译出来的函数直接驱动的。</li><li><span class="lk">一处需要诚实标注的发现</span>论文只报告了两档教师配置的对照——纯用弱教师(GPT-5.4-mini 单独造全部 3600 条样本)语义准确率 0.746；换成弱强按 2:1 混合(2400 条 mini + 1200 条 GPT-5.5)后跳到 0.851。这证明"掺入强教师样本比纯弱教师好"；但论文<strong>没有报告"纯用强教师 GPT-5.5 单独造全部样本"这一档</strong>，所以还不能像直觉推断那样断言"教师队伍多样≫单一最强"——这条更强的说法目前缺证据，是完整版写完后经二次核验发现的边界，如实标注，不隐藏。</li><li><span class="lk">诚实交底</span>① <strong>合成监督会继承教师的错</strong>——教师造的样本本身可能错，编出来的函数就跟着错；论文明说"需要保证正确性的应用应当校验输出、或保留确定性的控制路径"。② <strong>还没做系统的用户研究</strong>，真实可用性的证据有限，作者列为 future work。③ 沿用 PAW 的边界：目前主打单步函数（一进一出），且解释器与这套编译流程成对绑定。</li></ul><h2 id="s9">七拍 · 内核</h2><p><strong>"把智能编译成本地工件"这个动作，从今天起有了优化档。</strong> PAW 证明了提示词可以被编译成一次成型、可版本、可离线的神经函数；这篇证明了这台编译器不必只有一档——简单函数走"秒级、一次前向"的快档，难函数走"分钟级、教师造数据＋真训练"的优化档，二者共用同一个运行时、连成一条完整的"速度↔质量"旋钮。神经函数就此从"便宜但飘"毕业成"你付多少编译算力、它就好到多少"。软件工程里那句老话——"要快还是要好，拨一下优化开关"——第一次原样长到了神经网络身上。</p><h1 id="s10">来龙去脉（倒读 3 层）</h1><p><strong>第 1 层（直接前驱，同组同数据同运行时）——PAW（[[2026-07-04--paw-program-as-weights]]，Yuntian Deng 组，两个月前）</strong>：PAW 立起"程序即权重"这根轴，用一个以自然语言为输入的超网络（hypernetwork，输出不是答案而是另一个网络的权重）一次前向传播就吐出 LoRA，几秒出件、终身本地跑。它的短板是<strong>只有快这一档</strong>：对难规格（FuzzyBench-Hard）几乎失效。本篇是它的<strong>优化档孪生</strong>——同样的程序格式、同样的运行时接口、同样的 FuzzyBench，甚至<strong>直接拿 PAW 的快预测当训练起点暖启动</strong>，再投入教师合成＋专属训练把难例子救回来。一篇立轴、一篇把轴做成旋钮，是教科书式的"同一条线的下一步"。</p><p><span class="lk">第 2 层（两条技术根汇流）</span>一条是<strong>"文字→权重"/超网络</strong>这条线（Hypter 2021、HINT/HyperTuning 2023、Text-to-LoRA 2025，以及本组 06-08 [[2026-06-08--code2lora]]"给代码模型生成适配器"）——这条线管"把一段描述变成一片适配器"。另一条是<strong>教师合成/蒸馏</strong>这条线——用强模型现造训练数据去教一个小模型，与台账里 07-15 [[2026-07-15--weak-to-strong-direct-opd]]、09-02 [[2026-09-02--opd-not-distillation]] 那批"用更强的老师塑造学生"的工作同源（区别是：那些是在学生自己走的轨迹上逐词给方向的 on-policy 蒸馏，这里是让教师<strong>离线造好整批带标注的合成样本</strong>再训适配器，更接近"数据蒸馏"）。本篇的新意就是把这两条根<strong>焊在编译器里</strong>：超网络负责给出快而糙的起点，教师合成＋训练负责把起点优化到能用。</p><p><strong>第 3 层（思想根）——摊销 vs 逐例优化，以及 Software 1.0/2.0/3.0</strong>：摊销（一次性预付换终身免运行时开销）是编译器打败解释器、查找表打败重复计算的老思想，PAW 是它的极致（编译时只花一次前向）。本篇则点破：<strong>摊销不是非黑即白，而是一条连续谱</strong>——你可以在编译时多花算力做逐例优化（per-spec optimization），换更好的工件。落到 Karpathy 的三层楼（1.0 人写代码 / 2.0 训练出的权重 / 3.0 提示词）：PAW 第一个把 3.0 编译回 2.0、用 1.0 的工程文明（版本、打包、离线、可复现）管起来；本篇给这条"3.0→2.0"的编译通道<strong>补上了优化 pass</strong>，让编译出的 2.0 工件质量可控可调。</p><p><span class="lk">与台账暗线的咬合</span>这是"智能价值从在线消耗转向离线固化"这条暗线的又一步深化——06-20 S-Agent、07-01 Agents-A1 把大能力捏进小模型，PAW 把粒度切到单个函数、成本压到一次前向，本篇则补上"难函数也能固化、且质量可按算力买"的最后一块。而"教师队伍混用(2:1)显著优于单一弱教师"这个结果，也算是给台账里"多样性/见世面胜过单点死磕"的规律添了一组数据点——但严格说只验证到"混合＞纯弱"，"混合＞纯强"这个更强版本目前没有直接证据支撑，暂不归入这条规律（呼应 PAW 里"编译器生成的 LoRA＞在该任务上全量微调"）。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><span class="lk">模型进化逻辑往哪挪了一步</span>前沿这根"能力能不能被固化成便宜工件"的坐标轴，今天多了一个刻度——<strong>固化不再是"能/不能"，而是"你愿意在编译时花多少算力，它就固化得多好"</strong>。基础模型的终局角色越来越像一个"工具车间＋质检线"：被调用一次，产出一个可复用、可分发、行为冻结的小工具；而且对难做的工具，你可以让它多花点工、造更多训练样本、把质量打上去。当"编译"从只有快档变成有优化档，大模型 API 里那部分"高频、稳定、值得固化"的流量会更彻底地永久性离开——不是被更便宜的 API 替代，是被"编译成本地工件、不再需要 API"替代。</p><p><span class="lk">对提示词的认知升级（最直接）</span>这篇把一条规律钉死了——<strong>编译质量 = 规格质量 × 教师造的示例质量</strong>。教师是照着你的规格现造（输入,输出）样本来训练函数的，所以你规格里没说清的边角，教师就造不出对应样本，函数就学不会。三条可直接用的纪律：① 写规格（＝写提示词）时，<strong>一段干净的任务复述＋几个能钉住边角情况的输入输出示例</strong>，是信息密度最高的形态——PAW 已证明编译器自己都会收敛到这个格式，本篇进一步证明这些示例直接变成训练数据。② 要可靠就别光"描述"，要"给例子"，尤其把容易出错的边角案例作为示例喂进去。③ <strong>造数据/评测集时，教师配置值得多测一档</strong>：这篇实测只验证到"2:1 弱+强 显著＞ 纯弱教师"(0.746→0.851)，没有测"纯强教师"这一档做对照，所以还不能断言"混合比单一最强模型好"——但已经证明"别怕掺弱教师"，纯用最贵的模型未必是唯一或最优选择，这条边界对思染团队评估合成训练/评测数据的教师配置策略仍有参考价值（至少省钱不吃亏）。</p><p><span class="lk">对京小贝的产品判断</span>① 把管线里"按 token 付费的模糊小函数"做<strong>分档</strong>：意图识别、工单路由、格式修复、query 改写、日志告警里那些<strong>高频且稳定</strong>的，值得走"-O2 编译档"——花一分钟编译时算力换 83.6% 的难例子表现，然后<strong>冻结</strong>成本地工件（行为钉死、可审计、可复现，供应商静默升级不再让线上漂移——这对金融产品是合规刚需）。简单的走快档、难的走优化档，正好对上这篇的旋钮。② <strong>务必配校验或确定性兜底</strong>：论文亲口说合成监督会继承教师的错，需要保证正确性的场景要么校验函数输出、要么保留一条确定性规则路径——金融场景尤其别把编译出的模糊函数当"绝对正确"，让它做初筛/建议、把最终裁决留给可审计的规则或人。③ 现在就能落的架构思路：把稳定环节从"每次调大模型"逐步迁往"编译/蒸馏成小模型工件"，大模型留给真需要现场智能的环节；这篇让"连难环节也能迁"变得可信了一截，但别急着上生产（还只做单步函数、合成数据验证中、无用户研究）。</p><h1 id="s12">来源</h1><ul class="ls"><li>论文：<a class="src" href="https://arxiv.org/abs/2609.04199">https://arxiv.org/abs/2609.04199</a> （2026-09-03 发表，cs.CL/cs.AI/cs.LG）</li><li>全文 HTML：<a class="src" href="https://arxiv.org/html/2609.04199">https://arxiv.org/html/2609.04199</a> （FuzzyBench-Hard 83.6% vs 22.4%、编译 50.9s vs 3.5s、教师 2:1 混合 0.746→0.851、数据规模 1440→7200 皆出于此）</li><li>HuggingFace Daily Papers：<a class="src" href="https://huggingface.co/papers/2609.04199">https://huggingface.co/papers/2609.04199</a> （当窗口 #1、207 赞，榜上最高）</li><li>直系前驱 PAW：<a class="src" href="https://arxiv.org/abs/2607.02512">https://arxiv.org/abs/2607.02512</a> · 台账 [[2026-07-04--paw-program-as-weights]]</li><li>同组血脉 Code2LoRA：台账 [[2026-06-08--code2lora]]</li><li>蒸馏/OPD 暗线：[[2026-07-15--weak-to-strong-direct-opd]] · [[2026-09-02--opd-not-distillation]]</li><li>Semantic Scholar：发表 2 天、今天 429 限流未取证，引用≈0 属正常（<a class="src" href="https://api.semanticscholar.org/graph/v1/paper/arXiv:2609.04199">https://api.semanticscholar.org/graph/v1/paper/arXiv:2609.04199</a>）</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
