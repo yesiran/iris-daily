@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28177%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231a7f4b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b3d24%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2237%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2238%22%20r%3D%2219%22%20fill%3D%22%23fff%22%20opacity%3D%220.15%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23eafff3%22%3E%C2%A5%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>未命名文档</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="73c7eaf8ed55e8ecdf6e4d3190a15bb18bd7264a519f9a19726f58d77de5c703">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 金融日报</span><span class="r">2026-09-07</span></div>
+  <h1 class="doc">未命名文档</h1>
+  <div class="dateline"><span>全文 <b>3,316</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>0</b></span></div>
+  <div class="mast-bar"></div>
+  
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div></nav>
+    <main><p>2026-09-07 · 思染金融日报</p><p>截至 17:32（北京时间）。今天的关键区别是：价格回落，不等于所有买盘都在撤退；资金数据缺失，也不能用故事补齐。本报告采用港股已形成的收盘记录，以及截稿前能够确定时间的海外市场资料。</p><p><strong>共同底色：就业数据留下利率压力，美国假期改变交易节奏。</strong> 先纠正旧认知中的日历错误：9月7日不是香港公众假期，美团、小米今天正常交易；美国劳动节休市适用于美国股票市场，不能据此把港股对上周五消息的反应推迟到9月8日。<a class="src" href="https://www.hkex.com.hk/-/media/HKEX-Market/Services/Circulars-and-Notices/Participant-and-Members-Circulars/SEHK/2025/ce_SEHK_CT_075_2025.pdf">港交所2026年交易日历</a>、<a class="src" href="https://www.nyse.com/trade/hours-calendars">纽交所假期日历</a></p><p>事实：9月4日北京时间20:30公布的美国8月非农就业增加16.2万人，失业率4.1%，平均时薪同比增长3.1%。这些是上周五发生、今天继续被交易的信息，不是9月7日新发布的就业数据。<a class="src" href="https://www.bls.gov/news.release/archives/empsit_09042026.htm">美国劳工统计局原始报告</a></p><p>作为最近完整美国交易日的参考，IC Markets今日晨报记录9月4日美元指数99.16、上涨0.25%；两年期美债收益率4.366%、上升3个基点，十年期4.782%、上升1.4个基点，并转述9月加息25个基点的市场概率约六成。这些不是17:32实时读数；本次未从CME动态页面取得可复核的截稿概率，不能把加息写成既定结果。<a class="src" href="https://www.icmarkets.com.au/blog/general-market-analysis-07-09-26/">IC Markets晨报</a></p><p>当天还存在地缘风险：CoinDesk早间报道周末美军打击伊朗原油运输船，并记录WTI约92.72美元、上涨约1%。推测链条是运输风险推高能源成本，继而增加通胀与利率不确定性；这能解释风险资产面临的压力，却不能证明四个标的每笔卖盘都由同一事件触发。<a class="src" href="https://www.coindesk.com/markets/2026/09/07/oil-up-bitcoin-down-as-u-s-strikes-iranian-crude-carriers">CoinDesk报道</a></p><p>实际利率需要单独看：本次FRED可读的最新十年期TIPS观察值为9月3日2.42%，较9月2日下降3个基点。它早于非农发布，不能拿来证明非农之后实际利率没有上升，更不能与9月7日金价拼成同步因果。<a class="src" href="https://fred.stlouisfed.org/series/DFII10">FRED实际收益率序列</a></p><p><strong>美团3690.HK：回踩80元，盈利修复仍需价格与资金继续确认。</strong> 事实：9月7日收盘80.05港元，跌2.08%，成交约2197万股；上个交易日9月4日收81.75港元。今天收盘仍略高于旧认知关注的80元，但仅高出0.05元，足以说明突破后的承接正在接受检验，尚不足以宣布站稳。<a class="src" href="https://hk.investing.com/equities/meituan-dianping-historical-data">美团历史行情</a></p><p>东方财富9月7日记录成交额17.65亿港元，沽空金额4.14亿、占比23.47%；9月4日对应为45.40亿、5.86亿、12.91%。按同一来源计算，总成交额减少约61%，沽空金额也减少约29%，只是后者下降得较慢，因而占比上升。该组数据尚未取得港交所原表复核；它支持的是“沽空成交相对占比提高”，不支持“空头绝对火力暴增”，也不能用来计算空头净仓位或回补量。<a class="src" href="https://hk.eastmoney.com/sellshort.html?code=03690">美团沽空记录</a></p><p>公司层面的可靠底座仍是8月28日财报：第二季度收入1046亿元，同比增长14.4%；公司称竞争趋于理性、叠加旺季，经营利润环比由负转正。这验证了旧认知中的盈利修复方向，但管理层对竞争环境的描述不等于第三季度利润保证；本轮没有核实到9月7日新增的财报级催化。<a class="src" href="https://www.meituan.com/news/NN260828216013035">美团官方二季报说明</a></p><p>推测：既有盈利改善与外部利率压力同时存在，今天更像上涨后的回撤检验，尚不能据此认定财报逻辑失效。今天最明确的认知修正是资金归因：沪、深两路港股通美团个股净买入均未取得可靠完整值，因此既不能说南向继续派发，也不能把承接方指定为外资。旧库中“没上榜所以南向没买”“沽空率下降所以发生回补”的判断应撤回其确定性；今日数据没有提供这种身份识别能力。</p><p><strong>小米1810.HK：发布会尚未开始，先面对成本与盈利的问题。</strong> 事实：9月7日收盘27.50港元，跌3.31%，较9月4日28.44港元回落，重新落到28元下方。Investing记录成交约1.6673亿股。<a class="src" href="https://hk.investing.com/equities/xiaomi-historical-data">小米历史行情</a></p><p>东方财富同日记录成交额47.42亿港元、沽空金额23.61亿、沽空比率49.80%；9月4日沽空金额9.84亿、比率19.39%。但上述成交额与另一来源的成交量、日内价格范围未通过一致性校验，因此分别列示，保留为待统一口径数据，不据此作精确量价结论。若沽空原表复核一致，意味着沽空成交金额明显增加；依然不能直接解释成方向性空仓净增加，因为数据不区分套保等交易目的。南向个股净买入本次未核实。<a class="src" href="https://hk.eastmoney.com/sellshort.html?code=01810">小米沽空记录</a></p><p>事件时间必须分开：9月2日的预告将秋季旗舰新品发布会定于今天19:00，涉及澎程系列新车、18 Fold等产品。截至截稿，发布会仍在未来，不能写今晚正式售价、订单量或市场反馈，更不能把今天下跌归因于“发布结果不及预期”。<a class="src" href="https://m.ithome.com/html/997228.htm">IT之家发布会预告</a></p><p>真正已发生的经营约束来自8月18日公告的二季报：智能手机平均售价同比提高25.9%，但毛利率仍由上年同期11.5%降至8.5%；公司明确解释为关键零部件涨价。事实因果链是成本上升挤压毛利，即使产品均价提高也未完全抵消。推测：今晚新品要改变盈利预期，需要展示售价、产品结构与成本之间的改善，而不只是新增型号或热度；这不是对今晚结果的预测。<a class="src" href="https://ir.mi.com/static-files/4a85fc36-8a6d-4c24-b45b-b18d5d162e6c">小米官方业绩公告</a></p><p>今日验证的是价格层面的28元未能连续守住；尚未验证的是新品能否改善盈利。长期研究应继续区分“技术与产品取得进展”和“利润能够兑现”：二季报证明这两件事可以暂时不同步，今天的跌幅也不能替今晚经营信息作答。</p><p><strong>比特币：ETF仍有净申购，新增风险来自侧链事件。</strong> 可追溯的早间新闻快照约为79,700美元，较UTC零点下跌接近1%。对应报道的聚合发布时间为9月7日04:44 UTC，即北京时间12:44；这是报道时间，原文未标精确成交分钟。17:32的可靠报价未取得，因此不把该数冒充截稿即时价，也不采用时间越过截止线的动态行情。<a class="src" href="https://www.coindesk.com/markets/2026/09/07/oil-up-bitcoin-down-as-u-s-strikes-iranian-crude-carriers">CoinDesk原文</a>、<a class="src" href="https://www.freebull.info/index.php">Freebull发布时间索引</a></p><p>资金事实更清楚：Farside列示9月4日美国现货BTC ETF净流入1.746亿美元，其中IBIT为1.174亿美元、FBTC为5720万美元；9月2日至4日连续三个交易日合计净流入10.065亿美元。周五流入较周四7.308亿美元明显收窄，但没有转负。今天美国股票市场休市，没有新的正常美国ETF交易日读数；不能把假日空白填成零流入。<a class="src" href="https://farside.co.uk/btc/">Farside原始资金表</a>、<a class="src" href="https://www.nyse.com/trade/hours-calendars">纽交所假期日历</a></p><p>直接催化方面，The Block在9月6日17:14美东时间首次报道Liquid侧链事件，最后更新为北京时间9月7日06:32：约4000枚BTC从其联邦钱包被提走，网络暂停。报道引述项目声明，但本次无法直接读取其X原帖，属于已读原报道、项目原帖受限。资金最终去向、所谓“白帽”身份及是否归还均未核实；侧链储备事件不能写成比特币主网被攻破，也不是全市场交易所余额下降的证据。<a class="src" href="https://www.theblock.co/news/defi/2026-09-06-liquid-network-pauses-after-purported-white-hat-hackers-withdraw-320-million-in-bitcoin-413626">The Block事件报道</a></p><p>推测有两条：能源与利率不确定性可能压低风险偏好；侧链安全事件可能另行影响加密交易与托管信心。现有证据不能分配两者对跌幅的贡献。CoinGlass页面未加载出有效清算数据，交易所总余额也未取得可靠同时间值，因此不写爆仓金额，不判定逼空或多头踩踏。</p><p>对旧认知的更新是：保留“价格与资金需要分别验证”的纪律，但当前不能套用“没有ETF接盘”的前提；最新资金表明确有净申购。与此同时，ETF净流入不能保证当天上涨，也不能把全部ETF持有人统称为机构。今天呈现的是已有申购支持与新增风险并存。</p><p><strong>黄金：央行买盘得到新增验证，ETF短期方向需要另看。</strong> 截稿前可核对的现货聚合参考为9月7日北京时间16:20:33每盎司4413.65美元，24小时减少15.30美元、约0.35%。来源未明确说明它是伦敦市场原始成交，故只作为现货参考；伦敦现货原始报价及当日LBMA基准价本次未能核实，不用COMEX期货替代。<a class="src" href="https://coincodex.com/precious-metal/gold/">CoinCodex现货参考</a></p><p>今天最可靠的新信息是中国8月黄金储备：官方表由7月7608万盎司增至8月7673万盎司，增加65万盎司，约20.22吨。人民财讯16:15的报道确认，这是连续第22个月增持。购金发生在8月，信息在今天发布；不能把它写成央行今天买入20吨，更不能用储备美元估值上涨替代实物增持量。<a class="src" href="https://www.safe.gov.cn/safe/2026/0206/27116.html">国家外汇管理局官方储备表</a>、<a class="src" href="https://stcn.com/article/detail/4174993.html">人民财讯发布记录</a></p><p>GLD方面，发行方页面持仓栏未成功加载有效数值。日本贵金属服务商unbanked在9月7日发布的记录称，9月4日持仓为1052.056吨，较前日减少约1.43吨。该数有明确数据日与报道日，可作二级来源参考，但尚未得到本次发行方直接复核；不能据旧库“连增七周”就默认最近一天仍增仓。<a class="src" href="https://www.spdrgoldshares.com/usa/gld/">GLD发行方页面</a>、<a class="src" href="https://unbanked.jp/market_information/9822.html">unbanked持仓记录</a></p><p>事实支持的第一条链是央行实物储备继续增加，长期官方需求仍在；推测是它有助于吸收部分供给，但不能据月度数量推导某个盘中价位存在硬底。第二条是美元与利率仍构成需要检验的短期约束：现有TIPS值停在非农之前，不能证明今天实际利率如何变化，也不能把央行公布时间与稍后的聚合金价相邻，直接说成“央行托住了跌幅”。<a class="src" href="https://fred.stlouisfed.org/series/DFII10">FRED实际收益率</a></p><p>今天验证了旧认知的央行长期需求部分；尚未验证“配置盘全面继续加仓”，更没有证成“黄金遇强弱数据都能上涨”。央行月度增持、GLD单日减少的报道与盘中价格走弱可以同时存在，分别反映不同参与者与时间尺度。</p><p>下一交易日／下一时段重点盯五项：</p><ol class="ls"><li>美团：80元附近能否持续承接；补齐沪深两路南向个股净额，并以沽空金额及总成交额同时检验占比变化，停止用榜单缺席代替资金方向。</li><li>小米：今晚19:00之后再核对正式售价、交付安排及有明确定义的订单数据；下一港股交易日观察28元能否收复，同时解决成交量、成交额和沽空口径差异。<a class="src" href="https://m.ithome.com/html/997228.htm">发布会时间依据</a></li><li>BTC：Liquid恢复、储备及归还情况须等项目可核公告；美国9月8日恢复股票交易后，再看ETF申赎是否延续，数据未齐时不提前宣布转向。<a class="src" href="https://www.nyse.com/trade/hours-calendars">纽交所日历</a></li><li>黄金：补齐伦敦现货与GLD发行方数据，并取得非农之后的TIPS读数；以同一时间窗口检验美元、实际利率与金价关系。</li><li>共同宏观：继续核对能源运输风险与后续通胀信息，观察其是否真正改变利率定价；美联储官方列示下一次FOMC会议为9月15—16日，当前仍是等待结果的阶段。<a class="src" href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">美联储会议日历</a></li></ol></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
