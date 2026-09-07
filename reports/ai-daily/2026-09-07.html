@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28125%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2239%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.13%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2251%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.16%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title> · </title>
+<title>2026-09-07 · 思染的 AI 日报</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
@@ -11,113 +11,130 @@
     --serif:"Songti SC","STSong","SimSun",serif;
     --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
     --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
   }
   @media (prefers-color-scheme: dark){
     :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
   }
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
-    font-size:16px;text-rendering:optimizeLegibility}
-  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
-  a{color:inherit}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
 
-  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
     font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
   .mast-top .r{color:var(--red)}
-  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
-    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
-  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
-    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
   .dateline b{color:var(--ink);font-weight:600}
-  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
-  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
-    padding-bottom:18px;margin-bottom:34px}
+  .mast-bar{height:8px;background:var(--ink)}
 
-  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
-    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
-  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
   .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
-  audio{width:100%}
+  audio{width:100%;min-width:0;max-width:100%}
   .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 
-  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
-  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
-  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
 
-  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
-  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
-    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
-  .toc-it:last-child{border-bottom:0}
-  .toc-it:hover span:last-child{color:var(--red)}
-  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
 
-  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
-  .item:last-child{border-bottom:0}
-  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
-    -webkit-text-stroke:1px var(--muted);color:transparent}
-  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
-    margin-bottom:16px;text-wrap:balance}
-  .lp{margin-bottom:14px}
-  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
     background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
-  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
-  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
-  .why p{font-size:15.5px;line-height:1.75}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
 
-  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
-    word-break:keep-all;white-space:nowrap}
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
   a.src:hover{color:var(--red);border-color:var(--red)}
   a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
 
-  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
-    .listen{grid-template-columns:1fr}}
-
-  .sector{margin-bottom:26px}
-  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
-    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
-  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
-  .srow:last-child{border-bottom:0}
-  .st{font-weight:600;margin-right:4px}
-  .srow p{color:var(--muted)}
-  .srow .st{color:var(--ink)}
-
-  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
-  .trend:last-child{border-bottom:0}
-  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
-  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
-  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
-
-  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
-  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
-  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
-
-  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
     justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
     text-transform:uppercase;color:var(--muted)}
 </style>
-<meta name="iris-content-sha256" content="f26b9977ac0ba1d584bae92a94ac0c946e706789ce5433344be1ef9c135b25e4">
+<meta name="iris-content-sha256" content="367debfe41d8a70836599f60ebcc2d65fc135b503e7766d27a788e0b0f27c796">
 </head>
 <body>
-<div class="page">
-  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r"> · </span></div>
-  <h1></h1>
-  <div class="dateline"><span>要闻 <b>0</b></span><span>分领域 <b>0</b> 条</span><span>趋势 <b>0</b> 判断</span></div>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · AI 日报</span><span class="r">2026-09-07</span></div>
+  <h1 class="doc">2026-09-07 · 思染的 AI 日报</h1>
+  <div class="dateline"><span>全文 <b>5,180</b> 字</span><span>约 <b>14</b> 分钟</span><span>章节 <b>16</b></span></div>
   <div class="mast-bar"></div>
-  <p class="notice"></p>
-
-  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 0 · 先看目录再点读</span></div>
-  <nav class="toc"></nav>
   
-
-  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 0 items</span></div>
-  
-
-  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
-  
-
-  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
-  <ul class="sources"></ul>
-
-  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">今日要闻一｜微信“小微 AI 社交”出现内测报道，人与人的协商可能成为新的智能体场景。</a><a class="t-h2" href="#s2">今日要闻二｜外交部确认中美保持 AI 沟通，具体对话安排仍未获确认。</a><a class="t-h2" href="#s3">今日要闻三｜工信部公开 APEC 发布会实录，AI 普惠服务的实施路径更清楚。</a><a class="t-h2" href="#s4">今日要闻四｜最高法发布 AI 纠纷审理意见，产品的侵权与证据处理需要纳入交付设计。</a><a class="t-h2" href="#s5">七方向动态｜OpenAI / GPT</a><a class="t-h2" href="#s6">七方向动态｜Google / DeepMind / Gemini</a><a class="t-h2" href="#s7">七方向动态｜Anthropic / Claude</a><a class="t-h2" href="#s8">七方向动态｜中国 AI：字节、豆包、Seed、DeepSeek、智谱、MiniMax、通义</a><a class="t-h2" href="#s9">七方向动态｜AI 芯片 / NVIDIA / 算力</a><a class="t-h2" href="#s10">七方向动态｜政策监管</a><a class="t-h2" href="#s11">七方向动态｜投融资</a><a class="t-h2" href="#s12">腾讯 AI 专栏｜① 当日已核实更新</a><a class="t-h2" href="#s13">腾讯 AI 专栏｜② 值得继续跟踪的变化与竞争影响</a><a class="t-h2" href="#s14">腾讯 AI 专栏｜③ 检索覆盖与暂缺</a><a class="t-h2" href="#s15">趋势与产品启发</a><a class="t-h2" href="#s16">核实边界</a></nav>
+    <main><p>截至 17:32（北京时间）。本稿为严格截止 2026-09-07T17:32:47+08:00 的截稿快照，今天尚未结束。覆盖模型、产品、算力、监管与资本，以及腾讯六条产品线；只使用公开可访问材料。页面发布日、事件发生日和文档更新时间分别处理，海外公告保留原站日期；缺乏精确发布时间的同日线索不作为确定的新发布。</p><p>以下选取四条当日公开信息：微信内测报道、中美 AI 沟通表态、对先前会议的官方披露，以及最高法发布的 AI 纠纷审理意见。前沿模型的重要发布主要在此前一周，另标为近期背景。</p><h2 id="s1">今日要闻一｜微信“小微 AI 社交”出现内测报道，人与人的协商可能成为新的智能体场景。</h2><p>事件：每日经济新闻于今天 13:17 发布记者报道，称微信正在内测“小微 AI 社交”：用户提出诉求，对方确认后，由双方的小微沟通，再向用户反馈；需用户决定时会提醒确认。报道未提供面向全部用户的开放公告。因此，今天能够确认的是这篇实测报道的出现，不能确认内测恰于今天启动。<a class="src" href="https://m.nbd.com.cn/articles/2026-09-07/4574540.html">媒体原始报道</a></p><p>重要性与边界：若这一机制扩大开放，产品设计将需要处理“谁代表谁、哪些条件可以协商、何时必须交还本人”的问题。它可能减少约时间等事务的沟通往返，但尚不能推出已支持普遍商业交易或跨平台代理协商。本轮没有找到腾讯官方发布文书、完整版本要求、地区和名额条件；腾讯专栏将其列为跟踪线索，不计入官方已核实更新。<a class="src" href="https://m.nbd.com.cn/articles/2026-09-07/4574540.html">报道及其披露范围</a></p><h2 id="s2">今日要闻二｜外交部确认中美保持 AI 沟通，具体对话安排仍未获确认。</h2><p>事件：新华社今天 15:20:12 报道，针对中美可能在未来几周举行 AI 对话的提问，外交部发言人毛宁表示，双方就 AI 问题保持沟通。答复支持“沟通存在”，没有给出会议日期、议程或协议结果。<a class="src" href="https://www.news.cn/world/20260907/acc303d32cc148d691551de68f85ab63/c.html">新华社现场报道</a></p><p>重要性与后续：对有跨境业务的 AI 产品团队，这是一项值得继续观察的政策信号；目前不足以据此调整出口限制、服务地区或数据处理规则的判断。下一步应寻找正式日程及双方公告。此处未取得外交部官网当日完整实录，采用新华社记者报道，不能把提问中的预期转写成已确定的外交安排。<a class="src" href="https://www.news.cn/world/20260907/acc303d32cc148d691551de68f85ab63/c.html">新华社</a></p><h2 id="s3">今日要闻三｜工信部公开 APEC 发布会实录，AI 普惠服务的实施路径更清楚。</h2><p>事件：工信部今天 14:27 发布的实录对应 9 月 4 日在广州举行的新闻发布会。原文介绍亚太人工智能赋能中小企业发展合作中心，后续工作包括综合服务平台、轻量工具推介、培训与项目对接。这是今天公开的官方材料，会议及相关倡议发生于此前，不能写成今天新设中心。<a class="src" href="https://www.miit.gov.cn/jgsj/qyj/gzdt/art/2026/art_1f2a718de2204d48bf2b76ad3709fdb4.html">工信部原始实录</a></p><p>重要性与边界：由此可提出一个产品假设：面向中小企业的机会不只在模型接入，也在低门槛部署、行业模板和持续服务。中心规划提供了潜在对接渠道，但并不等于已经存在可申请的采购预算或补贴。企业产品进入这类渠道前，仍需等待具体服务目录、项目条件和验收方式。<a class="src" href="https://www.miit.gov.cn/jgsj/qyj/gzdt/art/2026/art_1f2a718de2204d48bf2b76ad3709fdb4.html">工信部实录</a></p><h2 id="s4">今日要闻四｜最高法发布 AI 纠纷审理意见，产品的侵权与证据处理需要纳入交付设计。</h2><p>事件：新华社今天 15:02 报道，最高人民法院发布关于依法审理涉人工智能纠纷案件的意见，共五部分、24条，涉及换脸拟声、AI 幻觉侵权、模型训练、开源软件和知识产权等问题。<a class="src" href="https://www.news.cn/legal/20260907/ce0e6790833740d3901d2448e22557ff/c.html">新华社原始报道</a> 最高法此前发布的预告确认发布会安排在今天 15:00；预告自身发表于 9 月 6 日，不能混作意见全文。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511011.html">最高法发布会信息</a></p><p>产品启发：这使内容来源、训练材料授权、输出标识、申诉与证据留存成为值得重新检查的工作项。以上是依据新闻提出的产品检查方向。本稿尚未逐条核对意见全文，因此不推断所有生成服务适用同一责任标准，也不把司法意见称为新颁布的法律。</p><h2 id="s5">七方向动态｜OpenAI / GPT</h2><p>未发现可核实的 9 月 7 日新模型发布。近期背景：OpenAI 的研究加速报告原始发布日期为 9 月 6 日。公司称已达到“自动化研究实习生”目标，即在人类指导下完成明确的研究任务。报告中，8 月中旬每个人类工作日对应 3.1 个智能体工作日，衡量的是运行时间，不是科研产出提升 3.1 倍；成功的 4—8 小时任务中，超过一半仍有人类干预。<a class="src" href="https://openai.com/index/research-acceleration-view-inside-openai/">OpenAI 原始报告</a></p><p>对产品管理的含义是，应同时观察完成率、人工接手和最终验收，不能仅凭运行时长认定自动化收益。这份材料来自 OpenAI 内部，研究人员、工具环境和资源条件有特殊性，也不是外部随机对照实验；迁移到普通企业之前，需要自己的任务样本验证。<a class="src" href="https://openai.com/index/research-acceleration-view-inside-openai/">报告方法与限制</a></p><p>另一项近期背景是 9 月 3 日发布的 GPT-6 Astra。发布公告列出分阶段开放安排，且企业工作区在上线时默认关闭、需管理员启用。公告中的计划不能独立证明截至今天所有账号均已获得相同权限。对采购和产品发布而言，应分别核对模型可用、工具可用、组织授权和额度，不能把型号出现在公告里等同于交付条件齐备。<a class="src" href="https://openai.com/index/gpt-6-astra/">Astra 官方发布公告</a></p><h2 id="s6">七方向动态｜Google / DeepMind / Gemini</h2><p>未发现可信的当日新发布。近期背景：Google 原始公告日期为 9 月 2 日，发布 Gemini 3.8 Flash 与 3.8 Flash Cyber。Flash 的公告介绍价为每百万输入 token 0.75 美元、输出 3.75 美元；Cyber 通过 Fairwind 向可信防御方提供。消费者入口写明 Google AI Pro、Ultra 订阅条件。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/">Google 官方公告</a></p><p>产品判断：低单价值得进入测试，但 Google 同时说明复杂任务可能使用更多 token，高推理强度尤其如此。比较模型应看完成相同任务的总费用和时延；Cyber 的准入也不能从普通 Flash 的可用性类推。上述价格是带期限的介绍价，不应直接当作长期成本常量。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/">价格、用量与准入说明</a></p><h2 id="s7">七方向动态｜Anthropic / Claude</h2><p>未发现可信的当日型号更新。近期背景：Anthropic 官方新闻目录将 Fable 5.1、Mythos 5.1 发布标为 9 月 1 日。公司说明二者为同一底层模型、采用不同安全限制：Fable 一般开放，Mythos 仅通过可信访问计划提供。缓存读取价格调整带来的节省是依赖工作负载的官方估算，不能直接视作每位客户都会获得的降本。<a class="src" href="https://www.anthropic.com/claude-fable-and-mythos-5-1">Anthropic 发布原文</a></p><p>同日宣布的 Enterprise Frontier Safeguards 更贴近企业采购：方案让活动数据留在客户控制的云基础设施，并由客户处理监测标记；官方计划在秋季稍晚分阶段开放。它显示数据控制权正在成为模型产品的一部分，但本稿没有证据证明这一计划已在所有企业账号落地。<a class="src" href="https://www.anthropic.com/news/enterprise-frontier-safeguards">EFS 官方公告</a></p><h2 id="s8">七方向动态｜中国 AI：字节、豆包、Seed、DeepSeek、智谱、MiniMax、通义</h2><p>本轮对上述厂商做了日期限定检索，并尝试读取 Seed、DeepSeek 文档、智谱及 MiniMax 官方入口，未找到足以确认为今天新增的完整官方发布记录。部分入口动态渲染或抓取失败，所以结论是“本轮未发现可信新增”，不是断言厂商今天没有动作。市场转述、促销汇总与未取得原文的模型能力数字不作补位。</p><p>近期研究背景之一是 E-Commerce Bench：arXiv 首次提交为 8 月 31 日，作者以模拟的一年电商经营评估长期智能体，覆盖采购、谈判、履约、退货和现金流。论文称不同模型在资产、效率、反欺诈等维度上各有强弱。这种评估把“持续经营的代价”纳入观察，适合启发企业验收指标；模拟资产增长不是实际商家的营收或投资回报。<a class="src" href="https://arxiv.org/abs/2608.30730">论文原始记录与摘要</a></p><p>另一项近期背景是 Qwen-Drive-1.0，arXiv 首次提交同为 8 月 31 日。它将三维感知、视觉问答和运动规划置于统一框架，并保留可检查的感知接口。产品启发在于让模型的中间判断可以检验；论文实验本身不等于车企量产、道路安全认证或商业部署，不能据此判断某款车已经获得该能力。<a class="src" href="https://arxiv.org/abs/2609.00111">论文原始记录</a></p><h2 id="s9">七方向动态｜AI 芯片 / NVIDIA / 算力</h2><p>未发现可核实的当日 NVIDIA 新芯片或新增交付公告。近期背景：NVIDIA 9 月 3 日的 IFA 文章把重点放在本地智能体部署、推理优化和 RTX Spark。原文将 RTX Spark Windows PC 的到来安排在 10 月，因此不能把展示设备当作今天已普遍可购买的现货，也不据此填写零售价格。<a class="src" href="https://blogs.nvidia.com/blog/local-ai-ifa-next-gen-agents-nv-pair-rtx-spark/">NVIDIA 官方文章</a></p><p>更具体的软件变化是同日发布的 PAIR：按官方技术文档，它把独立推理请求路由到局域网内可用设备，兼容 Ollama、LM Studio。每个请求仍由选中的节点完整执行。产品判断：其价值是降低多任务排队，而非自动把多台电脑显存合成一台大机器；评估时应使用实际并发任务，而不是期待单个超大模型自然获得跨机运行能力。<a class="src" href="https://developer.nvidia.com/blog/nvidia-pair-virtual-inference-router-expands-available-compute-on-your-local-network">NVIDIA 技术原文</a></p><h2 id="s10">七方向动态｜政策监管</h2><p>今天的重要司法动态是上文的最高法 AI 纠纷审理意见，另有中美沟通表态与工信部实录公开。意见的具体适用范围仍需依据全文和后续案件核对。近期背景：工信部《人工智能中小企业创业支持计划（2026—2028年）》通知成文于 8 月 29 日，官网发布于 9 月 4 日。已打开的通知正文确认文件印发，但附件内容没有在该页面完整展开，因此不引用二手文章中的补贴金额、企业数量目标或申报门槛。<a class="src" href="https://www.miit.gov.cn/jgsj/qyj/wjfb/art/2026/art_86c400b4473849818629663a94a6d44b.html">工信部通知</a></p><p>还需纠正一项时间错位：北京经开区 AI4Chip 行动计划的原始发布日期是 8 月 24 日，成文日为 8 月 23 日。即使今天出现有关报道，它仍是历史政策背景。对产业研究而言，政策落地后的执行进度值得跟踪，转载本身不能成为“今天政策再加码”的证据。<a class="src" href="https://kfqgw.beijing.gov.cn/zwgkkfq/2024zcwj/202608/t20260824_4834208.html">政策原始文书</a></p><h2 id="s11">七方向动态｜投融资</h2><p>本轮未取得可同时核实公告时间、金额与交易状态的当日重要融资事件。近期背景：NVIDIA 于 9 月 3 日宣布同意收购 Hugging Face，披露交易金额为 12,930,300,000 美元，约 129.303 亿美元。这是收购协议公告，不能写作今天融资完成或已完成交割。<a class="src" href="https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/">NVIDIA 收购公告</a></p><p>对产品公司的影响，首先可能是模型发现、评估与部署平台和算力供应商之间的联系加深。NVIDIA 在公告中承诺平台继续支持不同云和加速器、不要求使用 NVIDIA 硬件；这些是买方的公开承诺，后续仍应观察具体平台规则与服务条款。本稿不把生态协同推测折算为收入或股价收益。<a class="src" href="https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/">公告中的平台承诺</a></p><h2 id="s12">腾讯 AI 专栏｜① 当日已核实更新</h2><p><strong>无已核实更新。</strong> 此处指尚未找到能够确认“9 月 7 日新增产品功能、版本或服务发布”的官方证据。WorkBuddy、CodeBuddy 均未查到当日新版本记录；微信内测目前只有已打开的媒体报道，不能升级为腾讯官方发布。</p><p>当天确有官方文档更新时间：WorkBuddy 微信助理页面标注 9 月 7 日 10:38:33。但页面没有此次修订的差异说明，也没有原始首发日期；它可以作为当前使用条件的证据，不能证明微信助理今天首次上线。因此腾讯当天官方更新 URL 数组保持为空。<a class="src" href="https://cloud.tencent.com/document/product/1831/134438">腾讯云微信助理文档</a></p><h2 id="s13">腾讯 AI 专栏｜② 值得继续跟踪的变化与竞争影响</h2><p>WorkBuddy 的近期背景有明确版本证据：官方日志顶部为 9 月 4 日的 5.5.3，扩大了本地 Office 文件的预览上限，并修复企微机器人持续思考、消息处理完仍继续运行等问题。此前 9 月 1 日的 5.5.0 增加行业 Buddy 应用和微信聊天记录分享入口，9 月 3 日的 5.5.2 改善自动化状态及历史恢复。这提示团队既在扩展场景，也在修补持续执行的可靠性；修复记录不能证明相关故障已在所有环境消失。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy 官方更新日志</a></p><p>微信助理文档给出的可用前提是 WorkBuddy 至少 4.6.4、微信至少 8.0.70，电脑端已安装登录且保持运行，通过扫码绑定。它描述的是从微信向电脑上的 WorkBuddy 发任务并接收结果；不要由此推断所有任务脱离电脑也可执行。该页没有完整说明地区、订阅与灰度边界，这些条件仍暂缺。<a class="src" href="https://cloud.tencent.com/document/product/1831/134438">官方接入条件</a></p><p>另一个值得观察的企业化信号来自 WorkBuddy Enterprise 订购协议：文本明确 9 月 4 日生效，页面仅提供更新时间，首次发布日期未知。协议列出组合订购、OneID 和套件积分机制，但产品清单及权益以订单为准。对企业客户，这可能简化多产品采购，也要求比较实际可用席位与额度；不能理解为一个账号自动享有所有腾讯产品、全部积分无条件互通。<a class="src" href="https://cloud.tencent.com/document/product/301/137433">腾讯云订购协议</a></p><p>CodeBuddy 的状态基线：本次打开的 IDE 发布日志顶部为 4.11.3，日期 8 月 28 日，已经超出近七天新闻窗口。它包含长对话压缩优化及服务端中断后缺少错误提示等修复。本稿只用其说明版本核查结果，不把它填入今日要闻；IDE 日志也不能代表插件和 CLI 的全部发布活动。<a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy IDE 日志</a></p><h2 id="s14">腾讯 AI 专栏｜③ 检索覆盖与暂缺</h2><ul class="ls"><li>WorkBuddy：已访问两个官方首页，均未返回可读正文；随后成功读取官方更新日志及腾讯云接入、协议文档。未核实当日新发布，也未进行登录后的功能测试。</li><li>CodeBuddy：已读取指定 IDE 更新日志；当天没有可核实新增，插件、CLI 和企业灰度更新仍存在覆盖缺口。</li><li>混元与元宝：混元首页抓取失败，元宝首页可读内容有限；另已打开腾讯关于 Hy4 preview 的官方公告，原始日期为 8 月 28 日，其中说明接入混元相关腾讯产品。该材料仅作旧状态基线，不能当作今天或近七天的新模型新闻。<a class="src" href="https://www.tencent.com/zh-hk/tencent-releases-and-open-sources-tencent-hy4-preview/">腾讯官方公告</a></li><li>腾讯云：已核查 WorkBuddy Enterprise 文档、协议及模型服务线索；部分页面抓取失败。只有更新时间或常驻介绍的页面未计作功能发布。</li><li>微信 AI：已核实 WorkBuddy 微信助理的文档条件；“小微 AI 社交”另列媒体报道。二者的产品身份和证据来源不同，目前没有依据将其合并成同一次官方发布。<a class="src" href="https://cloud.tencent.com/document/product/1831/134438">接入文档</a></li></ul><h2 id="s15">趋势与产品启发</h2><p>第一，评估对象正在从一次回答延长到一段工作过程。E-Commerce Bench 的模拟环境要求持续处理业务状态与资金约束，说明单次输出质量不足以描述运营能力。可据此设计一个更贴近业务的试验：让同一组任务经过资料变化、工具失败和重新执行后，再看最终交付、人工时间与损失。这里提出的是评估方法，不是论文已经证实某产品可以自治经营。<a class="src" href="https://arxiv.org/abs/2608.30730">研究依据</a></p><p>第二，安全控制本身影响可交付范围。OpenAI 在 9 月 3 日安全概览中称，Astra 的工具使用部署加入了行为失准监测，同时承认其思维链可监测性下降；规避监测的结果主要来自对抗评估。由此推断，企业验收不能只检查模型解释，还应检查实际动作与权限边界；但不能把对抗测试转写为真实用户已遭受同类事故。<a class="src" href="https://openai.com/index/safety-overview-gpt-6-astra/">OpenAI 安全概览</a></p><p>第三，企业产品的差异会体现为谁掌握数据、谁处理异常。EFS 的设计把日志存储与人工复核责任更多放到客户侧，这给产品团队一个具体问题：若引入持续工作的智能体，业务人员、安全团队和供应商分别看见什么、承担什么工作？目前它仍是分阶段开放计划，不能提前把规划中的控制能力写入对客户的现有承诺。<a class="src" href="https://www.anthropic.com/news/enterprise-frontier-safeguards">EFS 方案与开放状态</a></p><p>第四，本地执行值得按工作负载分层评估。NVIDIA 的 IFA 材料同时出现已提供的软件能力、仍待支持的操作系统和计划到来的硬件，说明“本地 AI”并不是单一可用状态。对于办公产品，应把本地数据处理、模型运行位置、云端升级路径分别说明；否则用户很容易把本地客户端误解为所有信息都留在本机。<a class="src" href="https://blogs.nvidia.com/blog/local-ai-ifa-next-gen-agents-nv-pair-rtx-spark/">NVIDIA IFA 原文</a></p><h2 id="s16">核实边界</h2><p>本稿没有使用账户内消息、付费数据库或旧日报作为新事实依据。未取得原文的 IPO 时点、估值、国产模型收入和 GPU 安装比例未予采用；没有编制当日行情或资金流汇总。文档只给更新时间时，来源中的 published_date 填 unknown，并在 supports 说明时间证据。全文的“未发现”均限定于本轮公开检索覆盖，不代表对全部官方渠道的穷尽证明。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
 </div>
 </body>
 </html>
