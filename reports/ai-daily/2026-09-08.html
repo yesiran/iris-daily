@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28155%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%229%22%20r%3D%227%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2212%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.17%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-08</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="afb55482bdca5902947101a2b5ac6fc7a320f620250ddd734b1fe9b7b865700c">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-08 · 周二</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>4</b> 条</span><span>趋势 <b>4</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">本期主线：AI 竞争继续向真实工作推进——个人风格、桌面交付、多模态速度与研究数据入口，都在改变“一个任务究竟值多少钱”。截至北京时间9月8日23:59；覆盖9月8日完整自然日。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>ChatGPT Work 开始学你的文风，Astra 付费订阅额度完成重置</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>DeepSeek V4.1 Flash 开启短期测试：先验证速度，再核算账单</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>小米 MiMo Desktop 开放邀测，竞争对象变成完整的桌面工作流</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>Google 发布 AlphaGenome Atlas，把大规模预测变成可直接查询的研究资源</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>OpenAI 与 Firmus 签约马来西亚算力，900 MW 指全客户合同规模</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>ChatGPT Work 开始学你的文风，Astra 付费订阅额度完成重置</h3><p class="lp"><span class="lk">事件</span>OpenAI 的 ChatGPT 官方账号宣布，Work 可以从已连接的 Gmail、Google Drive、Slack、SharePoint 等工具学习用户的惯用表达和写作特点。这条美国时间9月7日的消息，发布于北京时间9月8日凌晨；不是把昨天的 Astra 首发再报道一次。<a class="src" href="https://x.com/ChatGPT/status/2097018264048251309">官方原帖</a>提供了功能说明，<a class="src" href="https://pc.watch.impress.co.jp/docs/news/2139019.html">PC Watch 当日报道</a>补充了设置入口。同日中午，Tibo 确认此前预告的付费订阅用量重置已经完成；这是一次额度恢复，不能理解为永久提额或 API 降价。<a class="src" href="https://x.com/thsottiaux/status/2097174560412246215">重置完成原帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>写作助手最常见的返工，是内容大体正确、语气却始终不像本人。若能从实际工作材料中提炼风格，用户就少了一轮反复示范；但相似的口吻也更容易让人忽略内容错误。产品验收应同时看修改次数和事实保真，不能只看“像不像我”。额度恢复则给高消耗任务提供了重新试用窗口。</p></div><p class="lp"><span class="lk">接下来观察</span>把同一份邮件或方案交给开启、关闭文风学习的两种设置，比较最终采纳率、事实改动和人工修改时间；另外单独记录 Astra 在额度重置后的任务耗用。不要把一次充值式的体验改善，计入长期单位成本下降。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>DeepSeek V4.1 Flash 开启短期测试：先验证速度，再核算账单</h3><p class="lp"><span class="lk">事件</span>9月8日下午，DeepSeek 官方社区出现 V4.1 Flash 中间版本测试公告。<a class="src" href="https://www.yicai.com/news/103356428.html">第一财经原文</a>附有公告截图：新结构、原生多模态是厂商宣称的变化，测试模型名带有9月10日到期标记，每账号限制20并发，当前计费与 V4 Flash 相同。<a class="src" href="https://finance.sina.com.cn/tech/roll/2026-09-08/doc-inirceww4639322.shtml">机器之心当日报道</a>也记录了测试开放与早期体验。尚不能据此认定模型正式商用、权重开放，或把社区个例速度当成所有任务的提升。</p><div class="why"><span class="why-k">为什么重要</span><p>更短等待时间会改变用户愿意交给 AI 的任务：原本不值得等的多轮检查、图文核对，可能进入日常流程。但输出更快，并不自动意味着单任务更便宜；同样的时间里也可能消耗更多内容。短期接口适合跑一组固定样本，测试质量、耗时、总费用，不适合直接替换需要长期稳定的生产依赖。</p></div><p class="lp"><span class="lk">接下来观察</span>在相同材料和验收标准下，对比 V4 Flash 与测试版的完整任务耗时、重试次数、成功交付成本；重点看图片理解是否减少后续纠错。等待正式版本、到期安排与价格说明，再决定迁移规模。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>小米 MiMo Desktop 开放邀测，竞争对象变成完整的桌面工作流</h3><p class="lp"><span class="lk">事件</span>据9月8日15:36发布的<a class="src" href="https://www.ithome.com/0/999/751.htm">IT之家报道</a>，小米 MiMo Desktop 开放申请测试，获准用户可限时、限量免费体验 MiMo-X-Pro-Preview 和 MiMo-X-Flash-Preview。报道引用小米公告，介绍了混合材料输入、可继续编辑的成果、会话内交互预览及浏览器操作。当前属于邀测，不等于所有人已可使用；这些是产品公布的能力，本期没有独立完成客户端实测。</p><div class="why"><span class="why-k">为什么重要</span><p>当输入从一句问题变成文件、录音、网页，输出从一段文字变成可操作成果，竞争的单位就从“回答得好”变成“交付得完整”。对已有办公 AI 产品而言，单独增加一个模型入口的价值会被压缩；材料能否接入、用户能否快速改稿、关键交互能否验证，才直接决定任务完成率和留存。</p></div><p class="lp"><span class="lk">接下来观察</span>邀测资格、实际支持的平台与功能范围，以及一次任务从导入原始材料到可用成果的人工接手次数。特别检查浏览器动作是否准确、失败后能否继续、导出文件是否仍能编辑；漂亮的演示不能代替这些连续使用指标。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>Google 发布 AlphaGenome Atlas，把大规模预测变成可直接查询的研究资源</h3><p class="lp"><span class="lk">事件</span>北京时间9月8日22:00，Google DeepMind 发布 AlphaGenome Atlas，预先计算约90亿种人类 DNA 单字母变异的分子影响，并提供整合 AlphaGenome 与 AlphaMissense 预测的 AVI 评分。研究者可经网页、API 和 Antigravity 技能使用相关资源；非商业访问已开放，Atlas 的 Google Cloud 商业使用仍标为即将提供。<a class="src" href="https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/">DeepMind 原文</a></p><div class="why"><span class="why-k">为什么重要</span><p>许多研究团队的瓶颈并非没有预测模型，而是无力对海量候选逐一计算、整理和解释。把共同需要的结果先算好，再提供排序与解释入口，能把重复建设变成共享基础设施。它影响的是“先验证哪个候选”的决策成本；预测仍需实验检验，不能直接等同疾病诊断，更不能把学术可用写成商业授权到位。</p></div><p class="lp"><span class="lk">接下来观察</span>独立团队能否在真实研究中减少候选筛选和实验轮次；评分对不同组织、变异类型的适用范围；商业访问的价格与许可。对科学 AI 产品，入口便利只是起点，可追溯的结果与验证效率才决定长期价值。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>OpenAI 与 Firmus 签约马来西亚算力，900 MW 指全客户合同规模</h3><p class="lp"><span class="lk">事件</span>9月8日，<a class="src" href="https://firmus.co/newsroom/firmus-surpasses-900-mw-contracted-capacity-adds-openai-as-anchor-customer-and-expands-into-malaysia">Firmus 公告</a>确认与 OpenAI 达成多年合作，后者将采购马来西亚两处站点的专用算力。合作后 Firmus 全体客户的已签约容量超过900 MW，并非 OpenAI 单独采购900 MW，也不是这些容量都已上线。公司七个站点中两个运营、五个在建，后者目标在未来24个月陆续具备服务条件；马来西亚项目计划使用 NVIDIA Vera Rubin 系统。</p><div class="why"><span class="why-k">为什么重要</span><p>持续使用 AI 的需求最终会遇到物理交付周期：签下合同之后，还要把供电、冷却、设备与网络变成稳定服务。对产品团队，这意味着长期供给扩张与眼前的限流并不矛盾；不能根据新建站新闻立即承诺更低价格或更高并发。供应商评估应追踪已上线容量和可靠性，而不是累计签约数字。</p></div><p class="lp"><span class="lk">接下来观察</span>马来西亚站点的实际上线里程碑、服务区域和可售容量，以及是否转化为用户端等待时间、可用性或价格改善。Firmus 公告没有披露 OpenAI 单独的容量与交易金额，这两个数字仍应留空。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 4 items</span></div>
+  <div class="sector"><div class="sector-h">投融资与企业部署</div><div class="srow"><p><strong class="st">Mistral 完成30亿欧元 D 轮融资：</strong>公司公告披露投后估值超过210亿欧元，Samsung Electronics 领投，Scaleup Europe Fund 与 PSG Equity 共同领投，资金用于研究、算力、基础设施与商业拓展。值得看的是企业能否控制数据、定制模型并保持部署选择，而非把融资额当成模型领先证明。<a class="src" href="https://mistral.ai/fr/news/mistral-makes-sovereign-open-weight-ai-to-frontier/">Mistral 官方说明</a>；<a class="src" href="https://techcrunch.com/2026/09/08/mistral-raises-e3b-as-sovereign-ai-becomes-big-business/">当日报道时间</a>。</p></div></div><div class="sector"><div class="sector-h">产品体验与研究讨论</div><div class="srow"><p><strong class="st">Astra 的实物设计案例继续传播：</strong>Greg Brockman 在9月8日转引了用户用视频说明问题、生成设计并3D打印的案例；原始案例发布于9月7日。它可作为“多模态理解—工具操作—实物验证”的体验线索，尚不足以证明广泛工程可靠性。<a class="src" href="https://x.com/gdb/status/2096998038443348263">当日转引与原案例</a></p></div><div class="srow"><p><strong class="st">Anthropic 本期不重复旧模型发布：</strong>可读取的应用日志最新条目为9月1日 Fable 5.1/Mythos 5.1，开发者日志最新为9月3日命令行工具更新。新研究线索中，J-space 原文实际发表于7月6日，并非9月8日刚发现的“AI 内心世界”。这类内容可单独深读，本期不充当新闻增量。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">应用日志</a>、<a class="src" href="https://platform.claude.com/docs/en/release-notes/overview">开发者日志</a>、<a class="src" href="https://www.anthropic.com/research/global-workspace">研究原文</a></p></div></div><div class="sector"><div class="sector-h">产业政策</div><div class="srow"><p><strong class="st">消费品工业明确推进“人工智能＋三品”：</strong>工信部9月8日会议部署相关专项行动，并提出智能家居跨品牌、跨品类互联互通。对应用团队，更值得追踪具体场景、采购与接口落地，会议部署本身不等于新增订单。<a class="src" href="https://www.miit.gov.cn/xwfb/bldhd/art/2026/art_77aedfadd17a4bcdbfc09ae1b766b316.html">工信部原文</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>9月8日无已核实更新。</strong> 本期能确认的 WorkBuddy 和 CodeBuddy 产品版本记录仍早于报告日；未把文档维护时间当成发布日，也未找到足以确认当天混元、元宝或微信 AI 新功能正式开放的官方证据。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p>WorkBuddy 产品站顶部为 <strong>5.5.3，9月4日</strong>：其修复涉及企业微信群机器人持续思考、消息处理后仍继续运行等问题。这些看似细碎的稳定性改进，直接关系到自动任务能否按时停下、是否重复耗费资源。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy 更新日志</a></p></div><div class="srow"><p>CodeBuddy IDE 顶部为 <strong>4.12.0，9月4日</strong>，包括多根工作区、统一插件与 Skill 市场等更新；页面的9月8日维护时间不能改写版本日期。多项目规则是否各自生效、插件能否可靠地更新和移除，比单纯展示市场条目数更能影响开发者的持续使用。<a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy IDE 更新日志</a></p></div><div class="srow"><p>本期的小米桌面邀测与 ChatGPT Work 文风学习，让腾讯的竞争问题更具体：能不能让用户用熟悉的材料、既有表达习惯和业务入口完成一件事。WorkBuddy 可以重点比较导入微信材料后的上下文保真、跨工具执行后的交付完整性；CodeBuddy 则要看跨项目任务是否减少人工搬运。以上是产品判断，不是腾讯当日新增功能公告。</p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>本期核查了两个产品站版本日志，并检索混元、元宝、微信及 WorkBuddy 动态。腾讯云镜像与公告页本轮未能稳定读取，不能据此断言腾讯所有产品当天都没有更新。可读的产品站证据已足以确认上述版本日期；其它方向保留缺口，不用旧消息填满专栏。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>桌面 AI 的护城河开始落在“少返工”上。</h4><p>
+ChatGPT Work 的文风学习处理表达返工，MiMo Desktop 的交互预览处理成果返工，CodeBuddy 多工作区处理跨项目上下文搬运。共同指向同一个采购问题：完成一项真实任务，还需要人补多少步骤？对产品负责人，下一轮评测可以把“用户纠正次数”和“最终可直接采用的比例”放在模型分数旁边。若答案质量提高，却仍要手动找材料、复制结果、排查导出，用户感受到的提升会很有限。</p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>速度、额度与便宜，是三件需要分别记账的事。</h4><p>
+DeepSeek 测试版强调速度，但公告保留原计费；Astra 当天重置的是可用额度；Firmus 的合作增加未来供给承诺。三者都可能改善体验，却沿着不同路径发生。合理比较应以同一个任务的成功交付为分母，算上重试、工具调用、等待与人工检查。先固定验收要求，再讨论哪个模型便宜，才能避免低单价配高返工，或者一次临时优惠掩盖长期消耗。</p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>把能力做成可反复调用的资源，比一次演示更接近业务价值。</h4><p>
+Atlas 把海量预测整理成查询、排序与解释入口；小米把生成结果放进可继续操作的会话；腾讯持续修复消息、文件与任务状态。价值来自成果能否接入下一步工作。做垂直 AI 应用时，可以先找出用户反复进行的共同准备工作，决定哪些适合预先计算、哪些需要保留人工判断，再设计模型调用。这样衡量的不是模型说了多少，而是流程少走了几步。</p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>企业对 AI 的控制权，会进入交付方案的核心。</h4><p>
+Mistral 用融资继续支持模型、基础设施和企业部署，Firmus 则把区域算力建设落到具体站点。对于企业客户，能力强只是一个维度，还要能回答数据在哪里、服务何时可用、失败由谁处理、依赖能否替换。产品团队可以在试点时就要求供应商展示导出、审计与替换路径；等业务已经紧密依赖单一服务后，再谈控制权，调整成本通常更高。</p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>本期把公司公告、产品日志与公开原帖作为核心证据。DeepSeek 以媒体原文及其展示的官方社区公告交叉核对；小米以可读取的媒体原文确认邀测，官方微信原页本轮遇到访问验证，因此不把演示描述写成实测结论。Google Atlas 的发布时间已换算为北京时间，商业访问与研究访问分别表述。</li><li>厂商所称性能、效率及未来交付仍需独立结果验证；本期不采纳缺少完整条件的社区跑分，也未把数学成果争议判定为已坐实的学术不端。旧版模型、旧研究和当天只是修改过的页面，只在确有解释作用时作为背景出现。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
