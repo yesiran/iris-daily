@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28136%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%2236%22%20r%3D%2218%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2227%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.18%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>压缩记忆该改多少？让模型把不确定性也记下来</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="89a123a1ae80cdb38125990948352908bb2956f7bd5d87243ab34f4980786b57">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-10</span></div>
+  <h1 class="doc">压缩记忆该改多少？让模型把不确定性也记下来</h1>
+  <div class="dateline"><span>全文 <b>3,150</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Kalman Delta Networks: Uncertainty-aware Associative Memory</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.07816">https://arxiv.org/abs/2609.07816</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Ngoc Bui, Tinglin Huang, Rex Ying</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Department of Computer Science, Yale University</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-07</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF论文页显示9月9日提交；原文提供理论推导、受控预训练比较与消融；未核实同行评审录用或独立复现，不采用动态赞数和排名</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 线性注意力, 不确定性, 循环记忆</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-10.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-10.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-10-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：只有一本固定大小笔记本的模型</a><a class="t-h2" href="#s4">二、困境：同样的冲突，可能需要相反的动作</a><a class="t-h2" href="#s5">三、旧路：先找差额，再由门控制修改力度</a><a class="t-h2" href="#s6">四、转折：再记一份“这张笔记有多不确定”</a><a class="t-h2" href="#s7">五、解法：让这份额外记录能够并行计算</a><a class="t-h2" href="#s8">六、结局：机制成立的迹象，收益仍须按尺度看</a><a class="t-h2" href="#s9">七、内核：压缩后的记忆，需要保留影响下一次修改的状态</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><p>2026-09-10｜截至 01:30（北京时间）。这是截稿快照，严格截止于 2026-09-10T01:30:55+08:00。本文研究 arXiv v1：首次提交时间为 2026-09-07 17:53:29 UTC，即北京时间 9 月 8 日 01:53:29；元数据保留原站的 9 月 7 日。论文位于过去14天选题窗口内，按所附台账核对ID及标题，未发现重复。<a class="src" href="https://arxiv.org/abs/2609.07816">原始提交记录</a></p><h1 id="s1">推荐理由</h1><p>模型读到新信息时，究竟应该改掉多少旧记忆？如果旧记忆只是仓促写下的猜测，新证据理应有更大分量；如果它已经获得充分支持，一次含噪输入就不该轻易覆盖它。Kalman Delta Networks（KDN）把这个问题落实成了一个可训练的内部机制：在保存压缩记忆之外，再保存对这份记忆的不确定性，并用两者共同决定更新。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§3</a></p><p>推荐它的原因是解释力。它把一系列Delta规则模型放进同一套估计框架：模型正在追踪一张不断变化的“线索→内容”映射，而写入是一种带噪测量后的修正。这使“遗忘多少”“相信新输入多少”“旧记忆还有多可靠”能够放在一起推导。随后，作者又处理了理论上合理、GPU上却难以高效计算的矛盾。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§3—4</a></p><p>质量信号应适度看待：HF论文页显示它于9月9日被提交，作者和耶鲁大学计算机系署名可在原文核对；HF收录只说明社区可见性。本文没有核实到该论文的同行评审录用或独立复现，不把社区热度当实验可靠性的替代。<a class="src" href="https://huggingface.co/papers/2609.07816">HF论文页</a> <a class="src" href="https://arxiv.org/html/2609.07816v1">原文署名与机构</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：只有一本固定大小笔记本的模型</h2><p>把循环记忆想象成一本页数固定的笔记本。输入持续到来，模型不能无限添页，只能修改已有记录。这里的“联想记忆”是一个矩阵：给它一条线索，也就是key，它返回相应内容，也就是value。线性注意力把此前输入压进这种固定大小的状态，解码时不必持续扩张历史缓存。笔记本只是解释类比，实际记录是连续向量，并非逐条可读的事实。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§2</a></p><h2 id="s4">二、困境：同样的冲突，可能需要相反的动作</h2><p>一条新输入与记忆不一致，原因可能是旧记录过时，也可能是新输入含噪。仅知道差了多少，还不足以决定该改多少。固定容量又让这种判断格外重要：一次猛烈写入，可能干扰其他共享表示的关联；更新过轻，则可能保住已经失效的内容。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§1、§3.1</a></p><h2 id="s5">三、旧路：先找差额，再由门控制修改力度</h2><p>Delta规则先读取当前key对应的旧预测，再计算“新value减旧预测”，只写入这部分差额。这个差额叫残差。Gated DeltaNet进一步允许旧状态衰减，KDA让不同通道以不同速度衰减。但它们的写入力度仍由token表征预测的门来控制，没有单独递推记忆协方差。这里不能夸大成“旧模型完全不利用历史”：当前层的表征可能包含上下文，缺少的是明确保存、逐步更新的置信状态。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§2—3.3</a></p><h2 id="s6">四、转折：再记一份“这张笔记有多不确定”</h2><p>KDN把记忆矩阵看作对隐藏映射的估计，同时维护协方差：它描述不同key方向上的估计不确定性及其关联。每一步先预测旧记忆如何保留或变化，再接收新value作为一次含噪测量。过程噪声表示旧映射可能发生了未能预测的变化；观测噪声表示当前value有多少不应被当作稳定记忆目标。两种噪声各有作用。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§3.1—3.2</a></p><p>模型仍然写残差，只是写入权重改由卡尔曼增益计算。直觉上，旧记忆越不确定、当前测量越可靠，就越愿意修正；旧记忆越稳、当前测量越嘈杂，就越谨慎。作者证明的最优性有明确条件：在线性、高斯噪声等设定下，精确滤波得到最小均方误差的状态估计。它不是关于所有语言现象或最终回答真实性的无条件定理。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§3.2、附录A.1</a></p><h2 id="s7">五、解法：让这份额外记录能够并行计算</h2><p>精确协方差需要为每个头保存一个d_k×d_k矩阵，而且后续更新依赖此前状态，难以直接套用高效并行扫描。作者设计了两种近似：Diagonal KDN给每个key通道保留一个不确定性数值，额外状态为O(d_k)；Isotropic KDN让每个头共享一个数值，额外状态为O(1)。这些复杂度只指新增的不确定性状态，原有记忆矩阵仍然存在。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§4</a></p><p>关键算法连接是：近似后的不确定性递推能写成“两个一次式相除”的分式变换，也叫Möbius变换。把每一步编码成2×2矩阵，连续更新就变成矩阵乘法。乘法满足结合律，因此可分组并行求出各位置的历史累积结果，再计算记忆更新；理论并行深度为对数级。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§4.1，式32—33</a></p><p>但近似会丢信息。对角形式丢掉通道之间的相关性，可能低估某条联合key方向已经获得的保护，导致后续写得过重。作者增加信息缩放系数μ：当前写入完成后，加强记入的不确定性下降，从而抑制未来沿重叠方向的覆盖。固定当前预测状态时，这一步不改变当前写入；它先改变的是未来更新。主实验使用μ=d_k，头维度为128。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§4.1、§5.1、附录B</a></p><h2 id="s8">六、结局：机制成立的迹象，收益仍须按尺度看</h2><p>作者在相同数据、骨干与训练配方下比较不同记忆模块，纯循环模型的非嵌入参数量匹配误差控制在0.03%内。两组预训练分别是750M参数、50B训练token，以及1.3B参数、100B训练token。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§5.1</a></p><p>在750M纯循环设置，Diagonal KDN的六任务平均准确率为54.97%，KDA为53.87%，相差1.10个百分点。到1.3B，分别为60.45%和60.28%，只差0.17个百分点；WikiText困惑度从15.40降至15.04，LAMBADA从10.09降至9.75。困惑度衡量对实际文本的预测难度，越低越好。这些结果支持受控设置中的改进，尚不足以宣称广泛的能力跃迁，主表也未提供多训练种子的置信区间。<a class="src" href="https://arxiv.org/pdf/2609.07816v1#page=12">原文表1，PDF第12页</a></p><p>更贴近记忆用途的六项真实检索任务中，1.3B纯循环Diagonal KDN均分34.86%，KDA为33.76%，但输入限制为2K token。接入滑动窗口注意力后，Isotropic KDN组合的均分45.94%，高于Diagonal组合的45.55%。因此“更细的不确定性表示处处更好”并未得到证明。<a class="src" href="https://arxiv.org/pdf/2609.07816v1#page=14">原文表3，PDF第14页</a></p><p>速度同样有代价。作者测量的是单张H200上的记忆混合层，而非完整应用：Isotropic版本接近KDA，Diagonal版本因额外扫描而增加开销，长上下文吞吐领先的是Mamba-3 SISO。超过4K训练长度的测量属于计算扩展探针，不能直接解释成同等长度的可靠理解能力。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§5.3、图4</a></p><h2 id="s9">七、内核：压缩后的记忆，需要保留影响下一次修改的状态</h2><p>我的机制归纳是：记忆压缩的损失，不只发生在“忘了哪条内容”，也发生在“忘了该怎样对待留下的内容”。如果两段历史产生相似记忆值，却积累了不同程度的支持，下一次更新就可能需要不同力度。KDN把这种区别存进额外状态，并给出能在硬件上实现的近似形式。它推进的是模型内部记忆更新的设计与理解。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§3—4；上述归纳为本文解释</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，先看最近的并行路线。2026年2月首次提交的Kalman Linear Attention已经将序列混合写成贝叶斯滤波，并通过信息形式实现并行扫描。因此不能把KDN写成“首次把卡尔曼滤波用于语言模型”。KDN明确将自己的差异放在key条件下的矩阵联想记忆，以及对应的协方差近似上。<a class="src" href="https://arxiv.org/abs/2602.10743">KLA原始记录与摘要</a> <a class="src" href="https://arxiv.org/html/2609.07816v1">KDN§6</a></p><p>再往前一层，2024年12月的Gated Delta Networks把快速遗忘和定向残差更新结合起来。它回应的是有限记忆如何腾出位置、如何准确修改。沿着这条问题链，KDN进一步追问：即使已经知道要修改哪个方向，这一次究竟应该修改多重？<a class="src" href="https://arxiv.org/abs/2412.06464">Gated Delta Networks</a></p><p>最底下一层，2021年的Linear Transformers Are Secretly Fast Weight Programmers把线性注意力解释为动态改写有限记忆的过程，并用Delta式规则替代纯加法写入。这让注意力模块可以被理解为一个小型在线学习系统。本文由此串起一条脉络：先能纠错，再能遗忘，继而明确追踪更新所依据的不确定性。这是解释性梳理，不表示所有工作组成严格的单线继承关系。<a class="src" href="https://arxiv.org/abs/2102.11174">Fast Weight Programmers</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p>对模型进化的判断：这篇论文提供了一个可检验的架构方向——用少量额外状态描述记忆估计的可靠程度，以改善固定容量下的更新决策。实验的有效范围是论文中的小规模预训练、常识与检索评测；它没有展示跨会话个人记忆、开放世界事实核验或大型代理任务的收益。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文§5</a></p><p>对产品的推演：如果以后评估长对话助手，可以把测试拆成两类。第一类让稳定信息受到干扰，观察误覆盖；第二类明确改变真实状态，观察纠正旧记录的速度。只测前者，容易奖励一个过度保守的记忆系统；只测后者，又可能奖励见新就改的系统。这套评测建议来自论文中“保护与更新”的张力，尚非论文已验证的产品方案。<a class="src" href="https://arxiv.org/html/2609.07816v1">推演依据：原文§3.1、附录B</a></p><p>还要保留一个反例：同一错误被反复复制，可能看起来像越来越充分的观测。协方差下降本身并不检查来源独立性或现实真伪。外部知识库若借鉴这种设计，仍需单独处理来源、时效和纠错权限。KDN也不是给现成模型加一句提示词即可获得的能力；原文是在预训练中更换内部序列混合模块。<a class="src" href="https://arxiv.org/html/2609.07816v1">机制边界依据：原文§3.1、§5.1；反例与产品判断为本文推演</a></p><h1 id="s12">来源</h1><p>本文依据Ngoc Bui、Tinglin Huang、Rex Ying的《Kalman Delta Networks: Uncertainty-aware Associative Memory》v1进行中文解释、结构重组与评论，未获作者背书。arXiv明确标注原文采用CC BY 4.0；该许可允许分享与改编，要求适当署名、附许可链接并标明修改。本报告已提供作者、原标题、原文链接和改编说明。<a class="src" href="https://arxiv.org/html/2609.07816v1">原文及许可标记</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0许可</a></p><p>原始提交日期以<a class="src" href="https://arxiv.org/abs/2609.07816">arXiv记录</a>为准；机制依据<a class="src" href="https://arxiv.org/html/2609.07816v1">HTML全文</a>，关键表格与<a class="src" href="https://arxiv.org/pdf/2609.07816v1">PDF原文</a>交叉核对。<a class="src" href="https://huggingface.co/papers/2609.07816">HF页面</a>仅用作发现入口与社区展示证据。脉络中的三篇前驱均已实际打开原始记录：<a class="src" href="https://arxiv.org/abs/2602.10743">2026年KLA</a>、<a class="src" href="https://arxiv.org/abs/2412.06464">2024年Gated Delta Networks</a>、<a class="src" href="https://arxiv.org/abs/2102.11174">2021年Fast Weight Programmers</a>。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
