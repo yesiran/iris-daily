@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2852%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2216%22%20r%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2243%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.11%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型必须经过内部思考，并验证这段思考确实有用</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="03b513150e61fbb4918dfd862d0adcda941b9edce0d32ec7766679edef4ea9f3">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-11</span></div>
+  <h1 class="doc">让模型必须经过内部思考，并验证这段思考确实有用</h1>
+  <div class="dateline"><span>全文 <b>3,139</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Reason Through the Latent! Making Latent Visual Reasoning Necessary</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.06746">https://arxiv.org/abs/2609.06746</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Suhyeong Park, Junha Jung, Jaewoo Kang</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Korea University；AIGEN Sciences（论文署名）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-06</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF 9月9日论文页收录；原文提供重训练消融及因果干预；同行评审接收与独立复现未核实；不采用动态赞数或排名</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, latent-visual-reasoning, causal-analysis</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-11.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-11.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-11-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个看过图片的问题表示</a><a class="t-h2" href="#s4">二、困境：写了工作纸，不代表交卷时用了它</a><a class="t-h2" href="#s5">三、旧路：只把旁路封死，可能连原有能力也丢掉</a><a class="t-h2" href="#s6">四、转折：寻找“已经看懂一些，还能继续看”的位置</a><a class="t-h2" href="#s7">五、解法：工作纸持续修改，图像证据保持可读</a><a class="t-h2" href="#s8">六、结局：保住能力，还要证明重新看图有贡献</a><a class="t-h2" href="#s9">七、内核：计算经过哪里，与那里做了什么，要分开证明</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><p>2026-09-11｜截至 01:30（北京时间）。这是截稿快照。今日选择过去7天内的 CVRR，未与所附台账的 arXiv ID 或标题重复。原始提交时间为2026年9月6日17:39:32 UTC；本文依据截止前的 v1，发布日期保留 arXiv 的原始日期。<a class="src" href="https://arxiv.org/abs/2609.06746">提交记录</a></p><h1 id="s1">推荐理由</h1><p>一个模型在回答前生成了几步内部状态，我们很容易把它叫作“思考”。但如果把这些状态换掉，答案照样正确，它到底依靠什么完成任务？CVRR 值得读，就在于它把这个疑问变成了可以动手检查的计算路径问题：先让图像信息必须经过循环更新的内部状态，再验证循环中的重新观察有没有改变答案。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第1—3节</a></p><p>这里的“潜在状态”，就是模型内部尚未转换成文字的一组数值表示；“潜在视觉推理”，则是让这组表示承担中间计算。论文区分了三个命题：状态里包含信息，回答依赖该状态，状态经过更新后更有用。前一个命题成立，并不能自动推出后两个。作者既改变结构，也做干预，因而提供了比单看正确率更可追问的证据。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第1节、第5节</a></p><p>HF 页面显示该论文由作者于9月9日提交，可作为研究社区发现它的信号；这不等于同行评审认可。推荐的主要依据是原文的问题意识和实验设计。本文没有核实会议接收或独立复现，不使用无法还原截稿时点的赞数、排名和下载量。<a class="src" href="https://huggingface.co/papers/2609.06746">HF论文页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个看过图片的问题表示</h2><p>可以把模型想成一名看图答题的人：面前有图片，手里有一张工作纸。这个类比中的工作纸，对应问题词元的隐藏状态；词元是模型处理文本的基本单位。模型读过图后，即使这些位置原本来自问题文字，它们也可能已经吸收图像信息。因此，文字位置上的内部状态不等于只有文字信息。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第2.2节、第3.2节</a></p><h2 id="s4">二、困境：写了工作纸，不代表交卷时用了它</h2><p>作者先保留原有多模态回答通路，把若干潜在推理方法的中间状态替换为空白图像状态、其他答案对应的状态或幅度匹配的噪声。在这一诊断中，UniVLR 的准确率变化最多只有0.5个百分点。这支持一个有限判断：在被测配置中，答案对所提议的潜在内容依赖较弱；它不能证明所有潜在推理都无效，也不能排除并行通路的补偿。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第2.1节、图1a</a></p><h2 id="s5">三、旧路：只把旁路封死，可能连原有能力也丢掉</h2><p>最直接的办法，是禁止交卷者重新看图，只让他读工作纸。但工作纸如果没有承接原模型已经形成的视觉理解，封路只会造成信息损失。作者在冻结底座的预实验里发现：把完整多模态中间状态交给上层解码器，准确率为75.9%；只保留同次前向计算的问题位置，仍有75.4%；纯文本问题状态以及给它拼接原始视觉特征的条件，都只有35.6%。关键在于接住已经融合好的表示。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第2.2节、图1b</a></p><h2 id="s6">四、转折：寻找“已经看懂一些，还能继续看”的位置</h2><p>CVRR 没有任意挑一层插入循环。作者固定问题、换用答案不同的图片，逐层替换视觉激活，检查最终答案偏好受到多大影响。这种把内部数值从一个样本搬到另一个样本的操作，叫激活替换。它帮助定位视觉信息传递的边界：问题状态已经承接视觉能力，同时图像状态仍能影响后续计算。Qwen2.5-VL-7B 的实验选择第20层之后，并用第21层初始化循环；边界定位只使用训练样本。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第3.1节、附录B.1</a></p><h2 id="s7">五、解法：工作纸持续修改，图像证据保持可读</h2><p>具体流程有三个阶段。先按预训练模型的原生路径得到带图像信息的问题状态 h₁，以及固定视觉证据 v。随后反复使用同一个经过适配的解码层，让变化中的问题状态重新读取同一份 v。默认 T=4 包括一次原生初始化和三次后续更新；每次把旧状态与新计算结果按各一半混合。证据没有换，当前问题表示变了，因此每一步可能读取出不同的相关信息。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第3.2节、附录B.1与C</a></p><p>最后开始生成答案时，系统丢弃视觉状态与原多模态 KV 缓存。KV 缓存是注意力计算保留的键和值，其中可能藏着另一条传递图像信息的路。下层只保留不含图像的文本缓存，上层接收最终状态 hₜ；这样，图像对答案的影响只能经过这份最终状态。底座冻结，仅训练共享层上的低秩适配参数，也就是对原有权重施加小规模可学习修正；训练目标只要求答案正确，不提供中间思考的标准轨迹。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第3.3节、附录B.1</a></p><h2 id="s8">六、结局：保住能力，还要证明重新看图有贡献</h2><p>在这一严格接口下，CVRR 的 V* 准确率为81.2%，MMVP 成对准确率为52.7%，BLINK 总体准确率为55.2%。MMVP 的“成对正确”要求一对相似图片对应的两道题都答对。六种兼容基线在同样移除旁路、重新训练后，V* 最好为39.8%，MMVP 成对准确率最好为2.7%。这说明，至少在作者的实现和训练设置里，承接原生视觉表示的方式非常关键。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第4节、表1、附录B.2</a></p><p>更有解释力的是组件消融：保留原生起点和可学习更新，但去掉循环中的视觉重读并重新训练，MMVP 成对准确率从52.7%降至18.0%；只解码初始状态 h₁，则为22.7%。所以完整方法的表现不能仅用“把原先就会的答案装进一个必经容器”解释。作者还交叉组合正确与错误的初始状态和图像证据：正确证据能修正错误起点，错误证据也会带偏正确起点；阻断相应读图连接后，这些作用大幅减弱。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第5.1—5.2节、表2、图3</a></p><h2 id="s9">七、内核：计算经过哪里，与那里做了什么，要分开证明</h2><p>CVRR 的路径必要性是架构主动规定的；它本身并非发现了一个天然存在的“思考器官”。真正需要实验回答的是：规定这条路径后，模型还能不能工作，循环读图是否在其中发挥作用。论文的贡献是把这两层证据接起来。我的判断是，这为潜在推理提供了更严谨的研究范式，但尚不足以把每一步更新解释成人类式的观察、比较或逻辑推导。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第1节、第5—6节</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是对“提升究竟来自哪里”的追问。《Beyond Visual Memory》把潜在词元拆成内容槽位、边界标记和格式，检查收益是否真的来自内部视觉内容。它提醒我们，相近正确率可能由不同机制产生。CVRR 接着把机制诊断转成结构设计：既然存在绕行可能，就明确控制通往答案的接口。<a class="src" href="https://arxiv.org/abs/2606.01287">前驱论文摘要</a> <a class="src" href="https://arxiv.org/html/2609.06746v1">CVRR附录A.2</a></p><p>再倒读一层，是 Coconut 对中间计算载体的改变：将隐藏状态直接作为下一步输入，而不必先转换成文字。CVRR 延续了在连续状态中计算的方向，但增加一个多模态条件：状态更新必须能持续受图像证据影响，最终回答还要实际使用该状态。<a class="src" href="https://arxiv.org/abs/2412.06769">Coconut原始记录与摘要</a> <a class="src" href="https://arxiv.org/html/2609.06746v1">CVRR第1—3节</a></p><p>更底下一层，是 Universal Transformer 将自注意力与循环更新结合的思路。它解释了为什么增加计算步骤不一定需要每一步都新增一套参数。CVRR 借用共享层循环这个构件，再接上原生视觉初始化和严格回答接口。因此，这条脉络逐步形成了三个问题：怎样重复计算，怎样不用文字承载中间过程，怎样验证该过程真的参与回答。这是本文对研究关系的归纳。<a class="src" href="https://arxiv.org/abs/1807.03819">Universal Transformers摘要</a> <a class="src" href="https://arxiv.org/html/2609.06746v1">CVRR第3.2节</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p>这一步推进了我们对模型内部计算的理解：可以把一段潜在计算做成视觉信息的必经路径，并用干预检查它有没有继续处理证据。对产品研究而言，我建议把“新增模块后分数变高”拆成三次验收：正常输入能否工作，替换模块内容会否改变结果，以及切断它读取证据的连接后，原有收益是否消失。这是从论文实验设计推导出的评估建议，尚不是论文验证过的通用产品方案。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第2节、第5节</a></p><p>例如，你若评估一个先观察界面、保存中间状态、再决定操作的助手，可以构造问题完全相同、关键视觉事实相反的样本，再交换它们的中间状态。这样比直接塞随机噪声更有解释力：噪声可能只是在破坏正常数值分布。CVRR 在固定问题的 MMVP 干预中，准确率由73.3%降至26.7%，支持图像相关内容确实影响预测；这组机制读出与主表的生成式评测不同，不能混为同一项分数。迁移到界面助手只是待验证的推演。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文第5.3节、图4、附录B.3</a></p><p>也要留住三条边界。第一，CVRR 在 MME-RealWorld-Lite 上为46.7%，低于原底座的50.8%；作者提出训练数据与现实领域不匹配这一解释，但没有据此排除所有其他原因。第二，T=4、6、8 的 V* 准确率分别为81.2%、78.5%、80.1%，而且不同深度分别训练，所以不能宣称部署后让同一模型多想几步就会稳定变强。第三，主要机制分析采用选择题设置，边界依赖底座，视觉证据固定；开放式交互和主动获取新证据仍待验证。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文表1、附录D、结论与局限</a></p><p>论文还有一个统计边界：每个训练配置只报告一个随机种子；评测样本的自助采样置信区间不代表跨训练运行的稳定性。因而我更愿意把它作为值得复现的机制设计，而不是可直接采购的能力保证。<a class="src" href="https://arxiv.org/html/2609.06746v1">原文附录B.3</a></p><h1 id="s12">来源</h1><p>主文依据 Suhyeong Park、Junha Jung、Jaewoo Kang 的 <a class="src" href="https://arxiv.org/html/2609.06746v1">CVRR v1全文</a>进行中文改写与机制解释；作者和原始提交日期见<a class="src" href="https://arxiv.org/abs/2609.06746">arXiv记录</a>。原文明确标注 CC BY 4.0，允许按条件分享和改编；这里保留作者署名、原文和<a class="src" href="https://creativecommons.org/licenses/by/4.0/">许可链接</a>，并明确本文加入了原创类比、评价与产品推演，不表示作者认可这些解释。</p><p>发现入口与质量信号见<a class="src" href="https://huggingface.co/papers/2609.06746">HF论文页</a>。研究脉络分别核查了 <a class="src" href="https://arxiv.org/abs/2606.01287">Beyond Visual Memory</a>、<a class="src" href="https://arxiv.org/abs/2412.06769">Coconut</a> 和 <a class="src" href="https://arxiv.org/abs/1807.03819">Universal Transformers</a> 的原始摘要与版本记录；旧论文只用于解释前驱，不作为今日新成果。实验数字均为作者报告，本日报没有独立复现。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
