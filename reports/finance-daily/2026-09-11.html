@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2859%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231a7f4b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b3d24%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2256%22%20cy%3D%228%22%20r%3D%2223%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2244%22%20r%3D%2213%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2214%22%20cy%3D%2242%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23eafff3%22%3E%C2%A5%3C%2Ftext%3E%3C%2Fsvg%3E"><meta name="viewport" content="width=device-width, initial-scale=1"><title>思染金融日报 · 2026-09-11</title><style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+
+  html{scroll-behavior:smooth}
+  .item{scroll-margin-top:24px}
+  .item-body{min-width:0}
+  .item h2{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;margin-bottom:20px;text-wrap:balance}
+  .headline-point{color:var(--red)}
+  .lp{line-height:1.85;overflow-wrap:anywhere}
+  .why p{line-height:1.85;overflow-wrap:anywhere}
+  .notice{white-space:normal}
+  .notice .lp:last-child{margin-bottom:0}
+  .subhead{font-family:var(--serif);font-size:19px;margin:24px 0 12px}
+  .watch-list{list-style:none;margin:12px 0}
+  .watch-list li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:15px 0;border-bottom:1px dotted var(--hair);line-height:1.8}
+  .watch-list li:last-child{border-bottom:0}
+  .list-marker{font-family:var(--label);color:var(--red);font-weight:600}
+  blockquote{border-left:3px solid var(--hair);padding:10px 18px;margin:18px 0;color:var(--muted);white-space:pre-line}
+  pre{overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel);padding:16px;margin:16px 0}
+  code{font-size:.9em}
+  .table-wrap{overflow-x:auto;margin:20px 0}
+  table{border-collapse:collapse;min-width:100%;font-size:14px}
+  th,td{padding:10px 12px;border:1px solid var(--hair);text-align:left}
+  th{background:var(--panel)}
+  hr{border:0;border-top:1px solid var(--hair);margin:24px 0}
+  a.src{white-space:normal;overflow-wrap:anywhere}
+  .toc-it:focus-visible,a.src:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+  @media(max-width:560px){.page{padding:28px 20px 60px}.mast-top{letter-spacing:.12em;font-size:10px}.item h2{font-size:22px}.toc{padding:6px 16px}.sec-h{flex-wrap:wrap;gap:6px 14px}.folio{letter-spacing:.08em}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style><meta name="iris-content-sha256" content="d118732e6f99ee35d0362f68713062bff7f965f990137247741d40bcef71085b">
+</head>
+<body><main class="page">
+<header><div class="mast-top"><span>思染 · 金融观察</span><span class="r">2026-09-11</span></div><h1>思染金融日报</h1><div class="dateline"><span>2026-09-11</span><span>深读 <b>6</b> 栏</span></div><div class="mast-bar"></div></header>
+<div class="notice"><p class="lp">截止：2026年9月11日23:59:59，Asia/Shanghai。港股采用当日收盘数据；海外行情只采用截止前可核实的盘中快照，明确区分美国交易日与北京时间。数据覆盖不完整：两股南向当日合计净额、GLD最新持仓，以及CPI公布后同步的美元、利率与金币报价未取得可靠核验，不以旧日报补齐。</p></div>
+
+<div class="sec-h"><span class="cn">今日观察</span><span class="en">先看目录再点读</span></div>
+<nav class="toc" aria-label="金融日报目录"><a class="toc-it" href="#section-1"><span class="tn">01</span><span>宏观｜核心通胀环比加快，港股反弹发生在数据公布之前</span></a><a class="toc-it" href="#section-2"><span class="tn">02</span><span>美团｜缩量回升，沽空成交降温尚不等于趋势反转</span></a><a class="toc-it" href="#section-3"><span class="tn">03</span><span>小米｜价格止跌一步，盈利与资金仍需分别确认</span></a><a class="toc-it" href="#section-4"><span class="tn">04</span><span>比特币｜ETF连续流出，不能继续描述为稳定接力</span></a><a class="toc-it" href="#section-5"><span class="tn">05</span><span>黄金｜实际利率压力上升，盘中反弹不等于宏观逆风解除</span></a><a class="toc-it" href="#section-6"><span class="tn">06</span><span>下一交易日观察｜先对齐时点，再判断修复是否延续</span></a></nav>
+<article class="item" id="section-1"><div class="item-n" aria-hidden="true">01</div><div class="item-body"><h2>宏观｜核心通胀环比加快，港股反弹发生在数据公布之前</h2><p class="lp"><strong>事实</strong>：北京时间9月11日20:30，美国公布8月CPI：总体环比上涨0.4%，前值0.1%；同比上涨3.4%，与前月相同。核心CPI环比上涨0.3%，前值0.2%；同比从2.5%降至2.4%。汽油环比上涨3.9%，贡献超过三分之一的总体月度涨幅。因此，这份数据同时包含“同比核心通胀放缓”和“近期月度涨势加快”，不能只取其中一面。<a class="src" href="https://www.bls.gov/news.release/cpi.nr0.htm">美国劳工统计局，9月11日发布</a></p>
+<p class="lp">数据公布前，路透亚洲时段报道记录美元指数99.084、美国10年期国债收益率4.957%；报道援引CME，当时9月会议加息25个基点的隐含概率为71.1%。该文最后更新于印度时间11:25，即北京时间13:55；这些是报道中的盘中读数，不是逐笔同步报价，也不是CPI后的最终定价。<a class="src" href="https://in.marketscreener.com/news/dollar-holds-gains-yen-slips-as-mideast-energy-shock-deepens-ce785bdfd88af52d">路透亚洲市场报道，9月11日</a></p>
+<p class="lp">当天共同风险来自能源供应与利率预期。上述报道指出，红海及中东航运风险推高能源供应担忧；亚洲时段布伦特原油虽回落，仍报每桶106.99美元。<strong>推测</strong>：能源成本上升可能通过通胀预期和货币政策预期，提高成长股与不生息资产面对的折现压力；但这只是有依据的传导机制，不能替代各标的自身资金证据。<a class="src" href="https://in.marketscreener.com/news/dollar-holds-gains-yen-slips-as-mideast-energy-shock-deepens-ce785bdfd88af52d">路透，9月11日</a></p>
+<p class="lp">中国方面，9月9日公布的8月CPI同比上涨0.8%、核心CPI上涨1.0%、PPI上涨3.8%，属于此前已知背景。统计局明确提到国际能源价格传导，不能把物价回升直接解释成居民消费数量全面走强，更不能据此宣布美团订单或小米利润已改善。<a class="src" href="https://www.stats.gov.cn/sj/sjjd/202609/t20260909_1965261.html">国家统计局，9月9日发布</a></p>
+<div class="why"><p><strong>核心判断</strong>：港股收盘早于美国CPI公布。今天两股的反弹不能归因于晚间CPI；而CPI之后的市场反应，也不能用午间的加息概率和美元读数代替。共同宏观环境仍有压力，个股能否走出持续修复，要另看成交、经营与资金。</p></div></div></article><article class="item" id="section-2"><div class="item-n" aria-hidden="true">02</div><div class="item-body"><h2>美团｜缩量回升，沽空成交降温尚不等于趋势反转</h2><h3 class="subhead">价格与资金</h3>
+<p class="lp"><strong>事实</strong>：3690.HK当日收75.10港元，上涨0.47%；开74.00，最高75.60，最低73.40，成交约2598万股。前一交易日收74.75港元、成交4747万股，今天成交股数约减少45%。盘中跌破前日低点后收涨，说明低位出现承接，但反弹伴随明显缩量。<a class="src" href="https://hk.investing.com/equities/meituan-dianping-historical-data">美团历史行情，数据日9月11日及10日</a></p>
+<p class="lp">东方财富同口径记录：9月11日成交额19.4184亿港元，沽空金额4.7343亿港元、633.56万股，占成交额24.38%；9月10日分别为35.7382亿、10.8354亿和30.32%。沽空金额约下降56%，占比下降5.94个百分点，方向一致。本次比率下降不能仅解释为总成交额扩大稀释，因为总成交额也下降了；这些仍是数据商记录，港交所原表未能复核。<a class="src" href="https://hk.eastmoney.com/sellshort.html?code=03690">美团沽空记录</a></p>
+<p class="lp"><strong>证据边界</strong>：当日沪、深两路南向个股合计净买入未核实。不从活跃榜未列名推断零买入，也不把未知买盘归为外资。沽空成交减少只说明当天被记录的卖空交易减少，不能直接证明存量空仓下降或发生净回补。</p>
+<h3 class="subhead">催化与旧认知</h3>
+<p class="lp">9月11日10:56公开报道转述摩根士丹利观点：维持美团“增持”评级及110港元目标价，继续预测外卖单位经济效益于2027年恢复至每单1元，并看好到店其他业务。这里是<strong>维持评级及分析师预测</strong>，不是公司当天公布盈利改善，也不是评级上调；原始研报未取得。<a class="src" href="https://cj.sina.com.cn/articles/view/5115326071/130e5ae77020030wve?finpagefr=p_104">格隆汇报道，9月11日</a></p>
+<p class="lp">背景日期也须分开：公司投资者关系页面确认，上半年业绩公告日期为8月28日，不能将该轮财报重新当作9月11日发生的新闻。<a class="src" href="https://www.meituan.com/en-US/investor-relations">美团官方投资者关系页面</a></p>
+<div class="why"><p><strong>推测</strong>：券商对盈利修复路径的重新解释，可能缓和此前下跌后的悲观预期；但“报道出现—股票收涨”只有时间关联，尚无证据证明它贡献了多少涨幅。缩量与新低同时出现，使今天更适合记作一次修复尝试。</p></div>
+<div class="why"><p><strong>核心判断</strong>：今天新增的是“沽空金额与占比同时下降”的样本，继续支持双口径核对；没有验证“空头已离场”。旧认知中的“有催化就有独立超额收益”也暂不裁决，缺少足够的同窗口比较与资金归因。</p></div></div></article><article class="item" id="section-3"><div class="item-n" aria-hidden="true">03</div><div class="item-body"><h2>小米｜价格止跌一步，盈利与资金仍需分别确认</h2><h3 class="subhead">价格与资金</h3>
+<p class="lp"><strong>事实</strong>：1810.HK收26.36港元，上涨1.70%；开25.66，最高26.66，最低25.44，成交约1.1353亿股。前日收25.92港元、成交1.4866亿股，今天成交股数约减少24%。收盘略低于9月9日的26.38港元，尚未收复本周前半段跌幅。<a class="src" href="https://hk.investing.com/equities/xiaomi-historical-data">小米历史行情，数据日9月9—11日</a></p>
+<p class="lp">9月11日成交额29.6955亿港元，沽空金额9.2615亿港元、3545.94万股，占比31.19%；前日沽空金额18.4144亿、占比47.82%。金额约减半，占比下降16.63个百分点，表明沽空成交活跃度降温，但不能由此直接确认空头回补。<a class="src" href="https://hk.eastmoney.com/sellshort.html?code=01810">小米沽空记录，9月10—11日</a></p>
+<p class="lp">南向当日两路合计净额未核实。9月11日18:43财联社报道援引Wind，列小米“近7天”净买入20.93亿港元；该文同时使用带T+2滞后的持仓统计。这个多日资金证据不能冒充9月11日净额，也不能由多日合计反推每天均为净买入。<a class="src" href="https://cj.sina.com.cn/articles/view/2868676035/aafc85c302001xa4e">财联社资金追踪，9月11日</a></p>
+<h3 class="subhead">产品催化与盈利边界</h3>
+<p class="lp">9月11日10:43报道转述里昂观点：维持“跑赢大市”评级、目标价35港元，并预计新旗舰产品推动收入和盈利在第三季度见底、第四季度反弹。报道提及新车锁单与高端硬件策略；原始研报和相关订单原始披露未取得，因此盈利见底只能列为券商预测，不能记为已经发生。<a class="src" href="https://www.itiger.com/hant/news/2666542510">格隆汇／老虎证券，9月11日</a></p>
+<div class="why"><p><strong>推测</strong>：新产品若能提高实际交付、平均售价并覆盖新增成本，才可能改善利润；发布与锁单处于这条链的前端。当天评级报道提供了修复预期，但不能证明存储成本压力已经缓解，也不能单凭股价上涨验证汽车盈利。</p></div>
+<p class="lp">作为已核实背景，9月8日公司原始披露显示回购303.86万股，价格26.72—27.10港元，总额8201.6848万港元。这继续构成旧“约21.5元才回购”机械门槛的反例；不是9月11日回购数据，也不构成固定价格托底承诺。<a class="src" href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0908/2026090800786_c.pdf">小米翌日披露报表，9月8日</a></p>
+<div class="why"><p><strong>核心判断</strong>：今天给“价格、资金、盈利分别验证”框架增加了价格回升样本，尚不足以确认反转。多日南向净买与周内价格疲弱可以并存；“南向始终不接”的绝对表述不应沿用，“资金已改善所以利润会改善”同样没有证据。</p></div></div></article><article class="item" id="section-4"><div class="item-n" aria-hidden="true">04</div><div class="item-body"><h2>比特币｜ETF连续流出，不能继续描述为稳定接力</h2><p class="lp"><strong>事实</strong>：路透9月11日亚洲时段报道中的BTC报价为77,094.41美元，下跌0.2%。报道最后更新于北京时间13:55，但没有给出该报价独立的逐笔时间；本报将其视为该报道窗口内快照，不作为23:59报价，也不作为UTC日线收盘。<a class="src" href="https://in.marketscreener.com/news/dollar-holds-gains-yen-slips-as-mideast-energy-shock-deepens-ce785bdfd88af52d">路透，9月11日</a></p>
+<p class="lp">Farside完整分项显示，美国9月10日现货BTC ETF净流出2.827亿美元；9月8日、9日分别流出4660万、1.202亿美元，三个交易日合计流出4.495亿美元。其中9月10日ARKB流出1.643亿美元，是最大单项。9月11日行仍为未填报状态，不能把汇总栏的0.0解释为零流量。<a class="src" href="https://farside.co.uk/btc/">Farside原始汇总，交易日9月8—10日</a></p>
+<p class="lp">交易所BTC余额、同窗口资金费率、未平仓量和爆仓金额均未取得可核实历史数据。因此，不判断当天是鲸鱼吸筹、杠杆踩踏还是空头挤压；ETF净申赎也不能识别全部最终持有人，更不能直接等同于机构现货买卖总量。</p>
+<div class="why"><p><strong>推测</strong>：此前美国交易日ETF净赎回与当日较高的美元、利率环境，都可能削弱价格支撑。不过，两类证据的统计窗口不同，只能说压力方向相容，不能相加解释全部跌幅，更不能借此证明BTC“只认利率”。</p></div>
+<div class="why"><p><strong>核心判断</strong>：旧“ETF资金具有反复性”获得第三个连续净流出样本；“稳定净买接力”当前不成立。三个交易日还不足以认定长期资金撤离，而缺少晚间同步报价，也不足以裁决CPI之后是否出现价格与资金的背离。</p></div></div></article><article class="item" id="section-5"><div class="item-n" aria-hidden="true">05</div><div class="item-body"><h2>黄金｜实际利率压力上升，盘中反弹不等于宏观逆风解除</h2><p class="lp"><strong>事实</strong>：路透记录9月11日11:05 GMT，即北京时间19:05，国际现货金报4339.46美元／盎司，上涨0.6%。这是伦敦交易时段的现货报价，早于CPI公布；不是LBMA定盘价，也不是纽约收盘价。LBMA当日定盘原表及CPI后截止前的可靠同步快照未取得，不以CFD或黄金期货替代。<a class="src" href="https://au.marketscreener.com/news/gold-gains-on-softer-oil-prices-us-inflation-data-in-focus-ce785bdfda8ef620">路透现货金报道，9月11日</a></p>
+<p class="lp">美国财政部已完成交易日数据表显示：9月10日10年期TIPS实际收益率2.55%，高于9月9日的2.46%，上升9个基点。这是实际利率本身的变化，不是用名义国债收益率代替；但它属于上一美国交易日，不能据此声称9月11日晚实际利率继续同幅上升。<a class="src" href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_real_yield_curve">美国财政部实际收益率表</a></p>
+<p class="lp">SPDR官方页面未返回可用吨位，历史档案亦未能读取，所以本报无法确认GLD截至最近完整交易日的持仓及增减，不延用旧“连续增仓”判断。<a class="src" href="https://www.spdrgoldshares.com/usa/gld/">SPDR GLD官方数据页</a></p>
+<p class="lp">央行需求属于慢变量背景：9月8日中新网英文报道引用9月7日公布的数据，中国8月末黄金储备7673万盎司，较7月增加65万盎司、约20.22吨。这里购买统计期是8月，披露日在9月7日，报道日在9月8日；没有证据证明它是9月11日盘中反弹的直接买盘。<a class="src" href="https://www.ecns.cn/cns-wire/2026-09-08/detail-ihfkanuz5372107.shtml">中新网，9月8日</a></p>
+<div class="why"><p><strong>推测</strong>：较高实际收益率增加持有黄金的机会成本；另一方面，路透当日采访将反弹部分联系到油价回落与航运谈判预期可能缓解通胀压力。这说明能源风险可以经利率预期影响黄金，但仍只是候选解释，不能与滞后的央行购金拼接成完整日内因果。<a class="src" href="https://au.marketscreener.com/news/gold-gains-on-softer-oil-prices-us-inflation-data-in-focus-ce785bdfda8ef620">路透，9月11日</a></p></div>
+<div class="why"><p><strong>核心判断</strong>：今天补上了实际利率继续上升的硬证据，同时看见CPI前现货回升。两者不同步，既不能宣布利率框架失效，也不能称“强弱通胀都保证黄金获益”。旧认知应保留条件性，GLD持仓缺口尤其不允许用“配置盘托底”填补。</p></div></div></article><article class="item" id="section-6"><div class="item-n" aria-hidden="true">06</div><div class="item-body"><h2>下一交易日观察｜先对齐时点，再判断修复是否延续</h2><ul class="watch-list"><li><span class="list-marker">1.</span><div><strong>共同宏观</strong>：取得CPI后的同窗口DXY、2年及10年名义收益率、10年TIPS和加息概率，检验月度核心通胀加快是否真正推动新一轮紧缩定价。</div></li><li><span class="list-marker">2.</span><div><strong>美团</strong>：以今天75.10收盘及73.40低点作新观察基线，关注回升能否伴随成交恢复；同步核对沽空绝对额和占比，补齐两路南向数据。券商预测须等待实际经营证据。<a class="src" href="https://hk.investing.com/equities/meituan-dianping-historical-data">行情基线</a></div></li><li><span class="list-marker">3.</span><div><strong>小米</strong>：观察26.36附近修复能否延续，并分别核对南向净交易、公司回购、新车实际交付与毛利。今天25.44低点只是观察基线，不是已确认支撑。<a class="src" href="https://hk.investing.com/equities/xiaomi-historical-data">行情基线</a></div></li><li><span class="list-marker">4.</span><div><strong>BTC</strong>：等待美国9月11日ETF完整填报，再与明确时区的BTC价格比较；周末价格仍变动时，不把ETF缺报当成需求归零。<a class="src" href="https://farside.co.uk/btc/">Farside</a></div></li><li><span class="list-marker">5.</span><div><strong>黄金</strong>：补齐GLD官方吨位与晚间现货、TIPS同步快照，检验反弹有没有资金与实际利率共同支持；央行月度储备继续作为背景单独跟踪。</div></li></ul></div></article>
+<footer class="folio"><span>Iris Daily · Finance</span><span>思染金融日报</span></footer>
+</main></body></html>
