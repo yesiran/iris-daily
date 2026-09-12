@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>记忆先变成阶段计划 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026-09-13</span></div>
+  <div class="bar"></div>
+  <h1>记忆先变成阶段计划</h1>
+  <p class="meta"><b>5</b> 条主线 · <b>23</b> 个知识点 — 结构由 Codex 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">问题：眼前信息不足</div><ul><li><div class="n2" style="--c:#E63312">遮挡后仍需历史颜色</div></li><li><div class="n2" style="--c:#E63312">相似画面对应不同进度</div></li><li><div class="n2" style="--c:#E63312">语言摘要可能丢细节</div></li><li><div class="n2" style="--c:#E63312">增长历史拖慢执行</div></li></ul></li><li><div class="n1" style="--c:#10395E">记忆生成计划</div><ul><li><div class="n2" style="--c:#10395E">每阶段保留8帧实况</div></li><li><div class="n2" style="--c:#10395E">语言计划确定子目标</div></li><li><div class="n2" style="--c:#10395E">视觉计划保留空间细节</div></li><li><div class="n2" style="--c:#10395E">历史主要用于阶段规划</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">进度连接执行</div><ul><li><div class="n2" style="--c:#9E2B22">动作与进度联合预测</div></li><li><div class="n2" style="--c:#9E2B22">进度作为下一步条件</div></li><li><div class="n2" style="--c:#9E2B22">附近计划帧校准进度</div></li><li><div class="n2" style="--c:#9E2B22">转换阈值0.95</div></li><li><div class="n2" style="--c:#9E2B22">真实观察回填记忆</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">实验与成本</div><ul><li><div class="n2" style="--c:#3E5C2E">RMBench平均83.3%</div></li><li><div class="n2" style="--c:#3E5C2E">两类真机平均78.0%</div></li><li><div class="n2" style="--c:#3E5C2E">消融支持进度条件</div></li><li><div class="n2" style="--c:#3E5C2E">执行推理约827毫秒</div></li><li><div class="n2" style="--c:#3E5C2E">时延排除编码与传输</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">边界与产品推演</div><ul><li><div class="n2" style="--c:#6B4A8E">执行器按任务训练</div></li><li><div class="n2" style="--c:#6B4A8E">训练依赖已有分段</div></li><li><div class="n2" style="--c:#6B4A8E">像素匹配有视觉局限</div></li><li><div class="n2" style="--c:#6B4A8E">固定执行不等于总成本</div></li><li><div class="n2" style="--c:#6B4A8E">软件代理迁移待验证</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: Codex</span><span>Layout: Local Press</span></div>
+</div>
+<div style="max-width:1180px;margin:0 auto;padding:0 36px 36px;font:13px/1.7 sans-serif">基于 Sizhe Zhao, Haozhe Xie, Weiyu Zhao, Chenchu Zhang, Huan Wang, Chenyang Wang, Qinglin Liu, Shengping Zhang 的 <a href="https://arxiv.org/abs/2609.11561">Memory as Plans: World-Action Modeling with Memory-Grounded Planning</a>，由 Codex 整理为中文逻辑图，包含解释性修改。 <a href="https://creativecommons.org/licenses/by/4.0/">原文及本图改编部分许可</a>。</div></body>
+</html>
