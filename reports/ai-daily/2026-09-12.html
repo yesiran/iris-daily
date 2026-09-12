@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2893%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%228%22%20r%3D%2222%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2255%22%20r%3D%228%22%20fill%3D%22%23fff%22%20opacity%3D%220.23%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-12</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="42cf769157961d51e3b7c315a24bebd8bd85d56bb1396686e40fb1f50cb1e710">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-12 · 周六</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>4</b></span><span>分领域 <b>16</b> 条</span><span>趋势 <b>3</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-13 02:00（北京时间）。本期覆盖9月12日全天及次日凌晨截稿前增量：值得关注的变化集中在应用协作、智能体运行质量和外部评估；近期模型与产品开放进展均另标原始日期。
+今日阅读顺序：Sites的团队交付能力 → Anthropic的外部评估承诺 → Fugu的编排采购路径 → Astra的运行质量修复。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 4 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>ChatGPT Sites强化共同维护，生成应用开始成为团队资产</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Anthropic承诺引入常驻外部评估，安全披露向过程核验推进</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Fugu把多模型编排变成可购买服务，成本比较需要换计量单位</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>Astra披露三类质量问题，技能和上下文策略成为选型变量</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>ChatGPT Sites强化共同维护，生成应用开始成为团队资产</h3><p class="lp"><span class="lk">事件</span>北京时间9月12日01:05:30，@ChatGPT的完整原帖记录集中介绍Sites的共同编辑、私密分享、数据库查看、自定义域名等变化，并称累计创建超过500万个站点、从提示到部署的耗时减半。帖子使用“近期已推出”的回顾性表述，因此本日事实是集中公布这些进展，不能把每项功能都写成当天首发；数量和提速均为该账号披露，未独立验证。<a class="src" href="https://x.com/ChatGPT/status/2098457920291946894">原帖</a></p><p class="lp">官方帮助文档进一步明确：同工作区编辑者可以保存修改，所有者完成首次发布后，编辑者可以发布后续版本；工作区外受邀者只有查看权限。Sites仍为公开测试，开放受套餐、地区和管理员设置约束，自定义域名在Enterprise初始开放范围中不支持。<a class="src" href="https://help.openai.com/en/articles/20001339">功能与范围</a></p><div class="why"><span class="why-k">为什么重要</span><p>共同维护和定向访问降低了内部工具从个人原型转为团队日常应用的交接成本。对产品团队而言，生成代码之外，平台开始同时承担托管、协作和访问管理；这会影响轻量仪表盘、项目工具和客户门户究竟采购独立软件，还是在已有工作平台内搭建。这里的判断来自功能组合，并非站点数量本身。</p></div><p class="lp"><span class="lk">接下来观察</span>观察团队是否持续使用并共同维护同一个Site，以及编辑权限、发布权限和应用所连接数据的权限是否保持一致；创建量不能替代活跃应用数量与维护成本。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Anthropic承诺引入常驻外部评估，安全披露向过程核验推进</h3><p class="lp"><span class="lk">事件</span>北京时间9月12日22:01:10，Dario Amodei发帖介绍《We Must Pace the Frontier》，并宣布Anthropic单方面承诺为第三方评估者提供持续、接近员工级别的访问，以检查安全实践、报告事件和评估训练中的对齐情况。<a class="src" href="https://x.com/DarioAmodei/status/2098773920774074715">发布原帖</a></p><p class="lp">长文提出嵌入式评估、跨公司协调、全球协调三步框架。第一步是公司承诺，后两步仍是倡议。文中计划让外部团队拥有相近的工具和工作空间权限，并可独立发表关键发现；法律、客户隐私和特定敏感信息存在例外。文章只标“September 2026”，具体公开时刻由上述原帖锚定。评估者不能写成已经进驻。<a class="src" href="https://darioamodei.com/post/we-must-pace-the-frontier">完整长文</a></p><div class="why"><span class="why-k">为什么重要</span><p>评估者若能持续接触训练和运营过程，客户判断厂商可靠性的依据就会超出发布时的测试报告。它可能提高企业采购对可核验过程的要求，也让安全承诺能否落实成为竞争变量。关键约束是外部人员实际看得到什么、能公开什么，而不是公司是否表态支持减速。</p></div><p class="lp"><span class="lk">接下来观察</span>首批评估机构、合同访问范围与首份独立报告。文中风险情景是作者判断，不能据此断言行业已经失控，也不能把三步倡议写成已生效监管。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Fugu把多模型编排变成可购买服务，成本比较需要换计量单位</h3><p class="lp"><span class="lk">事件</span>持续重要议题，原始发布日期为9月11日。Sakana AI发布Fugu Max和Fugu Ultra v2：前者优先成本效率，后者优先复杂任务质量，两者都通过兼容OpenAI格式的API提供服务。Max公告价为每百万输入、输出token分别2美元和6美元。官方称Ultra v2在八项基准中的五项取得最好或并列最好成绩，模型池不含Fable 5、Fable 5.1和GPT‑6 Astra；这是厂商评测口径。<a class="src" href="https://sakana.ai/fugu-max-release/">发布公告</a></p><p class="lp">本期仍值得阅读的是其可采购的系统边界：产品团队能把“单模型调用”和“由供应商负责的多模型编排”直接放入同一评测。OpenRouter产品页标注Ultra v2发布于9月11日，并明确内部编排消耗的token也按输入、输出计费，超过272K输入token另有更高费率。不能把用户可见的输入输出量当作全部账单。<a class="src" href="https://openrouter.ai/sakana/fugu-ultra-v2">平台说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>过去采用多个模型通常意味着自己承担路由、调度和故障处理；这类服务把其中一部分复杂度交给供应商，让中小团队也能测试编排路径。与此同时，采购对象从一次回答变成一次完整执行，单token便宜并不必然带来单任务便宜，竞争会更多落到合格交付物的总成本。</p></div><p class="lp"><span class="lk">接下来观察</span>同一批真实任务的完整费用、总耗时和人工返工量。官方排行榜尚不足以证明所有场景都优于单模型；内部编排开销和服务稳定性可能改变最终排序。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>Astra披露三类质量问题，技能和上下文策略成为选型变量</h3><p class="lp"><span class="lk">事件</span>北京时间9月12日11:20:36，Tibo（@thsottiaux）在完整原帖中称，团队处理了三类问题：旧模型技能过度触发或阻止检查结果；一项上下文管理实验导致提前结束、回复旧消息，现已关闭；部分配置不当的引擎造成质量下降，已移除。他估计上下文实验影响约4000—5000名用户，并称后续执行、最新消息跟踪和检查有所改善。这些是账号对修复的陈述，不是本报独立复测结果。<a class="src" href="https://x.com/thsottiaux/status/2098612714704891959">修复说明</a></p><p class="lp">同日16:09:17，该账号又表示额度重置已经传播完成。该完成帖与上午预告合并看待，不把“午夜前”自行换算成另一个日期，也不将一次补偿理解为永久额度提升。<a class="src" href="https://x.com/thsottiaux/status/2098685367058612394">完成帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>同一个模型名称背后，技能触发、上下文压缩与请求路由都可能改变任务是否完成。产品团队若只记录模型版本，很难解释线上质量波动；把这些环境条件一起固定，才能判断更换模型是否真的有效，也能避免把系统配置问题错误归因于模型能力退步。</p></div><p class="lp"><span class="lk">接下来观察</span>在相同技能、上下文和任务集下，提前结束率与回复旧指令的比例是否下降。额度重置只改善重试空间，不等于质量问题全部解决。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 16 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT：研究交付与共享资料是独立产品变化</div><div class="srow"><p><strong class="st">近期背景，9月9日：</strong>Deep Research进入ChatGPT Work和Codex，可结合网页、文件与支持的连接应用形成带引用、可编辑的交付物；适用于拥有Work访问权限的Plus、Pro、Business、Enterprise和Edu用户，使用既有Work／Codex额度或credits。同日日志另列Library文件和文件夹共享；9月10日又列Data插件及Box、Dropbox、SharePoint接入Library。这些能力分别改变研究交付、共享素材和业务数据分析，不应合并为Astra模型首发。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">独立更新条目</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini：桌面入口与主动内容服务分别扩大分发</div><div class="srow"><p><strong class="st">近期背景，官方日期9月10日：</strong>Gemini Windows应用面向全球Windows 10／11推出，支持Alt＋Space唤起；Spark和部分创作能力另需Google AI订阅，并有18岁以上等限制。父进程取得的官方RSS时刻为北京时间9月11日00:00，因此不能算作本日首发。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows/">Windows公告</a></p></div><div class="srow"><p><strong class="st">近期背景，官方日期9月10日：</strong>Dreambeans扩大至美国18岁以上消费者账户，包括非AI付费订阅账户；可从用户选择连接的Google应用组织个性化日常内容。官方RSS对应北京时间9月11日02:00。其变化是降低主动内容服务的账户门槛，不是全球开放。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/dreambeans-expansion-september-2026/">Dreambeans公告</a></p></div><div class="srow"><p><strong class="st">研究背景，9月8日：</strong>AlphaGenome Atlas提供约90亿个人类单碱基变异的分子影响预测，并提供面向学术研究的免费网页入口。这是预计算预测资源，不是90亿项实验验证结果。<a class="src" href="https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/">DeepMind原文</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude：企业使用情况开始进入产品反馈回路</div><div class="srow"><p><strong class="st">近期背景，9月10日：</strong>Claude Enterprise推出smart reports测试版，分析团队完成的工作、成本、会话阻力及适合沉淀为共享技能的重复模式。它与本日安全承诺属于不同层次：前者帮助管理企业使用，后者涉及模型开发与运营的外部核验。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">Claude更新日志</a></p></div></div><div class="sector"><div class="sector-h">中国AI：实际开放范围比日报标题更值得核对</div><div class="srow"><p><strong class="st">近期背景，9月11日：</strong>IT之家原发报道显示Kimi K2.8 Preview全量上线Kimi Code，沿用kimi-for-coding标识，各会员档最高支持1M上下文。“综合性能接近K3”是报道转述的厂商说法。别名不变降低了接入负担，也意味着团队应在版本变化后重跑既有任务。<a class="src" href="https://www.ithome.com/1/001/319.htm">原发报道</a></p></div><div class="srow"><p><strong class="st">近期邀测背景：</strong>小米官方文档标注9月8日更新时间，描述MiMo Desktop申请制测试，获批用户可限时、限额体验MiMo-X-Pro-Preview和MiMo-X-Flash-Preview。正文支持邀测、可编辑产物和电脑操作等能力描述，但更新时间不等于可独立证明的首次发布日期；未取得本日扩大开放证据。<a class="src" href="https://mimo.mi.com/docs/en-US/news/latest/mimo-desktop">小米官方文档</a></p></div><div class="srow"><p><strong class="st">覆盖结论：</strong>字节／豆包／Seed、DeepSeek、智谱、MiniMax、通义及小米均已核查。智谱一篇新增文章仅能确认标为9月13日，缺少证明早于02:00的时刻，因此不纳入本期；其余缺少本日证据的方向不以模型目录补齐新闻数量。</p></div></div><div class="sector"><div class="sector-h">AI芯片 / NVIDIA / 算力：异构推理更依赖系统兼容</div><div class="srow"><p><strong class="st">近期背景，9月10日：</strong>d-Matrix宣布与NVIDIA合作，将下一代Raptor推理XPU集成进NVLink Fusion与MGX机架体系，并制定多年产品路线。当前能确认的是合作与集成计划，不能写成新芯片已规模交付。其产业意义在于专用推理芯片可以通过既有机架生态进入客户环境，而不必独立重建整套部署体系。<a class="src" href="https://www.d-matrix.ai/announcements/d-matrix-rackscale-nvidia/">公司公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管：软件生产方式与责任边界分别推进</div><div class="srow"><p><strong class="st">近期背景，9月11日：</strong>新华社报道工信部对外发布《“人工智能+软件”专项行动实施方案》，涉及人机协同、就业影响评估和人才转型。由于本期未取得该方案正式文书全文，这里仅报道发布及议题范围，不外推强制义务或生效日期。<a class="src" href="https://www.news.cn/20260911/5fb61e122095434c9ea6af0badc2ecab/c.html">新华社报道</a></p></div><div class="srow"><p><strong class="st">近期背景，9月7日：</strong>最高法发布AI纠纷审理意见，官网全文涉及人格权益、知识产权、开源软件及证据审查等问题。它不是9月12日新出台的规则；本期没有取得最高法、网信办、工信部或新华社可确认为报告日新增的重大AI监管文书。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511101.html">最高法原文</a></p></div></div><div class="sector"><div class="sector-h">投融资：保留已确认金额，不把周报再包装成新交易</div><div class="srow"><p><strong class="st">近期背景，9月9日：</strong>Harvey官方宣布融资5.5亿美元、估值155亿美元，由Diffusion和Lightspeed联合领投。该轮融资面向法律团队的AI能力建设，不能根据二手标题写成156亿美元估值，也不应算作本日完成的新融资。<a class="src" href="https://www.harvey.ai/blog/harvey-raises-dollar550m-at-a-dollar155b-valuation-to-help-legal-teams-own-their-intelligence">Harvey公告</a></p></div></div><div class="sector"><div class="sector-h">其他产品与研究：区分功能陈述、使用案例和经营口径</div><div class="srow"><p><strong class="st">本日账户陈述：</strong>北京时间9月12日04:03，@alexandr_wang称Muse Spark 1.3 max进入Contributor档，仅限Muse Code订阅；所引原帖称套餐5美元起。现有证据没有给出该档可完成的实际任务量，不能据此计算单位工作成本。<a class="src" href="https://x.com/alexandr_wang/status/2098502637163565533">原帖记录</a></p></div><div class="srow"><p><strong class="st">本日账户陈述：</strong>@dps于9月12日12:50介绍Muse可在共享云端虚拟机中编写连接服务的代码；这是自定义连接器能力的陈述，不证明任意服务都能稳定接入。<a class="src" href="https://x.com/dps/status/2098635455768195105">原帖记录</a></p></div><div class="srow"><p><strong class="st">本日经营方口径：</strong>dax于9月12日22:30称OpenCode Go连续两周收支平衡。没有财务口径、成本分摊或审计资料，不推广为行业盈利结论，也不采纳其对其他公司的笼统指控。<a class="src" href="https://x.com/thdxr/status/2098781354611650806">原帖记录</a></p></div><div class="srow"><p><strong class="st">研究议题，9月12日：</strong>Sakana AI介绍皇家学会世界模型专题，讨论因果抽象、自我建模与人工生命。文章是在呈现研究方向和论者观点，不能将其改写成“学界已证明扩大模型无效”。<a class="src" href="https://sakana.ai/world-models-royal-society-issue/">研究解读</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> WorkBuddy、CodeBuddy均未取得9月12日及次日02:00前带日期的腾讯侧新发布证据。这一结论仅指本期能确认的公开发布，不代表没有灰度变化。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong>WorkBuddy近期背景：9月10日的5.5.5与5.5.6解决了不同问题。</strong> 前者加入资料库引用、后台任务详情与取消，以及企微转发内容中的文档等信息读取；后者改善失败任务在原会话继续重试及运行历史状态。对无人值守办公，失败后能否接续、后台执行能否检查，直接影响人工接管次数。这是日志支持的功能变化，尚无跨产品成功率比较。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy版本日志</a></p></div><div class="srow"><p><strong>模型接入事实需要保留归属。</strong> DeepSeek在9月10日自己的公告中明确表示，WorkBuddy（含CodeBuddy）和OpenCode已经全量接入V4.1 Flash。这能支持供应商宣布接入完成，不能替代腾讯本期官方公告，也不能推出腾讯套餐额度或价格同步变化。<a class="src" href="https://deepseek.com/news/deepseek-v4-1-flash/">DeepSeek原始公告</a></p></div><div class="srow"><p><strong>CodeBuddy版本状态：可确认4.12.0条目日期为9月4日。</strong> 该历史条目包括多根工作区、统一插件与Skill市场及高积分操作前置确认；它说明产品同时处理项目上下文和费用控制，但不作为近七日或本日新闻，也不称为当前最高版本。<a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy版本条目</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已覆盖WorkBuddy、CodeBuddy、混元、元宝、腾讯云及微信AI相关公开入口与发布线索。WorkBuddy有具体版本原文，CodeBuddy有带日期条目记录；部分其他入口未提供可核对的本期发布时间及开放范围，且公开网页无法覆盖所有官方群与用户灰度状态。当前最影响判断的缺口，是腾讯侧模型接入后的套餐条件，以及两款Buddy产品是否另有本期独立发布。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>生成应用的价值正在取决于交付之后能否继续工作。</h4><p>Sites本日集中介绍共同编辑与定向分享，Muse相关账号同日介绍自定义连接器。两条证据分别把应用伸向团队成员和外部业务系统。由此推断，应用生成平台的竞争会更依赖权限、连接维护和修改责任：能生成一个页面容易形成试用，能让另一个人持续使用并接手维护，才更可能进入团队流程。验证信号应是持续共同维护的应用占比，而不是累计生成数。<a class="src" href="https://x.com/ChatGPT/status/2098457920291946894">Sites</a>、<a class="src" href="https://x.com/dps/status/2098635455768195105">连接器陈述</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>过程可见性同时影响产品质量和客户信任。</h4><p>Astra当天披露的质量问题涉及技能、上下文和引擎配置；Anthropic同日承诺让第三方检查安全实践及训练过程。两者共同显示，只看最终答案难以解释智能体行为。分析上，能保留环境版本、执行记录和异常处置证据的产品，更有条件定位退化并接受核验。可验证信号是固定环境下的任务完成率，以及外部评估者实际取得的过程证据。<a class="src" href="https://x.com/thsottiaux/status/2098612714704891959">修复说明</a>、<a class="src" href="https://x.com/DarioAmodei/status/2098773920774074715">评估承诺</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>低价入口不能直接换算成低交付成本。</h4><p>本日Muse的Contributor开放陈述与OpenCode Go收支平衡陈述，分别触及用户价格和供应商经营；Fugu平台计费说明则揭示编排过程本身也会产生费用。由此推断，采购评估需要同时记录推理、重试和人工验收开销。机会在于让低成本路径承担足够多的合格任务，约束在于失败和返工可能吞掉价差；观察单位应是一份验收通过的交付物。<a class="src" href="https://x.com/alexandr_wang/status/2098502637163565533">Muse</a>、<a class="src" href="https://x.com/thdxr/status/2098781354611650806">OpenCode</a>、<a class="src" href="https://openrouter.ai/sakana/fugu-ultra-v2">编排计费</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>公司公告和产品日志支持“厂商发布了什么、列明哪些条件”；性能、规模和改善幅度仍保留厂商归属。完整X记录用于证明相应账号在给定时刻的陈述，不自动证明全量可用或实测效果。</li><li>Kimi开放情况采用明确转述公告的原发报道；工信部方案仅报道已确认的发布及议题。标注“近期背景”的条目均不算本日首发；无可靠发布日期的功能文档不以抓取日期补齐。</li><li>本文趋势是基于所列证据的分析判断，不是行业统计。次日来源若无法证明在北京时间02:00前公开，未纳入本期事实。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
