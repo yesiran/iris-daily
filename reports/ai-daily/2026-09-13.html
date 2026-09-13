@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28115%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2243%22%20r%3D%2219%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.10%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2231%22%20r%3D%2217%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.23%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-13</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="eabc3bebbeb3debfeb0059756445e5f246f3b6307a033b9f9ae9361168aa1251">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-13 · 周日</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>3</b></span><span>分领域 <b>12</b> 条</span><span>趋势 <b>3</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-14 02:00（北京时间）。本期覆盖9月13日全天及次日凌晨截稿前增量：个人智能体开始争夺用户的长期记忆与执行授权，前沿研究则同时面对“如何衡量创新”和“谁有资格监督”的追问。
+本期重点：Muse的记忆与执行设计；前沿实验室的外部评估承诺及独立性争论；ARC-AGI-4的开放式创新路线图。前两项包含近期发布在报告日形成的新解释与争议，均不冒充当天产品首发。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 3 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>Muse把长期记忆接到信息流，把执行授权做进产品</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>外部评估承诺引出更具体的问题：监督者向谁负责</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>ARC-AGI-4将瞄准开放式创新，研究型智能体需要新的验收方式</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>Muse把长期记忆接到信息流，把执行授权做进产品</h3><p class="lp"><span class="lk">事件</span>9月13日22:56，Alexandr Wang解释Muse Feed的设计：让智能体依据对用户的持续了解推荐内容，而不只是追随最近一次点击。这条当日陈述把Muse的价值从代办任务延伸到内容发现；它引用的用户反馈更早发布，不能算当天再次上线。<a class="src" href="https://x.com/alexandr_wang/status/2099150117156888757">Wang原帖</a></p><p class="lp">Muse原始官方发布日为9月8日，公告描述的是从美国开始推出的个人智能体。它拥有独立云端运行环境，可经消息和应用入口处理任务；不能据此认定全球用户均已获准使用。官方设计长文还把持续对话、背景任务和帮助用户发现用途的Ideas放在同一体验中。<a class="src" href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">发布公告</a><a class="src" href="https://introducing.muse.ai/">产品设计长文</a></p><p class="lp">9月13日23:33，Wang再次强调安全是上线前耗时最长的工作，并引向安全说明。9月8日官方技术原文描述了凭证隔离，以及在主智能体之外检查连接器动作和外发请求的Sentinel；需要确认的动作通过独立审批界面处理。这证明厂商公开了具体控制设计，尚不能证明其在所有攻击下有效。<a class="src" href="https://x.com/alexandr_wang/status/2099159560103825579">当日安全陈述</a><a class="src" href="https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse">安全技术原文</a></p><div class="why"><span class="why-k">为什么重要</span><p>本刊判断，长期记忆降低反复解释目标的成本，清晰授权则降低连接真实账户的心理门槛；两者共同决定用户愿意委托多深的任务。对个人助理产品，竞争开始涉及谁能持续理解用户、接住后续行动，而不只是单次回答质量。信息流因此可能成为任务入口，执行结果又反过来补充个性化上下文。</p></div><p class="lp"><span class="lk">接下来观察</span>看Feed带来的任务启动率和审批后的完成率能否同步提高。官方说明中的ConfidentialVM仍是后续安排；现有隔离机制不能被包装成Meta已在密码学上无法访问用户数据，也不能把用户晒单视为独立安全评估。<a class="src" href="https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse">安全边界</a></p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>外部评估承诺引出更具体的问题：监督者向谁负责</h3><p class="lp"><span class="lk">事件</span>Dario Amodei于9月12日22:01:10（北京时间）公开介绍《We Must Pace the Frontier》，因此文章属于前一晚背景。完整文章提出嵌入式第三方评估、国内协调和国际协调三层安排；Anthropic单方面承诺的是第一层，让评估者持续接触系统及训练过程，而不是宣布整个行业停止训练。<a class="src" href="https://x.com/DarioAmodei/status/2098773920774074715">原始发帖时间</a><a class="src" href="https://darioamodei.com/post/we-must-pace-the-frontier">完整文章</a></p><p class="lp">报告日新增的是对监督结构的公开讨论。9月13日06:26，François Chollet主张更有民主问责的监督，并把限制开源、阻碍非前沿研究列为需要警惕的信号；22:34，Dean Ball表示METR本身不足以覆盖需求，需要更多具有技术能力的独立评估机构。这些是各自立场，既不证明已发生监管俘获，也不证明现有评估机构缺乏独立性。<a class="src" href="https://x.com/fchollet/status/2098901026514559194">Chollet原帖</a><a class="src" href="https://x.com/deanwball/status/2099144818165260581">Ball原帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>本刊判断，如果外部评估成为训练和部署的必要环节，模型供给节奏便不再只由算力和产品排期决定，也取决于评估能力与信息获取权限。企业选择供应商时，能够检查的安全承诺会比抽象的“负责任”口号更有用；评估者是否能够独立公开不利结果，则直接影响这些承诺的可信度。</p></div><p class="lp"><span class="lk">接下来观察</span>第一份公开的评估合作安排是否明确访问范围、负面发现的披露权和利益冲突处理。文章讨论的行业协调仍需要法律与政府支持，不能把倡议或高管赞同改写成已经生效的监管制度。<a class="src" href="https://darioamodei.com/post/we-must-pace-the-frontier">提案边界</a></p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>ARC-AGI-4将瞄准开放式创新，研究型智能体需要新的验收方式</h3><p class="lp"><span class="lk">事件</span>9月13日03:03:20（北京时间），所附ARC Prize完整原帖将ARC-AGI-4描述为面向自主、开放式创新的未来基准，并强调开放源代码。06:32:21，François Chollet引用该帖表示，ARC 4仍计划于“明年第一季度”发布，即2027年第一季度。已确认的是目标与时间表陈述，尚不是已发布题库、评测方法或模型排名。<a class="src" href="https://x.com/arcprize/status/2098849962754978152">ARC Prize原帖</a><a class="src" href="https://x.com/fchollet/status/2098902564955930953">Chollet路线图</a></p><p class="lp">凌晨增量：2026年9月14日00:48:03（北京时间），Lukasz Kaiser表示，按其日常经验，包括Astra和Fable在内的智能体仍经常更像神经架构搜索，而不像研究员。这是使用者的观察，不是受控实验，却与“优化现有目标”和“提出可复用的新概念”之间的区别直接相关。<a class="src" href="https://x.com/lukaszkaiser/status/2099178304125481462">凌晨原帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>本刊判断，固定目标上的高分可以帮助团队筛选工具，却未必回答工具能否提出有用的新问题。开放式创新基准若能给出可复现的评判方法，将改变科研智能体的验收：除了完成任务，还要衡量解释能否迁移、方法能否被其他研究者继续使用。这个方向比把单项突破直接称为AGI更接近研发采购的真实需求。</p></div><p class="lp"><span class="lk">接下来观察</span>ARC 4是否公布原创性判断、允许使用的外部资源及计算预算。没有这些条件，不宜将路线图转换为模型能力结论；本期也没有确认该基准提前开放。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 12 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">研究交付与协作，近期背景：</strong>官方日志9月9日分别记录Deep Research进入Work/Codex、Library新增共享，以及Voice模型与额度调整。研究功能可以生成带引用的可编辑成果，适用套餐与Work权限有限制；这些是三项独立能力变化。9月10日另有Data插件及Box、Dropbox、SharePoint接入Library。对企业产品而言，值得看的是资料进入、研究交付和团队复用能否连成工作流程。本期未确认它们在9月13日再次扩围。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">官方逐项日志</a></p></div><div class="srow"><p><strong class="st">开发者与桌面入口，近期背景：</strong>9月10日Agents API进入公开测试，提供托管的Codex执行框架与持久会话；同日GPT-Live 1在API正式可用。9月11日桌面日志另外记录Pets快捷对话与Windows Appshots，后者可将窗口截图和可取得的文本带入对话。这些变化分别降低智能体基础设施建设成本与用户提供上下文的操作成本，没有确认本期再次上线。<a class="src" href="https://developers.openai.com/api/docs/changelog">API逐项日志</a><a class="src" href="https://learn.chatgpt.com/docs/changelog">桌面产品日志</a></p></div><div class="srow"><p><strong class="st">数学成果，近期背景：</strong>OpenAI于9月8日发布Navier–Stokes相关研究说明，9月10日补充更新，描述其系统生成针对有外力情形的奇点证明及形式化验证。本文只将其作为公司公布的研究结果；不据此自行宣布数学大奖问题获最终认可。报告日关于研究能力的争论，不能替代原问题条件和外部审查。<a class="src" href="https://openai.com/index/navier-stokes-solution/">研究说明及更新</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">消费者产品扩围，近期背景：</strong>两篇官方公告均标9月10日；RSS对应北京时间9月11日00:00的Gemini Windows版，以及02:00的Dreambeans扩围。前者增加Windows桌面入口，部分高级能力仍取决于计划和地区；后者面向美国成年账号，不是全球开放。它们分别改变唤起入口和个性化内容的覆盖范围，未取得本期再次扩围的依据。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows/">Gemini Windows公告</a><a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/dreambeans-expansion-september-2026/">Dreambeans公告</a></p></div><div class="srow"><p><strong class="st">可使用的科研资产，近期背景：</strong>DeepMind于9月8日推出AlphaGenome Atlas，将约90亿个单碱基变化的预测提供给研究者，并提供网站与API等访问方式。它降低了逐次生成预测的使用门槛；预测结果仍需实验和专业解释，不能等同临床有效性。Gemini API日志未提供9月12日至13日的新条目证据。<a class="src" href="https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/">Atlas原文</a><a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">API日志</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">团队运营与执行修复：</strong>9月10日Smart reports以Enterprise测试版提供团队使用、成本、会话摩擦与可沉淀为共享技能的模式分析，属于近期背景。Claude Code发布列表另将v2.1.270标在9月12日，内容是修复长会话中只读Git命令意外要求许可的问题；页面所示时刻未提供可核实的时区，保留官方日期，不虚构北京时间首发。它是具体的操作摩擦修复，不是模型能力升级。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">Claude日志</a><a class="src" href="https://github.com/anthropics/claude-code/releases">Claude Code发布记录</a></p></div></div><div class="sector"><div class="sector-h">中国 AI</div><div class="srow"><p><strong class="st">DeepSeek服务连续性，近期背景：</strong>9月10日V4.1 Flash发布公告仍保留旧的V4 Pro下线安排；后续官方价格说明则明确，9月14日以后继续提供V4 Pro，计费方式不变。9月11日的同期报道也记录了该调整。因此，不能沿用旧公告催促团队在次日迁移；仍需区分固定模型与别名路由的实际行为。<a class="src" href="https://api-docs.deepseek.com/zh-cn/quick_start/pricing/">当前官方说明</a><a class="src" href="https://cladecode.com/news/oh-1980/">9月11日同期报道</a></p></div><div class="srow"><p><strong class="st">小米桌面邀测，近期背景：</strong>9月8日北京商报报道MiMo Desktop开放邀测，获批用户可限时、限量免费体验MiMo-X-Pro-Preview和MiMo-X-Flash-Preview。官方文档说明完整电脑控制存在海外范围限制，不能将“桌面客户端”自动理解为所有地区均可控制整台电脑。<a class="src" href="https://finance.sina.com.cn/stock/t/2026-09-08/doc-inirayqy9542686.shtml">同期报道</a><a class="src" href="https://mimo.mi.com/docs/en-US/news/latest/mimo-desktop">官方产品说明</a></p></div><div class="srow"><p><strong class="st">其余方向：</strong>字节/豆包/Seed、智谱、MiniMax、通义及其他中国模型线索中，未取得足以认定本期新发布的日期与正文组合。模型目录、调用网关和视频标题不构成当天发布证据；不据此宣称各家没有更新。</p></div></div><div class="sector"><div class="sector-h">AI芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">异构推理进入同一机架，近期背景：</strong>d-Matrix于9月10日宣布采用NVIDIA NVLink Fusion，规划让其推理处理器进入NVIDIA机架体系。这是合作与产品路线图，尚不是已交付系统的成本或延迟成绩。对模型服务商，值得比较的是专用推理硬件能否在现有基础设施中部署，而不是只比较单颗芯片的宣传参数。<a class="src" href="https://www.d-matrix.ai/announcements/d-matrix-rackscale-nvidia/">d-Matrix公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">司法规则原始日期是9月7日：</strong>最高法《关于依法审理涉人工智能纠纷案件的意见》涉及侵权、知识产权及审理等议题，属于近期背景。本期没有将9月13日转载、解读或搜索引擎更新误写成新规发布；也不从不完整的二次解读推导新的责任范围或生效日期。最高法、网信办、工信部与新华社均已分别核查，尚无可收入本期的新增政策原文证据。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511101.html">最高法原文</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">Harvey融资，近期背景：</strong>公司9月9日公告融资5.5亿美元，估值155亿美元，由Diffusion和Lightspeed共同领投。原文把融资用途与法律团队积累自身知识能力联系起来。它提供了垂直应用继续获得资本支持的实例，却不足以推断整个AI融资市场的趋势；部分二次标题中的156亿美元不采用。<a class="src" href="https://www.harvey.ai/blog/harvey-raises-dollar550m-at-a-dollar155b-valuation-to-help-legal-teams-own-their-intelligence">Harvey原公告</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> WorkBuddy、CodeBuddy、混元、元宝、腾讯云及微信AI，均未取得9月13日或本期凌晨由腾讯自身发布、且日期与正文满足核实要求的新增公告。这是本期证据状态，不代表断言产品当天没有变化。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong class="st">WorkBuddy / CodeBuddy的模型接入，近期背景：</strong>DeepSeek在9月10日V4.1 Flash原公告中明确称WorkBuddy（含CodeBuddy）已全量接入。这项信息可以保留为供应商陈述，但腾讯侧对应发布、各地区开放条件、用户额度及版本要求仍不能从该句话推出；也不能计入本期腾讯自有官方更新。<a class="src" href="https://www.deepseek.com/news/deepseek-v4-1-flash/">DeepSeek发布原文</a></p></div><div class="srow"><p>本刊判断，接入的价值取决于它能否改善完整任务：模型切换后，文件理解、工具执行和最后交付需要一起验收。若低成本模型增加重试、人工修订或失败任务，单次调用便宜不会自动转化成工作成本降低。对于WorkBuddy，应看跨应用任务；对于CodeBuddy，应看修改是否通过项目原有验证，而不是只看模型选择菜单。</p></div><div class="srow"><p>竞争参照可以从Muse的设计中提取：Ideas解决“不知道从哪里开始”，目标与活动记录帮助用户理解后台进度。这些是已有产品设计陈述，不证明Muse全面优于腾讯产品；更有用的比较是相同任务下，用户需要补充多少次信息、处理多少次授权，以及能否找到失败原因。<a class="src" href="https://introducing.muse.ai/">Muse设计原文</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已覆盖两个Buddy产品的官网与日志、混元、元宝、腾讯云文档及微信AI相关官方线索。WorkBuddy日志检索文本出现标注9月10日的5.5.5、5.5.6条目，但完整页面及更高版本未能确认；CodeBuddy的版本线索也不足以确认为当前最高版本。因此不把版本号称为“最新”，不将重试、资料库等待完整核实的条目写成当天更新。真正影响判断的缺口，是腾讯侧对接入范围、执行变化及可用条件的原始说明。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy日志入口</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>用户授权正在成为智能体增长的实际约束。</h4><p>Muse当日强调安全投入，Chollet同日追问监督者的问责，两条证据处于产品和行业不同层面，却都涉及“凭什么相信委托不会失控”。本刊推断，能展示边界、让用户理解控制权的产品，更可能获得真实账户连接。可验证信号不是安全页面长度，而是连接成功率、审批中断率与错误执行率是否一起改善。<a class="src" href="https://x.com/alexandr_wang/status/2099159560103825579">Muse当日陈述</a><a class="src" href="https://x.com/fchollet/status/2098901026514559194">监督讨论</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>持续了解用户，可能同时改变推荐和任务分发。</h4><p>Wang当日对Feed的解释，把长期记忆与推荐联系起来；Google在9月10日公布的Dreambeans扩围，则展示了基于个人上下文组织日常内容的另一条产品路线。本刊推断，新的竞争点是用户能否明确表达兴趣、纠正记忆，再把内容转成下一步行动。需要观察主动纠错是否提高后续推荐满意度，而不是把“个性化”本身当成功证明。<a class="src" href="https://x.com/alexandr_wang/status/2099150117156888757">Feed原帖</a><a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/dreambeans-expansion-september-2026/">Dreambeans近期背景</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>科研采购需要区分产出答案与产出方法。</h4><p>ARC 4的当日路线图关注开放式发明，Kaiser在9月14日00:48:03的观察强调现有智能体仍可能依赖搜索式尝试。本刊判断，两者提示研发团队设立不同验收目标：一个衡量解决问题的效率，另一个衡量所得解释能否帮助人类解决后续问题。可观察信号是他人能否在新问题上复用成果；在方法公布前，不提前认可新基准的有效性。<a class="src" href="https://x.com/fchollet/status/2098902564955930953">ARC路线图</a><a class="src" href="https://x.com/lukaszkaiser/status/2099178304125481462">凌晨观察</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>公司公告支持其公布的功能、范围和安排；性能领先、安全有效及用户经济收益仍需独立证据。本期未把体验帖当作基准测试，也未采用明确标为假设的利润率和订阅成本数字。</li><li>采用的X陈述来自所附完整公开帖记录，核对了账号、链接与时间的一致性；重新打开失败的记录只用于证明该账号说过什么。部分转推残片、作者与链接不一致的记录已排除。</li><li>日志按独立条目的原始日期处理；没有单独发布日期的持续更新页面标为unknown。腾讯日志缺口与供应商陈述已分别标明，近期背景均没有改写成9月13日首发。</li><li>“本刊判断／推断”是基于所引证据的分析。晨间增量明确标出9月14日时刻，截止之后的内容不进入本期。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
