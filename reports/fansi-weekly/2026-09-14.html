@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28207%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23b45309%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23292018%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%2228%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2255%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23fffbeb%22%3E%E6%80%9D%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-W37 认知迭代复盘</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="a9924c27d3d7087bf2ef35d8406901d9ad827872206e105584718877907ac66e">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 认知迭代</span><span class="r">2026-09-14</span></div>
+  <h1 class="doc">2026-W37 认知迭代复盘</h1>
+  <div class="dateline"><span>全文 <b>828</b> 字</span><span>约 <b>2</b> 分钟</span><span>章节 <b>7</b></span></div>
+  <div class="mast-bar"></div>
+  
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h2" href="#s1">一、本周认知主线</a><a class="t-h2" href="#s2">二、认知迭代</a><a class="t-h2" href="#s3">本周没有可确认的认知 diff，也没有足够证据标注“强化”。</a><a class="t-h2" href="#s4">三、反复出现但没动手的念头</a><a class="t-h2" href="#s5">四、本周资产入库清单</a><a class="t-h2" href="#s6">五、下周一个建议</a><a class="t-h2" href="#s7">从京小贝下周的一次真实产品决策里，留下一条完整的“改主意记录”。</a></nav>
+    <main><p>本期是原料不足的短版。仅依据提供的资料，无法确认你在本周形成了哪些新判断、改变了哪些决定；这不代表本周没有思考或行动。</p><p>资料边界：会话片段除“只回复：ok”外，只有两份面向 2026-09-06 的日报任务要求，没有研究结果或你的后续判断，不能作为本周认知变化的证据。wiki/log.md 与 wiki/index.md 提供的是往期每日论文内容，按要求排除。提供的历史周报是 <strong>2026-W33（8 月 10—16 日）</strong>，并非上周 W36；未提供本周主动资产、inbox 感悟或可用于深读的实质对话。</p><h2 id="s1">一、本周认知主线</h2><p><strong>本周主线暂时无法辨认。</strong> 最近可见的历史主线来自 W33：把自己的专业判断变成普通用户能读完、能理解、愿意追问的产品表达，并把“在场调试的手感”转成“不在场也能成立的规则”。这是历史坐标，现有材料不足以判断本周是在延续它，还是已经转向。</p><h2 id="s2">二、认知迭代</h2><h2 id="s3">本周没有可确认的认知 diff，也没有足够证据标注“强化”。</h2><ul class="ls"><li><strong>之前的认知：</strong> W33 周报记录，你已从“多角度覆盖才专业”转向“主逻辑只有一个，其他信息分层承接”，并用“在场／不在场的对齐”解释个人使用 AI 与做 AI 产品的差别。</li><li><strong>现在的认知：</strong> 未提供本周实质用户表达，无法确认这些判断有何修正、强化或落地。</li><li><strong>被什么改变：</strong> 缺少本周具体对话、主动收藏后的感悟或决策事件，无法建立变化的证据链。</li></ul><p>来源：所提供的 previous weekly，2026-W33“认知迭代”第 1、8 条。这里只用于交代历史起点，不计为本周成果。</p><h2 id="s4">三、反复出现但没动手的念头</h2><p><strong>本周无可确认条目。</strong> 没有同一念头在本周出现两次以上的有效记录，也没有足够材料判断它是否仍未行动。</p><p>W33 曾点名评测资产、真实上下文调试等待办，但距本期已有数周，不能把当时的未完成状态直接延续到今天，更不能据此说你“又拖了一周”。</p><h2 id="s5">四、本周资产入库清单</h2><p><strong>可确认条目：无。</strong> 提供的资料没有本周主动资产的入库记录；这表示本次材料未覆盖，不表示实际入库为零。往期每日论文和日报任务要求不列入清单。</p><h2 id="s6">五、下周一个建议</h2><h2 id="s7">从京小贝下周的一次真实产品决策里，留下一条完整的“改主意记录”。</h2><p>只记：原来准备怎么做、最终怎么做、哪句用户反馈或哪个实际结果让你改变了判断，保留对应原话或样例。</p><p>为什么是它：本期最缺的是能证明“你因为什么而改变”的材料。一条有前后对照、有触发证据的决策，就足以成为下一期复盘的扎实起点，也能检验 W33 的产品判断今天是否仍然成立。</p><p>本周最大的认知迭代：现有材料不足，无法确认。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
