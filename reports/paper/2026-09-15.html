@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28282%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2216%22%20r%3D%2211%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2238%22%20r%3D%228%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2247%22%20r%3D%2223%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>翻译时，模型可以先换语序，再换语言</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="6c308ad696480bd2bf6f35bd995430732b422610948a099e3ccd4398e0597d95">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-15</span></div>
+  <h1 class="doc">翻译时，模型可以先换语序，再换语言</h1>
+  <div class="dateline"><span>全文 <b>2,663</b> 字</span><span>约 <b>7</b> 分钟</span><span>章节 <b>14</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Separating Syntax from Language: A Mechanistic Account of Translation in Multilingual LLMs</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.01356">https://arxiv.org/abs/2609.01356</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Mikhail Sonkin, Tanja Baeumel, Daniil Gurgurov, Josef van Genabith, Simon Ostermann</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Saarland University；DFKI；CERTAIN；University of Göttingen（原文列示）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-01</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">DFKI 官方公告确认获 EMNLP Findings 2026 接收；原文为 CC BY 4.0；未独立复现实验，不使用动态赞数或排名</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 机制可解释性, 多语言模型</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-15.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-15.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-15-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">第一拍，主角：一个还没说出下一个词的翻译模型。</a><a class="t-h2" href="#s4">第二拍，困境：换语言时，往往也必须换语序。</a><a class="t-h2" href="#s5">第三拍，旧路：看看中间层像哪个词。</a><a class="t-h2" href="#s6">第四拍，转折：直接替换内部计算。</a><a class="t-h2" href="#s7">第五拍，解法：先沿层定位，再沿组件缩小。</a><a class="t-h2" href="#s8">第六拍，结局：有规律，也有明确例外。</a><a class="t-h2" href="#s9">第七拍，内核：共享功能，不必共享一种整齐的向量形状。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">模型理解向前的一步：给翻译错误增加一个可定位的中间层。</a><a class="t-h2" href="#s13">最应保留的边界，是自然语言证据仍薄。</a><a class="t-h1" href="#s14">来源</a></nav>
+    <main><p>截至 01:30（北京时间）。这是 2026-09-15 的截稿快照，严格截止于 01:30:57。今日选择的论文于 9 月 1 日 14:58:38 UTC 首次提交，处于过去 14 天窗口内；按所给台账的 arXiv ID 与标题核对，未重复。<a class="src" href="https://arxiv.org/abs/2609.01356">提交记录</a></p><h1 id="s1">推荐理由</h1><p>这篇论文让“模型如何翻译”多了一层可检验的解释：在受控翻译任务里，目标语言的语序可以与表面词汇语言分开改变。一个中间状态可能已倾向于法语的名词在前，却仍更容易被读成英语单词。模型内部的语言加工，因此不能仅凭“读出了哪个语言的词”来描述。<a class="src" href="https://arxiv.org/html/2609.01356v1#S4">原文 §4.1—4.2</a></p><p>推荐它的关键，是作者没有停在观察相关性。他们把一次翻译的内部状态移植到另一次翻译中，检查语序、语言、词义究竟哪一项随之改变，再把干预缩小到单个注意力头。注意力头是 Transformer 中负责汇集上下文信息的计算单元。这让“语序可能是独立因素”变成可以被反例挑战的机制假说。<a class="src" href="https://arxiv.org/html/2609.01356v1#S3">原文 §3.3—5</a></p><p>质量信号也有时间明确的原始证据：DFKI 在 8 月 27 日的官方公告中，将本篇列入 EMNLP 2026 Findings 接收名单。这是会议接收信号，不等于实验已获独立复现。<a class="src" href="https://www.dfki.de/web/news/mlt-auf-der-emnlp-8-beitraege-angenommen">DFKI 官方公告</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">第一拍，主角：一个还没说出下一个词的翻译模型。</h2><p>想象模型正在把“绿色的汽车”译成法语。在作者设计的续写位置，正常接下来应出现表示汽车的名词；另一个实验提示则要求把“红色的椅子”译成荷兰语，接下来应出现颜色形容词。两次计算同时区别在语言、语序和词义，恰好提供了一组能拆开观察的变量。<a class="src" href="https://arxiv.org/html/2609.01356v1#S3.SS4">原文 §3.4、图2、表2</a></p><h2 id="s4">第二拍，困境：换语言时，往往也必须换语序。</h2><p>如果法语输出换成了荷兰语，下一词从名词变成形容词，很难知道模型内部是一个整体开关，还是两种计算恰好一起变化。只检查最终译文，会把这些不同解释混在一起。作者因此将语序记为 S、表面语言记为 L、词义内容记为 C，并追踪它们来自原任务还是移植任务。<a class="src" href="https://arxiv.org/html/2609.01356v1#S3.SS4">原文 §3.4</a></p><h2 id="s5">第三拍，旧路：看看中间层像哪个词。</h2><p>Logit Lens，中文可理解为“中间层词汇透镜”，把中间隐藏状态提前送入模型的词汇输出映射，观察哪些词获得较高概率。它能显示中间表征偏向什么，却不能单凭读出结果确定该信息实际控制了什么。本文用它观察到：Llama 3 和 Aya Expanse 的中间预测可能仍偏英语词汇，但词的角色已符合目标语言语序；mGPT 没有同样的英语信号。<a class="src" href="https://arxiv.org/html/2609.01356v1#S4.SS1">原文 §3.3、§4.1</a></p><h2 id="s6">第四拍，转折：直接替换内部计算。</h2><p>Activation patching，即激活替换，是把移植提示在指定层产生的内部状态放入原提示的计算，再让模型继续预测。这里最有辨识力的结果，是输出保留原来的语言和词义，却采用移植任务的词序。作者用八种候选组合分别追踪三项因素，避免把任何输出变化都算成“语序改变”。<a class="src" href="https://arxiv.org/html/2609.01356v1#S3.SS4">原文 §3.4、表2</a></p><h2 id="s7">第五拍，解法：先沿层定位，再沿组件缩小。</h2><p>在论文展示的 Llama 3 法语／荷兰语例子里，第14层的替换首先推动语序变化，第17层开始推动语言变化，词义内容在更晚阶段随移植任务改变。随后，作者逐个替换相关层的注意力头，发现 Llama 3 的 H14.25 和 Aya Expanse 的 H15.0 对语序尤其敏感。mGPT 的影响更分散，最强的头也影响语言选择，因此分离并不同样干净。<a class="src" href="https://arxiv.org/html/2609.01356v1#S4.SS2">原文 §4.2—4.3、图4—5</a></p><h2 id="s8">第六拍，结局：有规律，也有明确例外。</h2><p>三个模型与三类数据组成的九个组合中，八个呈现作者归纳的 S→L→C 顺序；Llama 3 在主谓宾数据上，语序和语言对应的概率差峰值同在第14层。这里的“顺序”来自不同干预效果随网络层数的变化，不能解读成模型到最后才开始理解句意，更不是八成多的翻译成功率。mGPT 的纯语序效应也很小，部分数值按表格精度显示为 0.00。<a class="src" href="https://arxiv.org/html/2609.01356v1#S4.SS2">原文 §4.2、表3</a></p><h2 id="s9">第七拍，内核：共享功能，不必共享一种整齐的向量形状。</h2><p>作者进一步用不同语言的平均激活做替换。同语序语言通常引起较小变化，异语序语言更容易推动词性位置变化，而不系统地把输出语言带走。但这些注意力头的平均激活，用余弦相似度比较时并未按语序清楚聚类。最稳妥的结论是：部分组件具有跨语言的语序功能；“功能相似”不能直接推成“几何表示相同”。<a class="src" href="https://arxiv.org/html/2609.01356v1#S5">原文 §5、图7—8</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是 Dumas 等人的《Separating Tongue from Thought》。这条前驱研究通过激活替换，证明在所研究的翻译任务中，语言和概念可以被分别操纵。其 arXiv 首次提交日期是 2024-11-13，后续版本更新于 2025-06-25。本文接着追问：此前被归入“语言输出”的部分，是否还能拆出语序？<a class="src" href="https://arxiv.org/abs/2411.08745">前驱一</a></p><p>再倒读一层，是 Wendler 等人的《Do Llamas Work in English?》，首次提交于 2024-02-16。它发现 Llama-2 的一些中间表征更容易读出语义正确的英语词，最后才靠近目标语言输出。这提出了“内部概念空间偏向英语”的解释，也留下了问题：词汇读出偏英语，是否意味着其他语言结构也尚未形成？<a class="src" href="https://arxiv.org/abs/2402.10588">前驱二</a></p><p>今天这篇研究给出的推进，是把上述问题拆开测量：即使读出的词仍像英语，目标语序也可能已经参与预测；即使语言与词义可以分离，语序也仍值得单独检查。从观察词汇、到干预语言与概念、再到分离语序，证据逐渐从“表征看起来像什么”走向“替换它会改变什么”。这段研究脉络是本文对上述原始研究的综合解释。<a class="src" href="https://arxiv.org/html/2609.01356v1#S2">本篇 §1—2、§4</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">模型理解向前的一步：给翻译错误增加一个可定位的中间层。</h2><p>论文没有训练出一个更强的翻译模型，也没有报告部署后的成本下降。它提供的是一种分析方式：输出语言、词义内容和语序至少在部分场景下可以分开干预。因此，遇到“用对了语言、也选对了词，但组合方式不对”的错误，可以把结构实现作为独立的诊断对象。这是根据实验提出的产品诊断推演，尚未验证能降低实际系统的错误率。<a class="src" href="https://arxiv.org/html/2609.01356v1#S4">机制依据：§4—5</a></p><p>对多语言知识库或内容转换产品，可以据此设计一个小型评测：固定事实和实体，分别检查语言是否正确、关系和词义是否保持、语序是否自然；再改变输入语言和句式，看哪种错误随之出现。这种做法借用了论文的变量拆分思想，不需要宣称现有产品已经暴露出某个“语序头”。若能访问模型内部，才进一步考虑激活实验；普通文本接口无法直接执行本文的内部替换。</p><h2 id="s13">最应保留的边界，是自然语言证据仍薄。</h2><p>主实验使用三类受控合成数据：名词短语197例、主谓宾154例、情态动词31例，分别安排跨语言语序差异。自然数据补充仅有27句 FLORES-200 句子；Llama 3 在这部分也没有清楚分出语序与语言阶段。论文自己指出，更复杂的格变化、长距离依存、更多模型与自然提示，可能涉及不同机制。<a class="src" href="https://arxiv.org/html/2609.01356v1#A6.SS1">原文表1、附录F.1、Limitations</a></p><p>还有两条解释上的限度。其一，概率差最大所在层是一个定位指标，并非完整计算流程的录像；附录还显示，某些语序概率虽有上升，却不足以成为最可能输出。其二，平均激活实验存在语言例外，例如德语作为基础目标语言时，Aya Expanse 和 Llama 3 的相关语序效应缺失。因此不宜把 H14.25 当成通用语法按钮，更不能据此要求所有中文任务先翻译成英语。<a class="src" href="https://arxiv.org/html/2609.01356v1#A6">原文 §5、附录F</a></p><p>我的判断：这篇值得收藏的，是把一种看似纠缠的能力拆成可反驳的因果问题。真正可迁移的方法，是同时寻找“改变了什么”和“哪些因素没有随之改变”，并让例外决定结论的边界。</p><h1 id="s14">来源</h1><p>本篇原文明确采用 CC BY 4.0。本文为对 Mikhail Sonkin、Tanja Baeumel、Daniil Gurgurov、Josef van Genabith、Simon Ostermann 所著论文的中文解释性改写，重新组织了叙事，并加入明确标注的产品推演；不表示原作者认可这些推演。依许可保留作者署名、原文链接、许可链接并说明改写。<a class="src" href="https://arxiv.org/html/2609.01356v1">原文与许可标示</a>；<a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 许可及署名条件</a></p><ul class="ls"><li><a class="src" href="https://arxiv.org/abs/2609.01356">arXiv 摘要与提交记录</a>：核实标题、作者、首次提交时间。</li><li><a class="src" href="https://arxiv.org/html/2609.01356v1">arXiv HTML v1 全文</a>：机构、机制、表格、实验例外与局限。PDF 抓取未成功，深读依据可访问的 HTML 原文。</li><li><a class="src" href="https://www.dfki.de/web/news/mlt-auf-der-emnlp-8-beitraege-angenommen">DFKI 官方接收公告，2026-08-27</a>：确认 EMNLP Findings 2026 接收信息。</li><li><a class="src" href="https://arxiv.org/abs/2411.08745">Separating Tongue from Thought</a>：语言与概念分离的前驱证据。</li><li><a class="src" href="https://arxiv.org/abs/2402.10588">Do Llamas Work in English?</a>：中间表征英语偏向的前驱证据。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
