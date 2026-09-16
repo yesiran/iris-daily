@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2869%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2214%22%20cy%3D%2217%22%20r%3D%2217%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2210%22%20r%3D%2221%22%20fill%3D%22%23fff%22%20opacity%3D%220.11%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-16</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="dc117362f0071c9584725d182238214415ecb3a7fc4cbedd0f5dac6ee2ec88e7">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-16 · 周三</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>3</b></span><span>分领域 <b>13</b> 条</span><span>趋势 <b>3</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-17 02:00（北京时间）。本期主线是AI进一步进入可执行的业务流程：广告承接商家对话，语音协调后台任务，销售助手开始受控写回CRM；覆盖9月16日全天及次日凌晨截稿范围，近期进展均保留原始发布日期。
+要闻导读：① ChatGPT广告的新交互与商家入口；② Gemini实时语音的后台推理与开放范围；③ Claude销售插件的业务写回。后两项官方日期为9月15日，因直接改变产品可用性列为持续重要议题，不冒充本期首发。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 3 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>ChatGPT广告开始承接商家对话，并进入既有投放工具</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Gemini语音支持边交流边执行，开发者渠道已正式可用</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Claude销售插件连接CRM读写，权限继续由业务系统约束</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>ChatGPT广告开始承接商家对话，并进入既有投放工具</h3><p class="lp"><span class="lk">事件</span>OpenAI于9月16日宣布测试Sponsored Agents：用户点击广告后，可进入有明确标识、与原始聊天分开的商家赞助对话，目前限美国部分广告主。同时推出Ads Manager插件，使广告主可用自然语言创建、调整和分析活动，并提供文案、图片辅助及可选的文本定制能力。公告还宣布接入HubSpot和向美国Shopify商家开放相关应用。<a class="src" href="https://openai.com/index/reimagining-advertising-with-ai/">OpenAI公告</a></p><p class="lp">这里有一个影响时间判断的细节：Shopify商店页记录应用上线于9月3日。因此，本期变化应表述为9月16日官方宣布的开放和整合，不能称应用当天首次上架。商店记录也能确认开发者为OpenAI，支持广告支出、点击和转化等指标。<a class="src" href="https://apps.shopify.com/chatgptads">Shopify商店记录</a></p><div class="why"><span class="why-k">为什么重要</span><p>这是获客路径的变化。用户表达需求后，商家可以在同一AI入口继续解释产品；商家侧又能沿用已有经营工具，降低尝试新渠道的操作成本。我的判断是，竞争将从“谁拿到一次点击”延伸到“谁能持续回答购买前的问题”，垂直导购产品需要重新评估自身提供的信息与交易价值。</p></div><p class="lp"><span class="lk">接下来观察</span>测试商家是否获得可重复的增量转化，以及赞助对话与独立回答的边界是否始终清晰。目前没有足够数据支持“广告效果已提升”的结论。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Gemini语音支持边交流边执行，开发者渠道已正式可用</h3><p class="lp"><span class="lk">事件</span>Google官方9月15日发布Gemini 3.8 Live和3.8 Live Extended Thinking。API日志明确两者已GA：前者面向低延迟实时对话，默认支持异步函数调用；后者面向需要更多后台推理的任务。它们是独立于9月2日Gemini 3.8 Flash的产品进展，不能因Flash已报道而一并略去。<a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">Gemini API日志</a></p><p class="lp">原公告进一步区分开放渠道：开发者可经Gemini API及AI Studio使用；Gemini Enterprise为私有预览。消费者侧分别进入Search Live、Gemini Live，并按订阅条件进入Docs、Gmail和Keep等入口。官方称模型可以在后台调用工具、推理，同时维持对话；本期没有独立验证其宣传中的性能领先。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/">Google发布说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>过去较长的语音任务容易变成“说一句、等一轮”，每次等待都打断用户表达。后台执行如果能与对话并行，客服、预约和现场指导就可以在处理中接收修正。今天仍值得优先看，是因为开发者已能评估这一交互能力；它对流程设计的影响，比单纯更换语音音色更直接。</p></div><p class="lp"><span class="lk">接下来观察</span>工具尚未返回时，新增限制能否正确改变执行；中断、重连后是否重复操作。API的GA与某个企业入口正式开放是两件事，部署前需核实目标渠道。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Claude销售插件连接CRM读写，权限继续由业务系统约束</h3><p class="lp"><span class="lk">事件</span>Anthropic于9月15日发布Salesforce in Claude beta，提供37项销售技能，并结合Salesforce、Slack连接器处理客户研究、会议准备、商机检查及CRM更新。它沿用用户已有Salesforce权限，默认在写入每项变更前请求批准，Salesforce仍是业务记录系统。<a class="src" href="https://claude.com/blog/salesforce-in-claude">Anthropic产品公告</a></p><p class="lp">开放条件不能省略：官方日志写明支持所有付费Claude计划，但组织需获得Salesforce测试批准。它不是付费订阅后自动获得的全量开放。本期把这项近期进展与今天的广告整合并列，重点看销售与营销入口的重新分配，而不是重述Claude模型发布。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">Claude更新日志</a></p><div class="why"><span class="why-k">为什么重要</span><p>销售助手的障碍经常在资料收集之后：建议能否进入正确商机、字段是否完整、谁负责批准。这个插件把读取、组织任务和受控写回串起来，减少只生成一份摘要后仍需人工搬运的断点。我的判断是，企业AI采购会更重视交付闭环，连接器数量本身的说服力将下降。</p></div><p class="lp"><span class="lk">接下来观察</span>测试组织的商机更新准确率、审批通过率及纠错时间。若建议看似合理却频繁写错对象，节省会议准备时间也可能被后续清理抵消；目前官方案例不能替代这些生产指标。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 13 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">权限与推理选择是两项独立变化：</strong>9月14日，ChatGPT调整新Health连接的默认权限，使其遵循用户全局插件设置；同日取消Plus、Pro从Instant自动切到Thinking，用户仍可自行选择推理选项。这分别影响授权体验与回答质量预期，均属近期背景，不是9月16日模型升级。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT更新日志</a></p></div><div class="srow"><p><strong class="st">研究与协作能力分别记录：</strong>9月9日日志包含Voice模型与额度、Library文件夹共享，以及Deep Research进入Work和Codex；9月10日另有Data插件与Box、Dropbox、SharePoint接入Library。它们各自改变交互、共享或数据使用方式，但未取得本期新增开放证据，因此不重复占据头条。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">独立更新条目</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">消费者使用场景有新内容，未新增能力：</strong>官方9月15日的家务指南介绍家电排障、食材规划、票据整理和购物比较；所附官方RSS时间为北京时间9月16日00:00。它属于既有能力的场景教育，不能写成新模型或新功能上线。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/household-chores-tips/">家务指南</a></p></div><div class="srow"><p><strong class="st">桌面与个性化分发，均为近期背景：</strong>9月10日，Google宣布Gemini Windows应用面向Windows 10、11推出，部分能力有年龄和订阅限制；同日Dreambeans扩展到美国18岁以上所有账户。前者缩短调用入口，后者扩大主动内容分发范围；本期未取得再次扩围证据。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows/">Windows公告</a> <a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/dreambeans-expansion-september-2026/">Dreambeans公告</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">模型日期纠偏：</strong>Fable 5.1、Mythos 5.1的官方发布条目为9月1日，不是搜索结果更新时间所暗示的9月16日新品。9月10日另有面向Enterprise的smart reports beta，分析工作、费用和会话摩擦，属于企业采用管理的近期进展；本期重点仍是更直接改变销售执行链条的插件。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">Claude官方日志</a></p></div></div><div class="sector"><div class="sector-h">中国 AI</div><div class="srow"><p><strong>DeepSeek：别把模型别名当固定后端</strong>。9月10日V4.1 Flash公告列出，V4 Pro请求自北京时间9月14日12:00后路由至V4.1 Flash，按后者单价计费，直至未来V4.1 Pro上线。以上是公告安排，非本期首发，也非本次实测路由。维护评测与成本基线时，调用名没变不代表模型没变，应保存实际版本及测试日期。<a class="src" href="https://deepseek.com/news/deepseek-v4-1-flash/">DeepSeek原公告</a></p></div><div class="srow"><p><strong class="st">其他模型与桌面测试：</strong>字节/豆包/Seed、智谱、MiniMax、通义、小米MiMo未取得足以确认本期新增的重要发布证据。小米桌面邀测已有官方说明，但所读文档只标9月8日更新时间；不据此推定9月16日新开测试，也不把预览版性能写成独立实测结论。<a class="src" href="https://mimo.mi.com/docs/en-US/news/latest/mimo-desktop">小米官方邀测说明</a></p></div></div><div class="sector"><div class="sector-h">AI芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">异构推理仍是路线图，而非现货降价：</strong>d-Matrix于9月10日宣布采用NVIDIA NVLink Fusion及MGX架构，计划把Raptor推理芯片接入机架；初步可用时间预计为2027年第四季度。公告描述以GPU处理prefill、专用芯片处理decode的分工。其意义在于针对延迟敏感任务优化系统，不足以证明当前API成本已经下降。<a class="src" href="https://www.d-matrix.ai/announcements/d-matrix-rackscale-nvidia/">d-Matrix公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">国内产业方向更具体，但目标不等于采购订单：</strong>工信部9月15日发布的官方解读，将AI硬件底座、芯片和终端关键技术列入电子信息制造业规划；到2030年的规模以上企业营收目标为超过30万亿元，研发投入强度目标为3.5%。这些是规划目标，不是已实现规模或AI专项拨款。<a class="src" href="https://www.miit.gov.cn/zwgk/zcjd/art/2026/art_7fcfa72ae2ab46469faa7b61c5261079.html">工信部解读</a></p></div><div class="srow"><p><strong class="st">9月16日报道强调终端落地：</strong>经济参考报报道讨论端侧模型、芯片、操作系统适配与智能体融入终端。值得跟踪的是实际设备适配和项目落地，不能把报道中的销量预期当作已完成出货。<a class="src" href="https://www.news.cn/tech/20260916/b153ad8a360e47e296df3e7d105ae0da/c.html">报道原文</a></p></div><div class="srow"><p><strong class="st">安全治理与司法文件分开看：</strong>网信办9月15日论坛发布“人工智能应用安全指引”系列实践指南等成果；本期只确认发布和议题范围，未取得指南全文。最高法涉AI纠纷意见的官方发布日期为9月7日，不能因本周转载再次成为“今日新规”。<a class="src" href="https://www.cac.gov.cn/2026-09/15/c_1791222260355810.htm">网信办</a> <a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511101.html">最高法原文</a></p></div><div class="srow"><p><strong class="st">美国争论不等于监管已经改变：</strong>新华社9月16日综述报道，企业领导人关于放慢前沿AI发展的倡议，与特朗普9月14日反对降速的表态存在分歧。本期将其作为政策讨论，不推导已产生新的限制、豁免或生效日期。<a class="src" href="https://www.news.cn/world/20260916/018860f02f9e4ad9a79cd73361b891fb/c.html">新华社综述</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">OpenAI约1.2万亿美元估值，仍属融资讨论报道：</strong>9月16日PYMNTS转述FT匿名信源报道新一轮融资讨论，并指出OpenAI未向其回应、向FT拒绝置评。FT原文受订阅限制；本期按媒体转述呈现，不写成融资已完成。具体募资额、投资人和条款均未获公司确认，不能据此判断现金已到账或形成新的算力采购能力。<a class="src" href="https://www.pymnts.com/news/artificial-intelligence/2026/openai-eyes-1-2-trillion-valuation-in-pre-ipo-funding-round/">PYMNTS报道</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong>截至本期时间，WorkBuddy、CodeBuddy均未取得腾讯自有的9月16日或9月17日凌晨新增公告。这个状态表示证据不足以确认当日更新，不表示产品当日一定没有发布。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong>WorkBuddy｜近期背景，原始日期9月10日。</strong>官方日志中的5.5.5加入创意设计、资料库内容引用，以及后台任务详情、终端输出查看和随时取消；还扩展企业微信转发记录中资料的读取。5.5.6着重改进原会话内重试、历史运行状态及错误提示。它们分别影响任务输入、执行控制与失败恢复，不能只概括成“稳定性优化”。<a class="src" href="https://www.workbuddy.cn/docs/workbuddy/Changelog">WorkBuddy官方日志</a></p></div><div class="srow"><p>我的判断是，这些能力能否降低接管成本，比增加几个示例更值得追踪。长任务失败就要重建上下文时，用户会倾向于自己完成；如果能保留进度、看清状态并取消无效执行，委托才有机会变成常态。需要验证的是重试后有无重复操作，以及取消后工具是否真正停止，日志本身没有提供效果数据。</p></div><div class="srow"><p><strong>CodeBuddy与模型接入｜供应商陈述，原始日期9月10日。</strong>DeepSeek明确写明WorkBuddy（含CodeBuddy）已全量接入V4.1 Flash。这足以保留合作方所宣布的接入事实，却不能证明腾讯侧所有套餐、地区和积分计费都发生相同变化，也不计入腾讯本期官方更新。<a class="src" href="https://deepseek.com/news/deepseek-v4-1-flash/">DeepSeek接入公告</a></p></div><div class="srow"><p><strong>Octop｜近期背景，版本日期9月14日。</strong>包发布记录及项目日志标注1.0.0为GA版本；官方代码库提供自托管、多用户、多智能体的产品形态。9月16日的介绍文章不能替换软件包的原始日期。值得跟踪的是：自托管把环境维护交给用户后，数据控制的收益能否覆盖部署与升级成本，不能仅凭“本地”推定全流程不经外部服务。<a class="src" href="https://pypi.org/project/octop/">版本记录</a> <a class="src" href="https://github.com/TencentCloud/Octop">腾讯云项目</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已覆盖WorkBuddy、CodeBuddy、混元、元宝、腾讯云及微信AI。WorkBuddy已有可读官方版本正文；CodeBuddy独立发布日志及部分动态入口仍不足以复核本期状态，公众号与X首发覆盖也不完整。因此只陈述已核版本和合作方接入信息，不把旧版本称为当前“最新”，也不以动态官网没有日期推断整个腾讯AI没有进展。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>AI入口争夺的是业务关系，而不只是使用时长。</h4><p>今天的Sponsored Agents把商家咨询带入ChatGPT，HubSpot整合把投放接回既有经营系统；近期Claude销售插件从另一端接入CRM。由此推论，AI助手可能取得操作入口，但业务系统仍保留客户记录与授权结构。独立产品更有价值的合作位置，是提供准确业务上下文和可验收动作。验证信号是用户完成获客、跟进后，还要在哪个系统补录。<a class="src" href="https://openai.com/index/reimagining-advertising-with-ai/">广告整合</a> <a class="src" href="https://claude.com/blog/salesforce-in-claude">销售插件</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>“任务在继续”需要成为用户看得见、改得动的状态。</h4><p>Gemini的后台推理与异步调用，以及WorkBuddy近期的查看、取消和原会话重试，共同指向一个约束：执行时间拉长后，用户不能只获得开头的承诺和末尾的结果。推论是，进度表达、需求修正和故障恢复会进入核心体验指标；单纯压低首字延迟，无法解决十分钟后才发现方向错误的浪费。可比较完成同一任务时的人工介入次数与返工时长。<a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">API日志</a> <a class="src" href="https://www.workbuddy.cn/docs/workbuddy/Changelog">WorkBuddy日志</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>自动化程度应按动作风险分层。</h4><p>Salesforce插件沿用既有权限并默认批准写入；ChatGPT近期让新Health连接遵循全局权限设置。两项设计处理的约束不同，不能简单评判谁更“自主”。我的推论是，读取、草稿生成和外部写入应有不同的授权与记录方式：企业希望减少低风险摩擦，也需要在改变业务状态时知道谁批准了什么。验证信号是减少确认后，任务完成率与错误写入率能否同时改善。<a class="src" href="https://claude.com/blog/salesforce-in-claude">Salesforce权限设计</a> <a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">Health权限条目</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>产品事实主要采用厂商独立公告和带日期日志。官方“已推出”支持发布陈述，不自动证明所有账户都已可用；GA、私有预览、邀请测试及订阅条件分别保留。</li><li>模型性能、效率和接入范围若来自供应商，按供应商陈述处理；宣传排名、客户引语或演示结果不等于独立对照测试。趋势段属于分析推断。</li><li>规划目标、论坛成果、司法文件和监管讨论具有不同证据层级。融资仅有媒体报道，FT原文受订阅限制；不把估值讨论、预期出货或未来开放计划写成完成事实。</li><li>官方9月15日及更早日期均照录。除已给出的官方RSS时间外，不虚构海外公告的北京时间分钟。本期未收入有充分时间证据的9月17日00:00—02:00新增事件，补核未扩展截稿窗口。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
