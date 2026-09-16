@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28312%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2239%22%20r%3D%228%22%20fill%3D%22%23fff%22%20opacity%3D%220.12%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2234%22%20r%3D%2212%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>奖励走到哪里，也允许模型抄近路：让长推理从失败中学会前进</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="effc0633a8eb082bf844ba2ccc07d4d7f51743e3f6ba3dc951279ebea8520ca9">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-17</span></div>
+  <h1 class="doc">奖励走到哪里，也允许模型抄近路：让长推理从失败中学会前进</h1>
+  <div class="dateline"><span>全文 <b>2,975</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Long-Horizon Language Model Reinforcement Learning via Progressive Point Matching</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.07303">https://arxiv.org/abs/2609.07303</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Preston Fu, Kevin Frans, Oleh Rybkin, Sergey Levine, Aviral Kumar</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">UC Berkeley；Carnegie Mellon University</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-07</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">arXiv v1预印本；HF Papers可检索；原文提供理论、对照与消融；未核实同行评审接收、独立复现或截稿前热度</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 强化学习, 长程推理, 奖励设计</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-17.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-17.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-17-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个反复做长题的模型。</a><a class="t-h2" href="#s4">二、困境：差一步成功，仍然没有可用反馈。</a><a class="t-h2" href="#s5">三、旧路：给每一步打分，也可能教错。</a><a class="t-h2" href="#s6">四、转折：把参考解答变成可到达的知识状态。</a><a class="t-h2" href="#s7">五、解法：只给新增进展计分，并为捷径补齐分数。</a><a class="t-h2" href="#s8">六、结局：让几乎学不动的题开始产生信号。</a><a class="t-h2" href="#s9">七、内核：把参考答案用作进展的尺子。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">模型往前走的一步，是能从未完成的复杂任务中提取更有区分度的训练信号。</a><a class="t-h2" href="#s13">对你的研究或内容工作流，可先借用评价方法。</a><a class="t-h2" href="#s14">真正部署前，要验证分数是否预测任务成功。</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><p>2026-09-17｜截至 01:30（北京时间）。这是当日尚未结束的截稿快照。本文选择9月7日首次提交的论文，处于过去7—14天窗口，arXiv ID与英文标题均未出现在所附去重台账中。作者、机构和提交时间以原文为准：v1提交于2026-09-07 10:21:41 UTC，早于本次截稿。<a class="src" href="https://arxiv.org/abs/2609.07303">提交记录</a> <a class="src" href="https://arxiv.org/html/2609.07303v1">原文首页</a></p><h1 id="s1">推荐理由</h1><p>长任务训练有一种浪费：模型已经解出几个关键子问题，只因最后一步失败，整段尝试仍得零分。于是训练器看不出“有用但没做完”和“完全没进展”的差别。本文的Progressive Point Matching，简称PPM，可译作“渐进推理点匹配”，试图把这些失败中的有效进展变成学习信号，同时保留模型采用其他解法的自由。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">原文§1、§4</a></p><p>推荐它，是因为它把两个常被混在一起的问题拆开：怎样让反馈更密集，以及怎样防止密集反馈改变真正目标。它提出可检查的机制，给出带条件的最优性命题，再用长短不同的任务测试。最有说服力的是长链任务上的变化，而非“所有数学题都更强”：GSM-Infinite在相同4亿训练token下，任务长度参数n=24时，分段PPM成功率19.1%，稀疏结果奖励9.1%；但n=8时，PPM的65.2%低于结果奖励的68.4%，也低于Verifree的82.8%。收益显然有适用区域。<a class="src" href="https://arxiv.org/html/2609.07303v1#S5.SS2">原文§5.2，表1</a></p><p>HF Papers提供了选题入口，但页面可见不等于已获顶会认可。本次没有核实其收录时间、历史赞数或排名；作者附带说明页未能抓取，未使用其中内容。质量判断主要依据原文的机制、实验和暴露出的边界。<a class="src" href="https://huggingface.co/papers/2609.07303">HF论文页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个反复做长题的模型。</h2><p>想象训练器拿着一份参考解答，学生却要独立完成题目。这里的“学生”是正在接受强化学习的语言模型：自己生成解题过程，再根据奖励调整下一次的行为。这叫on-policy训练，即训练数据来自模型当前的行为，而不是始终照着标准答案续写。<a class="src" href="https://arxiv.org/html/2609.07303v1#S5">原文§3、算法1</a></p><h2 id="s4">二、困境：差一步成功，仍然没有可用反馈。</h2><p>如果一项任务必须连续完成许多子问题，只有全对才奖励，成功样本会越来越难遇见。论文在特定推理图和概率假设下，分析了梯度的信噪比，也就是更新方向里的有效信号相对随机波动有多强；稀疏奖励的信噪比随长度呈指数衰减。这个结论有模型化前提，不能改写成所有真实智能体训练都必然具有同一复杂度。<a class="src" href="https://arxiv.org/html/2609.07303v1#S5.SS1">原文§5.1，定理5.1及附录A</a></p><h2 id="s5">三、旧路：给每一步打分，也可能教错。</h2><p>“这一步说得正确”不保证它推进了目标。进一步，若只奖励与参考答案一致的中间步骤，一条绕远路却覆盖许多检查点的失败过程，可能比直接成功的捷径得分更高。此时模型学到的是讨好评分规则，最终完成任务反而退居其次。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">原文§2、§4</a></p><h2 id="s6">四、转折：把参考解答变成可到达的知识状态。</h2><p>论文称这些状态的组成单位为“推理点”。例如，得到一个后续证明可以直接使用的引理。若两种证明都可靠地得到同一引理，接下来的推理就可以只依赖引理，而不必复制之前的文字。作者据此假定，已到达的推理点集合能够压缩此前过程，充当后续推理需要的状态描述。这是方法的结构假设，并不是已经证明所有语言推理都能如此压缩。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">原文§1、§4</a></p><h2 id="s7">五、解法：只给新增进展计分，并为捷径补齐分数。</h2><p>先从每题一条参考解答提取推理点及依赖关系，再让模型独立生成过程。将过程按回合或固定长度切段，用φ衡量截至当前到达了多少参考推理点；本段奖励等于前后两次φ之差。同一进展不会因为反复提及而重复获奖。更关键的是shortcutting，即捷径补分：若到达后续节点使早期节点不再需要逐一展开，就按推理图规则承认相应进展；到达最终目标时，全部推理点计满。这里是奖励账本补分，不是声称模型真的执行了省略的证明。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">原文§4，公式1—4、算法1</a></p><p>可以用一个自拟例子理解：参考路线经过A、B、C后到达终点G，共四个点。某次尝试只完成A、B，获得两份部分分；另一次通过不同方法直接到G，也获得四份满分。训练器既能利用前一种失败，又不会为了参考步骤而惩罚后一种成功。实际论文还包含依赖图，不能把任意后续文本都当成有资格补分的节点。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">机制依据：原文§4</a></p><h2 id="s8">六、结局：让几乎学不动的题开始产生信号。</h2><p>在POPE-hard的4K训练、16K测试设置中，Qwen3-4B-Instruct经PPM训练后，pass@1为3.5%，GRPO为0.4%；pass@8分别为14.8%和2.3%。pass@8表示独立采样八条解答，至少一条成功的概率估计，不能当成一次回答的正确率。移除捷径补分后，PPM的pass@8降至9.3%；强制按参考顺序到达推理点时为3.2%。这组消融支持“给进展计分时仍需保留探索自由”，同时也提醒我们：这批极难题的绝对成功率仍低。<a class="src" href="https://arxiv.org/html/2609.07303v1#A2.SS3">原文附录B，表7</a></p><h2 id="s9">七、内核：把参考答案用作进展的尺子。</h2><p>我的理解是，PPM改变了参考解答与学生之间的关系：训练器借参考解答识别哪些中间成果有价值，学生则自己寻找获得这些成果的路径。它最值得带走的原则是：过程奖励应当帮助模型靠近目标，并承认那些让原定步骤变得多余的成功方式。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">推断依据：原文§1、§4</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是2024年的《Rewarding Progress》。这项研究已明确把“进展”定义为执行某一步前后，未来答对概率的变化，并训练过程优势验证器来预测它。PPM并非首次提出奖励进展；它换了一种获取信号的方式：借单题参考解答建立推理点，按到达情况记分，减少对另行学习价值或奖励模型的依赖。它仍需要判定器，不能称为免验证训练。<a class="src" href="https://arxiv.org/abs/2410.08146">前驱论文摘要</a> <a class="src" href="https://arxiv.org/html/2609.07303v1#S5.SS3">PPM §2、§5.3</a></p><p>再倒读一层，是2023年的《Let's Verify Step by Step》。它比较最终结果监督与中间步骤监督，在所研究的数学任务中展示后者的价值。由此可以看出问题怎样推进：先发现最后才反馈过于粗糙，再追问中间应该反馈什么，最后研究怎样在提供部分分时仍保持任务目标。这里描述的是论文之间的问题关系，不表示PPM已经取代所有过程监督方法。<a class="src" href="https://arxiv.org/abs/2305.20050">前驱论文摘要</a></p><p>沿这条脉络回看PPM，最容易漏掉的是“无偏”的范围。命题4.1假设存在几乎必然到达目标的策略；在其状态模型及捷径计分规则下，所有分段奖励相加会相消为最终进展值，而只有可靠到达目标才能取得最大值。因此，两套奖励的最优策略集合一致。这不等于每次梯度更新一致，也不保证当前模型、有限预算和有误差的判定器一定收敛到该最优策略。论文还明确区分：普通势函数塑形通常处理终止势能，PPM则为失败轨迹保留终止时的部分进展。<a class="src" href="https://arxiv.org/html/2609.07303v1#S4">原文§4，脚注1与命题4.1</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">模型往前走的一步，是能从未完成的复杂任务中提取更有区分度的训练信号。</h2><p>这可能扩大可用于训练的难题范围。其现实条件是：有可信参考解答，能提取有用中间结果，且能判断模型是否真正得到这些结果。本文证据主要来自1.7B、4B级模型、合成环境和数学任务；大规模模型、长期工具交互和编程智能体的效果仍待验证。<a class="src" href="https://arxiv.org/html/2609.07303v1#S6">原文§5、§6</a></p><h2 id="s13">对你的研究或内容工作流，可先借用评价方法。</h2><p>以下是产品推演，不是论文实测：把一次长研究任务的进展定义成“原始来源已核实”“关键矛盾已定位”“结论可被证据支持”等可检查状态，再记录哪里停住。应避免按搜索次数、写作长度或固定步骤数量计分；如果更短路径已可靠完成目标，就应允许它直接通过。普通提示词工作流可以借此改善诊断，但这不等于完成了论文中的强化学习训练。</p><h2 id="s14">真正部署前，要验证分数是否预测任务成功。</h2><p>论文用不同长度的参考前缀辅助续写，再比较判定分数与实际成功情况，以检验评分是否反映进展。对产品而言，可以自建包含有效捷径、漂亮但无效的推理、错误中间结果等样本的评测集；若分数只喜欢参考答案的措辞，应先修评分定义。这里的评测方案是依据论文机制提出的迁移建议。<a class="src" href="https://arxiv.org/html/2609.07303v1#S5.SS3">原文§5.3、附录B.3</a></p><p>最后保留两条反证。普通数学评测中，Polaris训练后的AIME25 pass@1，PPM为53.5%，GRPO为56.0%；不能宣传为全面领先。训练预算也没有单调规律：POPE-hard上4K训练的16K测试pass@8优于8K训练，但pass@1略低。作者关于中等长度预算诱发提前猜答案的解释属于假说，不能据此得出“训练越短越好”。<a class="src" href="https://arxiv.org/html/2609.07303v1#S5.SS4">原文表2、表7及§6</a></p><h1 id="s15">来源</h1><p>主论文为Preston Fu、Kevin Frans、Oleh Rybkin、Sergey Levine、Aviral Kumar所作《Long-Horizon Language Model Reinforcement Learning via Progressive Point Matching》，2026-09-07发布。本文核对了<a class="src" href="https://arxiv.org/abs/2609.07303">arXiv提交记录</a>、<a class="src" href="https://arxiv.org/html/2609.07303v1">v1 HTML全文</a>与<a class="src" href="https://arxiv.org/pdf/2609.07303v1">v1 PDF</a>。实验数字均为作者报告，本次未独立复现。</p><p>许可已核实：原文标记CC BY 4.0，摘要页许可链接也指向该许可。本文是中文转述、重组与评论，含明确标注的自拟示例和产品推演；原作者不为这些解释背书。复用应保留作者署名、作品与许可链接，并说明改动。<a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0许可及署名条件</a></p><p>选题入口为<a class="src" href="https://huggingface.co/papers/2609.07303">HF Papers论文页</a>，其页面创建日期未核实。两条历史前驱分别为2024-10-10发布的<a class="src" href="https://arxiv.org/abs/2410.08146">Rewarding Progress</a>与2023-05-31发布的<a class="src" href="https://arxiv.org/abs/2305.20050">Let's Verify Step by Step</a>，仅用于解释研究脉络，不作为当日新事实。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
