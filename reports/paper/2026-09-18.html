@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2812%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2241%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2210%22%20r%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%228%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.11%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型记得更久：复习旧知识，还要改变新知识的写入方式</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="c5eb0cc5f848e848ab30e09883bd2d1974b6e15431bf0be6c955e748118608dd">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-18</span></div>
+  <h1 class="doc">让模型记得更久：复习旧知识，还要改变新知识的写入方式</h1>
+  <div class="dateline"><span>全文 <b>3,070</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Continual Learning Mechanisms Compose for Long-Horizon Memorization</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.06986">https://arxiv.org/abs/2609.06986</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zheyuan Zhang, Alvin Zhang, Daniel Khashabi, Tianmin Shu</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Johns Hopkins University</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-07</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF 9月16日收录；三数据集、100任务、三随机种子、16种机制组合；未核实同行评审接收或独立复现</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, continual-learning, parametric-memory</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-18.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-18.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-18-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">1. 主角：一个不断接收新资料的模型</a><a class="t-h2" href="#s4">2. 困境：刚学会，与一直记得，是两种能力</a><a class="t-h2" href="#s5">3. 旧路：各自保护一部分东西</a><a class="t-h2" href="#s6">4. 转折：把“保什么”与“怎么累积修改”分开</a><a class="t-h2" href="#s7">5. 解法：旧模型既出复习材料，也提供参照</a><a class="t-h2" href="#s8">6. 结局：组合有效，但并非越多越好</a><a class="t-h2" href="#s9">7. 内核：能保护旧知识，还需要能容纳新修改</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><p>2026-09-18 · 截至 01:30（北京时间）。这是当日截稿快照。选读论文首次提交于 9 月 7 日，处于过去 14 天窗口内；arXiv ID 与标题均未出现在附带台账中。以下依据截稿前的 v1 原文，实验结论均指作者报告。<a class="src" href="https://arxiv.org/abs/2609.06986">论文记录</a></p><h1 id="s1">推荐理由</h1><p>一个模型刚学会你的资料，接着又学了几十批东西，它还记得最早那批吗？这篇论文把这个问题单独拿出来测。作者让模型依次学习 100 个问答任务，训练下一任务时不能重新读取以前的原始样本，回答时也不告诉它问题属于哪一批。研究对象是写进模型参数的记忆，也就是通过训练改变权重后留下的信息。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.1、§4.1</a></p><p>值得推荐的是一个经过组合实验检验的发现：复习旧知识与改变更新的累积方式，会相互放大效果。三种保护机制加上每轮合并的低秩更新，把三数据集平均最终记忆准确率从 1.2% 提高到 34.9%。但通用能力仍明显受损，旧记忆也继续衰减。这同时给出了一条可研究的路径和一条不能越过的结论边界。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §5.1—§5.3、附录 E.9</a></p><p>质量信号来自实验设计：四个机制开关的全部 16 种组合，三个数据集，每种配置三个训练随机种子。HF 页面标注作者于 9 月 16 日提交了论文，机构与原文署名一致；这里不使用会变化的票数或排名，也不将社区收录当作同行评审认可。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §5</a>；<a class="src" href="https://huggingface.co/papers/2609.06986">HF 论文页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">1. 主角：一个不断接收新资料的模型</h2><p>主角是 Qwen3-4B-Base。作者让它用监督微调学习一批批问答；监督微调就是给出问题和正确答案，训练模型把答案写对。三种材料从随机符号对应关系，到虚构事实，再到经过筛选的真实问答。每种材料都分成 100 个任务，前两种各有一万条，真实问答有五千条。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §4.2、附录 B.8 表3</a></p><p>可以把它想成一本反复修订的手册。新的一章容易写进去，难点在于修订过程中，前面的章节逐渐读不出来。</p><h2 id="s4">2. 困境：刚学会，与一直记得，是两种能力</h2><p>论文刻意在训练过的同一批问题上测试。每学完一个任务，既检查当前任务，也重测以前的任务。因此，它测的是记忆保持，不是对陌生问题的泛化。最终准确率是学完第 100 个任务后，在所有已学任务上的平均正确率。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §4.1</a></p><p>多数配置刚学完新任务时表现很好，过了许多次更新却大量忘记。朴素基线使用同一套 LoRA 连续训练、没有额外保护机制；它在三个数据集的最终准确率分别为 1.0%、1.4%、1.3%。所以问题主要出在后续更新破坏旧知识，而非这些题一开始就学不会。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文图3、附录 E.2 表8—10</a></p><h2 id="s5">3. 旧路：各自保护一部分东西</h2><p>作者把既有办法整理成三种“锚”，即训练时要求尽量保住的东西。数据锚让模型复习代表旧任务的材料；函数锚约束新旧模型的输出差异；权重锚限制对旧行为重要的参数发生过大改变。在本文的长期测试中，单一机制仍不足以维持强记忆。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.2、§5.1</a></p><p>另一个选择是 LoRA：训练少量低秩矩阵，用它们表示权重更新。这里的“低秩”可以理解为，每轮只允许通过一个较窄的调整空间修改模型。若所有任务反复改同一套矩阵，累计修改也一直受这套表示方式限制。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.3</a></p><h2 id="s6">4. 转折：把“保什么”与“怎么累积修改”分开</h2><p>论文提出的研究假设是：保护信号与更新分配可能互补。于是作者同时操纵三种锚，以及是否采用 merged LoRA——每学完一批，就把本轮更新合并进模型，再初始化新的低秩矩阵学习下一批。这样，累计修改不必始终由同一对低秩矩阵表示。[原文 §3.2—§3.3]</p><p>这一步很关键：保护机制决定训练要顾及哪些旧行为；合并与重置决定历次修改如何留在参数中。它们作用的位置不同，值得一起测试。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3</a></p><h2 id="s7">5. 解法：旧模型既出复习材料，也提供参照</h2><p>每次学习新任务之前，冻结上一版模型。数据锚让它从一个不区分任务的起始标记生成 300 条伪样本，丢弃空输出。训练时把这些材料与新任务搭配，并让新模型模仿旧模型在复习材料上的下一词概率分布。这种“软目标”保留了多个可能词的概率，而不只是一个确定答案。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.2、附录 B.3</a></p><p>函数锚也使用旧模型，但参照位置换成当前任务的数据。权重锚则根据参数的重要性估计，惩罚过大的移动；完整组合使用 SI，它从训练路径上的贡献累计这种重要性。三个保护项与学习新任务的目标共同起作用，并非依次执行三轮训练。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.2、附录 B.2、B.4—B.5</a></p><p>最后，每轮把 LoRA 更新合入模型，再开一套新的低秩矩阵。其保留状态不会随着任务数量不断增加，但这不等于没有额外成本：旧模型参照、伪样本生成与复习训练都需要资源。所谓“不保存旧数据”，也仅指不保留过去的原始训练样本，方法仍会使用临时生成的复习材料。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.3、附录 B.3、B.7</a></p><h2 id="s8">6. 结局：组合有效，但并非越多越好</h2><p>完整组合在符号、虚构事实、真实问答上的最终准确率分别为 18.5%±2.8、41.8%±1.4、44.3%±8.7；误差为三个种子的标准差。三项平均为 34.9%，在主实验 16 种组合中，各数据集均排进前三。但它并非处处第一：真实问答上去掉函数锚的组合达到 54.8%，提示保护项之间也可能冲突。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §5.1、附录 E.2 表8—10</a></p><p>更有解释力的是两个机制之间的配合。以虚构事实为例，朴素基线为 1.4%，单用生成回放为 7.5%，单用合并更新为 3.0%，二者合用达到 32.4%。相对基线，两个单独增益相加是 7.7 个百分点，组合增益却是 31.0 个百分点。全因子分析也在三个数据集上发现了显著正交互。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §5.3、表1、附录表9</a></p><h2 id="s9">7. 内核：能保护旧知识，还需要能容纳新修改</h2><p>我的机制解释是：复习材料告诉模型哪些旧行为不能随意丢弃，而逐轮合并让新旧任务的累计修改不必一直挤在同一套低秩表示中。两者结合，可能更容易找到兼顾新旧要求的更新。这是对实验现象的解释；论文证明的是这些配置下的互补效果，没有把全部遗忘原因拆成唯一、完备的因果模型。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §3.3、§5.3</a></p><p>边界必须一起读。完整组合的记忆半衰期——准确率首次降至刚学完时一半以下所经历的后续任务数——在三个数据集上为 19、32、32；朴素基线为 1、1、2。曲线仍继续下降，说明组合延缓了遗忘。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §5.2</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，本文直接接上了两条路线。一条是让模型自己生成旧任务材料来复习；另一条是让多次低秩修改累积到主体权重中。本文增加的认识，是用长期任务序列和完整组合实验检查这两条路线是否互相促进。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §2、§3、§5.3</a></p><p>倒读第二层，2019 年的 LAMOL 已经让同一个语言模型兼做任务求解与旧样本生成。2023 年首次提交的 ReLoRA 则研究用低秩更新训练出高秩网络。它们分别提供了“复习材料从哪里来”与“少量可训练参数怎样累积修改”的前驱思路。<a class="src" href="https://arxiv.org/abs/1909.03329">LAMOL</a>；<a class="src" href="https://arxiv.org/abs/2307.05695">ReLoRA</a></p><p>再往前，2017 年的 Deep Generative Replay 用生成器与求解器配合，把生成的旧任务材料混入新任务训练，处理不能持续保存过去数据的问题。这说明自生成复习并非本文首次提出。<a class="src" href="https://arxiv.org/abs/1705.08690">Deep Generative Replay</a></p><p>这段历史的启发是：一个成熟机制单独表现有限，不代表它在另一个更新结构中没有价值。本文的贡献落在这种可测的互补关系上。与此同时，这些研究的任务与评测条件不同，不能把早期论文的成绩与本文直接排成进步曲线。</p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p>模型能力向前的一步，是更有把握地把持续记忆拆成两个设计问题：更新时保护什么，以及历次更新如何累积。实验让这种拆分有了可比较的证据。它还没有证明模型能持续积累通用能力，或能把记住的事实灵活用于陌生任务。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文 §4.1、§6</a></p><p>最重要的反证在通用能力测试。作者另行固定各数据集选出的锚组合，比较不同更新分配方式：在虚构事实和真实问答训练后，merged LoRA 的四项通用基准平均准确率分别为 13.0% 和 13.4%，原始模型为 69.4%。这组实验的锚配置不完全等同于上面的统一完整组合，但明确表明：记住训练事实与保住原有能力必须分别验收。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文附录 E.9</a></p><p>下面是基于这些边界的产品推演，并非论文已验证的应用效果。若你研究会长期学习个人资料的助手，可以先建立一张时间矩阵：每次加入新资料后，同时测新资料、各批旧资料以及一组固定通用题。再比较持续改同一适配器、生成回放、逐轮合并及其组合。这样才能分清“没学会”“后来忘了”和“学会资料却损伤了其他能力”。</p><p>对要求准确溯源、纠错或撤回的信息，本文尚不足以支持放弃外部资料库。尤其是错误资料需要更正时，保护旧行为可能与更新事实发生冲突；论文的合成任务特意避免同一问题对应不同答案，因此没有直接回答这个产品难题。我的建议是把参数记忆视作待验证的补充，并把冲突更新列入下一轮实验。<a class="src" href="https://arxiv.org/html/2609.06986v1">原文附录 C.1、§6</a></p><h1 id="s12">来源</h1><p>主要事实依据为 Zheyuan Zhang、Alvin Zhang、Daniel Khashabi、Tianmin Shu 的论文 v1，首次提交时间为 2026-09-07 03:21:23 UTC。<a class="src" href="https://arxiv.org/abs/2609.06986">arXiv 元数据</a>；<a class="src" href="https://arxiv.org/html/2609.06986v1">完整原文与附录</a>。HF 仅用于核实收录线索，前驱论文用于追溯研究来源，均已在对应段落引用。</p><p>许可核实：arXiv 记录的许可链接及 HTML 页均明确标注 CC BY 4.0。本文是对上述作者论文的中文转述、重组与评论，已改变表达和结构；原创解释及产品推演已标明，不代表作者背书。复用需保留适当署名、原文及许可链接，并说明修改。<a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 许可</a></p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
