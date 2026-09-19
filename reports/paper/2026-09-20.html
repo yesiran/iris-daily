@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28111%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2237%22%20cy%3D%2238%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.19%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2210%22%20r%3D%2218%22%20fill%3D%22%23fff%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2254%22%20cy%3D%2222%22%20r%3D%2221%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.24%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让图像、语言和机器人状态，在同一种隐空间里推理</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="e42e767253eb6e5df746bd4db63ae8f695a010b87297beb8697f06157fd9da8f">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-20</span></div>
+  <h1 class="doc">让图像、语言和机器人状态，在同一种隐空间里推理</h1>
+  <div class="dateline"><span>全文 <b>3,254</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Uni-LaDiR: Latent Diffusion Unifies Multimodal Reasoning</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.19878">https://arxiv.org/abs/2609.19878</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Haoqiang Kang, Yizhe Zhang, Nikki Lijing Kuang, Yi-An Ma, Lianhui Qin</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">UC San Diego；Meta</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-17</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">新近 arXiv 预印本；原文提供跨任务评估与消融；未核实同行评审接收及独立复现；消融基线定义存在正文与附录不一致</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 多模态推理, 隐空间推理, 扩散模型</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-20.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-20.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-20-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：需要同时看懂和行动的模型。</a><a class="t-h2" href="#s4">二、困境：信息已经汇合，表示仍在切换。</a><a class="t-h2" href="#s5">三、旧路：让每种模态保留自己的中间表示。</a><a class="t-h2" href="#s6">四、转折：用后续用途来定义中间表示。</a><a class="t-h2" href="#s7">五、解法：让表示有用，再让模型学会生成它。</a><a class="t-h2" href="#s8">六、结局：结果有提升，但提升有明确分母。</a><a class="t-h2" href="#s9">七、内核：学习一种既能用于决策、又能从已知信息生成的中间状态。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><p>2026-09-20 · 截至 01:30（北京时间）。这是截稿快照，严格截止于 2026-09-20T01:30:55+08:00。本文依据 9 月 17 日提交的 v1，处于过去 7 天窗口，未与所附台账的 ID 或标题重复。作者与机构取自原文署名；以下实验数字均为作者报告，本次未运行代码或独立复现。<a class="src" href="https://arxiv.org/abs/2609.19878">提交记录</a> <a class="src" href="https://arxiv.org/html/2609.19878v1">原文署名</a></p><h1 id="s1">推荐理由</h1><p>今天推荐它，是因为它把一个常被混在一起的问题拆开了：模型接收多种模态，是否意味着它已经能用统一的表示进行推理？作者认为，图像、语言、三维几何和机器人状态即使进入同一个序列，中间计算仍可能不断转换表示。Uni-LaDiR 的尝试是：感知保留各自的入口，后续推理采用共享的连续向量表示。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3">原文第 1、3 节</a></p><p>这里的“隐空间”指模型内部的连续数值表示；“思维 token”也不是可直接阅读的词，而是承载中间信息的向量。论文值得读的地方，在于它给这种表示提出两项同时成立的要求：必须帮助后续推理和最终决策，也必须能够由推理时真正可见的上下文生成。只有第一项，模型可能依赖训练时才有的提示；只有第二项，则可能得到容易预测、却没什么用的向量。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3">原文第 3.1—3.4 节</a></p><p>它的质量信号主要来自可检查的方法、跨任务结果和消融，而不是热度。HF 论文详情页本次未能抓取，不引用点赞或排名；未核实本篇的会议接收状态。尤其需要保留一个疑点：模态共享消融的基线定义，在正文和附录中并不一致。它仍是值得研究的机制提案，但证据强度应据此打折。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S3">原文第 4.3 节及附录 B.2</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：需要同时看懂和行动的模型。</h2><p>设想一个机器人把电话放回底座：图像提供外观，三维信息提供位置关系，自身状态说明手臂与夹爪在哪里。这个例子帮助理解论文的目标：让这些证据共同支持下一步决策。作者在视觉问答中使用图文教师步骤，在机器人实验中使用未来图像、点云及机器人状态作为训练期的中间监督；动作仍是最终输出。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S1">原文第 4.1 节</a></p><h2 id="s4">二、困境：信息已经汇合，表示仍在切换。</h2><p>一段语言说明、一块图像特征、一组机器人状态可以顺次放入模型，却不一定形成统一的中间状态。作者的假设是，预测下一步时，模型既要决定推理内容，又要决定怎样把它表示成下一种模态，两个负担缠在一起。这是研究动机，不能仅凭叙述就视为已经证实的唯一瓶颈。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3.S1">原文第 1、3.1 节</a></p><h2 id="s5">三、旧路：让每种模态保留自己的中间表示。</h2><p>这种设计能保存细节，但表示服务的目标未必与下一步任务一致。例如，为了重建一幅中间图像而保留的背景信息，未必有助于抓取。这里的背景例子是解释性类比；论文实际比较的是“重建来源特征”与“预测后续步骤”，两种设置均保留最终输出监督。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S4">原文第 4.4 节、附录 B.2</a></p><h2 id="s6">四、转折：用后续用途来定义中间表示。</h2><p>Uni-LaDiR 在每个教师步骤的模态特征之后，附加固定数量的可学习查询向量，再取这些位置的隐藏状态，投影成思维 token。不同模态共享查询、输出投影及每块 token 数量。编码时，每块查询只能读取对应步骤，不能读取其他教师步骤。这让信息先经过统一接口，同时限制跨步骤偷看。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3.S2">原文第 3.2 节、附录 A.1</a></p><h2 id="s7">五、解法：让表示有用，再让模型学会生成它。</h2><p>第一条训练约束是下游监督：已有思维块应帮助预测后续教师步骤，完整思维序列应帮助生成最终答案或动作。它不是要求每块向量复原自己来自哪一幅图，而是要求它对接下来有帮助。文本目标使用交叉熵，连续特征使用平方误差；机器人最终动作另由采用流匹配损失的动作头生成。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3.S3">原文第 3.3 节</a></p><p>第二条约束是学会生成这些思维块。作者采用流匹配：从噪声逐步移动到目标向量，学习每一步应朝什么方向变化。这样建模的是“下一步可能怎样想”的条件分布。论文的动机是，同一个上下文可能支持多种合理中间步骤，直接回归单个向量可能不足以表达这种多样性。编码器与生成器共享主干并联合训练；扩散分支对干净目标及条件中的思维块停止梯度，不能简单说成两个损失毫无限制地互相修改目标。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3.S4">原文第 3.4 节</a></p><p>推理时，教师步骤消失，模型根据输入及此前自己生成的思维块，逐块去噪，再输出答案或动作。附录设定每块包含 4 个 512 维思维 token，视觉问答推理预算为 4 块，共 16 个思维 token。这个数字是表示长度，不等于总共只运行 16 次计算；块内仍存在生成过程。<a class="src" href="https://arxiv.org/html/2609.19878v1#A2.S1">原文第 3.4 节、附录 B.1</a></p><h2 id="s8">六、结局：结果有提升，但提升有明确分母。</h2><p>在 Qwen2.5-VL-7B 主实验中，四项视觉数学与逻辑基准的平均准确率从 ILVR 的 45.68% 到 Uni-LaDiR 的 49.03%，增加 3.35 个百分点，相对提升约 7.3%。七项视觉感知、搜索与空间基准的平均准确率，则从 Mirage 的 75.05% 到 76.31%，相对提升约 1.7%。因此，不能把 7.3% 写成全部 11 项基准统一获得的增益。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S2">原文表 1</a></p><p>在 RLBench 的十项模拟操作任务中，平均成功率从 LaST₀ 的 82% 到 87%，是增加 5 个百分点、相对提升约 6.1%。LIBERO 的平均成功率为 99.15%，较表内 PearlVLA＋PRL 的 98.7% 高 0.45 个百分点。两套实验提供了不同程度的收益，不能把前者的增幅推广到所有机器人任务。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S2">原文表 2、表 3</a></p><p>速度也须连同条件一起读：作者在同一 RTX 4090、无动作分块、每四次动作决策更新一次推理的设定下，测得 16.5 Hz；计时包含观察预处理、数据传输、推理与动作预测，排除模拟器步进和渲染。这是该协议下的决策吞吐率，不能直接当作实体机器人的完整闭环频率。<a class="src" href="https://arxiv.org/html/2609.19878v1#A2.S1">原文附录 B.1</a></p><h2 id="s9">七、内核：学习一种既能用于决策、又能从已知信息生成的中间状态。</h2><p>我的理解是，论文把多模态统一向前推进到了中间计算：关键不只是输入兼容，还包括中间表示如何被任务塑造。不过，“共享空间消除了模态转换负担”仍是对机制的解释，实验更直接支持的是这套训练方案在所测任务上的表现。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3">原文第 3、4 节</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是机器人隐式推理。2026 年 1 月首次提交的 LaST₀ 已经用隐式时空思维链组织未来视觉信息、三维结构和机器人自身状态，并以推理与动作专家协调运行。Uni-LaDiR 的机器人部分延续这种任务结构，进一步追问：这些中间步骤能否共用一个表示接口？它不是第一个让机器人在行动前进行隐式推理的方案。<a class="src" href="https://arxiv.org/abs/2601.05248">LaST₀ 原文摘要及提交记录</a></p><p>倒读第二层，是同一作者团队的 LaDiR。2025 年 10 月的这项工作先把文本推理步骤编码成向量块，再通过隐空间扩散生成推理轨迹。今天的新论文保留了块状表示与扩散生成，但把重点推进到异构教师信息如何进入共享空间，以及表示和生成器如何联合适应任务。<a class="src" href="https://arxiv.org/abs/2510.04573">LaDiR 原文摘要及提交记录</a> <a class="src" href="https://arxiv.org/html/2609.19878v1#S3">Uni-LaDiR 第 3 节</a></p><p>再往下一层，是“推理是否必须逐词说出来”。2024 年首次提交的 Coconut 把语言模型的隐藏状态直接作为下一步输入，探索连续表示中的推理。这个前驱提供的是问题转向，而不是今天这篇论文全部机制的来源：连续计算、生成连续轨迹、统一多模态中间表示，分别处理了不同层次的问题。<a class="src" href="https://arxiv.org/abs/2412.06769">Coconut 原文摘要及提交记录</a></p><p>这条脉络让我更关注中间状态的学习目标：把文本缩成向量，只解决表示形式；把各种模态投影到相同维度，也只提供形式兼容。Uni-LaDiR 进一步让后续任务影响向量里保存什么，再训练模型从可用信息生成这些向量。这个因果解释来自对其目标函数的阅读，不能扩张为“模型已经拥有通用、与模态无关的世界理解”。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3">原文第 3 节</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p><strong>模型向哪里进化？</strong> 这篇论文支持一个值得跟踪的方向：训练期可以利用丰富的中间过程，部署期则在较紧凑的内部表示上运行。视觉问答和机器人控制采用不同主干与训练设置，论文并未证明同一个模型检查点可以同时承担全部任务；“统一”主要指方法及任务内部的表示接口。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S1">原文第 4.1 节及附录 B.1</a></p><p><strong>产品上怎么用？</strong> 如果你评估视觉助手或具身模型，可以把它转化为三个检查项：中间表示保留的信息是否改善最终任务；推理时移除教师步骤后是否仍有效；相同输入、预算与计时边界下，收益是否成立。这些是从论文设计提炼出的评估建议，不是已经验证的通用产品方案。它需要训练与内部表示访问，不能靠给现成聊天接口加一句提示词实现。<a class="src" href="https://arxiv.org/html/2609.19878v1#S3">原文第 3 节、附录 B</a></p><p><strong>哪些证据还不够？</strong> 正文第 4.3 节称分开表示的基线绕过统一编码器、直接使用模态特征；附录 B.2 却称所有变体使用同样的可学习编码器，只改变查询与投影是否共享。这两种对照回答的因果问题不同。本次 PDF 抓取超时，无法进一步核对 PDF 排版版本，应保留这处 HTML 文本不一致，等待代码或作者澄清。<a class="src" href="https://arxiv.org/html/2609.19878v1#A2.S2">原文第 4.3 节及附录 B.2</a></p><p>此外，下游监督消融虽然提高总体均值，却让 MathVista 下降 4.20 个百分点；附录明确说明均值增益不表示统计显著性。机器人实验使用模拟任务，作者也明确指出不能据此证明实体机器人的安全性和可靠性。我的判断是：这是一项有具体机制和实验支撑的表示学习进展，尚不足以宣告多模态推理已经完成统一。<a class="src" href="https://arxiv.org/html/2609.19878v1#S4.S4">原文第 4.4 节、伦理声明及附录 B.1</a></p><h1 id="s12">来源</h1><p>本文依据 Haoqiang Kang、Yizhe Zhang、Nikki Lijing Kuang、Yi-An Ma、Lianhui Qin 的 Uni-LaDiR v1，进行了中文解释、重组与评论，非作者原文翻译，亦不表示作者认可本文判断。arXiv 许可入口与 HTML 均明确标注 CC BY 4.0；该许可允许分享与改编，要求适当署名、提供许可链接并说明修改。<a class="src" href="https://arxiv.org/abs/2609.19878">论文与许可入口</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p><p>主要事实来自 <a class="src" href="https://arxiv.org/html/2609.19878v1">Uni-LaDiR 完整原文</a>；历史脉络分别核对了 <a class="src" href="https://arxiv.org/abs/2601.05248">LaST₀</a>、<a class="src" href="https://arxiv.org/abs/2510.04573">LaDiR</a> 与 <a class="src" href="https://arxiv.org/abs/2412.06769">Coconut</a> 的原始摘要及提交记录。前驱日期均为首次提交日期，不是抓取日期。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
