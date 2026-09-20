@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28331%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2227%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2251%22%20cy%3D%2224%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.25%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2213%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-20</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="dbdf25b9432ce9e919ac98b07e0e5d2670c378e54f59705bdc127286c657e6ca">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-20 · 周日</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>4</b></span><span>分领域 <b>12</b> 条</span><span>趋势 <b>3</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-21 02:00（北京时间），覆盖9月20日全天及次日凌晨截稿窗口。今日主线是可调用模型与实时语音能力扩充，以及更接近任务交付的成本比较；没有取得可确认落在凌晨窗口内的新增事实。
+今日目录：Step 5 Preview开放；千问实时语音升级；GLM效率模型新增评测证据；东盟AI需求走向项目交付。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 4 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>Step 5 Preview当日开放，权重开放尚待10月</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>千问实时语音新增3.1 Plus，升级路径保留旧协议</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>GLM-5.3-FlashX新增评测：速度与费用优势伴随质量取舍</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>东博会呈现AI采购场景，出海竞争进入本地交付环节</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>Step 5 Preview当日开放，权重开放尚待10月</h3><p class="lp"><span class="lk">事件</span>IT之家9月20日报道，阶跃当天推出Step 5 Preview并宣布全量开放，面向软件工程、专业知识工作等场景，完整权重计划10月15日释放。本期据已读发布报道确认开放消息；“开源前三”等榜单表述和普遍成本优势不作为独立结论。当前可用与未来可自行部署，是两项不同承诺。<a class="src" href="https://www.ithome.com/1/004/705.htm">来源</a></p><div class="why"><span class="why-k">为什么重要</span><p>新增可调用选择，使团队可以把候选模型放进真实任务流程，而不必等待权重发布。对采购与研发排期，眼下最有价值的是验证任务完成质量、接入代价和失败后的人工成本；如果这些指标成立，才有理由调整模型供应商。权重计划则影响稍后的部署选择，不应提前计入当前能力。</p></div><p class="lp"><span class="lk">接下来观察</span>同一套长任务中，Step的验收通过率及失败重试费用能否形成稳定优势；10月15日只记为厂商计划，届时还需核对权重、许可证和部署条件。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>千问实时语音新增3.1 Plus，升级路径保留旧协议</h3><p class="lp"><span class="lk">事件</span>阿里云百炼官方日志的9月20日独立条目列出qwen-audio-3.1-realtime-plus：沿用3.0 Plus接入协议，支持实时双工，增加8种系统音色，上下文262,144 Token，并支持工具调用、联网搜索和声音复刻。北京及国际相关部署栏目均有该条目，不据此推定所有消费端已同步开放。<a class="src" href="https://help.aliyun.com/zh/model-studio/newly-released-models">来源</a></p><div class="why"><span class="why-k">为什么重要</span><p>协议兼容降低了已有语音应用评估新模型的工程门槛，团队可以把更多时间用于交互和任务完成质量，而不是重建连接。结合工具执行能力，产品评价对象应从一句回复是否自然，延伸到用户开口后业务是否完成。这是升级客户服务、语音办公等流程的具体切入点，尚不是已证明的性能提升。</p></div><p class="lp"><span class="lk">接下来观察</span>用相同音频和工具流程测量打断恢复、工具调用成功率与尾部延迟，并核对目标部署区的实际计费；本次日志没有提供足以比较端到端成本的数据。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>GLM-5.3-FlashX新增评测：速度与费用优势伴随质量取舍</h3><p class="lp"><span class="lk">事件</span>沙丘智库9月20日发布对9月18日推出的GLM-5.3-FlashX的SQBench评测。220项任务、Max配置下，FlashX综合分54.60，累计6.67小时、API费用5.68美元；GLM-5.3对应为56.06分、20.81小时和29.58美元。今日增量是评测证据，不是模型再次首发。<a class="src" href="https://www.shaqiu.cn/article/glm-5-3-flashx">来源</a></p><div class="why"><span class="why-k">为什么重要</span><p>这组结果提示，接近旗舰的综合表现可能以明显较少的时间和费用获得，因而效率型号值得进入常规任务的路由候选。产品上的收益取决于少量质量差异是否集中在高损失任务：如果返工昂贵，账面便宜就可能被抵消。因此最有价值的决策不是直接替换旗舰，而是寻找可稳定验收的任务边界。</p></div><p class="lp"><span class="lk">接下来观察</span>在自有任务上比较包含人工修订的成功交付成本。SQBench每题单次运行，正式完整题集和评分脚本未公开；其分数是特定加权口径，不能直接当作全部任务通过百分比，亦不能替代生产验证。<a class="src" href="https://www.shaqiu.cn/methodology">方法说明</a></p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>东博会呈现AI采购场景，出海竞争进入本地交付环节</h3><p class="lp"><span class="lk">事件</span>新华社9月20日现场报道，本届东博会首次设立AI大卖场，汇集70多家企业、500余款产品，展会期间签约21个人工智能项目。报道同时呈现跨境场景需求与电力巡检等实际应用。这是报告日的新报道；展会和项目活动分布在此前数日，并非所有项目都在9月20日签约。<a class="src" href="https://www.news.cn/fortune/20260920/dbc3b4ce38a743608181df83b15f4b17/c.html">来源</a></p><div class="why"><span class="why-k">为什么重要</span><p>明确行业场景与对接对象，让出海团队有机会从泛化展示转向可报价、可验收的项目。竞争约束随之落到语言、数据接入、流程适配和本地维护；拥有模型并不足以覆盖这些工作。对产品负责人，需求是否能复用成标准模块，会决定项目扩张能否带来规模收益，而不是持续增加定制负担。</p></div><p class="lp"><span class="lk">接下来观察</span>签约项目后续的验收、复购与运维投入。展会产品数、需求配对数和签约数均不能直接视为收入或规模化使用。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 12 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">办公入口，近期背景（9月17日）：</strong>ChatGPT更新日志分别列出Word接入，以及插件支持连接多个账户。两项能力影响文档内使用和多身份工作流，需分别评估；覆盖所有计划不意味着不限额度。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">官方日志</a></p></div><div class="srow"><p><strong class="st">专业检索，近期背景（9月17日）：</strong>Astra for Law围绕法律研究整合法律检索与专业工作流。对垂直产品，值得研究的是专业资料如何进入可追溯的答案链，而不是据厂商评测推断可以替代律师。本期未确认9月20日新增开放。<a class="src" href="https://openai.com/index/astra-for-law/">官方公告</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">家庭协作，近期背景（官方9月17日）：</strong>CC扩展为家庭智能体，支持最多6名成员及各自的数据分享控制。初期限美国成年用户的个人Google账户，包含现有用户逐步升级和新用户候补机制；官方RSS时刻对应北京时间9月18日02:15，不是9月20日首发。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/cc-expanding-to-groups/">官方公告</a></p></div><div class="srow"><p><strong class="st">开发迁移，近期背景（9月17日）：</strong>Gemini API日志发布Antigravity Agent新预览版本，旧预览计划10月5日弃用。对已接入的团队，这是需要安排回归测试的接口迁移事项，不能等同于消费者Gemini全面更新。<a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">开发日志</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">项目编排，近期背景（9月17日）：</strong>改版Projects让协调线程拆解目标、并行安排任务并汇总审阅成果。初期Beta仅面向部分Pro/Max云端用户，Team与Enterprise后续开放；并行也会加快额度消耗。它改变的是协作与执行方式，值得继续跟踪，但本期没有确认新的开放范围。<a class="src" href="https://claude.com/blog/projects-redesigned">官方全文</a></p></div><div class="srow"><p><strong class="st">研发自动化，近期背景（9月17日）：</strong>Anthropic称，截至8月，Claude牵头其26%的模型研发任务，同时明确没有任务完全自主完成。这是公司对内部工作方式的测量，不能解读成已实现无人监督的递归自我改进。<a class="src" href="https://www.anthropic.com/institute/measuring-pace-of-ai-development">原始研究</a></p></div></div><div class="sector"><div class="sector-h">中国AI</div><div class="srow"><p><strong class="st">本期与近期分开看：</strong>阶跃、千问和GLM今日增量已列入要闻。同一百炼日志另有9月17日的Qwen3.8-Omni-Flash多模态理解、HappyOyster交互世界模型，以及9月16日的Qwen-MT-Uni跨模态翻译；它们是独立能力条目，不能被实时语音更新覆盖，也不是今天再次发布。<a class="src" href="https://help.aliyun.com/zh/model-studio/newly-released-models">官方条目</a></p></div><div class="srow"><p><strong class="st">尚未形成当日事实的线索：</strong>DeepSeek峰谷计费的新调整、MiMo桌面邀测的首发时间，以及字节、MiniMax本期新增开放，未取得足以纳入当日新闻的证据。模型目录中的名称、旧版本日期和邀请测试入口，均不自动证明当天上线。</p></div></div><div class="sector"><div class="sector-h">AI芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">电力约束下的吞吐优化，近期背景（9月15日）：</strong>NVIDIA的DSX文章给出Lambda部署案例，称在既定电力条件下改善吞吐，并披露与d-Matrix等伙伴的基础设施协作。它提示算力采购需同时考察供电与软件调度；相关收益属于厂商及合作方报告，不是任何负载都能复现的保证。本期没有确认新的硬件交付或价格变动。<a class="src" href="https://blogs.nvidia.com/blog/ai-infra-summit-vera-rubin-dsx-energy-efficiencies-tokens-per-watt-ai-factories/">NVIDIA原文</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">江西专项行动（9月20日披露）：</strong>工信部发布地方动态，介绍江西“人工智能+信息通信”2026—2028年行动，目标包括到2028年形成10个以上高价值场景、100个以上行业模型。原文称有关部门“近日”印发方案，因此9月20日是报道日期；这些数字属于目标，不是建设成果或新增企业法定义务。<a class="src" href="https://www.miit.gov.cn/xwfb/gxdt/dfdt/art/2026/art_6051e1e6e8284b8aa1ae1f2dfcf3b321.html">官方消息</a></p></div><div class="srow"><p><strong class="st">最高法线索的时间纠偏：</strong>9月20日转载的涉AI纠纷解读不宜写成当天新规。最高法9月6日公告已预告9月7日举行相关发布会；本期没有取得主要文书全文，不据转载推断责任边界或生效时间。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511011.html">原始发布会预告</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">家庭助手资本动向，近期背景（9月16日）：</strong>Orbits官方宣布完成近200万美元、约260万加元的Pre-Seed融资，用于家庭助手Bit。两种金额是币种换算，不是两轮融资；9月20日的聚合收录不改变原公告日期。该项目与CC同属家庭任务方向，但融资不能证明用户留存和付费需求已成立。<a class="src" href="https://tryorbits.com/press/orbits-raises-pre-seed-round-ai-home-manager">公司公告</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> WorkBuddy、CodeBuddy均未取得本期带日期的腾讯自有新增公告。本期腾讯官方更新计数为零，不代表已证明当天没有灰度或版本变化。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong class="st">WorkBuddy的会议材料入口，近期背景（9月16日）：</strong>元宝AI录音笔支持边录边拍、设备内录和编辑，并可向WorkBuddy或腾讯文档快捷分享。央广网9月16日的材料标注为商业信息，IT之家9月20日报道相同能力；本期将其作为既有产品联动，不重复认定首发。报道给出的适用条件为元宝V2.85.0及以上。<a class="src" href="https://tech.cnr.cn/techgd/20260916/t20260916_527815505.shtml">9月16日材料</a>｜<a class="src" href="https://www.ithome.com/1/004/716.htm">9月20日报道</a></p></div><div class="srow"><p>由此可以提出一个可验证的产品判断：如果录音、图片与整理结果能减少进入WorkBuddy后的补充说明，会议到文档的衔接成本就可能下降，办公入口之间的协同价值也会提高。应衡量分享后的有效任务启动率、返工量和最终交付率；“已打通分享”本身不证明后台自动执行，更不证明处理质量领先。CodeBuddy的代码工作流不能直接套用这一办公场景结论。</p></div><div class="srow"><p><strong class="st">元宝鸿蒙入口，近期背景（9月19日）：</strong>IT之家刊于凤凰网的完整报道介绍手机尝鲜内测版，可从华为应用市场“应用尝鲜”进入，并包含Hy4 preview和专家模式。这里新增的是特定系统上的测试入口，不能写成混元在9月20日发布新模型，也不能把内测范围扩大成正式普遍可用。<a class="src" href="https://tech.ifeng.com/c/8wY0jy1MpcL">报道全文</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>覆盖WorkBuddy、CodeBuddy、混元、元宝、腾讯云和微信AI。WorkBuddy与CodeBuddy当前最高版本及完整灰度范围仍未确认，因此不宣称“最新版本”；元宝近期报道保留其原日期。尚缺腾讯侧本期发布证据，微信登录、生态信源检索等既有联动也不足以单列为微信AI当日发布。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>接入摩擦决定新模型多快变成产品能力。</h4><p>Step当日开放与千问保留旧接入协议，分别触及试用门槛和升级成本。推论是：产品路线图需要把“模型可用”拆成接入、测试、灰度、回退几个阶段；只有能够穿过这些环节，技术进展才会改变交付日期。竞争机会在于更短的可靠上线周期。可验证信号是每次模型升级的改造工时和回归缺陷，而非模型名称增加了多少。<a class="src" href="https://www.ithome.com/1/004/705.htm">Step</a>｜<a class="src" href="https://help.aliyun.com/zh/model-studio/newly-released-models">百炼</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>效率模型的经济性取决于失败落在哪里。</h4><p>今日的新模型选择与SQBench比较共同推动一个选型问题：综合分略低的模型，是否在目标任务上仍然够用？推论是，验收清晰、失败可恢复的任务更适合尝试效率路由；高损失任务则应把核验和升级成本计入预算。真正改变决策的信号，是每个通过验收的任务总成本下降，并且人工接管没有同步上升。<a class="src" href="https://www.ithome.com/1/004/705.htm">模型开放</a>｜<a class="src" href="https://www.shaqiu.cn/article/glm-5-3-flashx">评测证据</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>行业需求正在要求交付体系，而不只是模型接口。</h4><p>东博会具体项目对接与江西当日披露的专项行动，都把AI应用落到场景与工程任务。推论是，产品团队若能把接数据、配置权限、部署维护做成可复用模块，就有机会降低跨客户交付成本；反之，签约增长可能同时带来定制负担。应追踪验收周期、复用比例和续约，而不能用规划数量代替需求兑现。<a class="src" href="https://www.news.cn/fortune/20260920/dbc3b4ce38a743608181df83b15f4b17/c.html">新华社</a>｜<a class="src" href="https://www.miit.gov.cn/xwfb/gxdt/dfdt/art/2026/art_6051e1e6e8284b8aa1ae1f2dfcf3b321.html">江西行动</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>官方日志用于确认具体能力、条目日期及声明范围；厂商实验、内部自动化比例和未来计划均保留归属，不作为独立验证结果。</li><li>Step开放采用已读媒体发布全文；SQBench采用评测实施方原文及方法；腾讯录音笔材料包含商业稿，不能等同独立实测。</li><li>近期背景均注明原始日期。未标分钟的官方条目不虚构首发时刻；未取得带时区的次日凌晨证据，不补写凌晨新闻。本文因果分析是基于所列证据的推论，观察指标用于检验这些推论。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
