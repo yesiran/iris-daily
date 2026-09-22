@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%287%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2240%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2232%22%20r%3D%2225%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2224%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.10%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-22</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="f2afcf46462509a147c3d2cb8234137e6c15305688286ab868933b9340156a9d">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-22 · 周二</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>3</b></span><span>分领域 <b>14</b> 条</span><span>趋势 <b>3</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-23 02:00（北京时间）。今天的主线是模型交付门槛继续下降：小米开放训练资源和桌面入口，OpenAI 扩大工作模型的使用范围，Anthropic 降低旗舰模型费用。本期覆盖9月22日全天及次日凌晨至截稿时间。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 3 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>MiMo-V2.6 同时交付模型、强化学习资源和桌面入口</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>GPT-6 Sol、Luna 开始进入 Codex 和 ChatGPT Work</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Claude Opus 5.5 降低单价，把竞争进一步推向任务总成本</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>MiMo-V2.6 同时交付模型、强化学习资源和桌面入口</h3><p class="lp"><span class="lk">事件</span>小米官方模型日志将 MiMo-V2.6-Pro、Flash、Pro-UltraSpeed 的发布日明确列为9月22日。三者分别面向复杂任务、高频调用及低延迟场景；UltraSpeed 的“最高20倍推理速度”是官方上限描述，不能理解为所有请求都获得同等加速。<a class="src" href="https://mimo.mi.com/docs/zh-CN/updates/model">模型发布日志</a></p><p class="lp">完整公告同时宣布开放模型权重、技术报告、蒸馏模型及7000多个强化学习任务环境，并提供训练框架与可组合的智能体执行框架。MiMo Desktop 和会员方案同步上线，允许订阅使用或自配 API Key；原邀测活动将在一周后结束。官方称 API 延续 V2.5 系列定价。<a class="src" href="https://mimo.mi.com/docs/zh-CN/news/latest/v2-6">小米公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>应用团队获得了更直接的使用入口，研究团队则获得继续优化任务表现的材料。由此推断，小米争取的不只是模型调用份额，也包括围绕训练环境形成的开发活动。对已有智能体产品，新增机会是把自己的任务验收标准接入改进过程，检验通用能力能否转化为稳定交付。</p></div><p class="lp"><span class="lk">接下来观察</span>独立团队能否复现训练收益，并在同一业务任务上减少重试与人工接管。桌面客户端不等于旗舰模型可在普通电脑本地运行；模型卡中的权重部署是一套另外的资源要求。<a class="src" href="https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL">官方模型卡</a></p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>GPT-6 Sol、Luna 开始进入 Codex 和 ChatGPT Work</h3><p class="lp"><span class="lk">事件</span>OpenAI 9月22日独立更新条目宣布，两款模型向 Codex、ChatGPT Work 逐步开放，token 价格低于各自 GPT-5.6 前代。范围包括 Plus、Pro、Business、Enterprise、Edu；Free、Go 用户可在桌面应用使用 Luna。ChatGPT 内的开放位置是 Work 与 Codex，不包括普通 Chat。<a class="src" href="https://learn.chatgpt.com/docs/changelog">官方更新日志</a></p><p class="lp">配套费率表显示，在 Standard 速度、按积分计费的口径下，Sol 每百万输入、缓存输入、输出 token 分别为50、5、250积分，对应 GPT-5.6 Sol 为100、10、500积分。这个比较支持同口径费率减半，不代表 API 美元价格或订阅内含额度也按同一比例变化。<a class="src" href="https://learn.chatgpt.com/docs/pricing">官方积分费率</a></p><div class="why"><span class="why-k">为什么重要</span><p>新模型直接进入已有任务入口，减少了用户为了尝试新能力而迁移工具的成本。较低费率也给复杂任务与高频任务重新分配模型提供空间。由此推断，团队可以扩大自动化任务量，但需要同时考察交付质量；更便宜的调用若带来更多失败，仍可能增加总成本。</p></div><p class="lp"><span class="lk">接下来观察</span>企业工作区首发默认关闭，管理员须分别启用 Sol、Luna。应验证实际账号与客户端的可用性，再比较同一任务集的成功率和费用；更改本地模型名称不能越过组织访问控制。<a class="src" href="https://learn.chatgpt.com/docs/enterprise/workspace-model-availability">企业开放条件</a></p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Claude Opus 5.5 降低单价，把竞争进一步推向任务总成本</h3><p class="lp"><span class="lk">事件</span>Anthropic 官方公告日期为9月22日。Opus 5.5 标准输入、输出价格分别为每百万 token 4美元、20美元，较 Opus 5 下降20%；缓存读取为0.20美元。公司称默认设置下典型工作负载成本下降40%，其中还包含消耗减少，不能把它等同于单价下降40%。<a class="src" href="https://www.anthropic.com/claude-opus-5-5">发布公告</a></p><p class="lp">产品日志另行确认发布，并把“多数工作达到 Fable 5.1 水平”作为公司的能力定位。本期保留官方日期，没有把美国日期转换成一个未经证实的北京时间首发分钟，也不把能力定位当作独立评测结论。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">Claude 产品日志</a></p><div class="why"><span class="why-k">为什么重要</span><p>长任务会多次读取上下文、调用工具和纠错，因此输入价格只是费用的一部分。若单价和消耗同时下降，旗舰模型就可能进入此前预算不足的常规工作。对产品团队，真正影响默认路由的是每项合格交付的费用，而不是同样数量的 token 便宜了多少。</p></div><p class="lp"><span class="lk">接下来观察</span>固定任务、工具和推理设置，比较成功率、总费用及人工复核时间。公告中的额度提升与可保留重置有助于尝试新模型，但不能替代长期成本验证。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 14 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">信用评分接入，近期背景，原始日期9月21日：</strong>Finances 向美国 Plus、Pro 用户逐步开放 Experian 信用报告与 VantageScore 3.0 接入，并独立于银行账户连接。它增加了个人财务分析上下文，不表示产品获得办理信贷或移动资金的能力。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT 日志</a></p></div><div class="srow"><p><strong class="st">Privacy Center，同日另一独立条目：</strong>面向已登录的 Free、Go、Plus、Pro 用户逐步开放，集中呈现隐私、记忆、数据使用和账户安全信息，并链接到设置。该变化改善信息可发现性，不支持“默认隐私政策已改变”的推断。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT 日志</a></p></div><div class="srow"><p><strong class="st">前沿标准建议，近期背景，原始日期9月21日：</strong>OpenAI 提出共同测量与事件报告等治理方向，讨论自动化研究带来的风险。这是公司政策建议，不是监管机构已经通过的新规则。<a class="src" href="https://openai.com/index/building-standards-next-phase-ai/">OpenAI 原文</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">家庭协作智能体 CC，近期背景：</strong>9月17日独立公告允许最多六名成员与同一智能体协作，各自选择共享信息。产品拥有独立账号，可协助日历、任务和表单处理；仍是面向美国18岁以上个人 Google 账号用户的早期实验，新用户需候补。官方 RSS 时刻对应北京时间9月18日02:15，不属于本期首发。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/cc-expanding-to-groups/">CC 完整公告</a></p></div><div class="srow"><p><strong class="st">API 访问与迁移，分别为9月18日、17日背景：</strong>Gemini 2.5 系列限制为此前活跃使用者继续访问，并未退役；Antigravity 新代理则替换旧预览，本地工具参数和文件编辑形式发生变化。前者影响新项目选型，后者影响已有集成，不能因共享一个日志页面而合并成同一事件。<a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">Gemini API 日志</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">额度调整随模型发布一起理解：</strong>Opus 5.5 公告提高 Pro、Max、Team 和按席位计费 Enterprise 的五小时额度，并向订阅用户提供可留待以后使用的额度重置。这是明确的使用条件变化，但本期优先展开长期费用，未把一次重置拆成额外头条。<a class="src" href="https://www.anthropic.com/claude-opus-5-5">Anthropic 公告</a></p></div></div><div class="sector"><div class="sector-h">中国 AI</div><div class="srow"><p><strong class="st">开放权重与托管服务是不同交付路径：</strong>MiMo 官方模型卡提供模型结构和部署说明，为自建服务提供材料。托管 API 的加速条件不能直接套到自建服务；采用权重仍需验证硬件、推理框架及业务容量。今天值得评估的是哪条路径满足自己的成本与控制要求，而不是把“开源”直接等同于低部署成本。<a class="src" href="https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL">模型卡</a></p></div><div class="srow"><p><strong class="st">其他厂商的覆盖边界：</strong>字节/豆包/Seed、DeepSeek、智谱、MiniMax、通义均纳入核查；部分官方入口仅返回导航或不完整列表。本期未取得足以另外确认其9月22日模型首发的完整证据，不据此断言这些公司当天没有更新。</p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">阿里真武 V900 的量产安排属于未来供给信号：</strong>C114 9月22日现场报道转述，阿里在云栖大会发布该芯片，计划2027年第一季度量产并部署于阿里云数据中心。现有证据支持公司公布的路线图，不支持将其写成今天已经增加的现货算力；本期不把厂商性能倍数当作独立测试结果。<a class="src" href="https://m.c114.com.cn/w3542-1318151.html">C114 原发报道</a></p></div><div class="srow"><p><strong class="st">NVIDIA DSX Ready，近期背景，原始日期9月21日：</strong>资格计划首先覆盖电池储能系统和冷却分配单元。其价值是帮助建设方筛选符合相关要求的配套产品；这不替代具体机房的工程验证，也不是新芯片发布。<a class="src" href="https://blogs.nvidia.com/blog/dsx-ready-ai-factories-power-cooling/">NVIDIA 公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">AI 与就业进入 APEC 人力资源合作文件：</strong>新华社9月22日报道，前一日在南京举行的部长会通过《人工智能赋能亚太地区就业》附件。本期只报道会议成果及议题范围，未取得附件全文，不推导具体企业义务或生效日期。<a class="src" href="https://www.news.cn/20260922/8f8e59f277ec4baf81357a827b74d1ab/c.html">新华社原发报道</a></p></div><div class="srow"><p><strong class="st">国际前沿 AI 倡议，近期背景，原始日期9月21日：</strong>芬兰总统府原文呼吁透明安全规程、部署前测试、独立评估与重大事件报告，并探索国际机制。它反映治理方向，仍是倡议，不能写成统一法律已生效。<a class="src" href="https://www.presidentti.fi/en/a-call-for-control-of-frontier-ai-models/">总统府原文</a></p></div><div class="srow"><p><strong class="st">最高法司法意见是更早背景：</strong>官方9月8日介绍稿明确，《关于依法审理涉人工智能纠纷案件的意见》于9月7日公开发布。近期媒体解读不构成9月22日新规首发。<a class="src" href="https://ipc.court.gov.cn/zh-cn/news/view-6033.html">最高法官方介绍</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">Adlib 拟收购 Paperbox，近期背景：</strong>公司9月21日10:30美国东部时间发布收购协议公告，对应北京时间当日22:30，拟结合保险业务的智能体收件与分流，以及可追溯的文档数据处理。金额未披露，交割仍附条件。对行业的意义在于把“收到材料后做什么”与“依据来自哪里”连接起来，不能写成交易已经完成。<a class="src" href="https://www.prnewswire.com/news-releases/adlib-acquires-paperbox-combining-agentic-intake--orchestration-with-a-data-foundation-regulators-trust-302884706.html">公司原始公告</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> 按本专栏的腾讯自有官方页面标准，尚未取得同时具备本期发布日期与完整更新内容的腾讯或产品自有链接，因此本期官方更新字段为 false。WorkBuddy、CodeBuddy 均未核实9月22日独立版本发布。第三方平台保存的账号声明放在下一层，不能替代该字段要求的链接。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong>WorkBuddy：近期改进指向持续使用中的权限与上下文管理。</strong> 官方日志已取得的5.6.0条目日期为9月19日，包含应用授权管理、一键撤销授权、消息引用及闲置插件和技能关闭提醒。这些变化能帮助用户处理授权积累与会话接续；由此推断，其竞争价值更接近长期办公中的可控性。当前最高版本未完成确认，不称5.6.0为“最新”。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy 日志</a></p></div><div class="srow"><p><strong>CodeBuddy：历史版本提供执行控制的比较依据。</strong> 已取得的4.12.0条目为9月4日，包含多根工作区、统一插件与技能市场、高积分操作前置确认。该条目超出近七日范围，仅作历史状态说明。多项目上下文与费用确认是具体能力，不能据旧版本推定本期又有新发布，也不能确认当前最高版本。<a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy 日志</a></p></div><div class="srow"><p><strong>元宝图像模型：已有账号声明，腾讯自有发布页仍缺。</strong> 新浪页面保留了认证元宝账号9月22日11:10的正文，账号宣布全量上线 Hy Image3.5 preview。它支持“账号作出了此声明”，没有独立证明全部账号的实际体验。本期保留这条分发信号，但不将新浪 URL 填入腾讯自有官方更新数组。<a class="src" href="https://www.sina.cn/news/detail/5345905307553683.html">账号公开记录</a></p></div><div class="srow"><p><strong>WorkBuddy 接入线索不应被删除。</strong> IT之家9月22日原发报道明确将 WorkBuddy 列在图像模型接入应用中。现有材料支持媒体转述的接入声明，仍缺具体套餐、地域及开放范围的腾讯侧说明；本期不据此写成所有 WorkBuddy 用户已可用。产品层面的观察点是生成后的连续修改与成果复用，而不是只看一次出图。<a class="src" href="https://www.ithome.com/1/005/589.htm">IT之家报道</a></p></div><div class="srow"><p><strong>移动采集到办公处理已有具体连接。</strong> 近期背景，9月16日元宝账号宣布录音转写与总结可编辑，并可导出到腾讯文档、WorkBuddy。这给移动采集进入办公流程提供了入口；“导出”没有自动包含双向同步、权限继承或后续任务自动执行。<a class="src" href="https://www.sina.cn/news/detail/5343796279905188.html">元宝录音更新记录</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>覆盖 WorkBuddy、CodeBuddy、混元、元宝、腾讯云及微信 AI。影响判断的缺口包括 Buddy 当前最高版本、图像模型在各产品的实际开放条件、微信当日是否扩围。已读取的 TokenHub 产品动态页中，9月独立条目为9月10日和11日，页面更新时间不能补足本期发布证据；这也不代表该服务之后没有变化。<a class="src" href="https://cloud.tencent.com/document/product/1823/130675">TokenHub 产品动态</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>模型路由的比较单位正在变成每项合格交付的成本。</h4><p>OpenAI 降低工作模型费率，Anthropic 同时降低单价并宣称减少任务消耗，给不同复杂度的任务重新分配模型提供条件。由此推断，团队可能在相同预算下增加自动化工作量，但收益取决于质量门槛是否保持。可验证信号是固定任务集的成功率、重试量、总账单和复核时间共同改善；只看输入价格会遗漏失败成本。<a class="src" href="https://learn.chatgpt.com/docs/pricing">OpenAI 费率</a>、<a class="src" href="https://www.anthropic.com/claude-opus-5-5">Anthropic 公告</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>模型开放越来越依赖它进入哪条已有工作流程。</h4><p>MiMo 同步提供桌面入口，OpenAI 把 Sol、Luna 交付到 Work 与 Codex，并让 Luna 进入部分免费桌面使用范围。两项当日变化都缩短了新模型到用户任务的路径。由此推断，独立应用需要更多依靠专有材料、编辑流程和成果复用保持差异；下一步应观察用户是否持续完成任务，而非只记录新模型尝试量。本期没有市场份额数据来证明迁移已经发生。<a class="src" href="https://mimo.mi.com/docs/zh-CN/news/latest/v2-6">小米公告</a>、<a class="src" href="https://learn.chatgpt.com/docs/changelog">OpenAI 日志</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>能力比较需要把执行条件一起公开。</h4><p>MiMo 开放训练环境与框架，Anthropic 的当日评测注释披露推理强度和部分安全回退安排。这说明模型分数背后还包含工具、预算及控制机制。对产品决策的推论是，复现必须固定这些条件，才能判断优势是否可以迁移到自己的工作。真正值得追踪的是相同预算与权限下的独立任务成功率；资源开放本身不等于已经实现无人监督的递归自我改进。<a class="src" href="https://mimo.mi.com/docs/zh-CN/news/latest/v2-6">MiMo 公告</a>、<a class="src" href="https://www.anthropic.com/claude-opus-5-5">Opus 评测说明</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>公司公告与带日期日志支持发布内容、价格口径和宣布的开放范围；厂商性能、速度与典型成本宣称均不视为本报独立实测。</li><li>腾讯账号记录与媒体原发报道保留各自证据价值，但不能替代本期要求的腾讯自有官方更新链接。两个 Buddy 版本来自取得的官方日志条目文本，实时顶部未能确认，因此没有“最新版本”结论。</li><li>阿里芯片部分依据现场媒体原发文本，仅保留发布与计划量产的归属；未来供给计划不等同现货可用。政策倡议不等同法律，收购协议不等同交割。</li><li>9月21日及更早事项均标出原始日期；没有把网页修改时间或搜索时间当首发。未取得可单列为9月23日00:00—02:00新增的充分时间证据，不等于该时段没有新闻。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
