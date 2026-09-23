@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28251%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2236%22%20r%3D%2226%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.15%22%2F%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2210%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让记忆能够旋转：Complex KDA 如何改变线性模型的状态追踪能力</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="814c1cedd29545fa87a8e6908b5d8fed20acaca77f1714521bd57b13f2fd9dc9">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-24</span></div>
+  <h1 class="doc">让记忆能够旋转：Complex KDA 如何改变线性模型的状态追踪能力</h1>
+  <div class="dateline"><span>全文 <b>2,950</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>18</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Complex KDA: Understanding and Enhancing the Expressivity of Kimi Delta Attention</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.24797">https://arxiv.org/abs/2609.24797</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Julien Siems, Riccardo Grazzi, Korbinian Pöppel, Jaisidh Singh, Arber Zela, Timur Carstensen, Jenia Jitsev, Frank Hutter, Volkan Cevher, Antonio Orvieto, Aaron Klein</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">弗赖堡大学、微软研究院、ELLIS Institute Tübingen、EPFL、OpenEuroLLM 等，依据论文首页署名</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-21</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 9月22日收录；原文包含表达能力证明、机制观测与对照实验，并提供代码和模型链接；未核实正式录用或独立复现</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 线性递归模型, 状态追踪, 记忆机制</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-24.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-24.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-24-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个不断更新的小记事本。</a><a class="t-h2" href="#s4">二、困境：记得久，不等于跟得上变化。</a><a class="t-h2" href="#s5">三、旧路：多做一次更新，换来更强的变换。</a><a class="t-h2" href="#s6">四、转折：第二面镜子，原来藏在门控里。</a><a class="t-h2" href="#s7">五、解法：用角度保存进度。</a><a class="t-h2" href="#s8">六、结局：能力边界移动了，训练边界仍在。</a><a class="t-h2" href="#s9">七、内核：允许怎样更新，是一种能力预算。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h2" href="#s11">倒读第一层：CKDA 接在 KDA 的逐通道门控之后。</a><a class="t-h2" href="#s12">倒读第二层：更强状态追踪，曾通过增加每步反射次数获得。</a><a class="t-h2" href="#s13">倒读第三层：取值范围早已被证明会限制可计算的状态。</a><a class="t-h1" href="#s14">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s15">对模型进化的判断：内部记忆从保留信息，进一步走向执行状态操作。</a><a class="t-h2" href="#s16">对产品判断，先看最接近的对照。</a><a class="t-h2" href="#s17">我的应用推演：把“追踪变化”单独做成验收维度。</a><a class="t-h1" href="#s18">来源</a></nav>
+    <main><p>2026-09-24｜截至 01:30（北京时间）。这是当日尚未结束的截稿快照。本文依据截止前公开的 v1；其提交时间为 2026-09-21 15:56:04 UTC，即北京时间当日 23:56:04，位于最近14天内。按所附台账核对，arXiv ID 与标题均未重复。<a class="src" href="https://arxiv.org/abs/2609.24797">论文元数据</a></p><h1 id="s1">推荐理由</h1><p>推荐这篇，是因为它把一个容易被忽略的架构限制讲成了明确的因果链：模型保留多少记忆固然重要，记忆每一步允许怎样变化，同样决定它能做什么。Complex KDA，简称 CKDA，保留 Kimi Delta Attention 的递归结构，只扩展两组参数的取值范围，就允许单次状态更新实现平面旋转。作者进一步证明了这种变化能扩大状态追踪的表达能力，并观察到模型训练后确实会使用相应机制。<a class="src" href="https://arxiv.org/html/2609.24797v1#S3">原文第3—6节</a></p><p>它值得读的地方也在于证据没有完全顺从标题：理论上可表示的任务，普通训练未必学得会；专门设计的状态任务表现改善，也没有自动变成语言模型的明显优势。HF 页面记录该论文于9月22日被提交收录，但收录只提供发现入口，不能替代同行评议。本文不使用动态赞数或排名作为推荐依据。<a class="src" href="https://huggingface.co/papers/2609.24797">HF论文页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个不断更新的小记事本。</h2><p>线性递归神经网络逐步读取输入，把历史压进固定大小的内部状态。这里的“线性”主要指旧状态的更新形式；决定如何更新的矩阵仍可依赖当前输入。可以把它写成：新状态 = A × 旧状态 + 新写入的信息。A 是状态转移矩阵，规定旧记忆如何被保留、混合或改变。论文研究的核心，就是 A 的结构限制。<a class="src" href="https://arxiv.org/html/2609.24797v1#S2">原文第2节</a></p><h2 id="s4">二、困境：记得久，不等于跟得上变化。</h2><p>想象三个杯子不断交换位置，你要随时回答球在哪个杯子下面。只保存“过去大概发生了什么”不够，每次操作都必须正确改变当前状态，而且顺序不能弄反。论文用群字问题检验这种能力：群可以理解为一组可组合、可逆的操作，任务要求逐步输出这些操作的累计结果。S₃、S₄ 分别涉及三个、四个对象的排列。<a class="src" href="https://arxiv.org/html/2609.24797v1#S5">原文第5节、图4</a></p><h2 id="s5">三、旧路：多做一次更新，换来更强的变换。</h2><p>Delta-rule，即增量修正规则，在旧状态上施加一个由向量外积构成的秩一修正。“秩一”可直观理解为沿一个方向组织的整体调整。对单位向量 k，矩阵 I − βkkᵀ 在 β = 2 时成为 Householder 反射：像照镜子一样翻转一个方向。先前的 DeltaProduct 把多个这样的更新串在同一个输入步里，获得更丰富的状态变换；两次合适的反射可以组成旋转。<a class="src" href="https://arxiv.org/abs/2502.10297">DeltaProduct原论文</a></p><h2 id="s6">四、转折：第二面镜子，原来藏在门控里。</h2><p>KDA 已经有逐通道门控：状态的不同坐标，可以各自乘一个系数。普通非负门控主要负责保留与衰减；允许某个系数取 −1，就能把那个坐标翻转，得到一次坐标反射。CKDA 把门控 α 扩展到 [−1,1]，把修正强度 β 扩展到 [0,2]，让门控反射与原有的 Householder 反射组合。两项扩展需要配合：只增加负门控，或只扩大 β，都不足以解除论文分析的全部谱限制。<a class="src" href="https://arxiv.org/html/2609.24797v1#S3">原文第3—4节</a></p><h2 id="s7">五、解法：用角度保存进度。</h2><p>转移矩阵仍是 A = (I − βkkᵀ)Diag(α)。取 β = 2、α = (−1,1)、k = (1,1)/√2，A 就能把二维向量旋转90度。连续四步会回到原点方向；角度因此可以承载循环状态。这里的 Complex 指矩阵能够出现复共轭特征值，不要求把实现改成复数网络。作者证明，CKDA 能表示所有“对角矩阵加秩一修正”结构的正交矩阵，即这一结构中保持长度的全部线性变换。对于单位 k 和规定范围内的参数，旧状态的线性转移不放大向量范数；这不等于整个带写入项的网络状态永远有界。<a class="src" href="https://arxiv.org/html/2609.24797v1#S4">原文图1、定理1及命题2</a></p><h2 id="s8">六、结局：能力边界移动了，训练边界仍在。</h2><p>理论上，一个 CKDA 层、一个头能追踪所有同构于三维旋转群有限子群的群，包括 S₄ 和 A₅；其中 A₅ 的构造使用四维状态及多对一解码。实验上，训练长度最高32，作者报告三个随机种子中的最好结果：CKDA 在 S₃、S₄ 上比所测其他 KDA 参数范围设置更善于长度外推，但 S₄ 的准确率仍随长序列下降。普通随机初始化训练没有学会 A₅；接近理论构造的初始化取得成功，不过架构和训练日程也同时变化，无法把成功单独归因于初始化。<a class="src" href="https://arxiv.org/html/2609.24797v1#S6">原文第5—6节、图6—7</a></p><p>另一项实验要求单层模型听到半小节合成节奏后，在后续输入为零、没有输出反馈的条件下继续波形。训练最大长度136，测试长度264时，CKDA 的信噪比为38.1 dB，所测因果 Transformer 为2.8 dB；但非线性 GRU 的误差更低。这支持旋转动力学对这一周期延续任务有帮助，不能外推成音乐生成整体领先。<a class="src" href="https://arxiv.org/html/2609.24797v1#S6">原文第6节、图8</a></p><h2 id="s9">七、内核：允许怎样更新，是一种能力预算。</h2><p>作者在成功的状态追踪模型中观察到接近 ±1 的门控、接近2的 β，以及接近单位圆的复特征值，呼应了理论预测。我的理解是：这里真正增加的是内部状态可执行的操作种类。存储空间没有因此变成无限，但同一块空间能承载更丰富的循环与顺序关系。这是一种有机制解释的架构进步。<a class="src" href="https://arxiv.org/html/2609.24797v1#S6">原文第6节、图7</a></p><h1 id="s10">来龙去脉</h1><h2 id="s11">倒读第一层：CKDA 接在 KDA 的逐通道门控之后。</h2><p>Kimi Linear 于2025年10月30日首次提交，其中 KDA 把更细粒度的门控带入增量规则记忆，并围绕结构化转移矩阵设计高效计算。CKDA 追问的是：既然不同坐标已经能分别控制，能否让这种控制同时承担几何变换？它沿用这条结构路线，增加有符号门控所能表达的更新。<a class="src" href="https://arxiv.org/abs/2510.26692">Kimi Linear原论文</a></p><h2 id="s12">倒读第二层：更强状态追踪，曾通过增加每步反射次数获得。</h2><p>2025年2月14日首次提交的 DeltaProduct，把一次输入对应的增量更新扩成多次。这条路线把表达能力与每步变换数联系起来。CKDA 的贡献是找到另一种分解：复用逐通道门控，补足一次反射所缺的几何自由度。注意，数学结构更简洁不等于实测必然更快；CKDA 原文明确表示，没有建立相对 DeltaProduct₂ 的内在计算优势。<a class="src" href="https://arxiv.org/abs/2502.10297">DeltaProduct原论文</a> <a class="src" href="https://arxiv.org/html/2609.24797v1#S6">CKDA第6—7节</a></p><h2 id="s13">倒读第三层：取值范围早已被证明会限制可计算的状态。</h2><p>更早的《Unlocking State-Tracking in Linear RNNs Through Negative Eigenvalues》于2024年11月19日首次提交，讨论了有限精度条件下正特征值对奇偶追踪的限制，以及引入负值如何改善状态追踪。CKDA 沿着这条问题链继续推进：从能够翻转，走向能够在单步中旋转，并刻画这一结构能覆盖哪些任务。<a class="src" href="https://arxiv.org/abs/2411.12537">负特征值前驱论文</a></p><p>三层合起来，形成的解释是：高效递归模型的设计不仅要问“怎样少算”，也要问“少算后还剩哪些合法操作”。不过，CKDA 的正面定理使用特定精确数据类型等假设；它还给出了负面边界：在非扩张、每个头仅有限状态可达等条件下，单层 CKDA 即使有有限多个独立头，也不能完成 S₅ 追踪。不能把上述结论扩写成通用推理完备性。<a class="src" href="https://arxiv.org/html/2609.24797v1#S5">原文第5节、定理3—5</a></p><h1 id="s14">对思染：模型进化 &amp; 怎么用</h1><h2 id="s15">对模型进化的判断：内部记忆从保留信息，进一步走向执行状态操作。</h2><p>这是本文基于理论和受控实验的概括。作者在语言模型中也观察到了负门控与扩展 β 被使用，但明确把它们在自然语言任务中的具体功能留给未来机制研究。观察到一个机制出现，与证明它造成某项语言能力提升，仍隔着因果验证。<a class="src" href="https://arxiv.org/html/2609.24797v1#S6">原文第6—7节、图10</a></p><h2 id="s16">对产品判断，先看最接近的对照。</h2><p>在13亿参数、1000亿训练 token 的实验中，表2给出的零样本任务平均准确率是 CKDA 54.06%，作者重训的有界门控 KDA 为54.09%。两者基本持平。部分外部基线的混合注意力比例、训练细节不同，因此不能只截取与较弱基线的差距，宣称负门控已经普遍提高语言智能。<a class="src" href="https://arxiv.org/html/2609.24797v1#S6">原文第6节、表2</a></p><p>效率也要带着口径看：96%—97% 是指定 H100、BF16、16个头、键和值维度均为128、每步32k token 条件下，前向与反向递归内核相对 KDA 的吞吐保留率。它支持新增机制的内核代价较小，不能当成完整服务吞吐、端到端延迟或成本变化。<a class="src" href="https://arxiv.org/html/2609.24797v1#S6">原文第6节、图5及附录E</a></p><h2 id="s17">我的应用推演：把“追踪变化”单独做成验收维度。</h2><p>若将来评估用于代码执行轨迹、交互状态或周期信号的模型，可设计训练长度之外的测试，逐步增加操作次数，检查错误从哪里开始累积；再分别比较扩展门控、扩展 β、两者组合。这个建议来自论文的机制和实验设计，不是作者已经验证的产品效果。对普通模型使用者，当前最有价值的收获是评估视角；把提示词写成“允许记忆旋转”，并不能改变模型的状态转移矩阵。<a class="src" href="https://arxiv.org/html/2609.24797v1#S3">原文第3节与第6节</a></p><h1 id="s18">来源</h1><p>本文为对 Julien Siems、Riccardo Grazzi、Korbinian Pöppel 等上述署名作者论文的中文解释与改写，加入的产品判断均已标注。原文明确采用 CC BY 4.0：复用须适当署名、附许可链接并说明修改，不得暗示作者背书。本次已核实原文的具体许可，没有将其他 arXiv 论文一概视为相同许可。<a class="src" href="https://arxiv.org/html/2609.24797v1">论文许可标记</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0许可</a></p><ul class="ls"><li><a class="src" href="https://arxiv.org/abs/2609.24797">CKDA元数据与v1提交记录</a>：首发2026-09-21。</li><li><a class="src" href="https://arxiv.org/html/2609.24797v1">CKDA全文</a>：机制、定理、实验、机构署名及限制的主要事实源。</li><li><a class="src" href="https://huggingface.co/papers/2609.24797">HF论文页</a>：记录9月22日社区提交收录；不使用动态热度。</li><li><a class="src" href="https://arxiv.org/abs/2510.26692">Kimi Linear</a>：首发2025-10-30，作为架构前驱。</li><li><a class="src" href="https://arxiv.org/abs/2502.10297">DeltaProduct</a>：首发2025-02-14，作为多次反射路线前驱。</li><li><a class="src" href="https://arxiv.org/abs/2411.12537">Unlocking State-Tracking</a>：首发2024-11-19，作为参数范围与状态能力关系的前驱。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
