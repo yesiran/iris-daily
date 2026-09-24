@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28220%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2233%22%20r%3D%227%22%20fill%3D%22%23fff%22%20opacity%3D%220.21%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2221%22%20r%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2251%22%20r%3D%229%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-24</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="02fef9897f809762741f2e4c5e9aa6044e8f9cad7cab3f2d66d3e595cf350400">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-24 · 周四</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>13</b> 条</span><span>趋势 <b>3</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-25 02:00（北京时间）。本期覆盖9月24日全天及次日凌晨截稿前增量。主线是助手开始接管持续工作：语音、邮件和连接应用扩大入口，执行控制与结果验证决定这些入口能否转化为可靠交付。
+<strong>要闻速览</strong>：① ChatGPT Voice 与 Gemini 扩展工作入口；② Claude 提交可供实验的生物学候选；③ Muse 扩展电脑操作与实时形象；④ OpenChamber 降低长任务中断成本；⑤ Google Flow 推出六款可修改的创作工具。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>ChatGPT Voice 接入插件，Gemini 把更多第三方应用带进对话</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Claude 科研案例进入实验环节，发现价值取决于验证链条</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Muse 增加异步交办与电脑操作，实时形象研究补上交互层</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>OpenChamber 2.0 让配置在运行中生效，并减少工具调用往返</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>Google Flow 新增六款工具，把生成结果带入可编辑的制作流程</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>ChatGPT Voice 接入插件，Gemini 把更多第三方应用带进对话</h3><p class="lp"><span class="lk">事件</span>OpenAI 官方账号于北京时间9月24日01:12:27宣布语音更新。官方9月23日更新条目确认：网页、iOS和Android语音可调用账户已有插件；Work语音扩展至网页和移动端，通话结束后未完成任务可继续以文字执行。Free、Go只能使用套餐支持的插件，Work语音需要同时具备相应访问权限，既有额度与授权继续适用。<a class="src" href="https://x.com/OpenAI/status/2102808325742322002">官方原帖</a>；<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">产品日志</a></p><p class="lp">Google的另一项入口扩张发生在北京时间9月24日00:00：官网原始日期为9月23日，官方RSS为16:00 UTC。Gemini开始逐步推出新一批Connected Apps，包括Linear、Airtable等生产力工具，以及Adobe、Webflow等创作服务；用户可连接账户后通过对话调用。公告没有证明所有地区、套餐和账户已经同步获得全部连接器。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/new-connected-apps-gemini/">Google公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>两项变化共同降低了跨应用发起工作的门槛：用户可以先表达目标，再由助手访问已有服务。对第三方产品而言，竞争位置开始取决于能否被助手发现、正确授权并返回可继续处理的结果。产品分析上，连接器的任务完成率将比安装数量更能反映这种分发的价值。</p></div><p class="lp"><span class="lk">接下来观察</span>抽查同一账户在语音与文字下能否完成相同任务，以及通话结束后任务状态、敏感操作确认和结果通知是否保持一致。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Claude 科研案例进入实验环节，发现价值取决于验证链条</h3><p class="lp"><span class="lk">事件</span>Anthropic于9月23日发布ART研究案例，9月24日相关研究陈述继续传播，本期作为持续重要议题分析。公司称，Claude从超过20万条逆转录酶记录中筛出3,500个候选系统，进一步形成20份重点报告；其中ART包含逆转录酶、邻近基因和重复DNA序列，研究人员已开展实验。初步实验观察到不同的短RNA，但其生物学功能仍未确定，不能表述为已证实的新基因编辑工具。<a class="src" href="https://www.anthropic.com/news/claude-discovers-novel-enzyme-system">研究原文</a></p><div class="why"><span class="why-k">为什么重要</span><p>这里改变的是科研搜索与专家实验之间的分工。模型能把大量序列转成少数有理由继续验证的候选，实验室便可把时间投入最有信息量的测试。对科研软件而言，产品价值因此从生成解释，延伸到保存证据、比较假设和组织验证；候选数量本身并不等于发现质量。</p></div><p class="lp"><span class="lk">接下来观察</span>ART功能实验和独立复现是否成立，以及同类搜索中有多少候选最终通过验证。该案例仍由人类设定研究方向、审核结果并执行实验。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Muse 增加异步交办与电脑操作，实时形象研究补上交互层</h3><p class="lp"><span class="lk">事件</span>账号@alexandr_wang于北京时间9月24日08:18:37宣布Muse正在获得专属邮件地址，可被加入邮件线程或接收转发；08:20:32又称Mac版已经支持电脑操作及任务排队。这里保留账号陈述的归属：邮件入口处于推出表述，Mac能力尚未经过本报告实测，地区、套餐与账户开放条件未得到完整确认。<a class="src" href="https://x.com/alexandr_wang/status/2102915571276992875">邮件入口原帖</a>；<a class="src" href="https://x.com/alexandr_wang/status/2102916057006764370">Mac原帖</a></p><p class="lp">Meta在原始日期9月23日的研究文章中介绍Muse Realtime Avatar：官方报告在448×768、25帧每秒条件下，从用户说完到收到首个同步音视频字节约870毫秒。文章明确，展示的角色并非全部已在应用中提供；相关偏好测试属于厂商评估。<a class="src" href="https://research.meta.ai/blog/bringing-your-muse-to-life">Meta研究</a></p><div class="why"><span class="why-k">为什么重要</span><p>邮件让任务不必从聊天窗口开始，电脑操作扩大可执行范围，实时形象则提高持续互动的表现力。三者对应不同产品目标：交办效率、实际交付和互动留存。把它们合并为一个“更聪明”的指标会掩盖问题；团队需要分别衡量入口转化、执行失败和长期使用。</p></div><p class="lp"><span class="lk">接下来观察</span>邮件任务和Mac任务的正式开放说明、失败恢复与完成通知。眼镜接入和视频聊天的原帖使用“即将推出”，不能算已普遍上线。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>OpenChamber 2.0 让配置在运行中生效，并减少工具调用往返</h3><p class="lp"><span class="lk">事件</span>OpenChamber于9月23日发布完整说明，北京时间9月24日05:20:43的开发者宣布帖对应本期窗口。2.0版本基于OpenCode 2，要求OpenCode至少2.0.15；技能、智能体、MCP和插件等变更可保存后生效。Code Mode允许用一段脚本组织多个工具调用，并提供脚本及调用检查。环境变量、底层程序变化等仍可能需要重启；项目也提示小模型可能不擅长这种调用方式。<a class="src" href="https://openchamber.dev/blog/opencode-v2/">完整发布说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>长任务的成本不仅来自模型推理，也来自配置修改后的重启、丢失上下文与重复调用。热更新和批量组织工具分别减少操作中断与调用往返，使开发者更容易在任务进行中纠正工具环境。其产品价值可以直接落到恢复时间和完成成本，适合用真实复杂任务衡量。</p></div><p class="lp"><span class="lk">接下来观察</span>正在运行的会话能否稳定采用新配置，以及减少调用次数后是否仍保留足够清楚的检查记录。OpenChamber是独立项目，不等于OpenCode官方客户端。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>Google Flow 新增六款工具，把生成结果带入可编辑的制作流程</h3><p class="lp"><span class="lk">事件</span>Google文章原始日期为9月23日，官方RSS发布时间折合北京时间9月24日00:00。六款Flow工具覆盖分层音效、字幕、缩略图、表面材质、拼贴动画和动态图形；其中Mondo Sónico提供可编辑音效层与分轨输出，CaptionCast处理字幕，其他工具覆盖视觉素材及运动设计。用户可以复制、修改这些工具，也可通过自然语言继续构建。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/six-new-tools-built-by-creatives/">Google官方文章</a></p><div class="why"><span class="why-k">为什么重要</span><p>专业创作的主要摩擦往往出现在修改和交接阶段。把任务拆成可复用工具，并输出能继续编辑的中间产物，有机会缩短从生成到交付的距离。对创作产品而言，优势可能来自对具体制作环节的理解，以及能否进入现有工作流，而不只是一次生成的视觉效果。</p></div><p class="lp"><span class="lk">接下来观察</span>分轨、字幕和视觉素材进入后续编辑软件时的保真程度，以及复制工具后能否稳定复现结果。公告本身不构成全部功能免费或全球无条件开放的证明。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 13 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">评估走向具体场景：</strong>9月23日发布的MentalHealthBench由跨国专业人员参与设计，使用合成对话评估心理健康相关交流。它能帮助定位回答方式和风险处理中的缺陷，不能据此证明真实治疗效果。9月24日的讨论值得关注，因为当助手持续接触个人信息时，通用能力分数不足以描述这类场景质量。<a class="src" href="https://openai.com/index/introducing-mentalhealthbench/">官方研究介绍</a></p></div><div class="srow"><p><strong class="st">近期背景：</strong>9月22日日志分别记录Sol/Luna进入Work和Codex，以及所有ChatGPT套餐可用的学习闪卡。二者是独立更新，但没有取得本期新的开放增量，因此不重复列为今日首发；Library共享的原始条目则是9月9日。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">官方日志</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">语音制作能力扩展，保留原始日期：</strong>9月23日官方文章介绍Gemini 3.8 Flash TTS和Flash-Lite TTS，包括自然语言设计声音、逐句控制表演及授权声音复制；声音重混仍标注即将推出。这是近期背景，不因当天再次讨论而重算首发。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/">官方公告</a></p></div><div class="srow"><p><strong class="st">跨设备记忆的基础设施方案：</strong>DeepMind于9月23日介绍Private AI Compute持久化记忆架构，提出由个人设备持有密钥、云端隔离环境处理上下文的方式。它回答的是连续助手如何保存状态的技术问题，文章采用未来部署表述，不能写成所有Gemini用户已经获得跨设备长期记忆。<a class="src" href="https://deepmind.google/blog/advancing-private-ai-compute-with-secure-server-side-memory/">技术说明</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">研究交付优先于模型名称复述：</strong>本期重点是ART案例中从计算筛选到人类实验的衔接。官方说明仍有进一步实验在进行，因此对行业的增量是可检验的科研工作流，而不是已实现自主科学家或递归自我改进。<a class="src" href="https://www.anthropic.com/news/claude-discovers-novel-enzyme-system">研究原文</a></p></div></div><div class="sector"><div class="sector-h">中国 AI 与开放模型</div><div class="srow"><p><strong class="st">小米HySparse2：近期背景，成本机制值得看：</strong>论文原发9月22日。在文中指定的百万token实验下，相比HybridSWA，预填充计算量降至约五分之一，FP8 KV缓存由12.09GB降至2.69GB。它为长上下文成本提供了架构路径，但不能直接换算成线上响应提速或API降价；MiMo-V3相关预告也不等于模型已经发布。<a class="src" href="https://arxiv.org/abs/2609.26368">论文</a></p></div><div class="srow"><p><strong class="st">Qwen实时语音研究：</strong>9月21日的Qwen Audio 3.1论文关注边听边执行、轮次协调及背景语音干扰等问题。值得产品团队关注的是任务执行与对话时序能否共同改善，而不是只比较声音自然度；论文测试结果不代表所有真实通话环境。<a class="src" href="https://arxiv.org/abs/2609.25176">原始论文</a></p></div><div class="srow"><p><strong class="st">匿名模型保持匿名：</strong>Space Bunny Alpha页面标注9月23日发布，支持文本、图像、视频输入及工具调用，处于免费预览。提供者身份未公开，不能据此认定来自MiniMax或其他中国厂商；页面同时说明请求与回复可能被保留。<a class="src" href="https://openrouter.ai/stealth/space-bunny-alpha">模型原始页面</a></p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">当日增量在科学数据供给：</strong>NVIDIA于9月24日宣布与Google DeepMind、EMBL-EBI合作，开放覆盖超过2,800种病毒的预测蛋白复合物结构，结合AlphaFold与NVIDIA推理工具。价值是扩大研究者可使用的结构候选，不是把预测结构变成实验定论，也不是新芯片发布。<a class="src" href="https://blogs.nvidia.com/blog/open-protein-dataset/">NVIDIA公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">数字贸易与AI消费的政策方向：</strong>新华社9月24日14:48:15发布数字贸易博览会相关讲话报道，涉及“人工智能＋消费”、标准合作和数据治理。它体现发展方向，不能据讲话自行推导新的生效日期或企业法律责任。<a class="src" href="https://www.news.cn/politics/leaders/20260924/8924e157e6974a7da56c2c34a5431f6a/c.html">新华社原文</a></p></div><div class="srow"><p><strong class="st">纠正首发时间：</strong>最高法涉人工智能纠纷意见的官方发布介绍日期是9月7日。9月24日评论文章不是新规首次出台；本期不根据评论重述未经逐条核对的责任边界。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511101.html">最高法原始发布</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">近期背景：Bessemer募集57.5亿美元：</strong>9月23日发布的公告称，新基金包括17.5亿美元早期基金及40亿美元成长基金。它增加的是投资机构可配置资本，不是单家AI企业获得同额融资，也不保证全部资金投入AI。本期未将其包装为9月24日新交易。<a class="src" href="https://khsltv.marketminute.com/article/bizwire-2026-9-23-bessemer-venture-partners-closes-575-billion-to-back-founders-from-seed-through-growth">公司发布的Business Wire公告</a></p></div></div><div class="sector"><div class="sector-h">开发工具补充</div><div class="srow"><p><strong class="st">OpenClaw修复Mac启动故障：</strong>官方发布页注明，2026.9.6最初的macOS构建存在启动崩溃，9月24日09:52 UTC，即北京时间17:52，已替换为修复构建；npm包未改变。这是具体可用性修复，版本号中的“9.6”不能代替实际发布日期。<a class="src" href="https://github.com/openclaw/openclaw/releases/tag/v2026.9.6">官方发布页</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新</strong>——这里限定为腾讯自有、带本期发布日期的官方公告。WorkBuddy已核日志顶部为9月21日5.6.2，不能把页面现存功能写成9月24日上线；CodeBuddy IDE当期版本与发布时间仍待确认。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy官方日志</a></p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong>QClaw调整及WorkBuddy迁移值得单独看待。</strong> IT之家9月24日报道援引公告称，QClaw停止新用户注册和订阅购买、续费，计划于12月24日停止运营，并提供迁移到WorkBuddy的路径。该项以媒体据公告报道的身份保留，本期未取得腾讯自有原始公告链接，因此不计入上面的官方更新标记。<a class="src" href="https://www.ithome.com/1/006/528.htm">原发报道</a></p></div><div class="srow"><p>从产品角度推断，这可能减少腾讯内部相近助手之间的分散，但迁移入口并不自动形成留存。真正需要观察的是用户资料、既有任务和使用习惯能否接续，以及迁移后有多少人持续完成工作；现有证据不足以推导WorkBuddy用户规模或收入增长。</p></div><div class="srow"><p><strong>WorkBuddy近期背景有明确工程变化。</strong> 9月19日5.6.0增加已授权应用管理与撤销入口，并恢复自定义MCP配置即时生效；9月21日5.6.2修复连接器关闭后工具残留、定时任务通知延迟或漏发、无运行记录却重复执行等问题。这些改动直接影响持续执行是否可控，比泛称“更强办公助手”更有判断价值。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">官方更新日志</a></p></div><div class="srow"><p><strong>混元与腾讯云保留原始事件日期。</strong> 智东西9月22日报道、9月23日转载的Hy Image3.5 preview消息涉及图像生成及应用接入，属于近期背景；TokenHub官方日志中的MiMo-V2.6 Pro/Flash支持条目日期也是9月22日，不能使用文档更新时间重算上线。<a class="src" href="https://finance.sina.com.cn/stock/t/2026-09-23/doc-inisuxhf5294161.shtml">图像模型报道</a>；<a class="src" href="https://cloud.tencent.com/document/product/1823/130675">腾讯云更新文档</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已分别覆盖WorkBuddy、CodeBuddy、混元、元宝、腾讯云及微信AI。影响判断的缺口主要是CodeBuddy IDE当期版本、元宝鸿蒙从尝鲜到正式开放的具体范围，以及QClaw腾讯侧原文；CodeBuddy CLI记录不能替代IDE版本证据。上述缺口不等于这些产品当天没有变化，也不支持宣称WorkBuddy已成为腾讯唯一助手入口。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>任务入口正在集中，权限和交付成为实际竞争条件。</h4><p>ChatGPT Voice把说话连接到工具执行，Gemini扩充第三方应用；两者都需要既有账户授权。由此推断，连接器生态的价值应按授权后的有效任务衡量，而不是按上架数量衡量。可验证信号是首次任务完成率、用户返回原应用补做的比例，以及撤销授权后的行为一致性。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI日志</a>；<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/new-connected-apps-gemini/">Gemini公告</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>持续执行的经济性，越来越受状态维护影响。</h4><p>OpenChamber减少配置变化引起的任务中断；Muse实时形象研究则通过缓存复用和服务调度支持连续交互。两个不同场景都说明，产品成本不能只按单次回答估算，还应包含保持任务、恢复任务和维持交互的代价。可验证信号是相同完成质量下的整项任务成本与人工接管次数。<a class="src" href="https://openchamber.dev/blog/opencode-v2/">OpenChamber说明</a>；<a class="src" href="https://research.meta.ai/blog/bringing-your-muse-to-life">Meta研究</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>科研输入扩大后，验证能力更稀缺。</h4><p>ART案例提供经过筛选的生物学假设，NVIDIA与伙伴开放更多预测结构：计算侧可以增加值得研究的对象，实验侧仍决定哪些对象成立。产品机会因而在候选排序、证据追踪和实验反馈之间，而非单纯增加生成数量。判断这一方向应看独立验证命中率和单位有效发现成本。<a class="src" href="https://www.anthropic.com/news/claude-discovers-novel-enzyme-system">Anthropic研究</a>；<a class="src" href="https://blogs.nvidia.com/blog/open-protein-dataset/">NVIDIA公告</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>官方公告证明厂商发布或陈述了什么；性能、偏好测试与科学解释仍保留厂商归属。论文中的特定配置结果没有换算为线上价格或普遍效果。</li><li>Muse部分产品消息使用所附完整公开帖记录，明确区分已宣布支持、正在推出与未来计划；未把账号陈述当作全量用户实测。QClaw采用已读原发媒体报道，并保留腾讯侧原文缺口。</li><li>Google两项零点新闻按官方RSS时区换算，其他只有日期的来源保留原始日期。9月25日00:00—02:00未取得足以单列的重要新增事实；没有使用截稿后的信息填补窗口。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
