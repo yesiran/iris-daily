@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28240%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2222%22%20r%3D%2217%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.14%22%2F%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2230%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.18%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-25</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="5a3552d01f35597bde4cda18fbcc2f119dc494275067c959b2fe2bed039d25e0">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-25 · 周五</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>2</b></span><span>分领域 <b>15</b> 条</span><span>趋势 <b>4</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-26 02:00（北京时间）。本期最明确的产品变化是微软把 Copilot 延伸到持续执行与企业托管；值得深读的近期研究，则开始用用户实际收益检验 AI 的价值。覆盖 9 月 25 日全天及次日凌晨截稿范围，近期背景均保留原始日期。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 2 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>微软把 Copilot 推向持续工作与企业托管，竞争进入运行平台</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>StudentBench 用真人学习收益验收 AI，改变教育产品的比较方法</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>微软把 Copilot 推向持续工作与企业托管，竞争进入运行平台</h3><p class="lp"><span class="lk">事件</span>微软 9 月 25 日宣布由 Home、Code、Autopilot 组成的新 Copilot 体验。Home 承接文档协作，Code 面向应用构建，Autopilot 面向持续后台工作。开放阶段并不相同：Home、Code 计划随后数周逐步推出，Autopilot 将在月底扩大私测；这些计划不能解释成当天对所有用户开放。<a class="src" href="https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/">微软公告</a></p><p class="lp">当天已明确进入公开预览的是 Managed Runtime：微软托管生成的代码，并提供企业身份、受管理的数据连接和运行管理能力。它也面向通过 SDK 接入的开发工具，因此影响不止于 Copilot 界面，而是生成应用之后由谁承接部署与运行。<a class="src" href="https://www.microsoft.com/en-us/copilot/blog/copilot-studio/build-where-you-want-run-with-confidence-now-microsoft-hosts-and-manages-the-code-created-by-copilot/">运行平台原文</a></p><p class="lp">北京时间 9 月 25 日 21:42:21，Omar Shahine 的原帖称 Autopilot 预览正在向首批客户开放，并说明其基于 OpenClaw。这里的首批客户与官方公告中的后续扩大私测是不同范围，不能合并成全面上线。<a class="src" href="https://x.com/OmarShahine/status/2103480227561079264">负责人原帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>生成代码之后的部署、身份与运行维护，原本需要团队另外解决；托管平台把这些环节纳入同一采购关系。分析判断：企业选择代理时，会更看重它能否接入现有业务并持续交付，平台竞争因此从回答质量扩展到运行责任，也给独立工具带来接入平台或自行承担运维的选择。</p></div><p class="lp"><span class="lk">接下来观察</span>首批租户在真实业务中的连续任务成功率、人工接管次数及总账单。尤其应区分固定席位与持续执行的用量费用，不能以订阅价格代替完整运行成本。<a class="src" href="https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/">计费与开放说明</a></p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>StudentBench 用真人学习收益验收 AI，改变教育产品的比较方法</h3><p class="lp"><span class="lk">事件</span>这是近期研究，而非当天首发。StudentBench 预印本于 9 月 23 日 17:57:45 UTC 提交，对应北京时间 9 月 24 日 01:57:45；9 月 25 日再次进入研究者讨论。研究覆盖 2,383 名成人，以 GRE 辅导前后、不借助 AI 的测验衡量学习收益。作者报告，在预设等效范围内，汇总 AI 辅导与真人专家辅导的即时收益达到统计等效。<a class="src" href="https://arxiv.org/abs/2609.28470">论文及提交记录</a></p><p class="lp">这项研究今天仍值得阅读，原因是它提供了不同于模型答题榜的产品验收对象：学生离开助手后能完成什么。其结论只适用于特定人群、任务与短时实验，不代表所有模型、所有课程都等效，更没有证明长期学习或完整教师工作可以替代。论文仍是预印本。<a class="src" href="https://arxiv.org/html/2609.28470v1">方法与限制</a></p><div class="why"><span class="why-k">为什么重要</span><p>教育助手的核心承诺是帮助用户掌握能力，回答漂亮并不能完成验收。分析判断：一旦用独立后测评估学习收益，模型采购就能按实际效果和成本重新比较；部分昂贵能力可能不再必要，而教学节奏、反馈方式与延迟反而可能决定产品效果。</p></div><p class="lp"><span class="lk">接下来观察</span>数周后的无辅助测验，以及不同语言、年龄和基础水平人群的复现。若即时提升不能保留，产品应调整练习与复习机制，而不能继续把短时实验结果外推成长期教育成效。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 15 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong>近期背景：模型与入口更新分别发生</strong>。9 月 22 日发布的 GPT-6 Sol、Luna 面向 Work、Codex 与 API；9 月 23 日 ChatGPT 日志另列 Voice 插件，是独立的交互入口变化。两者均不能改写为 25 日首发。模型适配与工具入口应分别评估：能够调用某个模型，不自动意味着相同能力已进入所有 ChatGPT 场景。<a class="src" href="https://openai.com/index/introducing-gpt-6-sol-and-luna/">模型公告</a>；<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">产品日志</a></p></div><div class="srow"><p><strong>独立能力没有并入模型新闻</strong>。同一日志中的 Flashcards 标为 9 月 22 日，Library 共享标为 9 月 9 日；后者虽影响协作，但已超出本期七日发现窗口。未取得这些功能在 25 日扩大开放的证据，因此不以旧功能填充当天要闻。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">官方条目</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong>近期背景：Connected Apps 扩展任务入口</strong>。官方日期为 9 月 23 日，RSS 对应北京时间 9 月 24 日 00:00。公告涉及项目管理、创意制作和生活服务等新连接，采用逐步推出口径。对产品的意义是把操作入口放入对话，但实际价值仍取决于每个连接能完成的动作及授权范围。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/new-connected-apps-gemini/">原始公告</a></p></div><div class="srow"><p><strong>近期背景：Flow 增加六款创作者工具</strong>。同为官方 9 月 23 日发布、北京时间 24 日凌晨公开，涵盖音轨制作、字幕、缩略图、纹理、拼贴动画及脚本转动态图形。它展示的是具体制作流程的封装，不能只归为一次底层模型升级。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/six-new-tools-built-by-creatives/">六款工具全文</a></p></div><div class="srow"><p><strong>近期背景：Live Avatar 有明确开放边界</strong>。9 月 24 日公告将 Gemini 3.8 Live with Live Avatar 带入 Gemini Enterprise；定制头像仍受企业名单限制。实时交互与定制形象的开放范围不同，不宜据此承诺一般用户立即使用全部功能。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-with-live-avatar/">官方公告</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong>近期背景：科研代理产生待实验解释的发现</strong>。Anthropic 9 月 23 日披露 Claude 辅助发现新的酶相关系统。公告描述了大规模代理搜索与后续实验，但其生物学功能仍待确定，湿实验由人类研究者完成。值得关注的是候选发现流程，而非把它称为已经可用的基因编辑工具。<a class="src" href="https://www.anthropic.com/news/claude-discovers-novel-enzyme-system">研究披露</a></p></div><div class="srow"><p><strong>模型价格比较须明确口径</strong>。Opus 5.5 首发为 9 月 22 日。官方分别讨论 token 价格与完成任务的综合成本，二者不能互换；任务成本还取决于输出长度和执行路径。本期没有将此前模型首发及额度安排重排为当天新增。<a class="src" href="https://www.anthropic.com/claude-opus-5-5">Opus 5.5 公告</a></p></div></div><div class="sector"><div class="sector-h">中国 AI</div><div class="srow"><p><strong>近期背景：MiMo-V2.6 不只是模型权重发布</strong>。官方模型日志明确记为 9 月 22 日；配套长文说明桌面客户端及会员方案同步上线，并支持用户配置自己的 API Key。产品状态因此不能继续用较早的邀请测试公告概括。公告中的性能领先与加速幅度属于厂商宣称，本期不据此给出独立排名。<a class="src" href="https://mimo.mi.com/docs/zh-CN/updates/model">模型日期</a>；<a class="src" href="https://mimo.mi.com/docs/en-US/news/latest/v2-6">完整发布说明</a></p></div><div class="srow"><p><strong>近期背景：ZCode 改进运行中的工作流控制</strong>。9 月 22 日 3.14.3 日志包含不中止工作流调整并发等变化。分析判断：这类控制能力直接影响长任务的等待与资源安排，比单纯增加模型选项更接近实际执行体验；但本期没有取得其 25 日的新版本证据。<a class="src" href="https://zcode.z.ai/en/changelog">ZCode 日志</a></p></div><div class="srow"><p><strong class="st">其余方向：</strong>字节 Seed／豆包、DeepSeek、通义、MiniMax 均作了补查，未取得足以列为本期新增的重要原始公告。此处是证据范围说明，不是判断这些团队没有发布；模型目录、测试文件传闻和旧日期搜索结果不计作当日发布。</p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong>近期背景：软件优化改变特定推理负载的表现</strong>。Inferact 9 月 23 日公布 TPU megakernel 工作，报告 Kimi K3 在限定低并发测试中超过 700 tokens/s。它支持的是特定实现与配置下的性能陈述，不能直接推出所有负载下的芯片排名，也没有给出足以比较采购成本和能耗的统一口径。<a class="src" href="https://inferact.ai/blog/tpu-megakernels">技术原文</a></p></div><div class="srow"><p><strong class="st">产品含义：</strong>交互式代理关心响应时间，批处理服务关心吞吐与利用率。分析判断：基础设施选型应先固定并发、模型、精度和任务成功率，再比较成本；把单个速度数字直接写入商业计划，会遗漏服务负载的差异。</p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong>历史背景：最高法意见并非本期新规</strong>。《关于依法审理涉人工智能纠纷案件的意见》官方原始发布日期为 9 月 7 日，包含五部分、二十四条。本周转载不构成新的发布事件，本期不据转载日期重述为监管突变。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511101.html">最高法原文</a></p></div><div class="srow"><p><strong>当日行业报道：开始为智能体应用损失设计保障产品</strong>。新华社 9 月 25 日关于第五届数贸会的报道提到 AI 智能体应用费用损失保险，其发布活动发生在 9 月 23 日。这是行业风险分担产品的报道，不是监管规则；没有取得保险条款，不能推断承保资格、赔偿责任或实际赔付范围。<a class="src" href="https://www.news.cn/fortune/20260925/dd4dbaa9465d404c8ba47dfb3ac28d92/c.html">新华社报道</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong>近期背景：Ema 融资支持企业代理业务</strong>。公司 9 月 23 日公告完成 7,700 万美元 B 轮融资，由 Creaegis 领投，累计融资达到 1.4 亿美元。融资证明资本投入，不证明代理已达到其营销所描述的生产力；其宣布日期也不能因周报在 25 日转载而改变。<a class="src" href="https://www.globenewswire.com/news-release/2026/09/23/3367506/0/en/ema-raises-77m-series-b-to-put-ai-employees-to-work-across-the-enterprise.html">公司发布稿</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新</strong>。截至本期截稿，没有取得腾讯自有、带本期日期且足以确认新增的公告。WorkBuddy、CodeBuddy 均不标记为当天发布新版本；媒体关于元宝的报道在下一层单独保留。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong>WorkBuddy｜近期背景，原始日期为 9 月 21 日。</strong> 官方日志已核实 5.6.2，包含连接器授权状态、定时任务重复执行与通知、会话完成状态等修复。另一个独立变化是 9 月 19 日 5.6.0 的应用授权管理与撤销能力。二者共同指向持续执行的可靠性，而不是本期新增的模型能力。<a class="src" href="https://www.workbuddy.cn/docs/workbuddy/Changelog">WorkBuddy 官方日志</a></p></div><div class="srow"><p>分析判断：对于定时执行的办公代理，错误状态会影响用户是否重复发起任务，撤权不及时则会影响用户是否敢于持续授权。评价这些改动，应看重复任务率、通知到达率与撤权生效情况。日志证明厂商列出了修复，不等于这些问题已在所有设备上消失。</p></div><div class="srow"><p><strong>CodeBuddy｜当前版本状态仍待确认。</strong> 本期未取得可确认其最高版本及发布时间的日志正文，不引用第三方版本号，也不把 WorkBuddy 的版本变化移植到 CodeBuddy。</p></div><div class="srow"><p><strong>元宝｜9 月 25 日媒体报道鸿蒙版正式上线。</strong> 快科技稿件的公开转载称，产品搭载混元 Hy4 preview，提供专家模式及写作、语音、识图等能力。这支持媒体在当日作出该报道，尚不能替代对应腾讯原始公告，因此不计入本期腾讯官方更新字段。<a class="src" href="https://news.17173.com/content/09252026/080032250.shtml">公开报道</a></p></div><div class="srow"><p>分析判断：原生客户端上架首先改变设备覆盖和触达，不自动改变跨应用执行边界。对鸿蒙用户的实际影响，应由可安装范围与核心流程完成情况验证；不能从移动端报道推导 WorkBuddy、CodeBuddy 或微信 AI 同步开放了相同能力。</p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已覆盖 WorkBuddy、CodeBuddy、混元、元宝、腾讯云和微信 AI 的公开入口及相关发布线索。WorkBuddy 日志顶部已复核至 9 月 21 日 5.6.2；CodeBuddy 当前版本、元宝对应官方发布原文，以及混元、腾讯云和微信 AI 的本期独立新增仍存在缺口。上述缺口不等于确认没有更新。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>企业代理的竞争单位正在从回答扩展到可运行流程。</h4><p>微软当天公开预览托管运行平台，WorkBuddy 的近期版本则补充授权与任务状态管理。这两类证据分别指向部署责任和运行可靠性。分析判断：当用户把重复工作交给代理，迁移成本会逐渐来自业务连接、权限关系与历史任务，单次模型体验的重要性相对下降。可验证信号是相同业务流程在不同平台上的交付成功率，而非展示了多少工具。<a class="src" href="https://www.microsoft.com/en-us/copilot/blog/copilot-studio/build-where-you-want-run-with-confidence-now-microsoft-hosts-and-manages-the-code-created-by-copilot/">微软运行平台</a>；<a class="src" href="https://www.workbuddy.cn/docs/workbuddy/Changelog">WorkBuddy 日志</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>验收必须落在用户结果上。</h4><p>StudentBench 的近期实验把人的学习收益作为结果变量；今天微软又把运行管理纳入代理产品。二者并不共同证明业务收益已经提高，但提示了同一个评估缺口：模型能输出、平台能运行，与用户真正完成目标之间仍需验收。分析判断：教育看延迟后测，办公看可交付结果与返工，才能避免把调用量误当价值。<a class="src" href="https://arxiv.org/abs/2609.28470">StudentBench</a>；<a class="src" href="https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/">微软公告</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>更强工具可能把人的工作推向定义与审查。</h4><p>9 月 25 日，François Chollet 在引用 Simon Willison 的讨论时认为，人会适应新工具并重新用满认知能力，软件工程仍然困难。这是从业者观点，不是生产率实验。结合微软当天强调的企业管理层，分析判断：产品若只减少生成步骤，却没有降低确认目标、审查结果和处理例外的成本，用户未必觉得更轻松。应测量端到端人工投入，而非仅测代码生成时间。<a class="src" href="https://x.com/fchollet/status/2103338592672362566">原始讨论</a>；<a class="src" href="https://www.microsoft.com/en-us/copilot/blog/copilot-studio/build-where-you-want-run-with-confidence-now-microsoft-hosts-and-manages-the-code-created-by-copilot/">管理能力说明</a></p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>连接器扩张之后，撤销能力会成为信任条件。</h4><p>Gemini 的近期 Connected Apps 扩展与 WorkBuddy 的授权管理变化表明，助手正在接触更多外部业务入口。这是本周背景，并非两项都发生在今天。分析判断：连接数量增加之后，权限可见性、关闭后的工具行为和异常恢复将影响用户是否继续授权。最直接的验收是撤权后，既有任务和后续数据访问是否按预期停止。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/new-connected-apps-gemini/">Gemini 公告</a>；<a class="src" href="https://www.workbuddy.cn/docs/workbuddy/Changelog">WorkBuddy 日志</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>官方公告和带日期的日志用于确认发布内容、版本与计划；厂商性能、成本和效果宣称不视为独立实测。公开预览、私测与未来开放计划分别表述。</li><li>StudentBench 是预印本；Anthropic 科研披露中的生物功能尚待验证。研究结果的适用条件与推论分开，不外推到完整职业替代。</li><li>元宝鸿蒙版采用媒体转述，未据此标记腾讯官方新增。新华社数贸会材料取得了带日期的完整公开收录文本，原站直接访问未成功；保险责任仍因缺少条款而不展开。</li><li>最高法、网信办、工信部与新华社已分别核查；没有取得本期重要原始文书，不等于证明当天没有政策消息。本期未采用无法排除越过截稿时间的次日条目，也未将搜索引擎的抓取时间当作发布日期。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
