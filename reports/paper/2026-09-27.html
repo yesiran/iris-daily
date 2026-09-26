@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28327%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2227%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.29%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2254%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.29%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>智能体何时可以忘记：当推理的成果已有别处承载</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="2ba17f7717276e747af6efbab1e300ccdde95d2087cc9c46ff77ebafacb7fd4e">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-27</span></div>
+  <h1 class="doc">智能体何时可以忘记：当推理的成果已有别处承载</h1>
+  <div class="dateline"><span>全文 <b>3,159</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">When Can Agents Forget Their Reasoning? ICLR for Long-Horizon Agent Context Compression</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.29875">https://arxiv.org/abs/2609.29875</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Mingxuan Wang, Fei Luo, Bo Wang, Guorun Yao, Yinglong Guo, Chao Ning, Hongyue Chen, Yanbiao Ma, Jungong Han</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">TierFlow Team；中国人民大学高瓴人工智能学院；清华大学</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-24</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">已核实 arXiv v1 全文、作者署名机构及 CC BY 4.0 许可；含在线消融和局部状态干预；未核实同行评审、独立复现或 HF 热度。ICLR 是方法缩写，不代表会议录用。</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, agent-memory, reasoning-compression</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-27.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-27.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-27-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">第一拍，主角：一名不断做事的智能体。</a><a class="t-h2" href="#s4">第二拍，困境：删除文字会改变接下来的世界。</a><a class="t-h2" href="#s5">第三拍，旧路：用不确定性寻找冗余。</a><a class="t-h2" href="#s6">第四拍，转折：有些推理的信息已经搬家。</a><a class="t-h2" href="#s7">第五拍，解法：每轮结束后，只裁剪推理部分。</a><a class="t-h2" href="#s8">第六拍，结局：平均结果改善，内部差异很大。</a><a class="t-h2" href="#s9">第七拍，内核：遗忘会改变行为，能否忘取决于信息还剩在哪里。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><p>2026-09-27 · 截至 01:30（北京时间）。这是当日截稿快照。本文依据截止前已公开的 v1；arXiv 记录首次提交于 2026-09-24 14:28:43 UTC，即北京时间当日 22:28:43，位于最近七天内，且未与给定台账重复。<a class="src" href="https://arxiv.org/abs/2609.29875">论文及提交记录</a></p><h1 id="s1">推荐理由</h1><p>今天推荐它，是因为它把一个工程问题推进成了关于智能体工作记忆的问题：<strong>一段推理的价值，会不会随着任务推进而改变？</strong> 推理刚生成时，可能是某个约束、计划或中间结论的唯一载体；执行之后，同样的信息可能已经进入代码、文件或工具反馈。作者研究的是这种载体变化，以及删除旧推理会怎样改写后续行为。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第1、3节</a></p><p>论文提出 ICLR，即面向长程推理的交互感知压缩。它无需在评测期间训练模型，在每轮交互后选择性删减推理。值得读的部分包括真实在线执行、删除策略消融、表征探测和固定状态干预；推荐强度来自这些证据的组合，尚不能视为成熟的通用遗忘规则。作者署名机构为 TierFlow Team、中国人民大学高瓴人工智能学院和清华大学；本次未核实会议录用、独立复现或可用的 HF 热度记录。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文首页及第3—4节</a></p><p>先把反面结果放在前面：完整基准的平均奖励确实提高，但代码、办公、网页三个领域的分数都下降，收益主要来自安全任务。它最值得带走的，是关于信息何时变得可替代的研究问题；直接照搬压缩比例，需要额外验证。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文表2、附录E表7</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">第一拍，主角：一名不断做事的智能体。</h2><p>它思考下一步，调用工具，再读取环境反馈。论文把每轮拆成推理、动作、观察三部分。历史继续进入后面的模型请求，因此，已经完成使命的思考也可能被反复读取。这里的“长程”指任务要经过多轮行动才能完成。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第3.1节</a></p><h2 id="s4">第二拍，困境：删除文字会改变接下来的世界。</h2><p>对完成的数学解答进行压缩，可以检查最终答案是否还正确。智能体中的删除发生在任务中途：改动上下文，可能改变下一次工具调用，继而改变它看到的反馈、是否返工、何时停止。所以必须比较压缩后真实跑出来的整条轨迹。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第1、3.1节</a></p><h2 id="s5">第三拍，旧路：用不确定性寻找冗余。</h2><p>直接前驱 Step Entropy 用“步骤熵”衡量预测下一段文字时的不确定性，并在数学推理中研究优先裁剪低熵步骤。它还通过监督微调和强化学习，让模型学习生成带跳过标记的短推理。本文沿用这一压缩线索，将检验对象移到持续交互的智能体。<a class="src" href="https://arxiv.org/abs/2508.03346v1">Step Entropy 原始论文</a></p><h2 id="s6">第四拍，转折：有些推理的信息已经搬家。</h2><p>作者提出，过去的推理是否必要，取决于其中的“派生状态”还有没有别的可靠载体。派生状态就是从原始材料中推出来的任务信息，例如整理出的关系、约束或中间计划。把它写成代码，或让执行结果进入可见记录，都可能降低后续决策对原推理的依赖。这是作者提出并用局部实验支持的解释。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第3.4、4.4节</a></p><h2 id="s7">第五拍，解法：每轮结束后，只裁剪推理部分。</h2><p>首次请求保持完整；之后，在下一次请求前，把刚结束那轮的推理按空行切成若干块。冻结的 Qwen3.5 9B 代理评分器在因果上下文中计算每个位置的预测熵，再求块内平均。熵低，表示评分器预测接下来会出现什么时比较确定，并不直接表示内容正确或无关。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第3.1—3.2节、附录C</a></p><p>随后将最低熵的 floor(0.8N) 个块替换为 <code>[SKIP]</code>，其余原样保留；N 是该轮非空推理块数。动作、工具参数、工具输出、观察和最终答案都不参与裁剪。被修改的历史持续用于后续请求。80% 是块数量比例，不能读成总上下文或总成本减少80%；只有一个块时不删，评分上下文超过42K token 时跳过该轮压缩。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第3.2节、附录C</a></p><p>尤其要区分：<strong>在线算法使用熵排序；“是否已经外化”是解释性分析中的变量。</strong> 论文没有给在线算法装上一个已验证的检测器，逐项确认信息落盘充分后才允许删除。把机制解释当成算法已有的保障，会高估这项工作。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第3节、附录L</a></p><h2 id="s8">第六拍，结局：平均结果改善，内部差异很大。</h2><p>作者以 DeepSeek V4 Flash 为执行模型，在260项 WorkBuddyBench 任务上报告平均奖励从0.699升至0.718；输入、输出、缓存读取 token 分别减少25.5%、14.4%、33.3%。这些是不同统计项，不能相加；奖励也不是任务成功率。逐任务比较为102胜、76平、82负。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第4.1节、附录D.2及E表7</a></p><p>分领域看，按奖励乘100的口径，安全任务提高22.9分，代码、办公、网页分别下降6.4、4.2、2.2分；代码任务的输入量还增加6.35%。另一个40任务比较中，ICLR 的输入加输出 token 比基线增加6.9%。因此，全文不支持“压缩在各类任务上都更省、更准”。已报告的 token 变化也不能直接换算成包含评分器在内的端到端延迟或费用收益，本次未核实这样的完整测量。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文表1—2、附录E</a></p><h2 id="s9">第七拍，内核：遗忘会改变行为，能否忘取决于信息还剩在哪里。</h2><p>在固定80任务消融中，随机删除10%的推理 token 后，整条轨迹输入减少60.5%；删除20%时反而只减少44.0%。作者称之为“轨迹放大”：局部删除通过工具选择、重新推导和终止行为，改变后续请求的数量与内容。因此，压缩率本身不能代表最终效率。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第4.2节、附录F</a></p><p>更直接的证据来自固定状态干预。在一组位置干预中，只保留最近推理与保留全部推理的规则评分同为0.8717；只删除最近推理则降至0.7598。另一组代码已写入磁盘的状态中，清空推理后规则评分保持0.7587，但新增推理量从1289增至3222。它支持“外部载体有时可以替代旧推理”，同时提醒我们：最终结果不变，也可能付出重新计算的代价。<a class="src" href="https://arxiv.org/html/2609.29875v1">附录I表16</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是2025年的 Step Entropy：问题是怎样识别一段推理中较可压缩的步骤，其方法提供了低熵排序的直接来源。本次工作的变化，是让删除真正进入后续交互，把观察对象从答案扩展到行动轨迹。它没有证明“低熵等于无用”，而是把这一信号作为需要实验检验的启发式。<a class="src" href="https://arxiv.org/abs/2508.03346v1">Step Entropy</a> <a class="src" href="https://arxiv.org/html/2609.29875v1">本文第2—3节及附录B</a></p><p>再倒读一层，是2023年的 MemGPT：它借鉴操作系统的分层存储，通过不同记忆层之间的信息移动，管理有限的上下文窗口。这个方向使“信息不必一直留在当前窗口”成为可实现的系统设计。本文进一步追问：信息已经以别的形式可用以后，生成它的那段推理还需要随身携带多久？后半句是本文关注的问题，并非 MemGPT 已证明的结论。<a class="src" href="https://arxiv.org/abs/2310.08560">MemGPT</a> <a class="src" href="https://arxiv.org/html/2609.29875v1">本文第2.2节</a></p><p>最底层是2022年的 ReAct：推理帮助更新行动计划，行动又从外部世界带回信息，两者交替进行。沿着这一结构看，记忆的价值自然会随反馈变化。本文把这种变化推进为可测试的问题：改变推理历史以后，下一步行动及整条任务轨迹究竟怎样变化？这条脉络是对三个研究问题的整理，不代表它们使用相同实验协议。<a class="src" href="https://arxiv.org/abs/2210.03629">ReAct</a> <a class="src" href="https://arxiv.org/html/2609.29875v1">本文第3.1节</a></p><p>机制证据也需要分层阅读。作者在31项任务的265个边界样本上，用表征探针预测后续是否发生重新推导、额外推理或重新规划，AUROC 为0.844；这是区分行为标签的能力，不能理解成84.4%的任务正确率。激活替换实验则在冻结的代理模型上恢复受删除影响的下一 token 分布，尚未直接证明执行模型内部遵循相同机制。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第4.3节、附录G—H</a></p><p>外化分组中，信息仍只存在于推理时，后续行为风险标签发生率为67.3%；已有外部载体时为36.2%。这是描述性比较；同任务比较的差异为19.75个百分点，95%区间为1.00至37.05个百分点。它与固定状态干预方向一致，但样本范围和区间宽度都要求克制。这里的“风险”是后续重新推导等行为标签，不等于任务失败。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文第3.3节、附录I表14—15</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p>我的判断是，这一步推进了我们对智能体能力载体的理解：部分能力依赖推理历史、外部产物和可见反馈之间的信息接力。作者的理论充分条件也很明确：只有当保留状态足以让删除前后的行动分布一致，才能推出轨迹与最终评分分布一致；“已经有文件”本身达不到这个条件。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文附录B.5</a></p><p>对产品的可用启发，是在压缩前检查重要信息的去向。以下是基于论文的设计推演，尚非论文验证过的完整方案：将正在使用的约束、已确认的中间结论与关键反馈显式整理，检查下一轮是否能取得它们，再评估哪些旧推理可以退出活跃上下文。信息写入后是否正确、完整、可读取，应成为独立检查项。<a class="src" href="https://arxiv.org/html/2609.29875v1">推演依据：第3.4节及附录I、L</a></p><p>评估这样的设计，应同时看最终质量、重复工具调用、重新推导量和总资源消耗，并按任务类型拆开。尤其对于编码产品，论文中代码任务降分且输入增加，足以阻止我们把平均收益直接当作上线依据。一个合理反例是：代码保存了实现，却没有保存尚未落实的用户约束；此时删去推理，仍可能删掉唯一的信息载体。这个例子是依据作者定义构造的边界说明，并非论文中的实测案例。<a class="src" href="https://arxiv.org/html/2609.29875v1">依据：附录E表7、附录I</a></p><h1 id="s12">来源</h1><p>本文是中文重述与分析，研究成果署名归 Mingxuan Wang、Fei Luo、Bo Wang、Guorun Yao、Yinglong Guo、Chao Ning、Hongyue Chen、Yanbiao Ma、Jungong Han。已核实原文采用 CC BY 4.0；本报告对原文进行了翻译、压缩和重新组织，推演部分另行标明，不表示作者认可本报告。该许可要求适当署名、提供许可链接并说明修改。<a class="src" href="https://arxiv.org/html/2609.29875v1">原文许可标识</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p><ul class="ls"><li><a class="src" href="https://arxiv.org/abs/2609.29875">所选论文 arXiv 记录</a>：首次提交日期、作者及版本。</li><li><a class="src" href="https://arxiv.org/html/2609.29875v1">所选论文 v1 全文</a>：方法、实验、机构、局限与许可。</li><li><a class="src" href="https://arxiv.org/abs/2508.03346v1">Step Entropy 原始论文</a>：2025-08-05 首次提交，直接方法前驱。</li><li><a class="src" href="https://arxiv.org/abs/2310.08560">MemGPT</a>：2023-10-12 首次提交，分层记忆脉络。</li><li><a class="src" href="https://arxiv.org/abs/2210.03629">ReAct</a>：2022-10-06 首次提交，推理与行动交替的脉络。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
