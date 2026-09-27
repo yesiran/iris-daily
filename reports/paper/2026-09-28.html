@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2864%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2236%22%20r%3D%2214%22%20fill%3D%22%23fff%22%20opacity%3D%220.19%22%2F%3E%3Ccircle%20cx%3D%2223%22%20cy%3D%2232%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型学会挑问题：用证明的压缩价值引导数学发现</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="48a2e57c06bb8bae000a0df424a6d421b38dc10d873c25ed4a3de8e9de2ec36c">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-28</span></div>
+  <h1 class="doc">让模型学会挑问题：用证明的压缩价值引导数学发现</h1>
+  <div class="dateline"><span>全文 <b>3,266</b> 字</span><span>约 <b>9</b> 分钟</span><span>章节 <b>18</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Learning to Discover Interesting Mathematics</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.28603">https://arxiv.org/abs/2609.28603</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Niket Patel, Ahmad Rammal, Amaury Hayat, Remi Munos, Julia Kempe</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">FAIR @ Meta；CERMICS, ENPC, Institut Polytechnique de Paris；New York University</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-23</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF作者提交；形式化验证与筛选对照；预印本，独立复现未核实</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, autonomous-mathematics, verifiable-reasoning</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-28.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-28.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-28-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个需要自己找题目的数学模型。</a><a class="t-h2" href="#s4">二、困境：真命题可以不断增加，知识价值未必增加。</a><a class="t-h2" href="#s5">三、旧路：先把给定目标证明出来。</a><a class="t-h2" href="#s6">四、转折：先学会估计尚未完成的证明。</a><a class="t-h2" href="#s7">五、解法：让简短结论承载更多推导。</a><a class="t-h2" href="#s8">六、结局：提问分布改变了，但还不能宣布学会数学品味。</a><a class="t-h2" href="#s9">七、内核：给探索提供选择标准，再让选择改变下一步的起点。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h2" href="#s11">倒读第一层：价值为什么可以与压缩有关？</a><a class="t-h2" href="#s12">倒读第二层：让模型自己出题，并非从今天开始。</a><a class="t-h2" href="#s13">倒读第三层：这些循环依赖可检查的知识基础设施。</a><a class="t-h1" href="#s14">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s15">这一步推进了什么？</a><a class="t-h2" href="#s16">对研究产品的启发，是把“候选生成”和“知识晋升”分开。</a><a class="t-h2" href="#s17">最值得追加的验证，是测量后续任务有没有真的变容易。</a><a class="t-h1" href="#s18">来源</a></nav>
+    <main><p>2026-09-28｜截至 01:30（北京时间）。这是当日截稿快照。本文只依据截止前公开的论文版本及相关来源；论文于9月23日首次提交，处于近两周窗口，标题与arXiv ID均未出现在所附去重台账中。<a class="src" href="https://arxiv.org/abs/2609.28603">原始发布日期</a></p><h1 id="s1">推荐理由</h1><p>今天推荐的是一个关于“研究方向从哪里来”的实验。给定命题，让模型寻找证明，目标已经由人指定；允许模型自由提出命题，目标本身就成了待解决的问题。作者尝试给这种选择建立可计算的标准：一个结论如果说起来简短、推导起来却需要许多步骤，就可能把复杂推理浓缩成可复用的知识单元。他们把这一标准接入模型训练，并演示让已证明的结果成为下一轮探索前提。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§1、§3</a></p><p>值得深读的是整条因果链：怎样定义价值，怎样在证明之前估计它，怎样用它改变提问，最后怎样检查改变是否只是在讨好评分器。论文进入HF论文社区，页面记录由共同作者Julia Kempe于9月25日提交；机构信息来自原文署名。社区收录仅是发现信号，本次未核实会议接收或独立复现。<a class="src" href="https://huggingface.co/papers/2609.28603">HF论文页</a><a class="src" href="https://arxiv.org/html/2609.28603v1">原文署名</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个需要自己找题目的数学模型。</h2><p>这里的工作环境是Lean 4及其数学库Mathlib。Lean是一种能由计算机检查形式化证明的工具，Mathlib则积累了定义、定理和证明。作者希望系统从已有前提出发，提出命题、判断是否值得追求、完成证明，再把成果交给后续探索。形式化环境提供了检验逻辑成立与否的基础，但“成立”还不能回答“值得研究吗”。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§1</a></p><h2 id="s4">二、困境：真命题可以不断增加，知识价值未必增加。</h2><p>仅奖励正确，模型可以反复生成显然成立的关系；仅奖励困难，又可能偏好冗长拼接出来的命题。作者因此区分两个概念：内在趣味性，衡量一个结论用简短表述承载了多少证明工作；外在效用，衡量它作为可调用前提，能替其他证明省下多少工作。后者更贴近复用价值，却通常要等后续知识形成后才能观察。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.1—§3.2</a></p><h2 id="s5">三、旧路：先把给定目标证明出来。</h2><p>此前的LeanDojo把证明环境、前提标注和检索结合起来，让模型从大型数学库中选择可用引理，支持给定目标的证明。这解释了为什么“已有知识能否被找到并调用”是基础能力。今天这篇论文在其上提出另一层选择：接下来应当把什么命题变成可调用知识。<a class="src" href="https://arxiv.org/abs/2306.15626">LeanDojo原论文</a></p><h2 id="s6">四、转折：先学会估计尚未完成的证明。</h2><p>作者定义V(T｜P)：给定前提P，证明目标T需要多少证明代码行。这里的“难度”是可操作的代理量，并非人类觉得困难的程度，也不是已求得的最短证明。为了训练预测器，他们沿Mathlib的依赖关系展开前提：把可以直接调用的一条引理撤掉，换成证明那条引理所需的更基础前提，同时把相应证明行数加入标签。这样构造约10万条数据，让同一目标在不同知识条件下拥有不同成本。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§2.1</a></p><p>27B参数模型接受的训练约束包括：预测贴近标签；可用前提增多时，理想证明成本不应上升；通过中间引理完成目标时，成本估计应尽量满足分步组合关系。作者在4,615条留出提示上评估这个预测任务，报告专门训练的模型比其选用的通用模型更准确。这个结果支持的是条件证明成本预测，不能外推成通用数学能力全面领先。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§2.2、附录B</a></p><h2 id="s7">五、解法：让简短结论承载更多推导。</h2><p>核心指标为I(T｜P)=100×V(T｜P)/L(T｜P)。L不仅计算命题本身的字符数，还加入当前前提尚未提供、却为陈述该命题所必需的定义长度。它要防止把复杂性藏进新术语，再把表面很短的命题误判为高度浓缩。分母还有另一个作用：把许多互不相关的结论拼接起来，虽然证明变长，陈述通常也会变长，因而不会仅凭堆砌获得同等增长的得分。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.1，式5—6</a></p><p>作者冻结难度预测器，用它为猜想生成模型提供奖励；解析失败、表达无效、与前提无关和能被简单自动策略证明的候选分别受到处理。必须区分：训练阶段检查一个表达式是合法命题，不等于已经证明它为真。后续评估另外寻找形式化证明，依据最终获证命题及证明重新计算分数，避免直接把预测器给出的奖励当作实验结论。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.3、附录C.1—C.2</a></p><h2 id="s8">六、结局：提问分布改变了，但还不能宣布学会数学品味。</h2><p>在8个数学领域、每个模型每领域20条最终获证命题的评估中，训练模型的平均趣味性从基础模型的1.76提高到7.58，约为4.3倍。判为被Mathlib实质或完全包含的比例，从91.9%降至30.6%。前一个数字来自最终证明管线下的指标；后一个数字来自隐藏生成者身份的模型裁判。这表明生成分布发生了变化，但“库内重合较少”不能证明“人类从未发现过”。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.3、图4—5、附录C.2</a></p><p>还有两个评估条件不可省略：研究持续采样直到凑足每领域的获证样本，因此这些数字不是原始提案成功率；证明失败的提案可以进入受约束的修补流程，例如增加必要假设或小幅削弱结论。分数针对最终获证版本计算，不能写成所有原始猜想都无需修改地成立。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文附录C.2.1</a></p><h2 id="s9">七、内核：给探索提供选择标准，再让选择改变下一步的起点。</h2><p>论文还演示不更新模型权重的迭代探索：每轮提出400条候选，经语义筛选和独立证明后，按指标选出10条加入前提库。此时已有证明，排序使用实际获接受证明的长度，无须再调用难度预测器。对照保持猜想模型、筛选器和证明过程一致，改变结果保留规则，比较全部保留、随机保留、最长证明与趣味性筛选。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.4、附录D</a></p><p>这里应保留一处未解决的报告问题：正文§3.4写6轮，附录D.1却以10轮描述汇总；附录式9的分母也写作规范化命题字符数，与正文包含新增定义成本的通式口径不同。因此本文只把它作为迭代选择机制的初步证据，不把相关汇总拼成一个口径完全统一的结果。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.4、附录D.1，式9</a></p><h1 id="s10">来龙去脉</h1><h2 id="s11">倒读第一层：价值为什么可以与压缩有关？</h2><p>2026年3月的《Compression is all you need: Modeling Mathematics》把命名定义、引理和定理看成可重复使用的压缩单元，并用Mathlib依赖结构研究这种想法。今天的论文进一步把“压缩”转成可用于提案阶段的评分函数。我的理解是：一个定理的陈述像一个短接口，其证明承担了接口背后的工作；不过接口能否真正帮助别人，还取决于是否被后续任务使用。<a class="src" href="https://arxiv.org/abs/2603.20396">压缩视角的前驱论文</a><a class="src" href="https://arxiv.org/html/2609.28603v1">本论文§3</a></p><h2 id="s12">倒读第二层：让模型自己出题，并非从今天开始。</h2><p>2024年的Minimo已经联合学习提出猜想与寻找证明，目标是生成对自身而言困难但可证明的问题，并在三个公理化领域开展实验。它提供了自我出题的学习循环。本论文改变了选择信号：把相对陈述成本的证明工作量作为可估计指标，并在Mathlib环境中研究它与既有知识复用的关系。两者关注点有继承也有差异，不能把“自主出题”本身当作本论文首创。<a class="src" href="https://arxiv.org/abs/2407.00695">Minimo原论文</a><a class="src" href="https://arxiv.org/html/2609.28603v1">本论文§3、附录A</a></p><h2 id="s13">倒读第三层：这些循环依赖可检查的知识基础设施。</h2><p>LeanDojo所代表的基础工作，让模型能够与证明环境交互、读取细粒度前提信息并检索引理。沿这条线看，今天的变化是把学习对象从“证明动作”扩展到“未来要积累什么知识”。这是本文的机制归纳；它不意味着模型已能自行定义数学价值，也不意味着形式验证可以代替领域专家判断研究意义。<a class="src" href="https://arxiv.org/abs/2306.15626">LeanDojo原论文</a><a class="src" href="https://arxiv.org/html/2609.28603v1">本论文§4</a></p><h1 id="s14">对思染：模型进化 &amp; 怎么用</h1><h2 id="s15">这一步推进了什么？</h2><p>作者给出了一个可以训练和执行的研究选择标准。其支持证据包括获证样本上的指标提升，以及既有Mathlib中趣味性与效用的相关性：排除没有下游使用者的声明后，Spearman秩相关为0.756。但两项指标共享证明成本成分，因此这段相关性不足以单独证明新生成定理会帮助未来研究；作者也明确把新定理的后续效用留作开放问题。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.2、图3、§4</a></p><h2 id="s16">对研究产品的启发，是把“候选生成”和“知识晋升”分开。</h2><p>以下是机制推演，并非论文验证过的通用产品结论：研究助手可以产生很多候选，但进入长期知识库的条目，应另行满足正确性、去重和复用价值标准。记录哪些结论支持了后续任务，比只统计生成篇数更接近知识积累。数学实验给出了一个清晰实例：获证结果经选择后才成为下一轮前提；迁移到其他领域时，必须重新定义检验方法，不能直接照搬证明行数。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§3.4</a></p><h2 id="s17">最值得追加的验证，是测量后续任务有没有真的变容易。</h2><p>建议把它当作待检验假设：固定推理预算，在未见目标上比较加入新知识前后的成功率、推导成本及重复率，并保留未被筛选的对照。还应改变证明器或自动化策略，观察排名是否稳定。原因来自论文自己的限制：代码行数会受写法和自动策略影响；本文没有学习新定义，也没有证明长期探索能持续产生有用结果。一个需要长证明的冷僻命题，完全可能很少被复用。<a class="src" href="https://arxiv.org/html/2609.28603v1">原文§4</a></p><p>我的判断是：这篇论文提供了一个值得研究的选择机制。它证明了特定指标能够改变模型提出的数学问题；数学价值、全球新颖性和长期生产率仍需要其他证据。</p><h1 id="s18">来源</h1><p>主事实源为<a class="src" href="https://arxiv.org/html/2609.28603v1">arXiv v1全文</a>，发布日期以<a class="src" href="https://arxiv.org/abs/2609.28603">arXiv提交记录</a>为准。质量线索来自<a class="src" href="https://huggingface.co/papers/2609.28603">HF论文页</a>，不使用无法回溯至截稿时点的动态赞数。前驱原始来源为<a class="src" href="https://arxiv.org/abs/2306.15626">LeanDojo</a>、<a class="src" href="https://arxiv.org/abs/2407.00695">Minimo</a>和<a class="src" href="https://arxiv.org/abs/2603.20396">Compression is all you need</a>。本文核查了公开原文，未运行或独立复现作者实验。</p><p>许可与署名：原论文作者为Niket Patel、Ahmad Rammal、Amaury Hayat、Remi Munos、Julia Kempe；arXiv明确标注CC BY-NC-SA 4.0。上述中文长文、摘要及五镜头对论文作了翻译性改写、重组和评论，相关改编内容同样按CC BY-NC-SA 4.0提供，仅限非商业使用，并保留署名、原文链接、许可链接及改动说明；不表示原作者认可本解读。<a class="src" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">许可条款</a></p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
