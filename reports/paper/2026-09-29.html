@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28299%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2213%22%20r%3D%2222%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2223%22%20cy%3D%2215%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2213%22%20r%3D%2210%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>给模型的数学能力换张地图：从学科标签走向解题方法</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="957a295d6de8c252ac4f6dac0f8788d2498b76281dfd429dcbe28cbc454eb6a5">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-09-29</span></div>
+  <h1 class="doc">给模型的数学能力换张地图：从学科标签走向解题方法</h1>
+  <div class="dateline"><span>全文 <b>3,097</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Math Reasoning in LLMs is Organized by Approach, Not Topic</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.27041">https://arxiv.org/abs/2609.27041</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Sajad Goudarzi, Samaneh Zamanifard, Moloud Nasiri, Hamed Rahimian</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Clemson University</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-22</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">公开预印本；8个模型、5个数学数据来源；包含结构、语义与提示干预验证；未核实同行评审录用、独立复现或HF收录</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, reasoning, interpretability, evaluation</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-09-29.html">https://yesiran.github.io/ai-paper-daily/reports/2026-09-29.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-09-29-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个会做题、却缺少能力地图的模型。</a><a class="t-h2" href="#s4">二、困境：题目叫什么，与模型怎样解，可能是两回事。</a><a class="t-h2" href="#s5">三、旧路：读答案、读解题文字，都留下盲区。</a><a class="t-h2" href="#s6">四、转折：让模型走完自己的路，再沿原路测量。</a><a class="t-h2" href="#s7">五、解法：把每条轨迹压成内部“指纹”，再分别过三道检查。</a><a class="t-h2" href="#s8">六、结局：获得一条有证据的组织轴线，还没有拿到完整电路图。</a><a class="t-h2" href="#s9">七、内核：能力分类需要对应可重复使用的操作。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h2" href="#s11">从今天倒读第一层：为什么需要超出解题文本的观察？</a><a class="t-h2" href="#s12">再倒读第二层：为什么“生成的路径”值得研究？</a><a class="t-h2" href="#s13">再倒读第三层：为什么原先主要围绕题目测能力？</a><a class="t-h1" href="#s14">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><p>2026-09-29｜截至 01:30（北京时间）。这是今日截稿快照，严格截止于 2026-09-29T01:30:07+08:00。</p><p>本文选取过去7个日历日内首次提交的论文：首版为9月22日，深读采用9月24日发布的v2，均早于截止时间。作者及机构据arXiv记录与论文首页核实；第一作者在摘要页拼作Sajad，正文拼作Sajjad，元数据沿用摘要页。附带台账中没有相同ID或标题。<a class="src" href="https://arxiv.org/abs/2609.27041">版本记录</a> <a class="src" href="https://arxiv.org/html/2609.27041v2">v2原文</a></p><h1 id="s1">推荐理由</h1><p>这篇论文推进的是我们理解模型的方式。平常说模型“擅长代数、不擅长几何”，用的是题目的学科分类。但几何题也可能靠列方程、消元解决；同一道代数题，又可能采用枚举或变量替换。作者提出：模型内部留下的计算特征，可能更贴近这些可重复使用的解题方法。若这一点成立，只看各学科平均分，会遗漏能力的另一条重要轴线。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§1、§5</a></p><p>值得推荐的地方，是作者没有停留在给解题文本贴标签。他们先记录模型内部特征，再让相似轨迹自行聚类，最后用语义检查与改变解法的提示实验交叉验证。本文报告的证据覆盖8个开放权重模型、5个数学数据来源；这是一个值得继续检验的表征研究，但尚未给出具体推理电路，也没有证明按方法配训练数据就能提高成绩。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3、§5—6</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个会做题、却缺少能力地图的模型。</h2><p>研究对象包括不同规模的Qwen2.5指令模型、DeepSeek-R1-Distill-Qwen，以及两个Mistral系列模型。作者让每个模型面对同一批3,800道题，得到30,400条“模型—题目”生成轨迹。问题来自DeepMind Mathematics、GSM8K、MATH、MathQA和NuminaMath。研究想知道的，是这些模型完成运算时，哪些轨迹在内部更相似。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.1、表1</a></p><h2 id="s4">二、困境：题目叫什么，与模型怎样解，可能是两回事。</h2><p>论文附录给出一个直观例子：一个聚类包含预备微积分、几何、代数和数论题，生成解法却共享“把约束写成方程，再消去变量，求解简化系统”的路线。另一个聚类则把同属算术应用题的样本进一步分成“依次计算中间数量，再汇总”的方法族。这些是作者展示的代表样本，不能单凭它们断言全部数学都遵循同一组织规律。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文附录B、表8—9</a></p><h2 id="s5">三、旧路：读答案、读解题文字，都留下盲区。</h2><p>只看最终正确率，无法区分两次成功用了什么方法；只看生成文字，也不能直接认定它忠实描述了内部计算。作为本文的对照，作者用TF-IDF——按词在文本及语料中的出现情况赋权——表示相同解题文本，再运行相同聚类流程。文本聚类中，81.8%的簇满足作者定义的“学科纯度”阈值；内部特征聚类对应比例为36.9%。这说明两种表示捕捉到的结构不同，但还不足以单独证明哪一种更接近因果机制。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文附录A、表7</a></p><h2 id="s6">四、转折：让模型走完自己的路，再沿原路测量。</h2><p>作者采用“生成—回放”：先让模型自行生成解答，再把完全相同的提示与生成序列送回模型，做一次前向和反向计算。回放时固定已经生成的词元，即模型处理文本的基本单位，避免测量阶段又生成另一条路径。计算损失与汇总特征时，只纳入识别出的推理部分，排除提示位置及答案边界之后的位置。测量对象因此是这次实际生成的轨迹，而非人类参考解答。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.2</a></p><h2 id="s7">五、解法：把每条轨迹压成内部“指纹”，再分别过三道检查。</h2><p>这里的“指纹”只是解释用比喻。具体而言，每个被记录的模块贡献三种统计量：激活的平均绝对幅度、均方根幅度，以及激活幅度乘以归一化参数梯度范数。激活是模块处理输入时产生的数值；梯度反映当前损失对参数变化的局部敏感程度。第三项被用作聚类特征，不能直接当作某模块导致某种推理的证明。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.2及§2</a></p><p>随后在每个“模型×数据来源”单元内独立聚类：先归一化，用截断奇异值分解压到20维，再归一化，最后以K-Means寻找相近样本。簇数在5到12之间按轮廓分数选择；轮廓分数衡量簇内紧密、簇间分离的程度。学科与正确性标签不参与聚类，但数据来源被用于划分独立处理单元，所以这并非跨全部来源的一张统一能力地图。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.3</a></p><p>第一道检查问：这些分组比随机分组更有几何结构吗？40个单元的结果均超过200次保持簇大小分布的随机划分，平均轮廓分数为0.204。第二道检查问：同一簇里是否真有共同解法？作者取每簇离中心最近的5个样本，让两位模型评审分别判断，至少4个共享足够具体的方法才算通过。两位评审对真实簇给出的通过率为82.2%和77.3%，对来源内随机对照则为6.2%和11.2%。这些是聚类的语义一致率，不是解题准确率。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.4、表2、表4</a></p><p>第三道检查更接近关键问题：同一道题要求换解法，内部归类是否也换；只是换措辞，归类是否保持？作者把50道基础题扩成280个提示，包含基准、改写和解法要求。8个模型条件中有7个同时满足预设的解法变化与改写稳定阈值。例外是Mistral-7B-Instruct：它的解法变化率很高，但改写保持原簇的比例只有0.48，说明表面措辞仍明显影响其签名。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.4.3、表6</a></p><h2 id="s8">六、结局：获得一条有证据的组织轴线，还没有拿到完整电路图。</h2><p>作者将三层结果解释为：这些数学模型的内部计算更贴近解题方法。更克制的读法是，选定特征空间中的聚类与解法有较强联系，而且对解法要求表现出提示层面的敏感性。语义评判仍依赖模型；提示干预没有直接操作参数、注意力头或电路；实验也不能自动外推至闭源模型和非数学任务。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§5—6</a></p><h2 id="s9">七、内核：能力分类需要对应可重复使用的操作。</h2><p>本文支持我们在“题目属于哪个学科”之外，再问“模型靠什么操作完成它”。据此可以提出一个尚待验证的推断：即使语料按代数、几何、数论均衡采样，也可能反复练习同一种消元套路，遗漏枚举或其他方法。作者将按方法组织数据及评测列为后续方向，并未报告其训练收益。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§5</a></p><h1 id="s10">来龙去脉</h1><h2 id="s11">从今天倒读第一层：为什么需要超出解题文本的观察？</h2><p>2023年的《Language Models Don't Always Say What They Think》展示，输入中的偏置因素可以影响回答，模型的解释却不提及这些因素。这给本篇提供了一个直接动机：解题文字可以作为被测轨迹，却不能自动充当内部机制的说明书。<a class="src" href="https://arxiv.org/abs/2305.04388">前驱论文</a></p><h2 id="s12">再倒读第二层：为什么“生成的路径”值得研究？</h2><p>2022年的思维链工作发现，提供带中间步骤的示例能改善一批推理任务的表现。思维链指模型在最终答案前生成的一串中间推理。它让路径成为可以观察和干预的对象；本篇进一步固定模型自己生成的路径，测量其中的内部统计特征。前者研究如何引出能力，本篇研究已经出现的行为怎样组织。<a class="src" href="https://arxiv.org/abs/2201.11903">思维链原论文</a> <a class="src" href="https://arxiv.org/html/2609.27041v2">本文§2—3</a></p><h2 id="s13">再倒读第三层：为什么原先主要围绕题目测能力？</h2><p>2021年的MATH提供12,500道竞赛数学题及逐步解答，建立了一个明确的问题解决测量对象。本篇沿用数学题和模型解答，却在这些对象上叠加了方法层面的分析。我的理解是，这条研究链逐步把问题从“能否答对”扩展到“生成什么路径”，再到“路径对应什么内部结构”；三个问题互相补充，不能相互替代。<a class="src" href="https://arxiv.org/abs/2103.03874">MATH原论文</a> <a class="src" href="https://arxiv.org/html/2609.27041v2">本文§2</a></p><h1 id="s14">对思染：模型进化 &amp; 怎么用</h1><p><strong>这一步推进了可诊断性。</strong> 本篇没有训练出一个更强的新模型；它提出并检验了一种描述现有模型能力结构的方法。对产品最有价值的启发，是把笼统的“某领域不行”拆成可检验的操作假设，例如模型是否能稳定执行“约束转方程—消元—求解”。这是从论文证据引出的产品判断，尚非经过验证的产品收益。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§5—6</a></p><p>一个可尝试的评测设计，是保留原有学科标签，增加人工核验的方法标签；分别安排“换学科但保留方法”“同题换方法”“只换措辞”三类对照，同时记录正确率和实际采用的步骤。这样才能区分模型缺少某种操作、选错操作，还是对措辞敏感。这是对本文实验逻辑的迁移建议，不能把人工文本标签称为已测得的内部结构。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.4、§5</a></p><p>使用边界也很具体：仅有黑箱API时，无法照搬需要内部激活与反向计算的流程。即使拥有权重，也应先验证这套分组能否预测失败、指导数据选择，再决定是否纳入训练。作者把定向电路干预、人类审计及数据选择收益列为后续工作；当前结果没有证明“强制多种解法必然更准”。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.2、§5—6</a></p><p>我的额外审读意见：第一道检查采用随机划分作对照，而K-Means本来就在寻找紧密分组，簇数又按轮廓分数选择。因此其显著性不能独自承担“发现真实推理模块”的结论。本文更值得继续追踪的是语义与提示干预证据能否经人工复核、匹配混杂因素的实验和内部干预重现。这是方法学判断，不是作者已完成的实验。<a class="src" href="https://arxiv.org/html/2609.27041v2">原文§3.3—3.4、§6</a></p><h1 id="s15">来源</h1><p>研究首先浏览了<a class="src" href="https://huggingface.co/papers/date/2026-09-25">HF Daily Papers 9月25日入口</a>。所选论文的HF单篇页未能成功读取，因此不写HF收录、赞数或排名；也未核实同行评审录用或独立复现。</p><p>核心事实来自<a class="src" href="https://arxiv.org/abs/2609.27041">arXiv摘要及版本记录</a>与<a class="src" href="https://arxiv.org/html/2609.27041v2">9月24日v2全文</a>。三项历史前驱分别为<a class="src" href="https://arxiv.org/abs/2103.03874">MATH</a>、<a class="src" href="https://arxiv.org/abs/2201.11903">思维链提示</a>、<a class="src" href="https://arxiv.org/abs/2305.04388">思维链解释不忠实性</a>。</p><p>许可与署名：所选原文明确标注CC BY 4.0。本文署名原作者Sajad Goudarzi、Samaneh Zamanifard、Moloud Nasiri、Hamed Rahimian，提供原作与<a class="src" href="https://creativecommons.org/licenses/by/4.0/">许可链接</a>。本日报为中文重述、结构重组及评论，含明确标注的原创推断，不代表原作者认可这些解释；许可要求适当署名、链接许可并说明修改。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
