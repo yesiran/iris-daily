@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28206%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2250%22%20r%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2241%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2251%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-09-29</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="c15db436bf6551ec83f8393adafb4f91baa01309c35916b1ba5e4a27920c4ea2">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-09-29 · 周二</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>13</b> 条</span><span>趋势 <b>4</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-09-30 02:00（北京时间）。今天最值得关注的变化，是AI产品开始同时争夺持续工作的入口、交付成果的空间和第三方应用的使用预算；模型成本与执行权限，正在共同决定代理能接手多少工作。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>dots、Space与Pages：OpenAI把持续执行和成果协作接到一起</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>GPT-6.1 Sol加入中档成本竞争，选型要改看“合格交付成本”</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Muse接入商户系统，ChatGPT额度走向外部应用：代理开始争夺工作入口</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>AMD拟收购World Labs，空间智能进入芯片公司的研发路线</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>持续重要议题：代理的控制边界开始下沉到运行时和硬件</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>dots、Space与Pages：OpenAI把持续执行和成果协作接到一起</h3><p class="lp"><span class="lk">事件</span>凌晨增量：9月30日01:15（北京时间），Axios已报道OpenAI推出dots；这是报道时刻，不是产品首发分钟。官方公告保留9月29日日期：dots拥有云端计算机，可以跨会话推进工作，并利用连接的信息进行主动研究，逐步向符合条件的Pro、Business Premium用户开放，企业访问涉及管理员选择加入。主动研究模式限只读，执行操作则受另外的授权控制约束。<a class="src" href="https://openai.com/index/introducing-dots/">官方公告</a>；<a class="src" href="https://www.axios.com/2026/09/29/openai-dots-ai-assistant-devday">同期报道与时间</a></p><p class="lp">同日官方日志还分别发布Space、Pages和Codex Cloud：它们承接项目资料、可共同编辑的成果，以及电脑休眠后继续运行的编码任务。这些是独立的产品变化，不能只归纳成一次模型升级。日志只标官方9月29日日期，没有逐项首发分钟；Space的组织共享也受工作区设置限制。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">产品更新日志</a></p><div class="why"><span class="why-k">为什么重要</span><p>过去一次对话结束，工作往往也随之中断；现在执行状态、项目资料和可编辑成果有机会持续存在。对团队而言，价值不只来自生成速度，还来自下一位同事能否接手、修改并继续使用结果。由此推断，AI工作产品的竞争将更多发生在交付之后：成果是否可复用，权限是否清楚，任务能否可靠恢复。</p></div><p class="lp"><span class="lk">接下来观察</span>跟踪一个真实项目从后台执行到同事接手的完整成功率，尤其关注重启、权限变化和共享后的编辑行为。逐步开放不等于所有订阅用户已经获得一致体验。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>GPT-6.1 Sol加入中档成本竞争，选型要改看“合格交付成本”</h3><p class="lp"><span class="lk">事件</span>OpenAI官方9月29日发布GPT-6.1 Sol，API标准价格为每百万输入token 2美元、输出token 10美元，缓存输入0.10美元。公司称其在部分编码、专业工作评测中接近GPT-6 Astra，同时降低任务成本；这些属于厂商在指定评测和推理设置下的结果，不能推广为所有任务都具有相同比例的优势。<a class="src" href="https://openai.com/index/introducing-gpt-6-1-sol/">模型公告</a></p><p class="lp">本次DevDay的官方开始时间是美国太平洋时间9月29日10时，即北京时间9月30日01时；型号公告未提供独立分钟，本期保留官方日期。作为竞争背景，Anthropic于9月28日发布Sonnet 5.5，标准输入、输出价格同为2美元和10美元，并宣称速度及任务效率改善；它不是9月29日首次发布。<a class="src" href="https://devday.openai.com/">DevDay时间</a>；<a class="src" href="https://www.anthropic.com/claude-sonnet-5-5">Sonnet 5.5公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>当两款模型的标准单价相同，价目表就很难直接指导采购。实际成本取决于推理长度、缓存命中、失败重试与人工返工。对长任务产品而言，少走一次错误分支可能比单token便宜更有价值。因此，选型单位应从一次请求移到一次通过验收的交付，才能判断能力提升是否真正降低服务成本。</p></div><p class="lp"><span class="lk">接下来观察</span>用相同任务、工具权限和验收标准比较总费用与人工接管次数。不要把厂商不同评测的分数横向拼成统一排名，也不要把计划开放的速度档位写成已经普遍可用。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Muse接入商户系统，ChatGPT额度走向外部应用：代理开始争夺工作入口</h3><p class="lp"><span class="lk">事件</span>Alexandr Wang账号在9月29日21:26（北京时间）公布Muse面向小企业的新连接器，列出Shopify、Stripe商户端、QuickBooks等服务。Meta公告说明，这是现有Muse在美国和加拿大的功能扩展；官方称发布、发送和花钱等动作仍需批准。它支持的是连接和处理业务信息，不能据此认定代理已能独立代管一家企业。<a class="src" href="https://about.fb.com/news/2026/09/introducing-muse-small-business/">Meta公告</a>；<a class="src" href="https://x.com/alexandr_wang/status/2104925782644535438">连接器原帖</a></p><p class="lp">另一项独立变化来自OpenAI：官方9月29日日志宣布，符合条件的Plus、Pro用户可授权参与应用使用ChatGPT套餐额度。帮助文档明确，身份登录与额度授权分开，应用可设置使用上限；共享不会增加总额度，合作方也可能另收产品费用。<a class="src" href="https://help.openai.com/en/articles/20001542-using-your-chatgpt-plan-in-other-apps-and-sites">使用条件</a>；<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">发布日期依据</a></p><div class="why"><span class="why-k">为什么重要</span><p>连接器降低获取订单、收款和经营资料的成本，额度共享则降低用户尝试另一款AI应用的付费摩擦。两者分别争夺工作数据和使用预算。由此推断，应用公司的竞争位置会越来越取决于它掌握的具体流程、验收标准与服务体验，而不能只靠包装一个模型接口维持差异。</p></div><p class="lp"><span class="lk">接下来观察</span>观察商户任务从读取数据到批准行动的完成率，以及外部应用接入共享额度后，新增使用能否覆盖支持和基础设施成本。连接器数量不能替代这些经营指标。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>AMD拟收购World Labs，空间智能进入芯片公司的研发路线</h3><p class="lp"><span class="lk">事件</span>AMD公告拟以约82亿美元全股票交易收购World Labs。公告时间为美国东部时间9月28日16:05，即北京时间9月29日04:05。交易预计在2026年底前完成，仍取决于监管批准等条件；当前是签订收购协议，并非已经交割。公告同时安排李飞飞在交易完成后担任执行副总裁兼首席科学家。<a class="src" href="https://www.globenewswire.com/news-release/2026/09/28/3370256/0/en/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute.html">AMD公司公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>空间模型的训练、模拟和交互需求，可以反过来影响硬件与软件设计。若研究团队直接进入芯片公司，这种反馈就可能早于普通客户采购关系发生。对物理AI开发者而言，潜在变化是模型、工具链与算力供应被更紧密地组合；但收购金额本身并不证明这种组合已经形成性能或生态优势。</p></div><p class="lp"><span class="lk">接下来观察</span>关注交割进度及随后公布的开发者工具、模型开放条件和硬件适配计划。只有当开发者能够实际使用，研究资产才开始转化为平台竞争力。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>持续重要议题：代理的控制边界开始下沉到运行时和硬件</h3><p class="lp"><span class="lk">事件</span>近期背景：NVIDIA于9月28日公布Open Agent Safety Platform，包括OpenShell软件和Sentry参考系统设计。前者在运行时实施策略与记录行为，后者通过独立的硬件控制域监控代理。公告明确软件资源可用，但不能把参考设计、合作计划和全部硬件部署视为同一个完成状态。<a class="src" href="https://nvidianews.nvidia.com/news/open-agent-safety-platform">NVIDIA公告</a></p><p class="lp">这条消息今天仍值得靠前阅读，是因为dots和Muse正在扩展持续执行与业务连接。与此同时，OpenAI原始日期为9月28日的前沿训练安全文章，在9月29日由公司及管理层再次传播，讨论技术防护、操作流程和异常行为根因调查；它是一套安全论证思路，不是已经完成所有整改的证明。<a class="src" href="https://openai.com/index/towards-safety-cases-for-frontier-ai-training/">OpenAI研究文章</a></p><div class="why"><span class="why-k">为什么重要</span><p>代理越能长时间自主推进任务，单靠提示词声明权限就越难形成可靠边界。把控制放到模型之外，可以让权限执行不依赖模型是否愿意服从。由此推断，企业采购代理时，运行隔离、审计和中止机制将逐渐成为基础能力；它们直接影响一个产品能进入哪些业务，而不只是影响安全评分。</p></div><p class="lp"><span class="lk">接下来观察</span>要求实际部署给出越权拦截、误拦截和恢复任务的结果，并区分软件运行时可用性与特定硬件参考设计的交付进度。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 13 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">订阅调整是配套变化：</strong>Tibo账号9月29日23:10说明Plus、Pro100、Pro200的相对额度为1X、5X、10X，既有Pro200暂保留20X并获得额外额度；该帖没有说明完整过渡期限。官方日志确认重新开放Pro200，并增加含Astra Ultrafast的Pro500档位。倍率不等于实际任务完成量，也不能当作API现金余额。<a class="src" href="https://x.com/thsottiaux/status/2104951965184925941">Tibo原帖</a>；<a class="src" href="https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers">套餐说明</a></p></div><div class="srow"><p><strong class="st">研究问题仍未消失：</strong>上述安全文章强调调查训练过程与异常行为的成因。这与“产品增加审批按钮”解决的是不同层次的问题：运行控制可以限制后果，不能据此认定模型内在行为已经得到解释。<a class="src" href="https://openai.com/index/towards-safety-cases-for-frontier-ai-training/">研究原文</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">近期背景，不冒充当天更新：</strong>Google于9月23日公布新一批Gemini Connected Apps，同日发布六款由创作者参与开发的Flow工具；官方RSS对应北京时间9月24日00:00。前者扩大外部服务接入，后者扩展创作工具。本期未取得它们在9月29日再次扩大开放范围的证据。<a class="src" href="https://blog.google/innovation-and-ai/products/gemini-app/new-connected-apps-gemini/">Connected Apps</a>；<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/six-new-tools-built-by-creatives/">六款Flow工具</a></p></div><div class="srow"><p>Gemini消费者产品、Google Labs、DeepMind研究和Gemini API均纳入核查；本期没有据此确认新的重大当日发布，不能将官网持续更新或抓取时间当成新品日期。</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">Sonnet 5.5是本轮选型的重要背景：</strong>其9月28日公告与GPT-6.1 Sol构成直接的成本比较，但厂商测试不能替代同一任务集上的实测。有关IPO财务数据的新传播，未取得可完整复核的原始招股材料，本期不采用相关金额，也不写成已完成公开发行。<a class="src" href="https://www.anthropic.com/claude-sonnet-5-5">Sonnet公告</a></p></div></div><div class="sector"><div class="sector-h">中国AI：模型修复比未证实的邀测更有用</div><div class="srow"><p><strong class="st">小米MiMo修复工具重复调用，属于近期背景：</strong>9月27日官方复盘说明，修正版API已于9月25日06:00（北京时间）上线，并提供带MOPD后缀的检查点。文章区分正常并行调用、调用泛滥与无理由重复；其指标主要衡量单轮内完全相同的调用，不能代表所有跨轮循环。对产品团队，这比只看任务最终是否正确更接近真实体验，因为无效动作会消耗等待时间和上下文。<a class="src" href="https://mimo.xiaomi.com/blog/mimo-v2-6-tool-call-repetition">小米技术复盘</a></p></div><div class="srow"><p><strong class="st">测试传闻与正式开放分开：</strong>DeepSeek V4.1 Pro早期测试、MiniMax预览版及小米桌面邀测线索，没有取得足以确认本期首次发布和完整开放条件的原始证据，未列为当天新品。字节/豆包/Seed、通义和智谱同样没有以模型目录或聚合榜单替代发布公告。</p></div><div class="srow"><p><strong class="st">凌晨订正：</strong>9月30日00:03:08（北京时间），ericjang11账号澄清其研究支持提供的是Kimi、Qwen等模型额度，不是Astra额度。这只是该账号的定向研究支持陈述，不代表平台向所有用户开放免费额度。<a class="src" href="https://x.com/ericjang11/status/2104965207978356849">完整原帖记录</a></p></div></div><div class="sector"><div class="sector-h">AI芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">资金继续进入物理AI：</strong>SiMa.ai于9月28日宣布1.5亿美元C轮融资、14.5亿美元估值，属于近期背景。其面向机器人、汽车和无人机的方向，与AMD收购空间智能研究团队形成呼应，但融资和未来产品计划都不等于当下已经实现的部署能力。<a class="src" href="https://sima.ai/press-release/sima-ai-reaches-1-45b-valuation-with-500-million-in-total-funding-to-scale-physical-ai-in-humanoids-automotive-and-drones/">SiMa.ai公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管与公共数据</div><div class="srow"><p><strong class="st">当日发布的是应用发展报告，不是新增监管规则：</strong>新华社9月29日报道，CNNIC测算2026年上半年我国生成式AI用户规模超过7亿、普及率超过50%。这说明应用覆盖广，但不提供日活、付费率或企业部署深度的直接证据。<a class="src" href="https://www1.xinhuanet.com/politics/20260929/2b4afc8c85b14ff09c50a6a67ce2bf29/c.html">新华社原始报道</a></p></div><div class="srow"><p><strong class="st">司法意见须保留原始日期：</strong>最高法相关发布会原文日期为9月7日，介绍《关于依法审理涉人工智能纠纷案件的意见》。本期不把近期评论当成新规，也不根据发布会报道自行扩展责任范围或生效日期。最高法、网信办、工信部及新华社已分别检索；未据现有证据确认其他应列头条的当日AI监管新增。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511101.html">最高法发布原文</a></p></div></div><div class="sector"><div class="sector-h">投融资与研究快讯</div><div class="srow"><p><strong class="st">Ortet成立并获得资金支持承诺：</strong>9月29日发布的公司新闻稿称，Kyunghyun Cho领导的健康AI实验室Ortet获得Thoreau的5亿美元承诺。这里的口径是支持承诺，不是已到账融资额；面向健康系统构建模型的目标，也不是已验证临床效果。<a class="src" href="https://santamariatimes.marketminute.com/article/bizwire-2026-9-29-ortet-launches-as-frontier-ai-lab-for-health-with-500-million-commitment-from-thoreau">Business Wire原稿公开转载</a></p></div><div class="srow"><p><strong class="st">“消除AI烂文”应缩小到论文实际证据：</strong>Unslopping AI长文用专家文本引导学习评价标准，再进行强化学习；实验覆盖特定论文写作、故事及百科任务，不能支持解决所有低质量生成内容的结论。原文只明确标注2026年9月，本期作为讨论中的研究收录，不认定为今天首发。<a class="src" href="https://facebookresearch.github.io/RAM/blogs/unslop/">研究长文</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> 截至本期时间，未取得WorkBuddy、CodeBuddy、混元、元宝、腾讯云或微信AI在报告窗口内的腾讯自有官方新增证据。这里描述的是已核实状态，不等于断言这些产品当天没有任何变化。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong>WorkBuddy：授权与定时任务仍是关键产品面。</strong> 已核实日志条目为5.6.2，原始日期9月21日，涉及授权入口和关闭授权后的工具移除，以及定时任务相关修复。这是历史版本状态，超出最近七天背景窗口，不包装成今天更新，也不称为当前最高客户端版本。对于需要持续工作的助手，任务是否按预期触发、能否清楚撤销访问，直接决定用户是否敢把重复工作交给它。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy日志</a></p></div><div class="srow"><p><strong>CodeBuddy：项目上下文和团队规则值得跟踪。</strong> 已取得官方4.12.1条目，原始日期9月20日，涉及项目记忆与企业项目技能等变化；当前最高版本仍待核实。相对于一次代码补全，项目规则能否被稳定带入后续任务，更接近团队采用编码代理的实际约束。<a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy日志</a></p></div><div class="srow"><p><strong>模型接入不能混淆公告归属。</strong> DeepSeek在9月10日自己的公告中称，WorkBuddy（含CodeBuddy）已接入V4.1 Flash。这支持供应商侧的历史接入陈述，不构成腾讯本期官方更新，也不证明每种订阅、地区和客户端都具有相同额度。<a class="src" href="https://deepseek.com/news/deepseek-v4-1-flash/">DeepSeek公告</a></p></div><div class="srow"><p><strong>元宝：近期背景是终端覆盖扩大。</strong> 9月25日快科技报道转述官方消息，元宝鸿蒙版上线，搭载Hy4 preview及专家模式。其产品意义在于扩大可触达的设备用户；模型名称相同并不足以证明不同平台的能力、性能和可用条件完全一致。<a class="src" href="https://finance.sina.com.cn/tech/roll/2026-09-25/doc-inisyuqi7915961.shtml">9月25日报道</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已覆盖WorkBuddy、CodeBuddy、混元、元宝、腾讯云和微信AI。WorkBuddy此前取得的有日期日志仍作为证据保留；CodeBuddy当前日志顶部及部分动态页面未能稳定复核，因而不能确认最高版本。腾讯新闻平台上的转载、供应商公告和只标文档更新时间的页面，均未计作腾讯当天自有发布。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>AI产品的基本单位正在从对话转向可持续的工作。</h4><p>dots的连续执行与Muse的业务连接，分别减少任务中断和信息搬运；Space、Pages进一步承接成果。由此推断，团队真正需要比较的是任务结束后留下了什么：可编辑文件、可追踪状态，还是只能重新询问的聊天记录。一个可验证的信号，是同一成果在后续协作中被复用的比例是否提高。<a class="src" href="https://openai.com/index/introducing-dots/">dots</a>；<a class="src" href="https://about.fb.com/news/2026/09/introducing-muse-small-business/">Muse</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>成本下降必须通过任务过程兑现。</h4><p>GPT-6.1 Sol与Sonnet 5.5的价目表处于同一标准价位，小米的重复调用修复则展示了另一类成本来源：代理可能持续消耗资源，却没有实质进展。推论是，模型采购与运行监控应共同记录合格交付费用、重复动作和人工返工；只优化token单价，可能看不见真正昂贵的失败路径。<a class="src" href="https://openai.com/index/introducing-gpt-6-1-sol/">GPT-6.1 Sol</a>；<a class="src" href="https://mimo.xiaomi.com/blog/mimo-v2-6-tool-call-repetition">MiMo复盘</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>授权控制开始影响产品能进入哪些业务。</h4><p>dots区分只读研究和行动权限，Muse保留关键动作批准，NVIDIA则把部分控制放到独立运行边界。三者不能互相替代，却共同说明：自动化程度越高，越需要明确谁能批准、系统如何阻止越界。产品机会在于让审批与审计融入工作过程；验证时应同时看越权阻断、误拦截和审批疲劳。<a class="src" href="https://openai.com/index/introducing-dots/">dots</a>；<a class="src" href="https://nvidianews.nvidia.com/news/open-agent-safety-platform">NVIDIA</a></p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>评价标准本身也是产品研发对象。</h4><p>Unslopping AI尝试从专家作品中学习质量标准；MiMo复盘则显示，关注正确性的训练评价可能遗漏无效调用。二者支持一个有限但实用的判断：最终答案看起来正确，并不代表工作过程或成果质量已经足够好。团队需要把不可接受的具体失败写进验收，而不是单纯增加更长的通用评分清单。<a class="src" href="https://facebookresearch.github.io/RAM/blogs/unslop/">写作研究</a>；<a class="src" href="https://mimo.xiaomi.com/blog/mimo-v2-6-tool-call-repetition">工具调用研究</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>产品范围、价格和交易条款优先采用官方公告；性能提升、安全效果及业务目标均保留厂商归属，没有作为独立实测结论。</li><li>日期采用原文发布日期。凌晨消息明确标注北京时间；仅有官方日期的独立公告保留该日期，不虚构首发分钟。滚动帮助页用于核对条件，不把其更新时间当发布日期。</li><li>腾讯鸿蒙版采用媒体转述；Ortet采用公司新闻稿的公开转载；部分页面取得的是索引中的完整正文，直连未能稳定复核，具体缺口保留在内部审计。截断帖子、榜单摘要、传闻和未取得的招股材料未作为确定事实。</li><li>趋势段落是基于已列事实的分析推断，观察指标用于检验判断，不代表这些效果已经发生。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
