@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>后训练的行为影子 · 脑图</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#111110; --paper:#FFFFFF; --muted:#71706B; --hair:#DFDEDA; --red:#E63312;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --body:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--ink:#EDECE8;--paper:#171716;--muted:#98968F;--hair:#33322F;--red:#F0532E}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55}
+  .page{max-width:1180px;margin:0 auto;padding:48px 36px 80px}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .masthead .r{color:var(--red)}
+  .bar{height:6px;background:var(--ink);margin:14px 0 36px}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:.01em;margin-bottom:10px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:44px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .mm > ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  @media (max-width:820px){.mm > ul{grid-template-columns:1fr}}
+  .mm > ul > li{padding:26px 0;border-top:2px solid var(--ink)}
+
+  .n1{font-size:21px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .n1::before{content:"";width:14px;height:14px;background:var(--c)}
+  .mm ul ul{list-style:none;padding-left:7px}
+  .mm ul ul li{position:relative;padding:7px 0 7px 26px}
+  .mm ul ul li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--hair)}
+  .mm ul ul li:last-child::before{bottom:auto;height:1.45em}
+  .mm ul ul li::after{content:"";position:absolute;left:0;top:1.45em;width:17px;height:1.5px;background:var(--hair)}
+  .n2{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .n2 + ul{margin-top:4px}
+  .n3{font-size:15px;color:var(--muted)}
+
+  .folio{margin-top:52px;border-top:2px solid var(--ink);padding-top:16px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead"><span>春茂聊AI · 晨读脑图</span><span class="r">2026-10-01</span></div>
+  <div class="bar"></div>
+  <h1>后训练的行为影子</h1>
+  <p class="meta"><b>6</b> 条主线 · <b>27</b> 个知识点 — 结构由 Codex 生成，版面本地渲染</p>
+  <div class="mm"><ul><li><div class="n1" style="--c:#E63312">研究问题</div><ul><li><div class="n2" style="--c:#E63312">无关文本能传能力吗</div></li><li><div class="n2" style="--c:#E63312">教师与学生共享祖先</div></li><li><div class="n2" style="--c:#E63312">训练不取教师概率</div></li><li><div class="n2" style="--c:#E63312">字面内容不是全部信号</div></li></ul></li><li><div class="n1" style="--c:#10395E">ATD机制</div><ul><li><div class="n2" style="--c:#10395E">祖先概率0.48—0.52</div></li><li><div class="n2" style="--c:#10395E">先固定问题再问教师</div></li><li><div class="n2" style="--c:#10395E">每题读取一个token</div></li><li><div class="n2" style="--c:#10395E">选择透露更新投影符号</div></li></ul></li><li><div class="n1" style="--c:#9E2B22">主实验</div><ul><li><div class="n2" style="--c:#9E2B22">查询17,858次</div></li><li><div class="n2" style="--c:#9E2B22">保留5,664条</div></li><li><div class="n2" style="--c:#9E2B22">51.22%对45.88%</div></li><li><div class="n2" style="--c:#9E2B22">增益5.34个百分点</div></li><li><div class="n2" style="--c:#9E2B22">95%区间[1.22,9.60]</div></li></ul></li><li><div class="n1" style="--c:#3E5C2E">证据与边界</div><ul><li><div class="n2" style="--c:#3E5C2E">同词频打乱配对对照</div></li><li><div class="n2" style="--c:#3E5C2E">15组重复差值全为正</div></li><li><div class="n2" style="--c:#3E5C2E">新增模型区间包含零</div></li><li><div class="n2" style="--c:#3E5C2E">MBPP+无显著增益</div></li><li><div class="n2" style="--c:#3E5C2E">背答案与密码未迁移</div></li></ul></li><li><div class="n1" style="--c:#6B4A8E">研究脉络</div><ul><li><div class="n2" style="--c:#6B4A8E">蒸馏：学习教师输出</div></li><li><div class="n2" style="--c:#6B4A8E">任务向量：研究更新</div></li><li><div class="n2" style="--c:#6B4A8E">隐性学习：无关数据传递</div></li><li><div class="n2" style="--c:#6B4A8E">ATD：主动测量能力变化</div></li></ul></li><li><div class="n1" style="--c:#8A6D1F">对思染的启发</div><ul><li><div class="n2" style="--c:#8A6D1F">追踪数据生成来源</div></li><li><div class="n2" style="--c:#8A6D1F">探索辅助行为观测</div></li><li><div class="n2" style="--c:#8A6D1F">真实任务验证不可省</div></li><li><div class="n2" style="--c:#8A6D1F">计入筛选与丢弃成本</div></li><li><div class="n2" style="--c:#8A6D1F">产品收益尚待验证</div></li></ul></li></ul></div>
+  <div class="folio"><span>Structure: Codex</span><span>Layout: Local Press</span></div>
+</div>
+<div style="max-width:1180px;margin:0 auto;padding:0 36px 36px;font:13px/1.7 sans-serif">基于 Ziyang Zhang, Yubin Jing, Yuanhao Zeng, Yuyao Li, Haofan Wang, Yichen Gong 的 <a href="https://arxiv.org/abs/2609.29233">Post-Training Leaves Behavioral Shadows on Unrelated Decisions</a>，由 Codex 整理为中文逻辑图，包含解释性修改。 <a href="https://creativecommons.org/licenses/by/4.0/">原文及本图改编部分许可</a>。</div></body>
+</html>

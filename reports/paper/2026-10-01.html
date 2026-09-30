@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28104%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2252%22%20r%3D%2215%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2216%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%225%22%20opacity%3D%220.23%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2218%22%20r%3D%2218%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>不展示代码，也能传递编程增益：后训练留下了可学习的行为影子</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="1d152755f84873f3f4902383d01019ae4c6bc4810cb514c0b0aad076a4c36f2a">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-10-01</span></div>
+  <h1 class="doc">不展示代码，也能传递编程增益：后训练留下了可学习的行为影子</h1>
+  <div class="dateline"><span>全文 <b>3,093</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>5</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Post-Training Leaves Behavioral Shadows on Unrelated Decisions</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.29233">https://arxiv.org/abs/2609.29233</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Ziyang Zhang, Yubin Jing, Yuanhao Zeng, Yuyao Li, Haofan Wang, Yichen Gong</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">北京大学、佐治亚理工学院、上海科技大学、清华大学、Lovart AI（按论文署名）</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-24</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF 9月29日论文入口收录；原文提供多组匹配对照、独立采集重复实验及代码入口；未核实同行评审接收或独立复现；跨模型扩展的置信区间包含零</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 隐性蒸馏, 后训练, 能力迁移</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-10-01.html">https://yesiran.github.io/ai-paper-daily/reports/2026-10-01.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-10-01-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h1" href="#s3">来龙去脉</a><a class="t-h1" href="#s4">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s5">来源</a></nav>
+    <main><p>2026-10-01 · 截至 01:30（北京时间）。这是当日尚未结束的截稿快照。选读版本为 arXiv v1，提交于 2026 年 9 月 24 日 08:39:27 UTC，处于过去七天窗口内；ID 与标题均未出现在所附台账中。<a class="src" href="https://arxiv.org/abs/2609.29233">版本与提交时间</a></p><h1 id="s1">推荐理由</h1><p>今天推荐这篇论文，因为它改变了一个关于训练数据的判断：一条样本能教给模型什么，不能只靠人类读懂的字面内容来判断。作者让一个经过编程训练的教师，只回答与编程无关的普通词语选择，再用这些回答训练同源学生。学生在执行代码测试时出现了可测量的增益。这里的“同源”很具体：教师由某个公开模型继续训练而来，学生也从这个公开模型初始化。<a class="src" href="https://arxiv.org/html/2609.29233v1#S3">论文第3—5节</a></p><p>这项贡献属于“我们对模型理解向前一步”：后训练改变的行为分布，比它直接训练的任务更广；其中一些变化还能成为能力迁移的监督信号。研究价值主要来自严格对照和明确反例。HF 条目显示作者于 9 月 29 日提交了这篇论文，可作为发现入口；本文不采用会变动的点赞或排名，也不把社区关注当成实验验证。<a class="src" href="https://huggingface.co/papers/2609.29233">HF论文条目</a></p><p>许可已核实：arXiv 原文明确采用 CC BY 4.0。本文署名原作者、链接原文和许可，并将内容改写为中文机制解释；产品推演另行标记，不代表作者背书。该许可允许分享与改编，要求适当署名、附许可链接并说明修改。<a class="src" href="https://arxiv.org/html/2609.29233v1">原文许可标记</a>；<a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p><h1 id="s2">七拍故事</h1><p><strong>一、主角：一对共享起点、经历不同的模型。</strong>公开祖先是 Qwen2.5-1.5B-Instruct。教师经过代码偏好训练，学生从原始祖先重新出发。主实验使用 LoRA，即只训练附加的低秩参数来调整模型。教师和学生都采用 rank-16 的设置，但学生看不到教师的训练代码、参数或输出概率。它只能得到与目标任务无关的提示，以及教师返回的一个词。<a class="src" href="https://arxiv.org/html/2609.29233v1#S5">第3节、第5节实验设置</a></p><p><strong>二、困境：不给代码，究竟还有什么可以传？</strong>后训练可能同时改变模型在许多普通语境中的偏好。作者把这种任务之外的变化称为“行为影子”。难点在于：发现教师和祖先选词不同，只能说明模型发生过变化；必须让学生学这些差异后，在独立目标任务上变好，才有能力相关信息被传递的证据。<a class="src" href="https://arxiv.org/html/2609.29233v1#S1">第1、3节</a></p><p><strong>三、旧路：直接模仿答案，或者大量收集无关输出。</strong>常规蒸馏让学生学习教师的预测或回答。此前的隐性学习研究进一步发现：数字序列等语义无关数据，也能传递教师的某些行为倾向。ATD 要追问的是：这种通道能否承载可执行任务上的增益，以及能否主动找到信息更密集的观测位置。<a class="src" href="https://arxiv.org/html/2609.29233v1#S2">论文第2节</a>；<a class="src" href="https://www.nature.com/articles/s41586-026-10319-8">Cloud等人的前驱研究</a></p><p><strong>四、转折：在祖先最拿不定主意的地方测量。</strong>ATD，全称 Active Taskless Distillation，可译为主动无任务蒸馏。这里“无任务”指采集数据不展示目标任务，并不代表教师没受过目标任务训练。研究者先用公开祖先筛选提示：两个普通候选词的相对概率接近各半，归一化后的概率须落在 0.48—0.52 之间，而且祖先在整个词表中的首选必须属于这两个词。如此一来，后训练造成的一点偏好变化，就可能翻转最终选词。<a class="src" href="https://arxiv.org/html/2609.29233v1#S4">第4节，式5</a></p><p><strong>五、解法：固定问题，读取一次选择，再训练同源学生。</strong>提示和候选词先固定，之后每题只问教师一次。教师在完整词表中贪心选择，即返回概率最高的下一个 token；只有答案属于候选词对时才保留，否则丢弃且不重采样。学生以普通交叉熵训练，只对答案词计算损失，提示本身提供上下文。主实验实际发出 17,858 次教师查询，保留 5,664 条，约占 31.7%。因此，5,664 是有效训练回答数，不能写成总查询成本。<a class="src" href="https://arxiv.org/html/2609.29233v1">第4节、附录B</a></p><p>理解这一步，可以用作者的一阶近似：训练后两个词的分数差，约等于原来的差，加上参数更新在该问题敏感方向上的投影。原来的差接近零时，一次选词就能透露这个投影的符号。单个回答只提供“偏向哪边”的信息；许多不同问题合起来，才可能约束出与能力有关的变化。这里是局部解释，原文没有证明能够据此恢复完整参数更新。<a class="src" href="https://arxiv.org/html/2609.29233v1#S3">第3节，式2—4</a></p><p><strong>六、结局：增益来自问题与回答的对应关系。</strong>HumanEval+ 通过实际执行程序计分；pass@1 表示一次生成的解答通过测试的比例。主实验学生得分为 51.22%，严格匹配对照为 45.88%，差值是 5.34 个百分点，95% 置信区间为 [1.22, 9.60]，来自四个训练种子。严格对照保留提示、训练预算、答案词频，以及不同难度分组中相对祖先的选择翻转次数，只改变提示与答案的对应关系。因此，单纯多训练一轮或多见某些词，不能解释这组差异。<a class="src" href="https://arxiv.org/html/2609.29233v1#S5">第5.1节、表1、附录C</a></p><p>学生与教师在这个指标上都得到 51.22%，但总分相同不表示逐题行为一致，更不表示复制了教师的全部能力。重新构造五批采集、各配三个训练种子的实验，平均差值为 4.80 个百分点，15 组信号—对照差值全部为正；这加强了主设置的证据，但仍是作者团队内部的重复实验。<a class="src" href="https://arxiv.org/html/2609.29233v1#S5">第5.2节、图2、附录B表6</a></p><p><strong>七、内核：能力更新可以通过语义之外的选择留下痕迹。</strong>最有解释力的失败案例，也来自原文。一个背过 HumanEval+ 标准答案的教师，以及一个学过人为替换密码的教师，虽有很大目标得分优势，都没能通过这套方法让学生获得相应提升。作者据此倾向于把结果解释为：传递的是学生能够被激发出来的能力相关变化，而非教师的任意新增知识。这是得到反例支持的解释，尚非普遍定理。<a class="src" href="https://arxiv.org/html/2609.29233v1#S5">第5.5节、表3</a></p><h1 id="s3">来龙去脉</h1><p>倒读第一层，是 2026 年 4 月发表于 Nature 的隐性学习研究。Cloud、Le、Chua 等人发现，学生可以通过语义无关的数字序列等数据，获得教师的某些偏好或行为倾向；相同或行为匹配的底模是其重要条件。ATD 接过这一问题，把主要检验对象推进到代码执行等能力指标，并主动挑选祖先的近乎平局决策。变化在于测量位置和验证对象都更明确。<a class="src" href="https://www.nature.com/articles/s41586-026-10319-8">前驱原文</a>；<a class="src" href="https://arxiv.org/html/2609.29233v1#S2">ATD第2—5节</a></p><p>倒读第二层，是“任务向量”的视角。Editing Models with Task Arithmetic 把微调后权重减去原权重，视为任务对应的变化方向，并研究这些方向的加减。ATD 借用了“研究一次更新”的问题意识，但通过输出选择观察更新的部分影响。本文的理解是：这把直接读取参数变化的问题，变成了从行为中测量变化的问题；两者并非等价操作。<a class="src" href="https://arxiv.org/abs/2212.04089">任务向量原论文</a>；<a class="src" href="https://arxiv.org/html/2609.29233v1#S3">ATD第2、3节</a></p><p>倒读第三层，是知识蒸馏。Hinton、Vinyals、Dean 的经典工作研究如何把模型集合的知识压缩到更易部署的单模型。沿着这条线，ATD 提出了新的信息来源问题：当教师输出不再展示目标任务时，学生还能从生成这些输出的规律中学到多少？历史线索帮助定位贡献，不能把前驱的成熟程度算作新论文已经获得的验证。<a class="src" href="https://arxiv.org/abs/1503.02531">经典蒸馏论文</a>；<a class="src" href="https://arxiv.org/html/2609.29233v1#S2">ATD第2节</a></p><h1 id="s4">对思染：模型进化 &amp; 怎么用</h1><p>对模型进化的判断，应落在“学习信号的边界变宽了”。同一段普通文本，不同教师会形成不同的条件选择分布；在兼容的学生上，这种差异可能影响目标能力。ATD 支持我们把训练数据同时看成文本内容和生成模型留下的行为样本。不过，当前证据主要来自已知祖先、主动筛选提示、小规模模型及特定评测，不能直接推广到任意商用模型之间。<a class="src" href="https://arxiv.org/html/2609.29233v1">第3、5节及附录H</a></p><p><strong>最值得带走的产品推演，是改进评测设计。</strong>如果你比较同一底模上的两个后训练版本，可以考虑把一组固定的任务无关近边界问题，作为辅助行为观测，再用真实任务测试判断变化是否有用。这是由论文提出的实验思路推演而来；本文没有验证它能在生产环境中预警回归，也没有证据说明能取代任务评测。原文甚至明确区分：输出分布更接近教师，与下游能力显著提升，是两种不同指标。<a class="src" href="https://arxiv.org/html/2609.29233v1">第5.4节、附录F—G</a></p><p><strong>如果考虑训练用途，先把成本和反例放进比较。</strong>有效回答数之外，还要计入公开祖先筛选、未保留查询和学生训练；论文未给出相对常规任务蒸馏的全面成本优势。同样需要保留真实配对、打乱配对及祖先标签对照，才能知道提升是否来自教师的特定选择。<a class="src" href="https://arxiv.org/html/2609.29233v1">第4节、附录B—C</a></p><p>边界尤其重要：新增的 Qwen3-1.7B、Qwen3-4B、Llama-3.2-1B 实验虽均值为正，95% 置信区间都包含零；另一代码基准 MBPP+ 的主实验增益仅 0.33 个百分点，区间为 [-2.25, 2.91]；不兼容祖先的教师—学生组合也没有展示可靠迁移。这些结果支持继续研究这个通道，同时限制了“编程能力普遍可传递”的说法。<a class="src" href="https://arxiv.org/html/2609.29233v1">图3、附录H表12—13</a></p><p>对思染而言，这篇论文最有用的阅读动作是：以后看到“训练数据不包含某种内容”，继续追问它由哪个模型、在哪些状态下、按什么选择规律产生。字面检查只能回答其中一部分问题。把数据来源和配对结构纳入理解，是本文根据实验提出的方法判断；通用能力复制、任意知识提取和生产级收益，均未获本研究证明。</p><h1 id="s5">来源</h1><ul class="ls"><li><a class="src" href="https://arxiv.org/abs/2609.29233">arXiv摘要与版本记录</a>：作者、英文标题、2026-09-24 首次提交时间。</li><li><a class="src" href="https://arxiv.org/html/2609.29233v1">ATD原文v1</a>：机构署名、方法、表1主结果、图2重复实验、图3及附录H边界、CC BY 4.0 标记。本文是中文改写与分析，实验结果均归于原作者，未独立复现。</li><li><a class="src" href="https://huggingface.co/papers/2609.29233">HF论文条目</a>：显示 9 月 29 日提交，仅作选题入口。</li><li><a class="src" href="https://www.nature.com/articles/s41586-026-10319-8">Cloud等，Nature前驱论文</a>：2026-04-15 发表的隐性学习研究。</li><li><a class="src" href="https://arxiv.org/abs/2212.04089">Editing Models with Task Arithmetic</a>：2022-12-08 首次提交的任务向量研究。</li><li><a class="src" href="https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network</a>：2015-03-09 首次提交的蒸馏研究。</li><li><a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0许可</a>：复用、署名、许可链接与修改说明要求。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
