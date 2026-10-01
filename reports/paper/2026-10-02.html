@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2821%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2253%22%20cy%3D%2230%22%20r%3D%2216%22%20fill%3D%22%23fff%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%2224%22%20r%3D%2226%22%20fill%3D%22%23fff%22%20opacity%3D%220.11%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>读懂语言之前，先练会更新状态：困惑度看不见的推理起点</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="2e897b1e8a5cbb875fc3c870375e7218281ab3b7353411c05242c37f4e3d7dbf">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-10-02</span></div>
+  <h1 class="doc">读懂语言之前，先练会更新状态：困惑度看不见的推理起点</h1>
+  <div class="dateline"><span>全文 <b>2,994</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Lasting Effects of Abstract Pretraining Beyond Perplexity</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.38764">https://arxiv.org/abs/2609.38764</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Zachary Shinnick, Hemanth Saratchandran, Damien Teney, Anton van den Hengel</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Australian Institute for Machine Learning, Adelaide University；Idiap Research Institute；Metacognition AI</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-30</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">公开预印本；具有任务结构、权重扰动与训练时序对照；135M结果包含多个预训练种子；本篇同行评审接收及独立复现未核实</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 抽象预训练, 推理机制</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-10-02.html">https://yesiran.github.io/ai-paper-daily/reports/2026-10-02.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-10-02-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个尚未读过自然语言的小模型。</a><a class="t-h2" href="#s4">二、困境：会接下一句话，不等于容易学会连续传递中间结果。</a><a class="t-h2" href="#s5">三、旧路：用语言建模进展判断模型学到了多少。</a><a class="t-h2" href="#s6">四、转折：在读语言之前，先学一种没有世界知识的规则。</a><a class="t-h2" href="#s7">五、解法：把抽象规则变成一个可迁移的学习起点。</a><a class="t-h2" href="#s8">六、结局：得到特定能力收益，也看到清楚的失败边界。</a><a class="t-h2" href="#s9">七、内核：训练数据除了提供内容，也可能改变以后什么更容易被学会。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">模型理解向前的一步，是把学习终点与学习起点一起看。</a><a class="t-h2" href="#s13">如果能控制预训练，这是值得小规模复现实验的变量。</a><a class="t-h2" href="#s14">如果只使用现成模型，最直接的用途是改进评估。</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><p>2026-10-02｜截至 01:30（北京时间）。这是截稿快照。本文依据截止前已提交的 v1，首次提交时间为 2026-09-30 01:48:40 UTC，处于过去7天内；arXiv ID与标题均未出现在所附去重台账中。<a class="src" href="https://arxiv.org/abs/2609.38764">论文登记与版本记录</a></p><h1 id="s1">推荐理由</h1><p>今天推荐它，因为它把一个容易被平均指标遮住的问题做成了可检验实验：两个模型读自然语言的预测误差差不多，它们以后学习多步推理的能力，是否也差不多？作者发现，先接受抽象栈操作训练的小模型，经过自然语言预训练和问答微调后，在部分多跳任务上表现更好，而语言建模损失没有同步改善。这里的困惑度，是由预测文本的平均损失换算而来的指标；它能衡量预测文本的表现，却未必能分辨特定能力的差异。<a class="src" href="https://arxiv.org/html/2609.38764v1#S4">原文§3—4、图2</a></p><p>值得深读的部分是证据组织。作者把“多训练了一会儿”“换了一种抽象数据”“只是权重大小更合适”“什么时候训练都一样”等解释逐个拆开。栈换成队列，收益不能保持；保留权重分布却打乱排列，完整收益也不能保持；同样的栈训练放在语言预训练结束后，平均问答收益消失。这些结果支持训练起点与任务结构共同影响后续学习，但还没有识别出承担迁移的具体神经回路。<a class="src" href="https://arxiv.org/html/2609.38764v1#S5">原文§5—7</a></p><p>质量信号需要分清归属：本篇有公开全文和详细附录，但尚未核实同行评审接收或独立复现。其直接前驱《Procedural Pretraining》在arXiv登记中标注ICML 2026，作者项目页也列出这项研究；这是研究路线已有积累的信号，不能转写为本篇获得会议背书。<a class="src" href="https://arxiv.org/abs/2601.21725">前驱论文</a> <a class="src" href="https://zlshinnick.github.io/procedural-pretraining-page/">作者项目页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个尚未读过自然语言的小模型。</h2><p>实验采用SmolLM的135M和360M架构，即约1.35亿与3.6亿参数。研究者改变的是它进入语言预训练时的权重起点：一组从随机初始化出发，另一组先学习程序生成的抽象操作，再读相同预算的自然语言，最后接受相同协议的任务微调。这里的监督微调，是用问题及标准答案进一步训练模型。<a class="src" href="https://arxiv.org/html/2609.38764v1#S3">原文§3、附录B.1</a></p><h2 id="s4">二、困境：会接下一句话，不等于容易学会连续传递中间结果。</h2><p>多跳问答要求把前一步找到的实体交给下一步。例如，“某位作者出生的城市属于哪个国家”，先确定城市，再寻找国家。这是帮助理解的自拟例子。论文把这类依次依赖的题，与分别查找事实后再比较、合并的题分开评估；栈训练的收益主要集中在前一类。<a class="src" href="https://arxiv.org/html/2609.38764v1#S4.SS2">原文§4.2、图3</a></p><h2 id="s5">三、旧路：用语言建模进展判断模型学到了多少。</h2><p>若只观察预训练损失，两组模型可能看起来相近。实验中135M模型的语言建模表现相近，360M的栈初始化版本甚至略差，但部分问答表现更好。这使“损失没改善，所以初始化没有价值”成为不可靠的筛选规则。它并不意味着困惑度无用，只意味着该指标没有穷尽后续任务能力。<a class="src" href="https://arxiv.org/html/2609.38764v1#S4.SS1">原文§4.1、图2</a></p><h2 id="s6">四、转折：在读语言之前，先学一种没有世界知识的规则。</h2><p>栈是一种后进先出的容器，可以类比叠放的盘子：新放上的先拿走。训练数据包含放入、弹出等操作，模型要预测执行完操作后剩下的内容。符号没有自然语言语义，正确答案由操作规则确定。要做好这个任务，模型必须保留并更新状态，不能只识别出现过哪些符号。<a class="src" href="https://arxiv.org/html/2609.38764v1#S3.SS2">原文§3.2、附录A.1—A.2</a></p><h2 id="s7">五、解法：把抽象规则变成一个可迁移的学习起点。</h2><p>栈训练后，模型继续接受语言预训练，再学习问答；自然语言实验保留完整权重，包括词嵌入和输出层。作者随后改变三个因素：把后进先出改为先进先出的队列；保留栈状态更新却打乱最终输出；保留训练后权重的统计分布却破坏其排列。队列不能重现收益，打乱输出仍保留部分收益，而破坏权重结构后也无法重现完整效果。可支持的判断是：迁移依赖所学结构，权重数值的整体尺度不足以解释它。<a class="src" href="https://arxiv.org/html/2609.38764v1#S5">原文§5、附录A—B</a></p><h2 id="s8">六、结局：得到特定能力收益，也看到清楚的失败边界。</h2><p>最大自然语言问答提升出现在135M模型的MuSiQue上，为3.9个token级F1分数点；F1在这里衡量预测答案与参考答案的词元重合情况，不是整题正确率。两个规模在MuSiQue和HotpotQA上均改善，但360M在2WikiMultihopQA上基本不变。在受控的DEPO任务中，模型沿随机排列的节点关系回答1—4跳查询；先做栈训练的版本学习更快，训练末期在各跳数接近满分，语言预训练基线仍难以处理四跳。<a class="src" href="https://arxiv.org/html/2609.38764v1#S4">原文§4.1—4.3、图2—4</a></p><p>时序实验补上了关键一环：把栈阶段放在语言预训练的0%、25%、50%、75%或100%位置，最早训练获得最大平均收益，结束后再训练没有平均问答提升。重复加入栈训练也不是越多越好，在不同数据集上有得有失。早期优势则能经过数十亿自然语言token的后续训练继续存在。<a class="src" href="https://arxiv.org/html/2609.38764v1#S6">原文§6、图9—12</a></p><h2 id="s9">七、内核：训练数据除了提供内容，也可能改变以后什么更容易被学会。</h2><p>作者用归纳偏置解释这种现象：它指模型面对新数据时，更容易学到哪一类规律。我的理解是，这篇研究把“初始化”从一次随机赋值，推进为可以针对能力设计的训练阶段。这个解释与实验一致，但作者明确承认，尚未解释抽象训练具体怎样改变参数中的计算机制；不能把“模型内部形成了可复用的栈机器”当作已经证实的事实。<a class="src" href="https://arxiv.org/html/2609.38764v1#S7">原文§7</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是2026年1月首次提交的《Procedural Pretraining》。它已研究先用程序生成的数据热身，再进行语言、代码或数学训练，报告这种顺序能够改善后续学习效率。因此今天这篇并非首次提出抽象热身，它进一步追问：收益落在哪些能力上，以及平均语言损失看不到时，收益是否仍然存在。<a class="src" href="https://arxiv.org/abs/2601.21725">前驱论文及版本记录</a></p><p>再倒读一层，是2025年的《Between Circuits and Chomsky》。它研究哪些形式语言能帮助后续自然语言学习，发现捕捉层级依赖的结构有益，并提出迁移还受模型架构可学习性的约束。由此可以理解今天的栈与队列对照：同样是程序生成、同样涉及记忆操作，计算结构不同，迁移结果也可能不同。这里是两项研究之间的概念联系，并非旧研究已经预测了今天的全部结果。<a class="src" href="https://arxiv.org/abs/2502.19249">前驱原文摘要与版本记录</a></p><p>回到本篇，它把路线推进到三个可操作的问题：目标能力是什么，抽象任务要求什么计算，以及这种计算应在何时进入训练。特别是“先训练”和“后训练”的差异，使数据顺序成为需要独立检验的变量。作者没有证明某个不可逆的关键期，也没有证明后训练永远无法补救；实验所支持的是，在所测模型、预算和优化设置下，晚加入不能重现早期收益。<a class="src" href="https://arxiv.org/html/2609.38764v1#S6">原文§6—7</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">模型理解向前的一步，是把学习终点与学习起点一起看。</h2><p>同一架构、相近语言损失，可以对应不同的下游可学习性。产品上的推论是：筛选基础模型或训练配方时，应加入与你真正需要的计算结构相匹配的测评。如果任务依赖连续更新状态，就单独测链式推理；如果任务依赖独立事实比较，就另外测比较。论文恰好显示，两类任务的收益不能互相代替。<a class="src" href="https://arxiv.org/html/2609.38764v1#S4.SS2">原文§4.2、§7</a></p><h2 id="s13">如果能控制预训练，这是值得小规模复现实验的变量。</h2><p>可以比较随机初始化、栈热身和队列热身，同时记录自然语言损失及任务学习曲线；再增加总token或总计算量匹配的对照。这是我的实验建议。本篇主对照匹配的是语言预训练与下游阶段预算，抽象阶段额外增加；摘要所说低至约1%的抽象token，不应被解读为所有设置都只多花1%算力，更不能直接与135M的最大3.9分收益绑定为一个统一收益承诺。<a class="src" href="https://arxiv.org/html/2609.38764v1#S3">原文§3、附录A.2与B.1</a></p><h2 id="s14">如果只使用现成模型，最直接的用途是改进评估。</h2><p>这篇没有验证在提示词里加入栈练习会奏效，也没有给出对成熟模型补训即可复刻收益的证据。对一个问答产品，可以把“材料已提供但跨步组合失败”与“根本没有检索到材料”分开：论文的MuSiQue实验使用正确支持段落，不能据此声称检索能力也增强了。<a class="src" href="https://arxiv.org/html/2609.38764v1#A2.SS3">原文附录B.3</a></p><p>证据边界还有三项。第一，自然语言实验只有135M与360M规模，不能直接外推到前沿大模型。第二，评估经过任务微调，并过滤超过2048 token的样本，不是零样本长上下文能力证明。第三，正文§4.1笼统描述三个预训练种子和三个微调种子，但附录明确写135M为3×3、360M为1×3；本报告采用更具体的附录口径。原文也只承诺发表时释放复现代码，因此本次不把完整复现资产已公开作为质量信号。<a class="src" href="https://arxiv.org/html/2609.38764v1">原文§4.1、§7、附录B.1—B.3及复现声明</a></p><h1 id="s15">来源</h1><p>主要事实依据为Zachary Shinnick、Hemanth Saratchandran、Damien Teney、Anton van den Hengel的<a class="src" href="https://arxiv.org/html/2609.38764v1">论文v1全文</a>与<a class="src" href="https://arxiv.org/abs/2609.38764">arXiv登记页</a>。作者机构据全文首页核实。本文为中文转述、重组与评论，示例及产品建议已标明，不代表原作者背书。</p><p>原文明确采用<a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>，允许在履行署名、链接许可及标明修改等条件下分享和改编；此处保留作者、原标题、原文链接与许可链接。两项前驱为<a class="src" href="https://arxiv.org/abs/2601.21725">Procedural Pretraining</a>和<a class="src" href="https://arxiv.org/abs/2502.19249">Between Circuits and Chomsky</a>，作者官方资料为<a class="src" href="https://zlshinnick.github.io/procedural-pretraining-page/">Procedural Pretraining项目页</a>。本次未核实所选论文的HF收录、历史赞数、排名或引文数量，因此不作相关陈述。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
