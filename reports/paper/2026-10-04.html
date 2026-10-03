@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2819%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2217%22%20cy%3D%2222%22%20r%3D%2221%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2224%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PoS：让智能体看见自己为何原地打转</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="b17cfda6d527121b7bb1b49cd4bc9e624dc8c29a33e972dac880674a7c9e6ce2">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-10-04</span></div>
+  <h1 class="doc">PoS：让智能体看见自己为何原地打转</h1>
+  <div class="dateline"><span>全文 <b>3,017</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>13</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Beyond Memory: Harnessing Long-Horizon Agents with Explicit Belief States</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2610.01415">https://arxiv.org/abs/2610.01415</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Yu Luo、Jiamin Jiang、Yimin Zuo 等</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">南开大学、阿里巴巴集团、清华大学</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-10-01</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 10月2日收录，作者提交；原文提供跨任务比较与消融；预印本，未核实同行评审及独立复现</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, long-horizon-agents, belief-state</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-10-04.html">https://yesiran.github.io/ai-paper-daily/reports/2026-10-04.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-10-04-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个需要持续理解现场的智能体。</a><a class="t-h2" href="#s4">二、困境：历史记录可能齐全，当前判断仍然混乱。</a><a class="t-h2" href="#s5">三、旧路：让历史更容易使用。</a><a class="t-h2" href="#s6">四、转折：把决策需要的状态单独写出来。</a><a class="t-h2" href="#s7">五、解法：维护、检查，再诊断为何停滞。</a><a class="t-h2" href="#s8">六、结局：效果成立于作者的比较范围，同时成本显著增加。</a><a class="t-h2" href="#s9">七、内核：正确记账与有效推进，需要两种不同的检查。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">产品推演，尚未经本论文验证：</a><a class="t-h1" href="#s13">来源</a></nav>
+    <main><p>2026-10-04｜截至 01:30（北京时间）。这是截稿快照，不代表全天研究动态。本文只采用截止前公开的论文版本；所选论文首次提交于 2026-10-01 10:21:46 UTC，处于近七天窗口，ID 与标题均未出现在附带台账中。<a class="src" href="https://arxiv.org/abs/2610.01415">arXiv 提交记录</a></p><h1 id="s1">推荐理由</h1><p>今天推荐 PoS，关注一个容易被“更长上下文”掩盖的问题：智能体一直在操作，为什么任务没有往前走？作者把这类失败称为 Belief Trapping，本文译作“信念受困”：对环境的理解可能停滞、循环，或者不断变化却偏离真正需要解决的问题。论文尝试把这种失败变成可监测、可诊断、可恢复的过程。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第1、3节</a></p><p>它值得读，是因为实验把两个常被混在一起的目标拆开了：当前理解是否自洽，以及继续行动是否有用。PoS 在推理时维护明确状态，再分别检查一致性与任务进展。我的选题判断是，这给长任务智能体提供了一个可检验的机制假说，价值超过新增一种记忆格式。论文的质量信号包括作者提交至 HF Daily Papers，以及正文提供跨基准、跨骨干模型比较和组件消融；这些信号不能代替独立复现。<a class="src" href="https://huggingface.co/papers/2610.01415">HF 论文页</a> <a class="src" href="https://arxiv.org/html/2610.01415v1">原文第4节</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个需要持续理解现场的智能体。</h2><p>想象一个整理厨房的助手：它要知道杯子在哪、柜门是否打开、哪些操作已经完成。这是解释机制的假设场景，并非新增实验。论文所研究的共同结构是：智能体只能逐步获得观察，行动又会改变环境，所以“以前看到了什么”和“现在是什么状态”必须区分。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第1、3.1节</a></p><h2 id="s4">二、困境：历史记录可能齐全，当前判断仍然混乱。</h2><p>日志中既有旧事实，也有已经被推翻的猜测。若每一步都从整段历史重新拼装现场，过期判断可能继续参与决策。更隐蔽的是，所有记录可以互不矛盾，智能体却反复执行无效动作，或持续调查与目标无关的事情。前者是理解出了错，后者是理解没有推动任务。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第1节</a></p><h2 id="s5">三、旧路：让历史更容易使用。</h2><p>压缩摘要、保留相关片段、按子目标组织工作记忆，都有明确作用。但这些操作本身没有保证：留下来的内容准确表达了当前世界，或下一步行动会缩小尚未解决的问题。作者在本次比较中也观察到，一些上下文管理方法在部分任务上不如直接保留完整历史；这是特定评估下的结果，不能推成“摘要普遍有害”。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第2、4.1节</a></p><h2 id="s6">四、转折：把决策需要的状态单独写出来。</h2><p>PoS 是 Progression of States 的简称。它维护的 belief state，即“依据现有证据形成的当前状态估计”，包含四部分：世界状态、任务目标、认知缺口、达成缺口。认知缺口是还不知道或证据不足的事情；达成缺口是知道目标，但环境还没有达到要求。比如“不知道杯子在哪”需要获取信息，“杯子还没放进柜子”需要改变环境。两种缺口对应不同的下一步。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第3.1节</a></p><h2 id="s7">五、解法：维护、检查，再诊断为何停滞。</h2><p>世界状态由实体、状态、关系构成，状态与关系附带来源、置信度及可用证据。智能体每次选择一个当前最值得处理的缺口，执行行动，并据观察形成候选更新。候选更新先交给 Belief Sentinel，即状态审查组件，检查内部冲突及与观察证据的冲突；任务智能体依据反馈修订后，才提交下一步使用的状态。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第3.1—3.2节</a></p><p>随后系统在最近一段交互中检查三个信号：旧缺口是否持续存在、步骤是否缺乏进展、相关状态是否反复出现。持续未解决的缺口，与停滞或循环同时出现，才构成受困判断的重要依据。这里的“进展”也是操作性指标：执行任务关注缺口缩小或必要信息获得；诊断任务使用假设置信度的变化。后者不是客观正确性的证明。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第3.3节，公式4—5</a></p><p>恢复措施组合两个维度。先判断是静止、循环还是漂移：静止时压制已证明无效的状态—行动组合；循环时打断重复转移；漂移时重新围绕当前缺口选动作。再判断卡在求知还是执行：前者要求能区分候选解释的新证据，后者要求与任务有关的状态变化。恢复期间保留当前缺口，健康度恢复后解除附加约束。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第3.3节，公式6—7</a></p><h2 id="s8">六、结局：效果成立于作者的比较范围，同时成本显著增加。</h2><p>作者使用 Qwen3.7-Plus、Kimi-K3、GLM-5.3，在 ALFWorld、LOCA-Bench、RCA-100、ClinDiag 上评估；PoS 在全部十二个“基准×骨干模型”组合中取得所比较方法的最高总体成绩。以 Qwen3.7-Plus 的 ALFWorld 为例，最强基线为 72.39%，PoS 为 88.81%，提升 16.42 个百分点；论文所报 22.68% 是相对提升，不是百分点。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第4.1节，表1</a></p><p>同一设置下，移除一致性检查后 ALFWorld 成绩降至 73.88%；移除受困诊断及关联恢复后降至 73.13%。这支持两个组件都有贡献，但还不能证明收益完全来自机制本身，而与额外计算无关。RCA-100 的成本表揭示了取舍：相对原始历史基线，联合准确率从 24.27% 升至 38.83%，每案例总 token 从 355.70K 升至 1800.13K，约为 5.06 倍。任务执行组件本身少用 token，不能被写成整个系统省钱；统计包含各组件的输入与输出，也不是单次上下文长度。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文表1、表2及第4.3节</a></p><h2 id="s9">七、内核：正确记账与有效推进，需要两种不同的检查。</h2><p>我的机制归纳是：一致性检查减少错误状态进入后续决策，进展监控减少正确但无用的交互耗尽预算，定向恢复则把下一次行动重新连接到尚未解决的要求。论文证明的是这套组合在给定实验中的价值；它没有证明语言化状态等于完整世界模型，也没有证明智能体因此具备通用自我纠错能力。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文第3—5节</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是同一研究线中的 <strong>Graph of States</strong>。这项研究于 2026-03-22 首次提交，针对溯因推理——从观察寻找可能原因——用因果图表达依赖，用状态机约束推理转移。它已经把当前理解从自由文本推理中外显出来。与它对照，PoS 值得关注的新增问题是：状态有了结构以后，怎样持续检查更新，并在运行途中识别和修复无效推进？这是研究问题的比较，不意味着两篇论文存在受控的一对一胜负实验。<a class="src" href="https://arxiv.org/abs/2603.21250">GoS 原始记录与摘要</a> <a class="src" href="https://arxiv.org/html/2610.01415v1">PoS 第2—3节</a></p><p>倒读第二层，是 <strong>HiAgent</strong>。其预印本首发于 2024-08-18，以子目标为单位管理工作记忆，完成的子目标可被摘要替换，保留当前子目标相关的动作与观察。它回答“当前工作台上该留下哪些历史”。PoS 进一步把工作台组织为当前状态及未解决要求。由此可以分清两个可组合的问题：历史怎样收纳，当前判断怎样维护。<a class="src" href="https://arxiv.org/abs/2408.09559">HiAgent 原始记录与摘要</a></p><p>倒读第三层，是 <strong>ReAct</strong>。它于 2022-10-06 首次提交，把推理与行动交替起来，让模型能够通过外部观察修正后续行动。沿这条线看，行动反馈打开了与环境的循环；后续工作开始处理循环积累的历史；PoS 则尝试检查循环是否仍在产生任务相关的变化。这个三层排列是本文对研究问题的组织，不是作者证明的必然发展顺序。<a class="src" href="https://arxiv.org/abs/2210.03629">ReAct 原始记录与摘要</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p>这篇论文展示的进化主要发生在模型周围的决策系统：让模型的当前判断、未解问题和恢复条件显式存在。它没有增加模型参数，也不应被宣传成基础模型获得了新知识。所有代理侧组件使用同一被评估骨干，收益不来自偷偷引入更强审查模型；但多组件调用确实增加了计算量。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文附录D.1及表2</a></p><h2 id="s12">产品推演，尚未经本论文验证：</h2><p>对研究助手，可以把“当前有证据支持的判断”“仍需区分的解释”“下一条证据怎样改变结论”并排展示。假设一个行业分析不断增加新闻，却始终分不清需求增长还是供给收缩，下一步应寻找能区分两者的证据。这个例子借用论文的认知缺口与定向恢复结构，不是论文测过的投资分析效果。<a class="src" href="https://arxiv.org/html/2610.01415v1">机制依据：第3节</a></p><p>若要试用这一思路，先挑那些经常重复查询、反复修改却无法验收的长任务。评估时同时观察完成率、全系统 token 和耗时，并设置相同总预算的比较组。论文的证据足以支持做这种针对性试验，却不足以支持给所有短任务加入完整维护流程；尤其表2的额外开销很大。<a class="src" href="https://arxiv.org/html/2610.01415v1">证据依据：第4.3节</a></p><p>还有三条实质边界。第一，PoS 的审查组件与执行组件仍依赖同一骨干，不能自动视为独立事实裁判。第二，作者明确承认：缺乏领域知识时，内部一致的状态仍可能包含错误因果判断。第三，实验使用的 API 没有固定快照；ClinDiag 排除了不可访问的 Emergency 子集。因此，这些结果应当被读作特定数据、接口与模型条件下的作者报告，而非现实部署可靠性保证。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文附录C.2、D.1、G</a></p><h1 id="s13">来源</h1><p>本文基于 Yu Luo、Jiamin Jiang、Yimin Zuo、Xidao Wen、Rongchen Gao、Yongqian Sun、Shenglin Zhang、Guiyang Liu、Cheng Zhang、Fang Situ、Qi Zhou、Dan Pei 的论文撰写。arXiv 原文明确标注 CC BY 4.0；该许可允许分享和改编，要求适当署名、链接许可并说明改动。本文为中文重述、结构重组和评论，假设案例及产品推演已标明，不代表作者背书。<a class="src" href="https://arxiv.org/html/2610.01415v1">原文与许可标记</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 许可</a></p><p>核查采用 <a class="src" href="https://arxiv.org/abs/2610.01415">arXiv 提交记录</a>、<a class="src" href="https://arxiv.org/html/2610.01415v1">v1 HTML 全文</a>、<a class="src" href="https://huggingface.co/papers/2610.01415">HF 论文页</a>，并直接打开上述三篇前驱论文的 arXiv 页面。PDF 因抓取工具内容大小限制未能取得，未声称完成 PDF 视觉核对；未使用二手解读作为实验依据。未核实截止时刻的赞数、排名、引文量、同行评审状态或独立复现，不以这些信息作推荐理由。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
