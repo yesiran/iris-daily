@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2816%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2245%22%20r%3D%2225%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ccircle%20cx%3D%2214%22%20cy%3D%2228%22%20r%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2216%22%20r%3D%227%22%20fill%3D%22%23fff%22%20opacity%3D%220.11%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>在线蒸馏为什么有效？把走哪条路、怎样纠错和改动多大拆开</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="53963cc9115477a1d503fd49ac1a671b3f11637f5878429e711da976442cd599">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-10-06</span></div>
+  <h1 class="doc">在线蒸馏为什么有效？把走哪条路、怎样纠错和改动多大拆开</h1>
+  <div class="dateline"><span>全文 <b>2,861</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>15</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">On-Policy or Off-Policy Learning? A Systematic Study of Distillation Dynamics</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.35259">https://arxiv.org/abs/2609.35259</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Julianna Piskorz, Antonin Berthon, Mihaela van der Schaar</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">University of Cambridge</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-28</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF Daily Papers 10月2日收录；两模型家族受控实验及梯度分析；预印本，未核实同行评审接收或独立复现</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, knowledge-distillation, post-training</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-10-06.html">https://yesiran.github.io/ai-paper-daily/reports/2026-10-06.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-10-06-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">一、主角：一个要学新本领的小模型。</a><a class="t-h2" href="#s4">二、困境：看懂老师的解答，不等于会处理自己的错误。</a><a class="t-h2" href="#s5">三、旧路：把整套配方的结果归给轨迹来源。</a><a class="t-h2" href="#s6">四、转折：把三个开关独立拨动。</a><a class="t-h2" href="#s7">五、解法：沿着梯度追问机制。</a><a class="t-h2" href="#s8">六、结局：不同收益归属不同开关。</a><a class="t-h2" href="#s9">七、内核：训练配方必须拆成可归因的选择。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h2" href="#s12">模型理解向前走了一步：把方法名称拆回机制。</a><a class="t-h2" href="#s13">产品推演：先搭建便宜而可信的对照。</a><a class="t-h2" href="#s14">评估终点要对应使用方式。</a><a class="t-h1" href="#s15">来源</a></nav>
+    <main><p>2026-10-06｜截至 01:30（北京时间）。这是当日截稿快照。本文采用截稿前公开的 v1；原文首次提交于 2026-09-28 14:20:42 UTC，位于过去两周选题窗口，ID 与标题均未出现在所附台账。<a class="src" href="https://arxiv.org/abs/2609.35259">版本记录</a></p><h1 id="s1">推荐理由</h1><p>这篇论文推进的是我们对模型训练的理解：当一种训练配方同时更换数据、损失函数和学习率时，性能改善究竟该归功于谁？作者选取知识蒸馏——让学生模型学习教师模型的输出分布——作为可控试验场，把通常捆绑使用的组件拆开。它直接挑战一种容易影响产品投入的判断：只要让学生不断生成自己的训练轨迹，就会更少遗忘、更新更稀疏、泛化更好。<a class="src" href="https://arxiv.org/html/2609.35259v1#S4">原文§1、§4</a></p><p>值得推荐的原因是，它同时给出反证和例外。主实验未发现在线轨迹对最终任务表现、遗忘或更新稀疏度有一致优势；更难的算术迁移任务却确实受益于在线轨迹。由此得到的是可用于选择训练配方的条件，而非另一个无条件口号。论文已进入 HF Daily Papers；这只作为发现入口，不把社区热度当作实验可信度。<a class="src" href="https://arxiv.org/html/2609.35259v1#S5.SS3">原文§5.3</a> <a class="src" href="https://huggingface.co/papers/2609.35259">HF论文页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">一、主角：一个要学新本领的小模型。</h2><p>它希望借助更强教师提升推理，同时保留原来的能力。主要实验用 Llama-3.1-8B 教师指导 Llama-3.2-1B 学生，附录用 Qwen2.5-7B 与 Qwen2.5-1.5B 检查另一模型家族。教师先针对任务训练，再在蒸馏期间冻结；同家族设计使双方可以直接比较共同词表上的概率。<a class="src" href="https://arxiv.org/html/2609.35259v1#S4.SS1">原文§4.1、附录A.5</a></p><h2 id="s4">二、困境：看懂老师的解答，不等于会处理自己的错误。</h2><p>离线蒸馏使用教师生成的回答；在线蒸馏则让学生生成回答，再请教师在学生走到的每个位置提供监督。这里的“轨迹”是一串逐步生成的词元，“前缀”是当前已经写出的部分。在线方法因此能接触学生实际会遇到的局面，但也需要训练期间持续生成新轨迹。它的额外开销应由哪些收益来证明？<a class="src" href="https://arxiv.org/html/2609.35259v1#S3">原文§1、§3</a></p><h2 id="s5">三、旧路：把整套配方的结果归给轨迹来源。</h2><p>常见组合是教师轨迹配前向 KL，学生轨迹配反向 KL。KL 散度衡量两个概率分布的差异，但方向不对称。前向 KL 按教师概率加权，推动学生覆盖教师认为可行的选项；反向 KL 按学生概率加权，更重视纠正学生已经偏好、教师却不认可的选项。谁带你走到这个位置，与到达后怎样纠错，是两个不同问题。<a class="src" href="https://arxiv.org/html/2609.35259v1#S3">原文§3，式2—3</a></p><h2 id="s6">四、转折：把三个开关独立拨动。</h2><p>作者交叉比较两种轨迹来源、两种 KL 方向和两档学习率，主实验每种配置训练 150 步、使用三个随机种子，其余优化设置保持一致。学习率为 0.00001 或 0.00005。这样可以检验：改善究竟来自学生亲自探索、纠错目标，还是每次参数更新的步幅。<a class="src" href="https://arxiv.org/html/2609.35259v1#S4.SS1">原文§4.1</a></p><h2 id="s7">五、解法：沿着梯度追问机制。</h2><p>梯度可以理解为“这次学习要求参数往哪里、改多少”的信号。在同一个前缀，前向 KL 对学生输出分数的导数是学生概率减教师概率，每个分量都落在 −1 到 1 之间。教师支持而学生忽略的选项，仍能得到补课信号。反向 KL 的导数带有学生概率权重与师生概率比的对数：学生几乎不考虑的选项，信号可能很弱；学生偏爱而教师极不认可的选项，则可能产生尖锐更新。因此，反向 KL 更依赖学生实际访问哪些前缀。<a class="src" href="https://arxiv.org/html/2609.35259v1#S5.SS1">原文§5.1，式4—5</a></p><p>这不是“前向 KL 永远稳定”的证明。作者的稳定性界需要学生输出分数对参数的导数有界，约束的是轨迹分布变化引起的更新差异，不能直接保证最终准确率。他们进一步连续改变采样策略，从偏向教师到偏向学生。Countdown-3 实验中，在低学习率下，前向 KL 的准确率沿整个采样谱保持在 80% 以上、波动 5.2 个百分点；反向 KL 的变化明显更大。这为机制解释提供了实验支持。<a class="src" href="https://arxiv.org/html/2609.35259v1#S5.SS2">原文§5.1—5.2、图3、附录C</a></p><h2 id="s8">六、结局：不同收益归属不同开关。</h2><p>三项任务的最佳平均准确率，在线为 72%，离线为 73%；这是各自最佳配置的比较，不代表离线显著胜出。前向 KL 在不同配置下达到 71%—73%，反向 KL 为 35%—72%。在作者测试范围内，目标函数比“是否在线”更能解释表现变化。<a class="src" href="https://arxiv.org/html/2609.35259v1#S4.SS2">原文§4.2、图1</a></p><p>遗忘方面，低学习率下七项分布外评测的平均分变化最多 1.3 个百分点，高学习率下则下降 11.2—14.0 个百分点。更新稀疏度也主要随学习率变化：低学习率为 85.3%—89.6%，高学习率为 51.9%—60.0%。这里“稀疏”专指参数绝对变化小于 0.000001 的比例，不能解释成模型只动用了少数神经元。<a class="src" href="https://arxiv.org/html/2609.35259v1#S4.SS2">原文§4.1—4.2、图1</a></p><p>在线采样仍有价值。从三操作数 Countdown 迁移到更难的四操作数任务时，两种 KL 下都出现偏向学生轨迹更有利的趋势。更长数学推理的补充实验中，低学习率的在线加反向 KL 配置取得最高 MATH-500 准确率；但该实验每种配置只有一次运行，作者明确把这个优势视为提示性证据。在线方法的优势需要对应具体任务条件。<a class="src" href="https://arxiv.org/html/2609.35259v1#S6">原文§5.3、§6</a></p><h2 id="s9">七、内核：训练配方必须拆成可归因的选择。</h2><p>这篇论文留下的判断是：轨迹来源决定练习发生在哪里，KL 方向决定怎样纠错，学习率决定改动步幅。在当前实验中，任务表现与输出覆盖更受 KL 方向影响，遗忘与更新稀疏度更受学习率影响；在线轨迹的优势则在更难任务上更清楚。这些都是有实验范围的结论。<a class="src" href="https://arxiv.org/html/2609.35259v1#S7">原文§7</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，最近的问题来自“在线数据是否保护旧能力”。2025 年的《Retaining by Doing》比较监督微调与强化学习，并提出在线数据是减少遗忘的重要因素。今天这篇论文把相关判断放入蒸馏框架重新检验：在这里控制 KL 和学习率后，在线来源本身没有稳定带来更少遗忘。两篇工作的训练目标和实验制度不同，因此不能把新结果写成对前作所有结论的推翻；它削弱的是未经条件限定的推广。<a class="src" href="https://arxiv.org/abs/2510.18874v2">前驱论文v2</a> <a class="src" href="https://arxiv.org/html/2609.35259v1#S4">本文§2、§4</a></p><p>倒读第二层，2023 年的 GKD 工作面对训练与推理的分布不匹配，让学生在自己生成的序列上获得教师反馈，并允许选择不同的蒸馏损失。这解释了在线蒸馏为什么合理：学生需要学习处理自己会进入的局面。今天的研究继续追问，改善是否一定由这种分布匹配带来，还是还依赖损失函数如何利用教师反馈。<a class="src" href="https://arxiv.org/abs/2306.13649">GKD原始论文</a></p><p>倒读第三层，2015 年的知识蒸馏工作推进了把复杂模型或模型集合的知识压缩进易部署单模型的路线。沿这条线看，问题逐渐细化：先问能否转移能力，再问在哪些轨迹上教，最后问看似绑定的训练组件分别贡献了什么。最后这一层关系是本文的组织性解读，并非三篇论文共同提出的一条定律。<a class="src" href="https://arxiv.org/abs/1503.02531">知识蒸馏前驱</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><h2 id="s12">模型理解向前走了一步：把方法名称拆回机制。</h2><p>读到“在线训练减少遗忘”，可以先检查学习率、目标函数和监督密度是否同时改变；读到“更新稀疏”，则检查阈值和参数变化的定义。这是由本文实验设计引出的研究判断方法，不是对所有后训练工作的统一裁决。<a class="src" href="https://arxiv.org/html/2609.35259v1#S7">原文§4、§7</a></p><h2 id="s13">产品推演：先搭建便宜而可信的对照。</h2><p>如果要训练一个保留通用能力的小型专业助手，我会把离线蒸馏加前向 KL、较低学习率作为候选基线，同时测新任务与旧能力。若目标是迁移到更难任务，再增加在线采样对照，并按完整训练成本比较收益。这是实验启发的方案，论文没有证明它能降低你的实际账单，也没有测出通用节省比例。<a class="src" href="https://arxiv.org/html/2609.35259v1#S7">原文§4.2、§5.3、§7</a></p><h2 id="s14">评估终点要对应使用方式。</h2><p>若产品允许多次尝试并验证答案，就应同时看 pass@1 与 pass@10：前者衡量一次尝试的正确性，后者衡量十次尝试至少成功一次的能力。本文发现前向 KL 在相近 pass@1 下可带来更大的重复采样收益。若蒸馏后还要做可验证奖励强化学习，也必须把下一阶段跑完再选配方：本文的在线检查点初始泛化优势，没有稳定延续到后续 300 步 RLVR。<a class="src" href="https://arxiv.org/html/2609.35259v1#S5.SS3">原文§5.3、图5—6</a></p><p><strong>证据边界。</strong> 学生最多 1.5B 参数，作者讨论的推理轨迹上限为 2,000 词元；主要任务教师回答平均只有 94—135 词元。长推理补充实验平均 622 词元，每配置单次运行，且用同一评测挑选并报告峰值，存在乐观偏差。不能据此替大规模长程 Agent、跨词表蒸馏或生产系统做最终选择。未核实这篇论文的同行评审接收和独立复现。<a class="src" href="https://arxiv.org/html/2609.35259v1#A1.SS3">原文§6—7、附录A.3</a></p><h1 id="s15">来源</h1><p>原作署名 Julianna Piskorz、Antonin Berthon、Mihaela van der Schaar，机构为 University of Cambridge。本文依据其《On-Policy or Off-Policy Learning? A Systematic Study of Distillation Dynamics》v1 作中文转述、重组和解释，产品推演已另行标明，不代表作者背书。原文明确采用 CC BY 4.0，允许按条件分享和改编，须适当署名、链接许可并说明改动。<a class="src" href="https://arxiv.org/html/2609.35259v1">论文及署名</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0许可</a></p><p>选题入口为 <a class="src" href="https://huggingface.co/papers/2609.35259">HF论文页</a>，发表时间以 <a class="src" href="https://arxiv.org/abs/2609.35259">arXiv版本记录</a> 为准。前驱资料为 <a class="src" href="https://arxiv.org/abs/2510.18874v2">Retaining by Doing</a>、<a class="src" href="https://arxiv.org/abs/2306.13649">GKD</a> 与 <a class="src" href="https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network</a>。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
