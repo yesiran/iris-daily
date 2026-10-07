@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2840%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2246%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2253%22%20cy%3D%2212%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20opacity%3D%220.19%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-10-07</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="09200613821ddb235cd8fe3c27d20fe3f6ade057c7d5a9c24ac361fe8106d894">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-10-07 · 周三</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>12</b> 条</span><span>趋势 <b>4</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-10-08 02:00（北京时间）
+今日主线：竞争焦点从单次模型能力延伸到设备端部署、跨步骤工作流和专业能力的访问治理。本期覆盖报告日及次日凌晨截稿前的可核实增量。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>Google 发布可在设备上运行的多模态向量模型</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>OpenAI 将合同工作流纳入代理训练和评估</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>OpenAI 向开发者开放 Decisions API 测试</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>Anthropic 将网络安全访问改为分层资格申请</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>OpenAI 扩展青少年学习工具，但核心新功能仍待开放</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>Google 发布可在设备上运行的多模态向量模型</h3><p class="lp"><span class="lk">事件</span>Google DeepMind 于 10 月 6 日公布 EmbeddingGemma 2：7.4 亿参数、Apache 2.0 许可，可把文本、代码、图像、视频和音频映射到共同向量空间，面向设备端推理。Google 称模型最高可减少 6 倍向量存储；量化后在 Pixel 11 Pro 上，纯文本约需 191MB 活跃内存，多模态版约 567MB。这些是厂商公布的数据，不是本日报独立测试。<a class="src" href="https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/">Google 官方公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>多模态检索若能在手机等设备上完成，部分搜索和 RAG 功能就不必将原始资料送往云端，也能减少离线场景的调用依赖。开放许可和现成部署工具降低了试用门槛；模型质量、耗电和索引成本仍需按目标设备实测，因此不能把单机内存数据直接等同于可规模化落地。</p></div><p class="lp"><span class="lk">接下来观察</span>关注设备覆盖、实际召回率与电量消耗，以及模型和向量库在真实产品中的总内存成本。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>OpenAI 将合同工作流纳入代理训练和评估</h3><p class="lp"><span class="lk">事件</span>OpenAI 于 10 月 6 日公布与合同软件公司 Ironclad 的研究合作。双方围绕法律、商业和采购流程设计 11 项任务，涵盖协议设置、审批流程和可复用条款配置；OpenAI 报告 GPT‑6 Astra 平均得分 55.0%，GPT‑5.6 Sol 为 41.6%。公司估算每次尝试平均耗时分别为 19.2 和 37.0 分钟，但明确说明这是基于假定处理速度的模拟估算，不是客户实际节省时间；任务数量也不代表全部合同工作流。<a class="src" href="https://openai.com/index/advancing-computer-use-with-ironclad/">OpenAI 与 Ironclad 评测说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>企业代理的难点不只在于会不会点界面，而在于能否把审批阈值、例外条件和结果检查贯穿多步骤。把熟悉业务的人参与定义的任务纳入训练和评估，能把产品验收从“动作完成”推向“流程规则是否满足”。但 11 项任务只是窄样本，现阶段还不能据此推断代理已能独立承担真实合同流程。</p></div><p class="lp"><span class="lk">接下来观察</span>后续公开任务是否扩展到更多软件和例外情况，以及客户部署中错误率、人工复核量和回滚能力如何。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>OpenAI 向开发者开放 Decisions API 测试</h3><p class="lp"><span class="lk">事件</span>OpenAI 的 API 更新日志记载，10 月 6 日发布 Decisions API beta，当前模型为 GPT‑6 Luna，可将文本和图像输入转换为类型化决策；公司称速度最高可达经 Responses API 调用的 10 倍。日志还记载 API 用量等级从五档简化为 Build、Launch、Grow 三档。速度比较属于 OpenAI 的产品说明，尚无本期独立基准验证。<a class="src" href="https://developers.openai.com/api/docs/changelog">OpenAI API 更新日志</a></p><div class="why"><span class="why-k">为什么重要</span><p>将分类、路由或动作选择放进专门接口，可能让产品在交互中更频繁地选择模型、工具或下一步动作，而不必每次都经过通用生成流程。这改变了开发者的编排选项，但是否降低端到端延迟或成本，取决于自身任务准确率、调用计费和失败回退；API beta 的能力边界仍应以实际文档和测试为准。</p></div><p class="lp"><span class="lk">接下来观察</span>关注选择准确率、延迟分布、计费方式和模型支持范围，尤其是错误选择后的安全回退。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>Anthropic 将网络安全访问改为分层资格申请</h3><p class="lp"><span class="lk">事件</span>Anthropic 于 10 月 6 日宣布扩展 Cyber Verification Program，将符合资格的安全团队访问先进网络能力的方案合并为三个访问层级；层级对应不同工作范围、验证要求和安全控制。公司称相关层级可开放 Claude Opus 5.5、Sonnet 5.5、Mythos 5.1 等模型，并减少部分网络安全工作中的拦截。该范围与准入条件是 Anthropic 的项目说明，不代表所有用户获得相同权限。<a class="src" href="https://www.anthropic.com/news/cyber-verification-program">Anthropic 项目公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>双重用途能力的产品交付开始从统一拦截转向按身份、任务和验证程度分层。这样可能让真实防守人员减少误拦截，同时把资格核验、用途约束和后续审查变成产品运营的一部分。能否兼顾安全与可用性，还取决于准入速度、滥用处置和误拦截数据，公告本身不足以证明治理效果。</p></div><p class="lp"><span class="lk">接下来观察</span>查看申请标准、审批时长、可执行任务边界及后续公开的误拦截与滥用处置数据。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>OpenAI 扩展青少年学习工具，但核心新功能仍待开放</h3><p class="lp"><span class="lk">事件</span>OpenAI 于 10 月 7 日发布青少年学习与升学规划说明，称 College Planner 将进入 ChatGPT for Teens，可整理申请要求、截止日期和资助信息；公告将其描述为即将推出，并未给出本期已上线的确认。文章同时介绍学习可视化、Study Mode 等既有使用情况，并公布公司自有统计。相关数据是 OpenAI 的产品使用披露，不能单独证明学习效果或安全性。<a class="src" href="https://openai.com/index/teens-learn-and-plan/">OpenAI 青少年学习产品说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>未成年人学习产品的价值不只在新增功能，还在默认体验、适龄设计与使用边界。把计划中的规划功能与已有学习工具区分开，有助于避免把产品路线图误读为已经可用的能力。当前公告重点是功能方向和公司自报使用情况，不能据此判断外部评估、学习成效或所有地区的实际开放范围。</p></div><p class="lp"><span class="lk">接下来观察</span>College Planner 的实际开放日期、适用年龄和地区，以及后续能否看到独立评估和具体保护措施。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 12 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">研究交付：</strong>OpenAI 于 10 月 6 日分享内部前沿模型产生的一组数学结果，并公开 GitHub 材料、部分 Lean 形式化证明、推理摘要和尝试统计；公司称平均结果消耗约相当于三小时 ChatGPT Pro 的计算量。它提供了可供外界检查的研究材料，但结果仍需数学研究者逐项审阅，不能把公司公布等同于学界确认。<a class="src" href="https://openai.com/index/sharing-ai-progress-in-mathematics/">OpenAI 数学研究说明</a></p></div><div class="srow"><p><strong class="st">开发者能力：</strong>Decisions API 和用量档位变化见今日要闻。X 上 OpenAI 开发者账号当天也发布了相同功能线索；以官方 API 更新日志为事实依据，不把帖子中未经日志确认的具体付费门槛写成事实。</p></div><div class="srow"><p><strong class="st">青少年产品：</strong>College Planner 是计划推出的功能，公告没有确认本期已开放。报告日未据此将其写成上线事实。<a class="src" href="https://openai.com/index/teens-learn-and-plan/">OpenAI 青少年学习产品说明</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">开发者模型：</strong>EmbeddingGemma 2 于 10 月 6 日发布，具体能力和厂商设备数据见要闻。<a class="src" href="https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/">Google 官方公告</a></p></div><div class="srow"><p><strong class="st">Google Labs：</strong>Flow Music 的原文日期为 10 月 6 日；Google 官方 RSS 给出的发布时间为 2026-10-06T16:00:00+00:00，即北京时间 10 月 7 日 00:00，属于本报告日凌晨增量。它允许用户用自然语言创建音色工具并导出为 VST3/AU 插件，接入数字音频工作站；这是面向音乐制作的具体工作流扩展，覆盖面较窄。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/create-music-production-plugins-google-flow/">Flow Music 官方公告</a></p></div><div class="srow"><p><strong class="st">Gemini 消费端与 API：</strong>核对近期 Gemini App、Google Labs 发布列表和给定 RSS 候选后，未取得报告日新增消费者功能或 API 发布的可核实原始公告。10 月 1 日发布的 Guided Vision 属于近期背景，不是今日上线。</p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">安全访问：</strong>10 月 6 日的 Cyber Verification Program 扩展是本期已核实的产品访问变化。Anthropic 新闻列表另有 10 月 2 日企业人才培训投资公告，但它与模型能力、产品范围的直接关系较弱，本期不列为要闻。<a class="src" href="https://www.anthropic.com/news/cyber-verification-program">Anthropic 项目公告</a></p></div><div class="srow"><p><strong class="st">模型：</strong>本期未发现 Claude 通用模型首发的已核实证据；Sonnet 5.5、Opus 5.5 属此前公告，不作为今日新闻。</p></div></div><div class="sector"><div class="sector-h">中国 AI</div><div class="srow"><p><strong class="st">模型与产品：</strong>对 DeepSeek、豆包/Seed、智谱、MiniMax、通义和小米 MiMo 的当日中文线索及官方入口进行核查，未取得报告日模型首发或公开范围变化的可核实原始公告。网关目录、价格汇总及模型测试帖子不能替代厂商发布或完整实测；因此不以这些线索宣称出现新模型。</p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">供给侧：</strong>未找到报告日可核实的 NVIDIA 新芯片或算力供给公告。EmbeddingGemma 2 体现设备端检索部署方向，但不能据此推出数据中心需求下降；X 中转述的 GPU 规模比较没有作为事实采用。</p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">报告日政策：</strong>分别检查最高人民法院、网信办、工信部和新华社关于人工智能的公开发布与报道线索，未取得可核实的报告日新规、司法文件或政策原文。最高法 9 月 7 日发布的涉人工智能纠纷意见是历史背景，不据此推演本期新增责任或生效规则。<a class="src" href="https://www.court.gov.cn/zixun/xiangqing/511111.html">最高人民法院意见发布说明</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">未确认融资：</strong>Brave 线索中出现 DeepSeek 融资洽谈报道，但现有材料为匿名信源转述，未取得公司确认或交易文件。本期不把金额、投资者参与或交易完成状态写成已证实事实，也不列入要闻。</p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong>截至本期截稿，未找到腾讯或产品自有渠道在 10 月 7 日或次日凌晨发布、且能核实原始日期的更新。WorkBuddy 日志当前可见顶部为 5.7.5（2026-10-03），记录定时任务运行汇总、任务产物通知和海外版 Outlook 连接器；这是近期背景，不是报告日更新。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy 更新日志</a></p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p>WorkBuddy 近期把定时任务的历次运行、产物通知和邮件/日历连接器放在同一办公代理体验中，显示其竞争点包括持续任务管理和业务工具接入；日志只能证明记录了这些功能，不能证明所有地区、账户或订阅均已开放。CodeBuddy IDE 当前日志顶部为 4.12.1（2026-09-20），包含项目记忆、可共享项目级技能和长会话历史加载；这类协作与上下文功能可能降低团队重复配置，但同样属于历史版本背景。<a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy IDE 更新日志</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>已核对 WorkBuddy、CodeBuddy IDE、混元、元宝、腾讯云及微信 AI 的给定官方入口和可读更新线索。WorkBuddy 与 CodeBuddy 本期无已核实的新发布；腾讯云 TokenHub 与混元未取得可确认本期更新的原始正文，元宝和微信 AI 也未找到腾讯侧带本期日期的公告。合作方或模型供应商提到接入，不计作腾讯自有更新。`tencent.has_verified_update` 为 `false`，`official_update_urls` 为空。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>本地部署开始覆盖检索层，而不只是生成模型。</h4><p>EmbeddingGemma 2 把多种媒体映射进同一设备端向量空间；它降低了开发者尝试本地多模态搜索的入口门槛。Google 公布的内存和存储数据仍需在更多设备上验证。下一项可观察信号是不同硬件的召回质量、索引耗时和持续运行成本。</p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>企业代理的评估单位正在从动作走向流程。</h4><p>OpenAI 与 Ironclad 的 11 项任务要求代理维持审批规则并验证流程结果；与普通网页操作相比，这将业务约束纳入评估。任务样本仍小，时间也为模拟估算。采购判断应等待更广任务覆盖、真实环境错误率和人工复核数据，而不是只看演示成功率。</p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>能力开放逐渐带上治理条件。</h4><p>Decisions API 把类型化决策单独提供给开发者；Anthropic 则按安全任务和资格分层开放网络能力。前者重在编排速度，后者重在访问控制，两者都把模型能力包装成有边界的接口。可验证的行业变化将体现在准确率、访问审批、滥用处置和失败回退，而不只是厂商给出的速度或能力描述。</p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>产品宣布与实际可用需要分开管理。</h4><p>OpenAI 的 College Planner 仍是即将推出；Flow Music 的插件导出则已由 Google 明确描述为可用能力。对产品决策者而言，路线图、测试开放和正式可用是不同状态，市场评估应逐项记录开放日期、用户资格和地区条件，避免把公告中的未来式功能算作当前竞争能力。</p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>Google、OpenAI、Anthropic 的官方公告和更新日志用于确认发布日期、功能描述与开放范围；厂商自报的性能、内存、速度和使用统计均明确归属厂商，不作为独立验证结果。</li><li>OpenAI 的数学成果及 Ironclad 评估提供公司公开材料，但前者仍待数学界逐项审阅，后者只覆盖 11 项任务且时间为模拟估算。</li><li>腾讯专栏依据产品官方更新日志区分版本记录和本期新增；日志可证明页面记录的版本日期和功能，不单独证明所有用户都已获得相同权限。</li><li>对官方渠道与指定新闻机构的检索未发现本期可核实政策或融资原始文件，故不把搜索线索写成确定事实。分析判断均以已引用事实为基础，并标出尚待验证的条件。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
