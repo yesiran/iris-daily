@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28206%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2214%22%20r%3D%2219%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.18%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2231%22%20r%3D%2213%22%20fill%3D%22%23fff%22%20opacity%3D%220.16%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2216%22%20r%3D%2214%22%20fill%3D%22%23fff%22%20opacity%3D%220.21%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让模型整理自己的工作台：上下文开始成为可学习的状态</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="7c355bdaa63bac70b4da80a98f81e6efce2e53a09a8bece70d38632065557250">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-10-09</span></div>
+  <h1 class="doc">让模型整理自己的工作台：上下文开始成为可学习的状态</h1>
+  <div class="dateline"><span>全文 <b>2,670</b> 字</span><span>约 <b>7</b> 分钟</span><span>章节 <b>8</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Context Language Models</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2609.37725">https://arxiv.org/abs/2609.37725</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Rulin Shao 等</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">University of Washington；Meta Superintelligence Labs；MIT；Trillium Labs</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-09-29</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">原始预印本可读；作者提交 HF Papers；许可已核实；未核实同行评审接收或独立复现</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 上下文管理, 长程智能体</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-10-09.html">https://yesiran.github.io/ai-paper-daily/reports/2026-10-09.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-10-09-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h1" href="#s3">来龙去脉</a><a class="t-h2" href="#s4">第一层：先把整理时机交给模型。</a><a class="t-h2" href="#s5">第二层：移出工作台的资料仍能取回。</a><a class="t-h2" href="#s6">第三层：输入也可以成为程序操作的对象。</a><a class="t-h1" href="#s7">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s8">来源</a></nav>
+    <main><p>2026-10-09 · 截稿快照</p><p>截至 01:30（北京时间），今天推荐《Context Language Models》，阅读版本为 arXiv v1。它在报告日前 10 天公开，符合优先选题窗口，未与提供的台账重复。作者与机构以原文署名为准；HF 页面记录了作者提交，但这里只把它作为发现入口，不使用动态赞数或排名作为截稿前的质量证据。<a class="src" href="https://arxiv.org/html/2609.37725v1">原文与署名</a> <a class="src" href="https://huggingface.co/papers/2609.37725">HF 论文页</a></p><p>原文明确采用 CC BY 4.0。本篇署名归于 Rulin Shao 等作者，保留原文和许可链接；中文解释、自拟场景及产品推演属于改写，不代表作者认可这些推演。许可允许分享和改编，要求适当署名、链接许可并说明修改。<a class="src" href="https://creativecommons.org/licenses/by/4.0/">许可说明</a></p><h1 id="s1">推荐理由</h1><p>这篇论文值得读，是因为它把一个常被当作外围工程的问题，变成了模型可以参与决策的问题：下一轮究竟应该看到什么？</p><p>作者的核心实现很直接：把实时上下文映射成可编辑文件，模型对文件的修改会同步到下一轮输入。通常只追加文本的交互过程，因此获得了修改当前状态的能力。<a class="src" href="https://arxiv.org/html/2609.37725v1#S4.SS1">原文 §4.1</a></p><p>我的判断是，这个接口变化比某一次分数提升更值得关注。只让模型继续写，意味着它必须带着已经形成的记录向前走；允许调整下一轮输入，则可以研究它如何保留证据、更新结论，以及撤下已经失效的内容。这些是从接口推导出的研究与产品机会，不能直接等同于可靠性已经得到解决。</p><h1 id="s2">七拍故事</h1><p>以下用一个自拟的研究助手场景解释机制，不是论文中的实验案例。</p><p><strong>主角。</strong> 一个助手要比较两条技术路线。它已经读过材料，工作台上放着原文摘录、几个候选解释和待验证问题。这里的“上下文”，就是下一次生成时实际进入模型的那份材料，而不是所有曾经保存过的文件。</p><p><strong>困境。</strong> 助手后来发现，最初支持路线甲的证据其实使用了不同的测试条件。它把纠正写在末尾，却仍带着此前的推断继续工作。记录越来越完整，但当前判断究竟是什么，反而越来越难看清。这个假想场景揭示了两个不同需求：保存调查历史，以及给下一步提供准确的工作状态。</p><p><strong>旧路。</strong> 一种做法是定期总结，把长记录缩成短记录。问题在于，“简短”不足以定义好状态。原文中的限定条件可能只占一行，却决定结论是否成立；十段失败尝试可能很长，却只需要保留一个避免重复的提示。总结需要知道下一步要做什么，才有依据决定保留什么。</p><p><strong>转折。</strong> 把工作台视为可更新的状态，就能换一种提问方式：不要先问怎么把所有内容缩短，而是先问接下来这一步需要哪些事实。假如下一步是确认可比性，测试条件应该居于显眼位置；假如下一步是写结论，已经被推翻的猜测应该带着状态标记，而不是继续与证据并排出现。</p><p><strong>解法。</strong> 在这个解释场景中，助手可以维护三块内容：已核实的事实、当前假设、尚缺的证据。新材料到来时，只更新受影响的部分；原始材料另外保留可追溯的位置。这样，“事实被修正”与“又增加了一条消息”有了不同的表达方式。这是理解论文接口的自拟例子，不是对其实际运行轨迹的复述。<a class="src" href="https://arxiv.org/html/2609.37725v1#S4.SS1">机制依据：原文 §4.1</a></p><p><strong>结局。</strong> 理想结果不是助手记住更多句子，而是它进入下一步时，仍能回答：哪些判断有效，哪些已经撤回，哪个问题还没解决。是否真的改善任务表现，需要把相同任务、相同模型和相同预算放在一起验证；看见漂亮的状态笔记并不足以判断成功。</p><p><strong>内核。</strong> 这个故事的因果链是：记录形式决定下一步看见什么，下一步看见什么影响决策，因此管理记录也可能成为任务能力的一部分。更进一步的推断是，长程智能体的训练对象可以包含“如何构造继续工作的条件”。这里没有推出更大的上下文无用，也没有推出自主整理必然胜过人工规则。</p><h1 id="s3">来龙去脉</h1><p>倒读这条研究线，可以把问题拆成三层：何时整理、如何取回、谁来决定当前状态。</p><h2 id="s4">第一层：先把整理时机交给模型。</h2><p>SelfCompact 将压缩工具与轻量判断准则结合，让模型依据任务进展选择时机。它提醒我们，推导进行到一半与子任务已经完成，即使文本长度相同，也可能需要不同的处理。这条前驱帮助定位今天的问题：长度阈值只是一个信号，任务结构也是信号。<a class="src" href="https://arxiv.org/abs/2606.23525">Self-Compacting Language Model Agents</a></p><h2 id="s5">第二层：移出工作台的资料仍能取回。</h2><p>ACM 提供专门的上下文编辑工具，让模型将内容卸载到外部记忆，并按需查询。由此可以区分两件事：一份资料是否仍被保存，以及它是否正在占用实时上下文。对于产品而言，这个区分意味着，“暂时不看”不必等于“永久丢失”。后一判断是对机制的解释，不是额外实验结论。<a class="src" href="https://arxiv.org/abs/2607.23809">ACM 原论文</a></p><h2 id="s6">第三层：输入也可以成为程序操作的对象。</h2><p>RLM 把长输入放入外部环境，让模型通过程序检查、拆分，并递归处理片段。这提供了另一种视角：模型不必每次直接接收整个资料库，可以参与选择读取路径。它与今天的论文值得并读，因为“从外部材料读入什么”和“当前工作台应该留下什么”是相邻但不同的问题。<a class="src" href="https://arxiv.org/abs/2512.24601">Recursive Language Models</a></p><p>这三层不是一条所有作者共同认可的线性进化史，而是我的对照框架。它们分别把时机、存取和输入组织显式化。今天这篇论文则使实时状态本身成为可修改对象。对照后的关键问题是：模型有没有足够好的判断，知道什么值得留下，以及什么可以安全地换成索引？<a class="src" href="https://arxiv.org/html/2609.37725v1#S4.SS1">CLM 原文 §4.1</a></p><h1 id="s7">对思染：模型进化 &amp; 怎么用</h1><p>先看实验边界。表 2 中，同样经过强化学习的 Qwen3.5-9B，CLM 与摘要方案的准确率分别为 42.5% 和 42.1%，每问计算量分别为 1.34 和 2.19 PFLOPs。这里的计算口径考虑前缀缓存复用，不能直接换成账单降幅或耗时降幅。<a class="src" href="https://arxiv.org/html/2609.37725v1#S5.SS2">原文 §5.2、表 2；计算口径见 §4.1</a></p><p>据这些数值，较稳妥的解释是：在这项对照中，准确率接近，而计算需求有明显差别。0.4 个百分点的差距本身不足以证明能力显著领先；本文也没有独立复现实验。产品上值得验证的是，状态整理能否减少重复处理，同时维持证据完整性。</p><p>对你的研究日报、长文分析或持续调查，最直接的启发是一份明确的“当前判断”。可以设想它包含：目标、已核实事实及出处、仍有分歧的解释、下一步需要补的证据。完整调查记录另行保留。这样，新证据到来时，要更新的是具体判断，而不只是把一段新材料放在末尾。这是待验证的产品设计建议，不是论文宣称已经验证过的日报方案。</p><p>一个容易忽略的反例是：某条材料今天看似无关，却是明天核对结论所需的唯一证据。若整理只依据当前相关性，系统可能得到更流畅的回答，却失去纠错条件。所以我会把“能否恢复并核对被撤下的内容”列为评估项，而不仅观察上下文长度。</p><p>另一个反例是任务很短。假如输入已经精简，额外的整理判断可能增加工作量。此时应比较成功完成任务的总成本，不能预设每次编辑都有价值。上述判断来自状态可编辑机制的条件推演，尚不能作为普遍部署结论。</p><p>如果未来做受控试验，我建议使用三类任务：关键原文必须逐字保留；中途出现证据纠正；早先撤下的材料随后重新变得相关。比较最终正确率、证据能否回溯、重复探索次数与总计算需求。这样才能区分“工作台看起来整齐”和“后续决策确实更可靠”。这份建议仅用于说明论文如何启发评估，本次任务没有执行任何程序或配置修改。</p><p>我最看重的进化方向是：模型开始有机会学习怎样准备自己的下一步。能输出答案只是一次行动；能维护足以支撑后续行动的状态，才与持续工作发生关系。它是否能跨任务稳定成立，仍需要更多证据。</p><h1 id="s8">来源</h1><ul class="ls"><li><a class="src" href="https://arxiv.org/html/2609.37725v1">Context Language Models，arXiv v1</a>：2026-09-29；署名、机构、机制与表 2。实验结果均属于作者报告。</li><li><a class="src" href="https://huggingface.co/papers/2609.37725">HF Papers 论文页</a>：论文标示发布日期为 2026-09-29，作者提交记录为 09-30；用于选题入口，不采用动态热度。</li><li><a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>：许可条件；页面发布日期未标明。</li><li><a class="src" href="https://arxiv.org/abs/2606.23525">Self-Compacting Language Model Agents</a>：初稿 2026-06-22；用于解释整理时机这一前驱问题。</li><li><a class="src" href="https://arxiv.org/abs/2607.23809">ACM: Agentic Context Management for Long Horizon Tasks</a>：初稿 2026-07-26；用于解释卸载与取回。</li><li><a class="src" href="https://arxiv.org/abs/2512.24601">Recursive Language Models</a>：初稿 2025-12-31；用于解释程序化读取输入的研究背景。</li></ul></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
