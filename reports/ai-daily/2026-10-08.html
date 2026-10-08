@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28210%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2214%22%20r%3D%2219%22%20fill%3D%22%23fff%22%20opacity%3D%220.20%22%2F%3E%3Ccircle%20cx%3D%2226%22%20cy%3D%2230%22%20r%3D%2214%22%20fill%3D%22%23fff%22%20opacity%3D%220.10%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-10-08</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="6f6d6cd79be24c0ffdc83c852143b2450ff093bfb62b0672111d14bfe4a81d68">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-10-08 · 周四</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>14</b> 条</span><span>趋势 <b>4</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-10-09 02:00（北京时间），覆盖10月8日全天及次日凌晨截稿前增量。今日主线是AI从回答问题走向直接提供界面和执行环境：交互成本、重复任务成本与部署边界同时变化。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>GPT-6进入ChatGPT日常对话，回答可以直接成为交互工具</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>Haiku 5.5降低短任务价格，Sonnet缓存降价改善长任务账单</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>GPT-6.1 Sol新增Ultrafast，工作代理的速度与访问范围分开选择</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>Long-WAM把视觉历史变成行动收益，也暴露记忆的实时成本</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>Windows开始提供持久代理运行底座，RTX Spark进入预订阶段</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>GPT-6进入ChatGPT日常对话，回答可以直接成为交互工具</h3><p class="lp"><span class="lk">事件</span>OpenAI官方公告原始日期为10月7日；对应公开宣布时刻为北京时间10月8日02:05:04。Intelligent UI让ChatGPT按任务生成图表、表单和交互组件，而不只返回文字。付费计划先开始全球分批推送，Free、Go从官方日期10月8日起开始；这是推送安排，不等于每个账户已经收到。该次发布针对Chat，不能据此推断Work、Codex同步换模。<a class="src" href="https://openai.com/index/gpt-6-for-everyone/">官方公告</a>、<a class="src" href="https://x.com/OpenAI/status/2107894997538525580">首发帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>用户过去要把回答复制到表格、计算器或其他应用，再完成一次操作；现在部分操作可以直接留在答案里。对教育、决策辅助和轻量工具产品，这意味着竞争开始包含“答案能否立即使用”。我们的判断是，只包装文字输出的功能更容易被通用入口吸收，具有持续数据、业务权限和完整工作流程的产品仍有明确价值。</p></div><p class="lp"><span class="lk">接下来观察</span>在同一道真实任务上，记录生成界面的正确率、完成操作的步数和二次修改成本。官方更新说明指出，使用Astra的Pro推理模式不支持Intelligent UI，不能将“Pro订阅”和“Pro推理模式”混为一谈。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">产品更新说明</a></p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>Haiku 5.5降低短任务价格，Sonnet缓存降价改善长任务账单</h3><p class="lp"><span class="lk">事件</span>Anthropic原始公告日期10月7日；Haiku首发帖对应北京时间10月8日02:01:16。Haiku 5.5在不超过10万token的提示下，每百万输入／输出token分别为0.10／0.50美元；超过门槛则为0.50／2.50美元。Sonnet 5.5缓存读取同时从每百万0.20降至0.10美元。官方称Haiku平均任务成本减少约75%，该估算考虑了分词变化，不能把短提示单价下降90%当成所有任务账单都下降90%。<a class="src" href="https://www.anthropic.com/claude-haiku-5-5">价格与上线公告</a>、<a class="src" href="https://x.com/claudeai/status/2107894039626277339">首发帖</a></p><div class="why"><span class="why-k">为什么重要</span><p>分类、压缩上下文、定点检索通常不需要最强模型，却会在代理循环中反复发生。短任务单价下降后，把复杂工作拆给小模型的经济性变好；缓存降价则奖励保留稳定上下文的长流程。产品团队更值得重新评估任务分工与缓存命中，而不是只替换一次模型名称，因为输出量、失败重试和升级到大模型仍决定最终成本。</p></div><p class="lp"><span class="lk">接下来观察</span>以成功完成的一项业务任务为单位，比较费用、延迟和人工返工，而非仅比较每百万token价格。Haiku的可调推理投入也应纳入测试；便宜的小模型不能自动替代复杂编码任务中的Sonnet或Opus。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>GPT-6.1 Sol新增Ultrafast，工作代理的速度与访问范围分开选择</h3><p class="lp"><span class="lk">事件</span>10月8日官方日志明确新增GPT-6.1 Sol Ultrafast，适用于Codex和ChatGPT Work的Pro 500美元计划及符合条件的Enterprise、Edu；Enterprise默认关闭，需管理员启用，支持美国与欧洲经济区加瑞士的推理驻留。这是本期新增速度模式，Sol模型本身已在9月29日日志出现，不能写成今天首次发布。<a class="src" href="https://learn.chatgpt.com/docs/changelog">10月8日更新</a></p><p class="lp">同日14:38:33，Tibo账号称Codex Cloud已经重新推出，并引用Tailscale接入消息。Tailscale原文日期为10月6日，证实云任务可以访问受限的私有网络资源；因此今天的新陈述是云产品重新推出，私网连接不是8日首次宣布。连接仍有协议和网络条件，不能等同于完整远程桌面或任意入站访问。<a class="src" href="https://x.com/thsottiaux/status/2108084615349170480">账号原帖</a>、<a class="src" href="https://tailscale.com/blog/codex-cloud-tailscale">Tailscale说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>企业使用代理的两个瓶颈是等待结果，以及代理接触不到内部系统。速度模式改变等待时间的选择，私网连接改变可执行任务的边界，两者共同影响部署决策。我们的推断是，采购将更强调“这一档服务能完成哪些内部流程”，而非只看模型榜单；管理员开关、数据驻留和网络授权会直接决定上线范围。</p></div><p class="lp"><span class="lk">接下来观察</span>在内部测试与数据查询任务中测量端到端完成时间，并确认套餐、驻留和网络策略能同时满足要求。日志没有给出Sol Ultrafast的统一加速倍数，不能借用其他模型的倍数或费率。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>Long-WAM把视觉历史变成行动收益，也暴露记忆的实时成本</h3><p class="lp"><span class="lk">事件</span>Long-WAM的arXiv首版提交于10月7日17:58:04 UTC，即北京时间10月8日01:58:04。作者报告，在RoboCasa GR-1中，视觉历史从0增加到19.2秒，成功率由63.3%升至78.7%；双向预训练的对照并未得到相同收益。论文与实验材料已公开，这是特定机器人任务中的作者结果，不是独立复现或通用机器人产品可用性证明。<a class="src" href="https://arxiv.org/abs/2610.10528">论文与提交记录</a></p><p class="lp">同样在北京时间8日凌晨提交的RoboJEPA研究，将预测模型扩展到80亿参数、使用12类机器人本体数据，并分析预测误差与规划表现的关系。它提供另一条研究线索：不仅要增加数据和模型规模，还要判断学到的表示是否能服务下游行动。<a class="src" href="https://arxiv.org/abs/2610.10515">RoboJEPA论文</a></p><div class="why"><span class="why-k">为什么重要</span><p>实时任务需要记住动作发生的顺序，但读取更多历史也会拖慢反应。Long-WAM的价值是把“有记忆”和“能利用记忆”区分开，并用预训练方式与延迟测量检验它。对具身产品，记忆窗口因而是需要分配的计算预算；对其他代理，它也提示应按任务状态保留上下文，而不是默认越长越好。</p></div><p class="lp"><span class="lk">接下来观察</span>19.2秒历史配置在RTX 5090上的动作块延迟为341.0毫秒，107.4毫秒对应2.4秒历史，不能混写成最长上下文仍保持最低延迟。下一步关键是同一策略能否动态调整窗口，并在真实机器人上复现收益。<a class="src" href="https://arxiv.org/html/2610.10528v1">实验与延迟表</a></p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>Windows开始提供持久代理运行底座，RTX Spark进入预订阶段</h3><p class="lp"><span class="lk">事件</span>近期背景，NVIDIA官方公告原始日期10月7日，未给出可核实分钟时刻。公告称Microsoft Execution Containers已经正式可用，提供操作系统层面的后台代理执行基础；RTX Spark笔记本开始预订，计划10月16日上市，紧凑桌面机计划11月销售。本文继续关注它，是因为采购与本地代理架构的选择已进入可行动阶段，而不是把它写成8日新首发。DGX Station for Windows仍是预览。<a class="src" href="https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/">NVIDIA公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>本地代理要长期运行，除了算力还需要隔离、状态管理和企业治理。操作系统提供公共底座，会减少应用各自搭建运行环境的重复成本；本地硬件则提供另一种数据处理与费用结构。我们的判断是，桌面AI竞争正在从聊天窗口延伸到谁能可靠地托管持续任务，硬件采购与软件分发因此开始相互牵动。</p></div><p class="lp"><span class="lk">接下来观察</span>正式机器交付后的模型吞吐、功耗、连续运行稳定性，以及MXC对第三方代理的实际支持。峰值FP4算力和统一内存容量不能直接换算成真实工作流速度，更不能据此宣称所有云模型都能无损迁移。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 14 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI／GPT</div><div class="srow"><p><strong class="st">额度与执行入口：</strong>Tibo账号在8日03:19:17宣布向付费账户提供一次可保存的额度重置，并于11:44:55称已经落地。可支持该账号的宣布与确认，不能证明每位用户的实际到账额度，也不是永久提高订阅上限。本期将其放在快讯，价值低于实质能力与访问范围变化。<a class="src" href="https://x.com/thsottiaux/status/2108040921044639779">完成帖</a></p></div><div class="srow"><p><strong class="st">研究背景：</strong>10月6日发布的数学成果仍在引发研究者讨论；官方提供研究说明和形式化证明材料。8日研究人员对科学发现前景的评论属于判断，不能据此将未公开模型等同于可购买产品，也不能把单领域突破概括为普遍超越人类。<a class="src" href="https://openai.com/index/sharing-ai-progress-in-mathematics/">数学研究原文</a></p></div></div><div class="sector"><div class="sector-h">Google／DeepMind／Gemini</div><div class="srow"><p><strong class="st">近期背景，10月6日：</strong>EmbeddingGemma 2将文本、图像、视频与音频表示放入统一向量空间，采用Apache 2.0许可。对需要本地跨媒体检索的产品，值得评估是否减少多套索引维护；官方基准尚不等于自有语料上的搜索质量。<a class="src" href="https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/">官方介绍</a></p></div><div class="srow"><p><strong class="st">近期背景，10月6日：</strong>Flow Music的Spaces支持用自然语言构建音乐工具，并导出VST3／AU插件。它的意义在于生成结果能进入既有专业工作流；不应把原公告的产品描述扩大为所有地区、所有账户都已开放。<a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/create-music-production-plugins-google-flow/">Google Labs原文</a></p></div><div class="srow"><p><strong class="st">API背景，10月6日：</strong>日志列出Nano Banana 2.1正式可用及上一代图像模型的弃用安排。本期没有取得8日新增Gemini模型或消费者开放范围的明确公告，Gemini应用栏目与Labs独立公告也已纳入核对。<a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">API日志</a></p></div></div><div class="sector"><div class="sector-h">Anthropic／Claude</div><div class="srow"><p><strong class="st">近期背景，10月6日：</strong>Claude for Google Workspace向付费计划开放公测，可在Docs、Sheets、Slides侧栏读取和编辑当前文件，也提供从Claude创建、编辑Google文件的连接器。默认编辑前逐项批准；Team、Enterprise的连接器还受管理员启用条件约束。它提供的是现有文件工作流中的操作能力，不能当成8日新发布。<a class="src" href="https://claude.com/resources/articles/claude-now-works-in-google-docs-sheets-and-slides">官方产品文章</a></p></div><div class="srow"><p><strong class="st">订阅与API连接，10月7日：</strong>Max、Team新增月度API额度，按几天逐步开放，需要关联Console组织；不是所有账户立即收到，也不是提高聊天额度。Python、TypeScript SDK同时增加计算机与浏览器使用的公测支持，两项变化应与Haiku模型上线分别看待。<a class="src" href="https://support.claude.com/en/articles/12138966-release-notes">订阅额度更新</a>、<a class="src" href="https://www.anthropic.com/claude-haiku-5-5">SDK公告</a></p></div></div><div class="sector"><div class="sector-h">中国AI</div><div class="srow"><p><strong class="st">产品资料，发布日期未标明：</strong>MiniMax的M3.1-Flash-Preview官方页面描述了MiniMax Code中的使用路径，要求先确认账号模型权限；其预览指南列出始终开启思考与五档推理投入。页面也列出API模型ID和兼容接口，不能因此断言所有API账户已开放，更不能沿用旧体验帖的“尚无API”作为当前结论。开放时间、范围和长期价格仍未核实，不计作本期模型首发。<a class="src" href="https://agent.minimax.cn/tools/m3-1-flash-preview">官方产品说明</a></p></div><div class="srow"><p><strong class="st">模型与桌面应用：</strong>本期未取得字节／豆包／Seed、DeepSeek、智谱、MiniMax、通义、小米MiMo在报告窗口内可核实的新模型发布或桌面邀测原公告。模型目录、网关可选项和未确定测试版本的体验帖，不足以证明厂商当天发布。本栏保留这一缺口，不用既有模型排名或著作权登记替代产品新闻。</p></div></div><div class="sector"><div class="sector-h">AI芯片／NVIDIA／算力</div><div class="srow"><p><strong class="st">科学算力支持，10月8日：</strong>NVIDIA承诺未来五年提供价值10亿美元的科学支持；Anthropic同日承诺三年1.5亿美元支持Genesis Mission相关科研使用。两者期限、服务内容不同，是承诺而非已经支付的现金，不能合并成当日成交金额。<a class="src" href="https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years">NVIDIA原文</a>、<a class="src" href="https://www.anthropic.com/news/genesis-mission-commitment">Anthropic原文</a></p></div></div><div class="sector"><div class="sector-h">研究与评估</div><div class="srow"><p><strong class="st">评估基础设施，近期背景10月7日：</strong>Snorkel将开放基准资助承诺从300万美元扩大至3000万美元，并设立持续红队与研究奖学金。这项投入针对模型评估的共同难题：排行榜要能发现污染、验证器缺陷和被指标优化掩盖的问题。<a class="src" href="https://benchmarks.snorkel.ai/frontier-ai-is-accelerating-open-benchmarks-need-to-keep-up/">资助原文</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">中国政策状态：</strong>最高法、网信办、工信部及新华社均已单独核查，未取得本期新增AI规范性文件的完整证据。网信办10月8日转载的《向新图强，创新潮涌神州大地》属于创新发展综述，不是新监管规则；没有据此推断新的适用责任或生效日期。<a class="src" href="https://www.cac.gov.cn/2026-10/08/c_1793212322045639.htm">网信办转载原文</a></p></div><div class="srow"><p><strong class="st">平台规则，10月8日：</strong>Anthropic公布使用政策修订，官方注明11月12日生效。它涉及欺骗性活动和物理硬件控制等范围，是厂商服务条件，不是政府立法；相关实施要求应按政策原文理解。<a class="src" href="https://www.anthropic.com/news/2026-usage-policy-update">政策更新原文</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">Manus融资，10月8日：</strong>路透社报道，其母公司Butterfly Effect称完成超过5亿美元融资，由博裕资本与IDG资本共同领投。资金说明来自公司经媒体转述，未取得完整交易文件，也没有据此推算估值。对产品竞争的实际信号是独立代理企业获得继续投入交付与分发的资金，而非融资规模自动证明留存或利润。<a class="src" href="https://www.streetinsider.com/Reuters/Manus%2Braises%2Bmore%2B%24500%2Bmillion%2Bafter%2BMeta%2Bexit/27162541.html">路透社报道转载</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> WorkBuddy、CodeBuddy均未取得报告日或已核实凌晨窗口内带原始发布日期的腾讯自有发布证据。官方页面确有产品能力描述，但不能把“最新动态”栏目名称或页面抓取日期当成本期首发日期。</p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p>WorkBuddy官方页面描述了独立文件浏览器：文件拥有各自的Buddy对话，可在独立窗口共同编辑并存回原文件，范围包括常见办公格式、Markdown和HTML。官方明确只读取主动打开或添加的文件，并称打开、编辑本地文件不消耗积分；这不能扩写成所有AI处理免费。页面未提供该条发布日期与最低版本，因而作为能力背景保留，不计入当日更新。<a class="src" href="https://cloud.tencent.com/act/pro/workbuddy">腾讯云WorkBuddy页面</a></p></div><div class="srow"><p>这项能力值得跟踪的原因是，文件本身开始成为任务入口：用户可以围绕已有材料直接操作，减少上传、导出和重复解释上下文。与Claude的Workspace侧栏相比，两者分别强调本地文件与在线办公文件，差异落在文件权限、变更能否回写、跨文件协作和人工验收。竞争判断应建立在完整任务能否完成上，不以预置专家数量或宣传话术判断效果。</p></div><div class="srow"><p>CodeBuddy官方定位覆盖插件、IDE和CLI三种形态，分别连接已有编辑器、可视化开发与命令行流程；这属于持续产品定位资料，不代表本期新增。对同时采购WorkBuddy与CodeBuddy的团队，下一步更值得核对任务、文件和权限是否能一致流转，而不是只检查两端是否出现相同模型名称。<a class="src" href="https://intl.cloud.tencent.com/zh/products/acc?lang=zh">CodeBuddy官方产品页</a></p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>覆盖WorkBuddy产品与日志、CodeBuddy IDE／CLI文档，以及混元、元宝、腾讯云和微信AI相关公开入口。WorkBuddy与CodeBuddy当前日志顶部和最高版本仍待核实；已检索到的历史版本不能充当当前版本。混元模型上线、元宝产品变化及微信接入范围也未取得本期带日期的自有公告。官方页面中微信／企微及元宝录音笔的接入描述有资料价值，但其发布时间与具体开放条件未完整确认，不据此填报当日上线。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>AI回答正在承载操作，文件正在承载上下文。</h4><p>今天的Intelligent UI把交互组件嵌入答案；近期Claude Workspace与WorkBuddy资料把操作接回原文件。由此推断，产品价值正更多取决于减少多少搬运和返工，而不只是生成多少内容。机会在于连接稳定数据、业务权限与可回写的成果；可以验证的信号是任务完成率和跨应用切换次数，而不是界面看起来更丰富。<a class="src" href="https://openai.com/index/gpt-6-for-everyone/">交互入口</a>、<a class="src" href="https://claude.com/resources/articles/claude-now-works-in-google-docs-sheets-and-slides">文件操作</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>成本竞争正在分成“便宜执行”和“更快执行”两条路线。</h4><p>Haiku与Sonnet缓存降低反复执行的费用，Sol Ultrafast则提供有套餐门槛的速度选择。这意味着一个代理的模型路由应同时考虑任务难度、时延价值与缓存复用：后台整理和交互阻塞任务不必采用同一档服务。是否值得付费提速，要用完整任务节约的时间及额外费用验证，不能从单价或token生成速度直接推出投资回报。<a class="src" href="https://www.anthropic.com/claude-haiku-5-5">成本变化</a>、<a class="src" href="https://learn.chatgpt.com/docs/changelog">速度与范围</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>记忆、计算和评估必须一起设计。</h4><p>Long-WAM证明历史收益依赖预训练与执行预算，RoboJEPA研究表示误差能否预测规划能力；近期Snorkel资助则针对持续评估的缺陷。这组证据提示，堆长上下文或追单个总分都可能遗漏真正约束。机器人产品更有价值的比较是固定时延预算下的任务成功率，并区分训练分布内表现、未知组合任务和真实环境结果。<a class="src" href="https://arxiv.org/html/2610.10528v1">记忆实验</a>、<a class="src" href="https://arxiv.org/abs/2610.10515">表示与规划</a></p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>企业代理的竞争包含运行位置与治理。</h4><p>本期Sol Ultrafast列明驻留地区和管理员开关，近期Windows MXC提供操作系统执行底座，Tailscale接入则扩展云代理可触达的内部资源。由此推断，云与本地不会只由模型能力决定：组织权限、持续运行需求和数据边界会影响选择。具体观察信号是同一内部流程能否在合规权限下完成、断线后是否恢复，以及谁承担运行和维护成本。<a class="src" href="https://learn.chatgpt.com/docs/changelog">工作代理条件</a>、<a class="src" href="https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/">本地底座</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>公司公告、明确日期的日志和arXiv提交记录支持发布、价格、计划和研究范围；厂商评测、收益估计与资助承诺均保留归属，不作为独立实测或已完成支付。</li><li>Manus采用路透社报道的公开转载，属于媒体证据；没有完整交易文件，不延伸估值、股权或监管责任。来源没有分钟时刻时保留官方原始日期，不虚构北京时间首发。</li><li>已取得的完整X记录可支持“该账号在该时刻陈述什么”。额度落地与云产品重新推出仍是账号陈述，不能替代账户实测；截断转推和未读长文不作为性能证据。</li><li>近期背景均明确原日期；本期观察与趋势为基于相关事实的分析推断。未解决的中国模型发布、腾讯更新日期与版本缺口保留，不用搜索摘要、页面修改时间或历史日报填补。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
