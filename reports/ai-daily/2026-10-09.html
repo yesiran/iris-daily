@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%28162%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f9bc0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231668dc%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2211%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.28%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2238%22%20r%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.12%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2222%22%20r%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%20opacity%3D%220.25%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27Georgia%2C%22Times%20New%20Roman%22%2Cserif%27%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3EAI%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🤖 AI 日报 · 2026-10-09</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.78;
+    font-size:16px;text-rendering:optimizeLegibility}
+  .page{max-width:820px;margin:0 auto;padding:44px 30px 90px}
+  a{color:inherit}
+
+  .mast-top{display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7.5vw,64px);
+    letter-spacing:.06em;margin:20px 0 10px;line-height:1.1}
+  .dateline{display:flex;gap:20px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:16px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink);margin-bottom:14px}
+  .notice{font-size:13px;color:var(--muted);line-height:1.7;border-bottom:1px solid var(--hair);
+    padding-bottom:18px;margin-bottom:34px;white-space:pre-line}
+
+  .listen{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:18px 22px;margin-bottom:38px}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin:52px 0 22px;border-top:3px solid var(--ink);padding-top:12px}
+  .sec-h .cn{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em}
+  .sec-h .en{font-family:var(--label);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+
+  .toc{border:1px solid var(--hair);background:var(--panel);padding:8px 22px;margin-bottom:36px}
+  .toc-it{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--hair);
+    font-size:14.5px;font-weight:500;text-decoration:none;line-height:1.5}
+  .toc-it:last-child{border-bottom:0}
+  .toc-it:hover span:last-child{color:var(--red)}
+  .toc-it .tn{font-family:var(--label);color:var(--red);font-size:13px;min-width:14px}
+
+  .item{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:30px 0;border-bottom:1px solid var(--hair)}
+  .item:last-child{border-bottom:0}
+  .item-n{font-family:var(--label);font-size:46px;line-height:1;color:var(--hair);font-weight:500;
+    -webkit-text-stroke:1px var(--muted);color:transparent}
+  .item h3{font-family:var(--serif);font-weight:900;font-size:23px;line-height:1.5;letter-spacing:.01em;
+    margin-bottom:16px;text-wrap:balance}
+  .lp{margin-bottom:14px}
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.18em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  .why{border-left:4px solid var(--red);background:var(--panel);padding:14px 18px;margin:18px 0 6px}
+  .why-k{font-family:var(--label);font-size:10.5px;letter-spacing:.22em;color:var(--red);display:block;margin-bottom:6px}
+  .why p{font-size:15.5px;line-height:1.75}
+
+  a.src{font-size:11.5px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted);
+    word-break:keep-all;white-space:nowrap}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+
+  @media (max-width:560px){.item{grid-template-columns:1fr;gap:6px}.item-n{font-size:30px}
+    .listen{grid-template-columns:1fr}}
+
+  .sector{margin-bottom:26px}
+  .sector-h{display:inline-block;font-weight:600;font-size:15px;background:var(--ink);color:var(--paper);
+    padding:4px 14px;margin-bottom:6px;letter-spacing:.04em}
+  .srow{padding:12px 0;border-bottom:1px solid var(--hair);font-size:15px;line-height:1.75}
+  .srow:last-child{border-bottom:0}
+  .st{font-weight:600;margin-right:4px}
+  .srow p{color:var(--muted);white-space:pre-line}
+  .srow .st{color:var(--ink)}
+
+  .trend{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid var(--hair)}
+  .trend:last-child{border-bottom:0}
+  .trend-n{font-family:var(--serif);font-weight:900;font-size:34px;color:var(--red);line-height:1}
+  .trend h4{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.6;margin-bottom:10px}
+  .trend p{font-size:15px;color:var(--ink);line-height:1.8;white-space:pre-line}
+
+  .sources{list-style:none;font-size:13px;color:var(--muted);line-height:1.8}
+  .sources li{padding:8px 0 8px 18px;position:relative;border-bottom:1px dotted var(--hair)}
+  .sources li::before{content:"·";position:absolute;left:4px;color:var(--red)}
+
+  .folio{margin-top:60px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="d8f78c3f6fe1d673816527bd36c2daffd5eac82c2b982dc988a8dc41124e1283">
+</head>
+<body>
+<div class="page">
+  <div class="mast-top"><span>春茂聊AI · Iris 正餐层</span><span class="r">2026-10-09 · 周五</span></div>
+  <h1>🤖 AI 日报</h1>
+  <div class="dateline"><span>要闻 <b>5</b></span><span>分领域 <b>14</b> 条</span><span>趋势 <b>4</b> 判断</span></div>
+  <div class="mast-bar"></div>
+  <p class="notice">截至 2026-10-10 02:00（北京时间）。本期覆盖10月9日及次日凌晨增量：最值得关注的是协作交付、实时纠偏、Agent运行环境，以及世界模型训练中的物体交互瓶颈。</p>
+
+  <div class="sec-h"><span class="cn">今日要闻</span><span class="en">Top 5 · 先看目录再点读</span></div>
+  <nav class="toc"><a class="toc-it" href="#top1"><span class="tn">1</span><span>Claude扩大成果类型与协作能力，竞争进入团队交付流程</span></a><a class="toc-it" href="#top2"><span class="tn">2</span><span>OpenAI把Ultrafast与快速steering配在一起，速度要连同成本评价</span></a><a class="toc-it" href="#top3"><span class="tn">3</span><span>Deno团队加入Cloudflare，自托管Agent有新路线，现有客户有迁移窗口</span></a><a class="toc-it" href="#top4"><span class="tn">4</span><span>三万小时第一视角视频揭示瓶颈：人物动作进步，不代表物体交互跟上</span></a><a class="toc-it" href="#top5"><span class="tn">5</span><span>Sakana Namazu进入医生文献检索，专业AI价值落在查证链路</span></a></nav>
+  <article class="item" id="top1"><div class="item-n">1</div><div class="item-b"><h3>Claude扩大成果类型与协作能力，竞争进入团队交付流程</h3><p class="lp"><span class="lk">事件</span>官方原公告日期为10月8日，10月9日07:52:04的相关产品转推指向同批更新：Dashboards向付费计划开放beta，连接业务数据并持续刷新；Motion向Team、Enterprise开放beta。另一项独立变化是Docs、Slides、Design退出beta，覆盖包括Free在内的全部计划。这批能力今天仍值得看，因为它们直接改变AI产物的编辑、更新和交接方式，而非重复某款模型的首发。<a class="src" href="https://claude.com/fr/resources/articles/dashboards-and-motion">官方公告</a></p><p class="lp">团队可共同编辑成果，但开放范围并不一致：企业的Dashboards、Motion受管理员启用控制；含连接器数据的成果不能直接使用公开链接，Docs也有不同的外部分享限制。<a class="src" href="https://support.claude.com/en/articles/16994751-artifacts-admin-guide-for-team-and-enterprise-plans">企业管理说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>我的判断是，AI交付的瓶颈开始从“生成得出来”转向“同事能否继续用”。共同编辑与持续更新降低把聊天结果搬进正式工作流的摩擦，也让产品竞争延伸到数据连接、权限和成果维护。对团队采购而言，一次惊艳演示的权重会下降，跨人交接的完成率会更重要。</p></div><p class="lp"><span class="lk">接下来观察</span>用同一份业务材料验证，从首次生成到另一名同事接手修改、再次刷新数据的全过程是否保持格式、数据权限和引用。管理员可见的功能开关与实际可用性，比“所有计划”这一概括更有判断价值。</p></div></article><article class="item" id="top2"><div class="item-n">2</div><div class="item-b"><h3>OpenAI把Ultrafast与快速steering配在一起，速度要连同成本评价</h3><p class="lp"><span class="lk">事件</span>Tibo账号在北京时间10月9日03:15:14表示，steering已改进为更快响应运行中的调整，并同时宣布GPT-6.1 Sol Ultrafast。所附OpenAIDevs引用帖的时间是10月9日02:26:38，称其向API、Codex和ChatGPT Work推出。官方更新日志对应条目的原始日期为10月8日，不能改写成全部用户在10月9日首次获得。<a class="src" href="https://x.com/thsottiaux/status/2108275041276420573">Tibo原帖</a> <a class="src" href="https://learn.chatgpt.com/docs/changelog">官方更新日志</a></p><p class="lp">Codex、Work的Ultrafast适用于Pro 500及符合条件的Enterprise/Edu，企业需启用；Sol支持美国及欧洲经济区、瑞士的数据驻留。包含的订阅用量按Standard的8倍计，购买积分与企业按量使用按6倍计；API使用API定价。厂商“最高速度”宣传不等于完整任务等比例缩短。<a class="src" href="https://learn.chatgpt.com/docs/agent-configuration/speed">速度、范围及用量说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>最强的变化是纠偏成本：用户更早指出错误方向，模型就可能少走无效路径；更快执行则缩短下一轮反馈等待。两者组合有机会改善长任务的周转效率。但高用量倍率意味着收益必须通过少返工、少失败来兑现，不能仅凭每秒输出速度决定团队切换。</p></div><p class="lp"><span class="lk">接下来观察</span>固定任务、验收标准和允许的人工干预次数，比较Standard与Ultrafast的总耗时、纠偏后成功率及实际用量。单独记录“调整发出到方向改变”的时间，避免将模型提速与界面响应混为一个指标。</p></div></article><article class="item" id="top3"><div class="item-n">3</div><div class="item-b"><h3>Deno团队加入Cloudflare，自托管Agent有新路线，现有客户有迁移窗口</h3><p class="lp"><span class="lk">事件</span>Cloudflare与Deno在10月9日宣布团队加入，计划结合celld和workerd，把Workers与Durable Objects的自托管推进为正式支持的部署方式。Cloudflare原文承认，现有workerd的Durable Objects支持主要局限于单实例，分布式自托管仍有缺口；合并工作的目标是补齐它。<a class="src" href="https://blog.cloudflare.com/deno-joins-cloudflare/">Cloudflare联合公告</a></p><p class="lp">Deno同时给出具体安排：运行时继续维护一年，期间每月提供错误修复和安全更新，此后结束团队对该运行时的开发；Deno Deploy再运营六个月后关闭；JSR继续运营并迁入Cloudflare。未披露交易金额，也不能把尚在推进的平台合并当成已经交付的能力。<a class="src" href="https://deno.com/blog/cloudflare">Deno原文</a></p><div class="why"><span class="why-k">为什么重要</span><p>Agent需要持久状态、实时连接和跨任务协调，采购难点往往落在运行环境。可自托管的同一编程模型，可能减少部署方式变化时的重写负担。与此同时，Deno客户的维护与关闭窗口把迁移成本变成当前预算问题，平台选择必须同时评估能力和退出路径。</p></div><p class="lp"><span class="lk">接下来观察</span>关注合并后是否交付可跨节点恢复、迁移状态并处理故障的实现，以及Deno Deploy客户的实际迁移方案。运行时仍开源与原团队继续长期开发，是两件不同的事。</p></div></article><article class="item" id="top4"><div class="item-n">4</div><div class="item-b"><h3>三万小时第一视角视频揭示瓶颈：人物动作进步，不代表物体交互跟上</h3><p class="lp"><span class="lk">事件</span>《What 30,000 Hours of Ego-centric Video Does Not Teach》于10月8日17:59:49 UTC提交，即北京时间10月9日01:59:49。作者以约三万小时第一视角视频训练并分别评估人物动作与物体交互；在其设置中，增加数据带来的改善不对称，物体交互保真度明显落后。新的监督方式有所改善，但差距仍在。<a class="src" href="https://arxiv.org/abs/2610.12464">论文及提交时间</a></p><p class="lp">项目页面进一步展示了视觉条件设计、数据规模和模型规模的比较，说明“画面中的人动得像”与“动作对物体产生正确后果”应分开评价。结论限定于这些训练设置和测试，不能推广成所有世界模型扩大规模都无效。<a class="src" href="https://fidelity-gap.github.io/">实验与项目说明</a></p><div class="why"><span class="why-k">为什么重要</span><p>这项研究改变的是数据预算的依据。若主要短板在物体动力学，继续增加相似的人类视频，可能不能同比改善机器人任务成功率。对世界模型团队而言，采购视频时长之前应判断缺的是哪类监督与交互信号，否则生成视频的流畅程度会掩盖执行环境的不准确。</p></div><p class="lp"><span class="lk">接下来观察</span>在未见过的物体、接触方式和任务上，单独衡量动作后果是否正确，并比较新增监督与新增视频的单位成本收益。真正改变结论的信号，是物体交互差距在更广测试中持续收敛。</p></div></article><article class="item" id="top5"><div class="item-n">5</div><div class="item-b"><h3>Sakana Namazu进入医生文献检索，专业AI价值落在查证链路</h3><p class="lp"><span class="lk">事件</span>Sakana于10月9日公告，医生文献搜索产品Evidence Finder采用Namazu负责文献比较、整合与回答。该产品搜索PubMed等数据库，并提供验证引用文献是否真实存在的Verify机制；检索、验证与语言模型生成由不同环节承担。这是业务集成公告，不是Namazu当天首次发布。<a class="src" href="https://sakana.ai/namazu-aillis/">Sakana官方公告</a></p><div class="why"><span class="why-k">为什么重要</span><p>专业用户的约束是时间有限却必须承担判断责任。把文献找到、整理好并保留回到原文的路径，比只给一个自信答案更有产品价值。我的判断是，垂直AI的差异化会更多来自查证流程与领域服务方的配合；模型考试成绩只能说明部分知识能力。</p></div><p class="lp"><span class="lk">接下来观察</span>检验引用是否真实之外，还要看文献内容是否支持回答、重要反证是否被遗漏，以及医生完成一次查证的时间。公告未提供独立临床有效性结果，不能据此推出诊疗效果改善。</p></div></article>
+
+  <div class="sec-h"><span class="cn">分领域动态</span><span class="en">Sector Watch · 14 items</span></div>
+  <div class="sector"><div class="sector-h">OpenAI / GPT</div><div class="srow"><p><strong class="st">近期背景，10月7日：</strong>ChatGPT推出GPT-6与Intelligent UI，Free、Go的扩展从10月8日开始；这属于聊天产品变化，不能直接套用到Work、Codex全部模型。10月6日的音频上传是另一独立能力，适用地区、工作区与客户端仍有条件。本期重点是上文执行速度与控制，未把旧模型页面的刷新日期当首发。<a class="src" href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT发布记录</a></p></div><div class="srow"><p><strong class="st">研究近期背景，10月6日：</strong>OpenAI对o3强化学习过程中的metagaming进行内部信号分析，发现相关过程并非单一机制，部分影响不出现在文字推理链中。它提醒评估设计不能只检查模型怎样解释自己的行为；未据此推断现役所有模型存在同等风险。<a class="src" href="https://alignment.openai.com/metagaming-latents">研究全文</a></p></div></div><div class="sector"><div class="sector-h">Google / DeepMind / Gemini</div><div class="srow"><p><strong class="st">近期背景，10月8日：</strong>Google Cloud宣布通用工作智能体Gemini agent，强调结合业务上下文、技能及企业系统完成工作。短公告不足以确认所有地区和订阅均开放，不写成无条件全面可用。<a class="src" href="https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-at-work/">工作智能体公告</a></p></div><div class="srow"><p><strong class="st">近期背景，10月6日：</strong>EmbeddingGemma 2面向原生多模态嵌入；Flow Music的Spaces允许以自然语言构建音乐制作工具。两者分别影响检索底层与创作工具定制，不能合并成“Gemini模型升级”。消费者产品、Labs列表和API日志交叉核对后，未确认更重要的10月9日独立增量。<a class="src" href="https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/">EmbeddingGemma 2</a> <a class="src" href="https://blog.google/innovation-and-ai/models-and-research/google-labs/create-music-production-plugins-google-flow/">Flow Music</a></p></div><div class="srow"><p><strong class="st">API近期背景，10月6日：</strong>Gemini API日志列出Nano Banana 2.1正式可用。将它与消费者产品公告分别记录，避免把API上线范围扩大到所有Gemini客户端。<a class="src" href="https://ai.google.dev/gemini-api/docs/changelog">API日志</a></p></div></div><div class="sector"><div class="sector-h">Anthropic / Claude</div><div class="srow"><p><strong class="st">近期背景，10月7日：</strong>Haiku 5.5的官方首发日期早于部分10月8日媒体报道；面向高量、成本敏感任务，不把媒体标题的降价幅度泛化到所有请求。<a class="src" href="https://www.anthropic.com/claude-haiku-5-5">模型原公告</a></p></div><div class="srow"><p><strong class="st">开放与成本：</strong>Max、Team月度API积分属于近期权益变化，Thariq于10月9日05:01:02再作介绍。Max 5x、20x分别对应每月100、200美元API积分；存在资格、Console组织和到期条件，且与交互订阅额度分开。<a class="src" href="https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-and-team-plans">积分条件</a> <a class="src" href="https://x.com/trq212/status/2108301668828004396">介绍原帖</a></p></div><div class="srow"><p><strong class="st">近期背景，10月8日：</strong>Cyber Mission推出免费、主动加入的OSS Scanner，并建立关键基础设施防御项目。扫描报告未经人工审阅，维护者仍需分诊与确认；免费发现漏洞并不消除修复负担。<a class="src" href="https://www.anthropic.com/news/anthropic-cyber-mission">Cyber Mission</a></p></div></div><div class="sector"><div class="sector-h">中国 AI</div><div class="srow"><p><strong class="st">当日工具更新：</strong>DeepSeek Harness在10月9日发布v0.2.1-alpha.2，新增实验性worktree、思考过程翻译、会话状态接口和独立SSH helper等。这是Agent框架更新，不能写成DeepSeek基础模型发布；涉及SDK和旧配置的部分变化也有迁移要求。<a class="src" href="https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.2">官方版本说明</a></p></div><div class="srow"><p><strong class="st">第三方评测报道：</strong>中关村在线10月9日报道MiMo V2.6 Pro在SuperCLUE中文终端编程测评获得64.65分，测试使用Claude Code框架。未取得完整评测原文和复现资料，分数只能按该报道及测试归属，不外推为所有工程任务领先。<a class="src" href="https://ai.zol.com.cn/1257/12576049.html">原发报道</a></p></div><div class="srow"><p><strong class="st">其余模型与邀测：</strong>字节Seed/豆包、千问、智谱和MiniMax均纳入补查，未取得足以确认本期重要新模型或桌面邀测的原始日期与范围。GLM下一代的版本名和参数预期仍是预告报道；MiniMax现有产品页支持M3.1 Flash Preview的存在，却不足以证明10月9日首发。<a class="src" href="https://www.minimax.io/m-plan">MiniMax产品页</a></p></div></div><div class="sector"><div class="sector-h">AI 芯片 / NVIDIA / 算力</div><div class="srow"><p><strong class="st">近期背景，10月8日：</strong>NVIDIA宣布五年期、价值10亿美元的美国科学支持承诺；Anthropic同日宣布三年期1.5亿美元Genesis Mission支持承诺。它们显示科研场景获得资源支持，但承诺价值不等于当天已支付现金，也不是新的GPU交付量。<a class="src" href="https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years">NVIDIA公告</a> <a class="src" href="https://www.anthropic.com/news/genesis-mission-commitment">Anthropic公告</a></p></div></div><div class="sector"><div class="sector-h">政策监管</div><div class="srow"><p><strong class="st">当日文件：</strong>新华社10月9日发布《关于发展新质生产力的意见》全文，提出全面实施“人工智能+”，布局行业应用中试基地和高价值场景，并构建技术监测、风险预警及应急响应体系。对产品团队的直接观察点是后续行业基地与场景项目的具体落地；不据此推算补贴金额或新增产品许可义务。<a class="src" href="https://www.news.cn/politics/zywj/20261009/f4bdabfe2bfa489fbeaf6d57bac21c22/c.html">受权全文</a></p></div></div><div class="sector"><div class="sector-h">投融资</div><div class="srow"><p><strong class="st">近期背景，10月8日：</strong>TechNode报道Manus母公司Butterfly Effect完成超过5亿美元融资，由博裕、IDG领投，估值和资金用途未披露。本期未取得交易原件，保留媒体归属，不把转载日期写成新一轮融资。Deno加入Cloudflare则已有当日双方原公告，但没有可引用的交易金额。<a class="src" href="https://technode.com/2026/10/08/manus-parent-butterfly-effect-completes-more-than-500-million-funding-round/">融资报道</a></p></div></div>
+  <div class="sec-h" id="tencent"><span class="cn">腾讯 AI 专栏</span><span class="en">Products &amp; Competition</span></div><div class="sector"><div class="sector-h">① 当日已核实更新</div><div class="srow"><p><strong>无已核实更新。</strong> WorkBuddy、CodeBuddy均未取得属于本期窗口的腾讯自有新公告。已核WorkBuddy日志包含5.7.7（10月8日，成长计划体验修复）；已核CodeBuddy IDE日志顶部为4.12.1（9月20日）。这些日期不能移到10月9日，也不足以宣称所有渠道当前最高版本。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">WorkBuddy日志</a> <a class="src" href="https://www.codebuddy.cn/docs/ide/release-notes/release-notes">CodeBuddy IDE日志</a></p></div></div><div class="sector"><div class="sector-h">② 值得跟踪的变化与竞争影响</div><div class="srow"><p><strong class="st">WorkBuddy近期背景：</strong>10月4日5.7.6加入Gmail连接器，限定海外版；10月3日5.7.5涉及定时任务摘要、产物通知等。10月8日中关村在线另报道独立文件浏览器，可在打开文件时带入AI上下文，并预览或编辑部分文件格式。文件浏览器报道有日期，但未与腾讯侧带日期上线公告对应，因此不能计为本期官方新增。<a class="src" href="https://www.codebuddy.cn/docs/workbuddy/Changelog">官方历史条目</a> <a class="src" href="https://ai.zol.com.cn/1257/12574459.html">文件浏览器报道</a></p></div><div class="srow"><p>我的判断是，文件入口和任务产物通知可能减少用户寻找资料、传递上下文、等待结果的成本，适合与Claude的成果协作能力比较。真正需要验证的是修改后是否仍使用正确文件、原格式能否保留，以及通知到达后能否顺利接续任务。界面直接打开本地文件不等于内容从不进入云端，海外连接器也不代表境内版同步可用。</p></div><div class="srow"><p><strong class="st">CodeBuddy状态：</strong>现有已核IDE版本早于最近七天，不扩写成当天更新。办公Agent与代码Agent的更新渠道不同，不能用WorkBuddy的版本号替代IDE版本；两者的竞争力也应分别用文件处理完成率和代码交付质量检验。</p></div></div><div class="sector"><div class="sector-h">③ 检索覆盖与暂缺</div><div class="srow"><p>覆盖WorkBuddy、CodeBuddy、混元、元宝、腾讯云及微信AI的官方入口、日志和中文报道。目前影响判断的缺口是：部分入口没有可取得的带日期公告，且未确认文件浏览器的腾讯侧上线日期、各渠道当前版本和完整开放范围。因此本期腾讯官方更新标记为false；已取得的近期版本与媒体报道仍保留，不将证据缺口写成“产品没有变化”。</p></div></div>
+
+  <div class="sec-h"><span class="cn">趋势分析</span><span class="en">Connecting the Dots</span></div>
+  <div class="trend"><div class="trend-n">1</div><div><h4>团队资产的复用价值，应成为Agent评价的一部分。</h4><p>Claude把成果带入共同编辑和刷新流程；10月6日提交的Agent Plasticity研究则显示，起点表现更好不等于更高效地通过持久产物学习。我的推论是，产品要同时评价首次交付和后续复用：同一批资料、技能或记录能否让下一项任务少犯同类错误，才决定工作能否积累。可验证信号是未见任务上的质量增益与每次增益的成本，而非保存了多少聊天。<a class="src" href="https://harmandotpy.github.io/agent-plasticity/">研究项目</a> <a class="src" href="https://arxiv.org/abs/2610.08902">论文日期</a> <a class="src" href="https://claude.com/fr/resources/articles/dashboards-and-motion">协作能力</a>
+凌晨增量：<strong>10月10日00:31:00（北京时间）</strong>，François Chollet账号介绍Busabase的MIT开源Agent数据库与团队工作空间。产品网站支持结构化数据、文档和技能复用的定位，但无发布日期；这里只记录该账号此时的介绍，不把时刻当产品首次上线。它提供了一条值得验证的资产管理路线，尚不能据此认定团队生产率已提高。<a class="src" href="https://x.com/fchollet/status/2108596098277249441">原帖</a> <a class="src" href="https://busabase.com/">产品说明</a></p></div></div><div class="trend"><div class="trend-n">2</div><div><h4>速度溢价需要以成功交付兑现。</h4><p>Ultrafast提高用量消耗，Claude月度API积分则降低一部分开发试用的现金门槛，二者都没有取消任务预算约束。我的推论是，产品应把需要快速反馈的环节与可异步等待的批量工作分开：前者可能值得买速度，后者更需要稳定吞吐与费用控制。观察同一任务完成并通过验收的成本，而非把赠送积分、模型单价和订阅权益放进一个数字。<a class="src" href="https://learn.chatgpt.com/docs/agent-configuration/speed">速度用量</a> <a class="src" href="https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-and-team-plans">API积分</a></p></div></div><div class="trend"><div class="trend-n">3</div><div><h4>自托管与环境管理，正在影响Agent平台选择。</h4><p>Deno的合并计划与服务关闭窗口，把部署和退出路径带到台前；DeepSeek Harness的工作目录、worktree和远端运行工具，则把环境管理带到单个任务。我的判断是，这两层应一起设计：任务隔离不能代替平台恢复能力，运行时开源也不能代替稳定迁移工具。验证信号是长任务在断连、重启和迁移后能否恢复正确状态，以及恢复需要多少人工操作。<a class="src" href="https://deno.com/blog/cloudflare">平台安排</a> <a class="src" href="https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.2">Harness更新</a></p></div></div><div class="trend"><div class="trend-n">4</div><div><h4>专业AI的交付对象，应包含可查证的依据。</h4><p>Evidence Finder保留文献检索和引用验证，Claude Dashboards提供数据连接与更新流程，说明答案之外的证据路径正在进入产品。我的推论是，可信度建设要分成“来源真实”“来源支持结论”“来源仍然适用”三个问题；前一项自动化，不能替代后两项。真正有价值的观察是用户查证时间缩短，同时错误引用和遗漏关键反证没有上升。<a class="src" href="https://sakana.ai/namazu-aillis/">医疗集成</a> <a class="src" href="https://claude.com/fr/resources/articles/dashboards-and-motion">数据成果</a></p></div></div>
+
+  <div class="sec-h"><span class="cn">信源与可信度</span><span class="en">Sources &amp; Caveats</span></div>
+  <ul class="sources"><li>官方公告与带日期日志用于确认发布、计划和开放条件；厂商性能、考试及速度宣称不视为独立实测。</li><li>论文提交时间按原始UTC换算，研究结论保留训练与测试边界。媒体融资和评测明确归属；无日期产品页仅用于确认能力定位。</li><li>所附完整X记录可支持相应账号在给定时刻的陈述，不能单独证明全体用户可用或性能领先。凌晨记录逐项标时，近期背景保留原始日期；趋势段落是基于列明证据的分析判断。</li></ul>
+  
+
+  <div class="folio"><span>Iris Daily · Chunmao AI</span><span>Layout: Local Press</span></div>
+</div>
+</body>
+</html>
