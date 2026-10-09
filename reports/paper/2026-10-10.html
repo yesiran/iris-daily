@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20gradientTransform%3D%22rotate%2840%20.5%20.5%29%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a23a2a%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2323211e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2241%22%20r%3D%2221%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%224%22%20opacity%3D%220.11%22%2F%3E%3Ccircle%20cx%3D%2227%22%20cy%3D%2241%22%20r%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20opacity%3D%220.17%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%229%22%20r%3D%229%22%20fill%3D%22%23fff%22%20opacity%3D%220.22%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2232%22%20dy%3D%22.36em%22%20text-anchor%3D%22middle%22%20font-family%3D%27-apple-system%2C%22PingFang%20SC%22%2C%22Noto%20Sans%20SC%22%2Csans-serif%27%20font-size%3D%2234%22%20font-weight%3D%22700%22%20fill%3D%22%23faf8f4%22%3E%E6%96%87%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把事后踩坑，练成行动前的预判</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFDFB; --ink:#16150F; --muted:#6E6A5E; --hair:#E2DFD6; --red:#C8371E; --panel:#F6F5EF;
+    --serif:"Songti SC","STSong","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+    --label:"Futura","Avenir Next","PingFang SC",sans-serif;
+    --mono:"Menlo",ui-monospace,"SF Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#171712;--ink:#EAE8DF;--muted:#9A968A;--hair:#33312A;--red:#E85C3F;--panel:#1F1E18}
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.82;text-rendering:optimizeLegibility}
+  .shell{max-width:1140px;margin:0 auto;padding:44px 30px 90px}
+
+  .mast-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;
+    font-family:var(--label);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  .mast-top .r{color:var(--red)}
+  h1.doc{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,42px);
+    line-height:1.42;letter-spacing:.01em;margin:22px 0 16px;text-wrap:balance;max-width:26em}
+  .dateline{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted);
+    font-variant-numeric:tabular-nums;margin-bottom:14px}
+  .dateline b{color:var(--ink);font-weight:600}
+  .mast-bar{height:8px;background:var(--ink)}
+
+  .metacard{border:1px solid var(--hair);background:var(--panel);padding:6px 20px;margin:26px 0 0}
+  .m-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;padding:9px 0;
+    border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.6}
+  .m-v{min-width:0;overflow-wrap:anywhere}
+  .m-row:last-child{border-bottom:0}
+  .m-k{font-family:var(--label);font-size:10.5px;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;padding-top:3px}
+  .m-v{color:var(--ink)}
+  .m-v a.src{font-size:12.5px}
+
+  .listen{display:grid;grid-template-columns:88px minmax(0,1fr);gap:18px;align-items:start;
+    border:1.5px solid var(--ink);padding:16px 20px;margin:26px 0 0}
+  .listen>div{min-width:0}
+  @media (max-width:560px){.listen{grid-template-columns:1fr;gap:10px}}
+  .listen-k{font-family:var(--serif);font-weight:900;font-size:28px;line-height:1.1}
+  .listen-k span{display:block;font-family:var(--label);font-size:10px;letter-spacing:.24em;color:var(--red);margin-top:4px}
+  audio{width:100%;min-width:0;max-width:100%}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tools{margin:18px 0 0}
+  .btn{display:inline-block;border:2px solid var(--ink);padding:9px 20px;margin-right:12px;
+    font-size:14px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  .btn.hot{background:var(--red);border-color:var(--red);color:#fff}
+  .btn:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  .wrap{display:grid;grid-template-columns:208px minmax(0,1fr);gap:52px;margin-top:40px}
+  .toc{position:sticky;top:26px;align-self:start;border-top:3px solid var(--ink);padding-top:14px}
+  .toc-t{font-family:var(--label);font-size:10.5px;letter-spacing:.26em;color:var(--muted);
+    text-transform:uppercase;margin-bottom:10px}
+  .toc a{display:block;text-decoration:none;color:var(--muted);font-size:13px;
+    line-height:1.5;padding:5px 0;border-bottom:1px solid var(--hair)}
+  .toc a:last-child{border-bottom:0}
+  .toc a:hover{color:var(--red)}
+  .toc a.t-h1{color:var(--ink);font-weight:600}
+  .toc a.t-h2{padding-left:14px}
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr;gap:28px}
+    .toc{position:static;max-height:none}
+  }
+
+  main{max-width:44em;min-width:0;overflow-wrap:anywhere}
+  main h1{font-family:var(--serif);font-weight:900;font-size:27px;letter-spacing:.04em;
+    margin:54px 0 20px;border-top:3px solid var(--ink);padding-top:14px}
+  main h1:first-child{margin-top:0}
+  main h2{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:.03em;margin:40px 0 14px}
+  main h3{font-size:17.5px;font-weight:600;margin:30px 0 10px}
+  main h4{font-size:16px;font-weight:600;color:var(--muted);margin:24px 0 8px}
+  main p{margin:0 0 16px}
+  main img{max-width:100%;border:1px solid var(--hair);margin:6px 0}
+  main blockquote{border-left:4px solid var(--red);background:var(--panel);
+    padding:14px 18px;margin:20px 0;font-size:15px}
+  main blockquote p{margin:0 0 8px}
+  main blockquote p:last-child{margin:0}
+  .rule{border:0;height:1px;background:var(--hair);margin:34px 0}
+
+  .ls{margin:0 0 18px;padding-left:0;list-style:none;counter-reset:item}
+  .ls>li{position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--hair)}
+  .ls>li:last-child{border-bottom:0}
+  ul.ls>li::before{content:"";position:absolute;left:10px;top:1.35em;width:14px;height:2px;background:var(--red)}
+  ol.ls>li{counter-increment:item}
+  ol.ls>li::before{content:counter(item);position:absolute;left:0;top:.72em;
+    font-family:var(--label);font-size:17px;color:var(--red);font-weight:500;min-width:28px}
+  .sub{list-style:none;margin-top:8px}
+  .sub li{position:relative;padding:4px 0 4px 20px;font-size:14.5px;color:var(--muted)}
+  .sub li::before{content:"·";position:absolute;left:6px;color:var(--red)}
+
+  .lk{font-family:var(--label);font-size:10.5px;letter-spacing:.16em;color:var(--paper);
+    background:var(--muted);padding:2px 8px;margin-right:10px;position:relative;top:-2px;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);
+    border:1px solid var(--hair);padding:1px 5px}
+  .codewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--hair);
+    padding:16px 18px;margin:0 0 18px}
+  .codewrap pre{font-family:var(--mono);font-size:13px;line-height:1.7}
+  .codewrap code{background:none;border:0;padding:0}
+
+  .tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--hair)}
+  table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+  th{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+
+  a.src{font-size:12px;color:var(--muted);text-decoration:none;
+    border-bottom:1px dotted var(--muted);word-break:break-all}
+  a.src:hover{color:var(--red);border-color:var(--red)}
+  a.src::after{content:"↗";font-size:9px;margin-left:1px}
+  strong{font-weight:600}
+
+  .folio{margin-top:64px;border-top:3px solid var(--ink);padding-top:14px;display:flex;
+    justify-content:space-between;font-family:var(--label);font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--muted)}
+</style>
+<meta name="iris-content-sha256" content="dce694194908d654be0894f665eaa48f53285ba2766b54141724926c3a80e179">
+</head>
+<body>
+<div class="shell">
+  <div class="mast-top"><span>春茂聊AI · 论文精读</span><span class="r">2026-10-10</span></div>
+  <h1 class="doc">把事后踩坑，练成行动前的预判</h1>
+  <div class="dateline"><span>全文 <b>2,805</b> 字</span><span>约 <b>8</b> 分钟</span><span>章节 <b>12</b></span></div>
+  <div class="mast-bar"></div>
+  <div class="metacard"><div class="m-row"><span class="m-k">论文</span><span class="m-v">Self-Retrospection Distillation: Turning Post-hoc Experiences into Prior Foresight</span></div><div class="m-row"><span class="m-k">链接</span><span class="m-v"><a class="src" href="https://arxiv.org/abs/2610.08077">https://arxiv.org/abs/2610.08077</a></span></div><div class="m-row"><span class="m-k">作者</span><span class="m-v">Haoxiang Zhang, Qinglin Chen, Hiroaki Hayashi, Zhuofeng Li, Siming Zhang, Jiaxin Zhang, Jixuan Chen, Fang Wu, Pan Lu, Silvio Savarese, Julian McAuley, Chien-Sheng Wu</span></div><div class="m-row"><span class="m-k">机构</span><span class="m-v">Salesforce AI Research；UC San Diego；Texas A&amp;M University；Stanford University</span></div><div class="m-row"><span class="m-k">发表</span><span class="m-v">2026-10-06</span></div><div class="m-row"><span class="m-k">信号</span><span class="m-v">HF 页面记载于 10 月 8 日提交；原文包含跨任务实验与消融；尚未核实同行评审或独立复现，不采用实时点赞与排名</span></div><div class="m-row"><span class="m-k">标签</span><span class="m-v">paper-daily, 智能体训练, 自蒸馏, 前瞻学习</span></div><div class="m-row"><span class="m-k">深读页</span><span class="m-v"><a class="src" href="https://yesiran.github.io/ai-paper-daily/reports/2026-10-10.html">https://yesiran.github.io/ai-paper-daily/reports/2026-10-10.html</a></span></div></div><div class="tools"><a class="btn hot" href="2026-10-10-mindmap.html">核心逻辑脑图 →</a></div>
+  <div class="wrap">
+    <nav class="toc"><div class="toc-t">目录 · Contents</div><a class="t-h1" href="#s1">推荐理由</a><a class="t-h1" href="#s2">七拍故事</a><a class="t-h2" href="#s3">主角：一个会尝试、却未必会提前判断的智能体。</a><a class="t-h2" href="#s4">困境：大家都失败时，比较失去方向。</a><a class="t-h2" href="#s5">旧路：从复盘中直接修正行为。</a><a class="t-h2" href="#s6">转折：事后才知道的事，能否成为下次行动前的预期？</a><a class="t-h2" href="#s7">解法：为同一份预判建立两种信息视角。</a><a class="t-h2" href="#s8">结局：奖励沉默时，另一种监督仍能工作。</a><a class="t-h2" href="#s9">内核：结果负责评价，轨迹还可以负责解释。</a><a class="t-h1" href="#s10">来龙去脉</a><a class="t-h1" href="#s11">对思染：模型进化 &amp; 怎么用</a><a class="t-h1" href="#s12">来源</a></nav>
+    <main><p>截至 01:30（北京时间），这是 2026-10-10 的截稿快照。今天推荐 SRD，首次提交于 10 月 6 日，本文采用 10 月 8 日的 v2；两次提交均早于截稿时间，且 ID 与标题未出现在所给台账中。作者与机构据原文核实。<a class="src" href="https://arxiv.org/abs/2610.08077">提交历史</a> <a class="src" href="https://arxiv.org/html/2610.08077v2">原文署名</a></p><h1 id="s1">推荐理由</h1><p>这篇论文把一个容易混淆的问题拆开了：一次尝试没有得到成功奖励，并不意味着它没有提供可学习的信息。对智能体而言，错误输出、工具限制、被撤下的可用动作，都可能揭示任务真正要求什么。SRD 的新意是改变监督目标：让执行后的经验，教模型在尚未执行时预判可能的陷阱。预判文本只用于训练，部署时不要求额外生成。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §1、§3</a></p><p>选择它的依据是机制和证据的组合。原文在数学、代码、搜索和交互环境共十项基准上比较不同训练目标，并单独研究奖励缺乏差异的情况；HF 页面记载作者于 10 月 8 日提交该论文。这些是值得深读的信号，不能替代独立复现或同行评审；后两项本次未核实。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §4—§5</a> <a class="src" href="https://huggingface.co/papers/2610.08077">HF 论文页</a></p><h1 id="s2">七拍故事</h1><h2 id="s3">主角：一个会尝试、却未必会提前判断的智能体。</h2><p>它拿到问题，调用解释器或搜索工具，在环境中行动，最后由验证器判定成败。RLVR，即“使用可验证奖励的强化学习”，把这些尝试压缩成结果分数。GRPO，即“组相对策略优化”，则比较同一道题的一组尝试：比组内平均表现更好的行为得到正向更新。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §2</a></p><h2 id="s4">困境：大家都失败时，比较失去方向。</h2><p>如果八条轨迹奖励全为零，每条都与组内平均相同，组相对奖励项的优势值为零；全都成功时也一样。可是八次失败可能包含不同教训：一直推理却不调用工具、程序状态设计错误、输出格式不符合接口。作者在关闭动态采样的代码实验中发现，不同模型规模有 37%—98% 的组奖励一致。这一范围属于该实验，不能当作所有智能体训练的普遍比例。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §2、§5 RQ3、附录 F.1</a></p><h2 id="s5">旧路：从复盘中直接修正行为。</h2><p>自蒸馏让同一个模型扮演教师和学生：教师看到执行反馈或正确解，学生只看到正常任务上下文，再让学生的下一 token 分布接近教师。这里的 token 是模型生成文本的基本单位；“蒸馏”学习的是输出概率分布，而非只复制一段标准答案。SRD 将这条路线归为回顾式学习：事后信息主要服务于下一步怎么行动。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §2、§6</a></p><h2 id="s6">转折：事后才知道的事，能否成为下次行动前的预期？</h2><p>原文的 ALFWorld 案例很具体。任务要求把两张卡放到椅子上。模型提前担心椅子能否容纳两张卡，实际限制却在自己身上：一次只能携带一个物品。拿到第一张卡后，可用动作列表撤去了继续拿取的动作；规则通过交互变化显露，而非直接写在任务句里。复盘应该提炼出的教训，是放下一件再去拿另一件。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文附录 F.3</a></p><h2 id="s7">解法：为同一份预判建立两种信息视角。</h2><p>学生只看任务和行动前可得的环境上下文，生成可能遇到的陷阱。教师额外看到完成的轨迹、参考答案和适用的错误注释，再对学生已经生成的同一段前缀计算下一 token 概率。训练让两种分布靠近。于是，学生练习的是在有限信息下提出更有根据的预判，而教师提供监督所需的事后证据。教师计算停止梯度；实际实验采用学生参数的指数移动平均教师，即缓慢跟随学生更新的参数副本。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §3.2、附录 C.2</a></p><p>SRD 设计了两条通道：成功轨迹提供 Knowledge，即可能需要的知识；失败轨迹提供 Pitfall，即应当预防的陷阱。失败复盘先逐条诊断，再把同一道题的诊断聚合成简短列表。主结果实际采用的是仅蒸馏陷阱的版本；两条通道同时使用并未稳定带来额外收益。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §3.2、§5 RQ1、附录 B.1</a></p><h2 id="s8">结局：奖励沉默时，另一种监督仍能工作。</h2><p>最醒目的结果来自代码单域、关闭动态采样的 2B 实验：98% 的组全部失败，基线训练成功率峰值为 1.6%，最终为 0.0%；相同 rollout 预算下加入 SRD 达到 60.6%。这里的 rollout 是一次完整执行轨迹。必须保留口径：60.6% 是训练成功率，并非未见代码题的测试成绩，也不代表同等总计算成本。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §5 RQ3</a></p><p>测试证据来自另一组设置。主表在 Qwen3.5-4B 上报告，GRPO 加入 SRD 后，数学、代码、搜索类别平均分别提高 10.03、8.33、8.05 个百分点。指标 avg@8 是每题独立采样八次，计算成功轨迹比例后再跨题平均；它不是八次中至少成功一次的 pass@8。主表保留动态采样，因此不能与前面的 2B 实验混作同一条件。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文表 1、附录 C.4—C.5</a></p><h2 id="s9">内核：结果负责评价，轨迹还可以负责解释。</h2><p>作者提出的前瞻学习，使事后信息监督行动前的预测；我的机制解释是，它增加了一条不依赖组内奖励差异的信息通道。经验先被转换为“哪里容易出错”，再通过共享模型参数影响之后的行为。实验支持这条训练路线有效，但尚不能证明模型内部形成了完整、可靠的环境模型。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §3、§5、附录 F</a></p><h1 id="s10">来龙去脉</h1><p>倒读第一层，是从“改动作”走向“改预判”。SRD 并不直接要求学生模仿一条最优行动轨迹，而是对行动前的知识或陷阱预测建立辅助损失。作者的主表配置还把教师的特权上下文改成结构化复盘，因此主表增益包含上下文构造与辅助目标的共同作用。要辨认新增目标的贡献，应看表 2 中固定教师上下文后的比较。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §3、§4.1、表 2</a></p><p>第二层，是从单个结果分数走向丰富反馈。2026 年 1 月的 SDPO 论文提出：让看到反馈的模型作为自教师，把反馈条件下的下一 token 预测蒸馏回策略。SRD 延续了这种信息不对称，却把监督对象转向行动前的预判。<a class="src" href="https://arxiv.org/abs/2601.20802">SDPO 原论文</a> <a class="src" href="https://arxiv.org/html/2610.08077v2">SRD §6</a></p><p>第三层，是组相对奖励为什么会留下空白。2024 年的 DeepSeekMath 提出了 GRPO；SRD 的预备章节说明，在奖励一致的组中，组相对优势值消失。由此可见，SRD 对准的是特定监督结构的盲区，而非证明所有强化学习都无法从失败中学习。<a class="src" href="https://arxiv.org/abs/2402.03300">DeepSeekMath 原论文</a> <a class="src" href="https://arxiv.org/html/2610.08077v2">SRD §2</a></p><p>把这三层连起来，变化发生在经验被转换成什么：分数用于比较行为，反馈用于修正行为，结构化复盘还可以用于训练预期。最后一步是本文对研究脉络的归纳。它没有取消验证器：成功或失败仍用于选择监督通道，教师也可能使用参考答案与错误注释。所谓自蒸馏，不等于没有外部事实依据。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §3.2</a></p><h1 id="s11">对思染：模型进化 &amp; 怎么用</h1><p>值得关注的能力变化，是模型能否在相似任务开始前，更早识别执行条件和失败风险。原文显示，部分收益能迁移到未见代码格式、ALFWorld 未见环境以及更长交互的搜索评测；但这里证明的是作者设置下的迁移，尚不能推出对任意工具或真实网站都有效。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §4.2</a></p><p>对有模型训练能力的团队，我的建议是先观察失败组中是否存在可复用的信息：错误输出、动作约束、预算耗尽原因，能否被可靠地提炼成任务开始前值得预防的陷阱。若存在，再比较固定教师上下文下是否加入前瞻损失，并同时记录测试成功率、采样量与训练耗时。这个实验建议来自论文的上下文消融和关闭动态采样实验，不是作者已经验证过的通用产品配方。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文表 2、§5 RQ3、附录 C.4</a></p><p>对只使用 API 的思染，SRD 提供的是失败日志如何组织的启发：把“这次没成功”细分为算法错误、接口约束、动作顺序和预算问题，复盘时记录证据，再在相似任务前检验能否提前识别。提示词中的复盘或预检并不等同于论文的参数训练，本文不声称这样做能获得相同提升。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文 §3、附录 F</a></p><p>也要保留三个边界。第一，增益不是逐项成立：9B 的 OPSD 加 SRD 后，WebShop 从 91.76% 降到 88.15%，BrowseComp-Plus 也有退步。第二，知识通道不一定值得叠加；表 2 显示部分结果下降。第三，复盘教师会犯错：ALFWorld 案例中的建议一度要求遍历全部家具，但八步预算根本不允许。把错误复盘训练进预期，可能形成错误先验，这是原文案例支持的风险推断。<a class="src" href="https://arxiv.org/html/2610.08077v2">原文表 1—表 2、附录 F.3</a></p><h1 id="s12">来源</h1><p>本文依据 Haoxiang Zhang 等十二位作者的 SRD v2 作中文改写与机制解释，保留原文署名和链接；产品建议与因果归纳已明确标为本文推断。arXiv 摘要页的许可链接及 HTML 均明确指向 CC BY 4.0。该许可允许分享和改编，要求适当署名、链接许可并说明修改；本文不表示作者认可这些推演。<a class="src" href="https://arxiv.org/abs/2610.08077">SRD 摘要与许可入口</a> <a class="src" href="https://arxiv.org/html/2610.08077v2">SRD v2 全文</a> <a class="src" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p><p>选题入口与收录日期依据 <a class="src" href="https://huggingface.co/papers/2610.08077">HF 论文页</a>；前驱事实分别核对 <a class="src" href="https://arxiv.org/abs/2601.20802">SDPO 原论文</a> 与 <a class="src" href="https://arxiv.org/abs/2402.03300">DeepSeekMath 原论文</a>。未将抓取时间记为发布日期，未采用实时点赞、排名或未核实的引用量。</p></main>
+  </div>
+  <div class="folio"><span>Chunmao AI · Press</span><span>信息保真 · 文案未动</span></div>
+</div>
+</body>
+</html>
