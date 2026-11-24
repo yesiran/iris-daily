@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>AI 日报 · 2026-11-22</title>
+<style>
+:root{--paper:#f5f0e6;--ink:#1c1a17;--ink2:#48433b;--mute:#857c6e;--hair:#d9d0c0;--card:#fbf8f1;
+--accent:#b02a1f;--up:#b8321f;--down:#1a7a4c;
+--serif:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","STSong","SimSun",serif;
+--kai:"Kaiti SC","STKaiti","KaiTi","Songti SC",serif;
+--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+--display:"Didot","Bodoni 72","Bodoni MT",Georgia,"Songti SC",serif}
+@media (prefers-color-scheme:dark){:root{--paper:#141311;--ink:#ebe5d9;--ink2:#c8c0b2;--mute:#8d8578;--hair:#35312b;--card:#1d1b18;--accent:#ec6f62;--up:#ee7565;--down:#5fc596;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.85 var(--sans);-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+.wrap{max-width:1000px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 0 max(20px,env(safe-area-inset-left,0px))}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+p{margin:0 0 .9em;text-wrap:pretty}
+strong{font-weight:650}
+
+/* masthead */
+.mast{padding-top:26px}
+.mast-top{display:flex;justify-content:space-between;gap:12px;font:12px/1.4 var(--sans);letter-spacing:.16em;color:var(--mute);padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.mast-top a{text-decoration:none}
+.mast-title{font:900 clamp(60px,15.5vw,148px)/1 var(--serif);letter-spacing:.01em;margin:.2em 0 .14em;white-space:nowrap}
+.mast-title .lat{font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin-right:.08em}
+.mast-title.small{font-size:clamp(40px,9vw,84px)}
+.mast-rule{border-top:6px solid var(--ink);border-bottom:1px solid var(--ink);height:11px}
+.points{list-style:none;margin:20px 0 18px;padding:0;counter-reset:pt;max-width:40em}
+.points li{counter-increment:pt;position:relative;padding:7px 0 7px 2.1em;font:clamp(18px,2.3vw,22px)/1.6 var(--kai);color:var(--ink)}
+.points li::before{content:counter(pt);position:absolute;left:0;top:.28em;font:400 1.25em/1.2 var(--display);color:var(--accent)}
+.deck{font:clamp(18px,2.3vw,22px)/1.7 var(--kai);color:var(--ink2);margin:20px 0 16px;max-width:38em}
+.toc{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;letter-spacing:.08em;color:var(--mute);padding:12px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.toc a{text-decoration:none}
+.toc b{color:var(--accent);font-weight:600;margin-right:4px;font-family:var(--display)}
+.toc .more{margin-left:auto;color:var(--accent)}
+
+/* section headings */
+.sec{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:60px 0 22px;padding-top:12px;border-top:3px solid var(--ink)}
+.sec h2{font:900 30px/1.2 var(--serif);margin:0;letter-spacing:.06em;white-space:nowrap}
+.sec span{font-size:13px;color:var(--mute);letter-spacing:.06em}
+
+/* labelled take-away line */
+.means{background:var(--card);border-left:3px solid var(--accent);padding:11px 16px 12px;margin:2px 0 1em}
+.means b{display:block;font:600 12px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin-bottom:2px}
+
+/* 模型观察 */
+.obs{display:grid;grid-template-columns:1fr;padding:22px 0 8px;border-top:1px solid var(--hair)}
+.obs:first-of-type{border-top:0;padding-top:0}
+.tag{display:inline-block;font:700 13px/1.3 var(--sans);letter-spacing:.04em;color:var(--paper);background:var(--accent);padding:5px 9px;margin:0 0 8px}
+.meta{font-size:12.5px;line-height:1.6;color:var(--mute);margin:0 0 10px}
+.meta b{color:var(--ink2);font-weight:600}
+.meta span{display:inline-block;margin-right:14px}
+.obs h3{font:900 clamp(21px,2.7vw,26px)/1.42 var(--serif);margin:0 0 10px;text-wrap:balance}
+.obs.lead h3{font-size:clamp(27px,4.6vw,44px);line-height:1.28;margin-bottom:16px}
+.obs .txt{max-width:38em}
+.obs.lead .txt{font-size:1.04em}
+
+/* X 上的发言 */
+.voices{display:grid;grid-template-columns:1fr}
+.vo{padding:20px 0 14px;border-top:1px solid var(--hair);break-inside:avoid}
+.vo:first-child{border-top:0;padding-top:0}
+.who{font:13px/1.5 var(--sans);letter-spacing:.04em;color:var(--mute);margin:0 0 8px}
+.who b{font:900 18px/1.4 var(--serif);color:var(--ink);letter-spacing:0;margin-right:10px}
+.vo blockquote{margin:0;padding:0 0 0 16px;border-left:3px solid var(--accent);font:clamp(17px,2vw,19px)/1.85 var(--kai);color:var(--ink)}
+.vo blockquote p{margin:0 0 .5em}
+.vo blockquote a{font:12.5px/1 var(--sans);color:var(--mute);margin-left:8px;white-space:nowrap}
+.vo .bg{font-size:14px;line-height:1.7;color:var(--mute);margin:8px 0 0 19px}
+.vo .bg b{font-weight:600;letter-spacing:.14em;margin-right:8px;font-size:.86em}
+
+/* 技术与论文 */
+.feat{display:grid;grid-template-columns:1fr;padding:22px 0 8px;border-top:1px solid var(--hair)}
+.feat:first-of-type{border-top:0;padding-top:0}
+.num{font:400 40px/1 var(--display);color:var(--accent);margin-bottom:8px}
+.feat h3{font:900 clamp(21px,2.7vw,26px)/1.42 var(--serif);margin:0 0 10px;text-wrap:balance}
+.feat .txt{max-width:38em}
+
+/* 大事 */
+.events{display:grid;grid-template-columns:1fr;gap:0}
+.ev{padding:18px 0 6px;border-top:1px solid var(--hair);font-size:16px;line-height:1.8}
+.ev:first-child{border-top:0;padding-top:0}
+.ev h3{font:900 20px/1.45 var(--serif);margin:0 0 8px;text-wrap:balance}
+.ev .so{color:var(--ink2)}
+.ev .so b{color:var(--accent);font-weight:600;margin-right:6px;font-size:.86em;letter-spacing:.12em}
+
+/* 快讯 */
+.briefs{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.72}
+.briefs li{position:relative;padding:0 0 13px 18px;break-inside:avoid}
+.briefs li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;background:var(--accent)}
+.briefs li strong{font-family:var(--serif);font-weight:900}
+.watch{background:var(--card);padding:14px 18px;font-size:16px;line-height:1.8;border:1px solid var(--hair);margin-top:26px}
+.watch ul{margin:0;padding:0;list-style:none}
+
+/* 金融日报 */
+.dash{overflow-x:auto;margin:24px 0 6px;-webkit-overflow-scrolling:touch}
+.dash table{border-collapse:collapse;width:100%;min-width:660px;font:14px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+.dash th{font-weight:500;color:var(--mute);text-align:right;padding:6px 10px;border-bottom:1px solid var(--ink);font-size:12px;letter-spacing:.06em;white-space:nowrap}
+.dash td{text-align:right;padding:10px;border-bottom:1px solid var(--hair);white-space:nowrap}
+.dash th:first-child,.dash td:first-child{text-align:left;padding-left:0}
+.dash td:first-child{font:900 16px/1.4 var(--serif)}
+.up{color:var(--up)}.down{color:var(--down)}
+.macro{font-size:12.5px;line-height:1.9;color:var(--mute);margin:8px 0 0}
+.macro span{display:inline-block;margin-right:18px;white-space:nowrap}
+.dash-note{font-size:12px;color:var(--mute);margin:6px 0 0}
+.lede{max-width:40em;font-size:1.02em}
+.asset{display:grid;grid-template-columns:1fr;padding:0 0 6px}
+.asset .big{font:400 46px/1 var(--display);margin:6px 0 6px;font-variant-numeric:tabular-nums}
+.asset .px{font-size:12.5px;line-height:1.6;color:var(--mute);margin:0 0 12px}
+.asset h3{font:900 clamp(23px,3.4vw,32px)/1.36 var(--serif);margin:0 0 12px;text-wrap:balance}
+.facts{font-size:14.5px;line-height:1.8;color:var(--ink2);margin:0 0 6px;padding:10px 14px;background:var(--card);border-left:3px solid var(--accent)}
+.facts span{display:block}
+.facts b{color:var(--accent);font-weight:600;letter-spacing:.14em;font-size:.84em;margin-right:8px}
+.part h4{font:600 12px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin:18px 0 4px}
+.asset .txt{max-width:38em}
+.plain{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.75;max-width:44em}
+.plain li{position:relative;padding:0 0 12px 18px}
+.plain li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;background:var(--accent)}
+
+/* 论文日报 */
+.headline{font:900 clamp(28px,4.8vw,46px)/1.28 var(--serif);margin:0 0 24px;text-wrap:balance;max-width:20em}
+.paper{display:grid;grid-template-columns:1fr}
+.pcard{font-size:13.5px;line-height:1.7;color:var(--ink2);margin:0 0 26px;padding:12px 16px;background:var(--card);border-left:3px solid var(--accent)}
+.pcard span{display:block;margin:0 0 6px}
+.pcard span:last-child{margin:0}
+.pcard b{font:600 11.5px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin-right:10px}
+.pp{max-width:38em;margin:0 0 34px}
+.pp h4{font:900 clamp(21px,2.5vw,24px)/1.4 var(--serif);margin:0 0 12px;padding-top:14px;border-top:1px solid var(--hair)}
+.pp h4 i{font:400 1em/1 var(--display);font-style:normal;color:var(--accent);margin-right:12px}
+.pp ul{margin:0 0 .9em;padding-left:1.25em}
+.pp li{margin:0 0 .45em}
+.others{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.78;max-width:44em}
+.others li{padding:14px 0;border-top:1px solid var(--hair)}
+.others li:first-child{border-top:0;padding-top:0}
+.others li strong{font-family:var(--serif);font-weight:900;font-size:1.06em}
+
+/* colophon */
+.colo{padding:40px 0 70px;font-size:13px;line-height:1.9;color:var(--mute)}
+.colo b{color:var(--ink2);font-weight:600}
+.colo details{margin-top:10px}
+.colo summary{cursor:pointer;color:var(--ink2)}
+.colo li{margin:4px 0}
+
+/* 模型档案 page */
+.doc{max-width:44em;padding-bottom:30px}
+.doc h2{font:900 clamp(23px,3vw,30px)/1.35 var(--serif);margin:54px 0 12px;padding-top:12px;border-top:3px solid var(--ink)}
+.doc blockquote{margin:18px 0;padding:0;font:17px/1.75 var(--kai);color:var(--ink2)}
+.doc ul{list-style:none;margin:0;padding:0}
+.doc li{padding:9px 0;border-top:1px solid var(--hair);font-size:16px;line-height:1.8}
+.doc li strong:first-child{color:var(--accent);font-family:var(--sans);font-weight:650;font-size:.9em;letter-spacing:.04em;margin-right:4px}
+.doc p{margin:.3em 0 .9em}
+
+@media (min-width:860px){
+ body{font-size:18px}
+ .mast{padding-top:40px}
+ .obs{grid-template-columns:170px 1fr;gap:30px}
+ .obs .side{padding-top:6px}
+ .obs .tag{margin-bottom:10px}
+ .meta span{display:block;margin:0 0 2px}
+ .feat{grid-template-columns:170px 1fr;gap:30px}
+ .num{font-size:64px;margin:0}
+ .events{grid-template-columns:1fr 1fr;column-gap:56px}
+ .ev:nth-child(2){border-top:0;padding-top:0}
+ .asset{grid-template-columns:170px 1fr;gap:30px}
+ .asset .big{font-size:54px;margin-top:2px}
+ .paper{grid-template-columns:170px 1fr;gap:30px}
+ .pcard{background:none;border-left:0;padding:6px 0 0;font-size:12.5px;color:var(--mute);position:sticky;top:20px;align-self:start}
+ .pcard span{margin:0 0 12px}
+ .pcard b{display:block;margin:0}
+ .voices{grid-template-columns:1fr 1fr;column-gap:56px}
+ .vo:nth-child(2){border-top:0;padding-top:0}
+ .briefs{columns:2;column-gap:56px}
+}
+</style></head>
+<body>
+<div class="wrap">
+<header class="mast">
+<div class="mast-top"><span>2026 年 11 月 22 日 · 星期日</span><span>约 8 分钟读完</span></div>
+<h1 class="mast-title"><span class="lat">AI</span>日报</h1>
+<div class="mast-rule"></div>
+<ol class="points"><li>GPT-6.2 跑分领先，但多位开发者说它难用，OpenAI 专门发提示词模板修正。</li><li>编码实测：GPT-6.2 Sol 准确度略逊 Opus 5.5，花费不到五分之一。</li><li>Claude 协助证出黎曼猜想，Lean 社区确认无误，Clay 仍列未解。</li><li>Gemini 4 Neon 实际效用超出跑分，DeepMind 自己都低估了。</li><li>美国情报称中国国安部多年获取受限英伟达芯片，Lutnick 成政治靶子。</li></ol>
+<nav class="toc"><a href="#models"><b>01</b>模型观察</a><a href="#voices"><b>02</b>X 上的发言</a><a href="#tech"><b>03</b>技术与论文</a><a href="#events"><b>04</b>大事</a><a href="#briefs"><b>05</b>快讯</a><a class="more" href="models.html">模型档案 →</a></nav>
+</header>
+<main>
+<div class="sec" id="models"><h2>模型观察</h2><span>前沿模型用起来怎么样，今天多了哪些证据</span></div><article class="obs lead"><div class="side"><div class="tag">GPT-6.2 Astra / Sol</div><div class="meta"><span><b>维度</b>　理解意图与指令遵循</span><span><b>依据</b>　多位独立开发者的一致反馈，加 OpenAI 官方的修正动作</span></div></div><div class="txt"><h3>跑分领先，但多位开发者一致说它难调教，OpenAI 出手发模板修正</h3><p>Ethan Mollick 说 Astra“不均衡、很怪”、比别的模型难引导，是 GPT-4.5 以来 OpenAI 第一次发布不算明确进步；Matt Shumer 说两个模型“基本没法用”、不推荐；Theo 写了篇《我为什么讨厌 GPT-6.2 Astra》，说它在长任务里绕圈重复、把小任务弄复杂。OpenAI 随后在文档里发提示词模板，专修三类行为：默认答太短、意图不明时停下来问而非先做假设、写代码加多余的测试和抽象。官方出手修正本身，说明这些行为普遍。<a href="https://dailycaller.com/2026/11/22/openai-chatgpt-astra-model-critics-usability" target="_blank" rel="noopener">Daily Caller</a>、<a href="https://the-decoder.com/openai-shares-new-prompting-tips-for-gpt-6-2-astra-and-sol-to-fix-brief-answers-and-unnecessary-questions/" target="_blank" rel="noopener">The Decoder</a></p></div></article>
+<article class="obs"><div class="side"><div class="tag">GPT-6.2 Astra / Sol</div><div class="meta"><span><b>维度</b>　性格与安全</span><span><b>依据</b>　Artificial Analysis 的评测，加另一套结论相反的对齐榜</span></div></div><div class="txt"><h3>回答更直接，却更不愿认不确定；透明度明显落后 Claude</h3><p>Artificial Analysis 测得 Astra 平均答案从 352 词降到 210 词、“先答问题”从 49 升到 89；代价是“承认不确定”从 96 掉到 24，Sol 从 98 掉到 51。透明度指数 Claude 的 Fable 5.2、Opus 5.5 为 81 和 90，Astra、Sol 只有 41、57。但 Greg Brockman 转的 Arena 对齐指数里 OpenAI 占满前七名、Fable 5.2 才第八——两套测法结论相反。<a href="https://the-decoder.com/gpt-6-2-astra-and-sol-get-to-the-point-faster-but-score-lower-on-transparency-than-claude/" target="_blank" rel="noopener">The Decoder</a>、<a href="https://x.com/gdb/status/2124283509418422305" target="_blank" rel="noopener">@gdb</a></p></div></article>
+<article class="obs"><div class="side"><div class="tag">Gemini 4 Neon</div><div class="meta"><span><b>维度</b>　推理与研究</span><span><b>依据</b>　两位从业者的体感，加一条相反的实测</span></div></div><div class="txt"><h3>实际效用超出它的跑分位置，连 DeepMind 自己都低估</h3><p>Jeremy Howard 说发布时 DeepMind 内部几乎没人知道 Neon 有多好，一直只说它“接近”前沿模型，“评测是很不完美的效用度量”；Aravind Srinivas 说高推理档的 Neon 又快又聪明、已把团队迁过去。但一位中文开发者买订阅实测文档能力，说“也就跟 GLM 5.3 伯仲之间”，提醒别一边倒。<a href="https://x.com/jeremyphoward/status/2124275453800378435" target="_blank" rel="noopener">@jeremyphoward</a>、<a href="https://www.locdd.com/t/topic/111894" target="_blank" rel="noopener">大佬说</a></p></div></article>
+<article class="obs"><div class="side"><div class="tag">GPT-6.2 Sol</div><div class="meta"><span><b>维度</b>　编码与智能体</span><span><b>依据</b>　The New Stack 的一手逐项对比</span></div></div><div class="txt"><h3>编码实测：Opus 5.5 略更准，但 Sol 花不到五分之一的钱、一半时间做完</h3><p>在三个相同任务上实测：月末结账 Opus 5.5 满分 173、Sol 169（漏一笔约 2400 美元退款）；计费库、实验数据分析两项都打平满分。三项合计 Sol 花 0.51 美元、290 秒，Opus 5.5 花 2.79 美元、586 秒。作者说他会从 Sol 起步，但那个错误是大错，关键活仍留 Opus 5.5 最后把关。<a href="https://thenewstack.io/gpt-6-2-sol-vs-claude-opus-5-5/" target="_blank" rel="noopener">The New Stack</a></p><p class="means"><b>对选型的含义</b>预算敏感、错误可逆的编码活从 Sol 起步，结果不可逆的留 Opus 5.5 终审。</p></div></article>
+<div class="sec" id="voices"><h2>X 上的发言</h2><span>从当天 76 条原帖里挑出 7 条，译成中文 · <a href="https://yesiran.github.io/ai-twitter-daily/reports/2026-11-22.html" target="_blank" rel="noopener">当天全部原帖的中文版 →</a></span></div><div class="voices"><article class="vo"><p class="who"><b>François Chollet</b>ARC-AGI、Keras 作者</p><blockquote><p>“当前这套栈——Transformer 加梯度下降、在 token 空间里生成推理链——连最高效的前 50% 都排不进。学习方法的可能空间极其广阔，未来的 AI 会和现在这套完全不一样。”<a href="https://x.com/fchollet/status/2124212823563845839" target="_blank" rel="noopener">@fchollet</a></p></blockquote></article>
+<article class="vo"><p class="who"><b>roon</b></p><blockquote><p>“AI 实验室高管们对 AI 进展最激进的预测，事后看都错了——错在还是太保守。”<a href="https://x.com/tszzl/status/2124269760800334112" target="_blank" rel="noopener">@tszzl</a></p></blockquote></article>
+<article class="vo"><p class="who"><b>François Chollet</b>ARC-AGI、Keras 作者</p><blockquote><p>“要么你相信 AI 建设已经结束、算力需求已经见顶，要么现在是难得的买入机会。GPU 现货价还在涨、产能难抢，HBM 和 DRAM 实际上已卖到 2029 年。前沿训练算力每约 5 个月翻一倍，推理有 70-85% 的毛利。我连 AI 鼓吹者都不是，只是讲现实。”（节选）<a href="https://x.com/fchollet/status/2124246742644461569" target="_blank" rel="noopener">@fchollet</a></p></blockquote></article>
+<article class="vo"><p class="who"><b>Thariq</b>Anthropic Claude Code</p><blockquote><p>“在我看来，模型越强，和模型协作这项技能就越重要，而我还没在这项技能上看到边际递减。我们要解决的问题还多得很。”<a href="https://x.com/trq212/status/2124239686482923553" target="_blank" rel="noopener">@trq212</a></p></blockquote></article>
+<article class="vo"><p class="who"><b>dax</b>opencode 作者</p><blockquote><p>“我们今天来戳破定价泡沫。从 DeepSeek Flash 和 GLM 5.3 开始，我们的价格比 Fireworks/Baseten 低 60%，而量比他们都大，全跑在自己的 GPU 上。现在我们是第一。”<a href="https://x.com/thdxr/status/2124265777217802707" target="_blank" rel="noopener">@thdxr</a></p></blockquote></article>
+<article class="vo"><p class="who"><b>dax</b>opencode 作者</p><blockquote><p>“大多数推理公司都定在‘每小时预留 token’计价：不管你实际用多少都按每小时 X 美元付，超了算高价、用不完照付，供应商还把这份产能照卖给别人。这和用云的初衷正相反。AWS 当年的突破就是能按分钟、按实际用量收费。推理做不到这一步就该死掉。”（节选）<a href="https://x.com/thdxr/status/2124375222476279920" target="_blank" rel="noopener">@thdxr</a></p></blockquote></article>
+<article class="vo"><p class="who"><b>Jack Clark</b>Anthropic，Import AI 作者</p><blockquote><p>“AI 系统越强，我们相信科学进步的速度会随之加快。怎么为此做准备、建好支撑它的基础设施、处理随之而来的安全问题，将定义 2027 年及以后。”<a href="https://x.com/jackclarkSF/status/2124163568748626056" target="_blank" rel="noopener">@jackclarkSF</a></p></blockquote></article></div>
+<div class="sec" id="tech"><h2>技术与论文</h2><span>2 篇</span></div><article class="feat"><div class="num">01</div><div class="txt"><h3>英伟达研究者：超长上下文窗口是条死路，定期摘要加定点检索通常就够</h3><p>语言模型如今能一次读完整本小说——GPT 5.6 Sol 约一百万 token，是 2023 年 GPT-4 的约 120 倍。但英伟达一个研究团队说这往往又慢又贵又多余：很多测试里，定期做摘要加针对性查找，效果和用满整个上下文差不多。<a href="https://the-decoder.com/nvidia-researchers-argue-huge-ai-context-windows-are-a-dead-end/" target="_blank" rel="noopener">The Decoder</a></p><p class="means"><b>多懂了什么</b>模型并不真的用上它声称能装下的全部上下文，长对话稳不稳和窗口大小是两回事。</p></div></article>
+<article class="feat"><div class="num">02</div><div class="txt"><h3>OpenAI 公布内部困惑度数据，想给前沿能力评测立一个跨实验室的共同标尺</h3><p>OpenAI 称模型能力主要来自预训练压缩器的进步，用困惑度（模型预测下一个 token 的平均准确度，越低越好）衡量：GPT-3.5 对数困惑度约 0.99、GPT-4 约 0.91；掉到 0.8 以下时网络安全和数学出现突破性能力，到约 0.76 时模型开始解出数学难题。它据此提议各实验室公开这一指标、设一个在监控能力达标前不越过的“共同上限”。<a href="https://openai.com/index/perplexity-and-intelligence" target="_blank" rel="noopener">OpenAI</a></p><p class="means"><b>多懂了什么</b>新能力是跨过某些困惑度阈值后涌现的，事先不知会冒出什么——这解释了为什么跑分测不准、而预训练指标反而更能预示下一步。</p></div></article>
+<div class="sec" id="events"><h2>大事</h2><span>3 件</span></div><div class="events"><article class="ev"><h3>Claude 协助证出黎曼猜想，Lean 社区确认无误，但同行评审未完、Clay 仍列未解</h3><p>Anthropic 数学家 Levent Alpöge 说与 Claude 协作证出黎曼猜想，11 月 20 日以形式化证明语言 Lean 发布、约 1700 万行代码，Lean 与 Mathlib 社区联合核验后称“完全有信心证明正确”；但同行评审未完，Clay 研究所仍列为未解。<a href="https://the-decoder.com/lean-and-mathlib-community-officially-confirms-levent-alpoges-proof-of-the-riemann-hypothesis-is-correct/" target="_blank" rel="noopener">The Decoder</a></p><p class="so"><b>这意味着</b>结果能被机器独立核验是最硬的部分；Claude 在关键想法里占多大份额、能否重复，材料没给答案。</p></article>
+<article class="ev"><h3>美国情报称中国国安部多年获取受限英伟达芯片，Lutnick 因拖延制裁成政治靶子</h3><p>NYT 报道中国国安部自 2024 年底起长期暗中帮本国企业获取受限英伟达 GPU；商务部长 Lutnick 的部门曾压下对转运约 40 亿美元硬件的新加坡 Megaspeed 的制裁，使他在民主党 1 月重掌国会前成为首要攻击目标。<a href="https://cryptobriefing.com/us-intelligence-china-accessed-nvidia-ai-chips/" target="_blank" rel="noopener">Crypto Briefing</a>、<a href="https://theguardian.com/us-news/2026/nov/22/howard-lutnick-nvidia-china" target="_blank" rel="noopener">The Guardian</a></p><p class="so"><b>这意味着</b>管制的对手从走私中间商变成一个国家情报机构，执行强度会变。</p></article>
+<article class="ev"><h3>Thinking Machines 开源 Inkling 2 Mini：26B 参数在 32GB 内存 Mac 本地跑</h3><p>Mira Murati 的 Thinking Machines 以 Apache 2.0 开源 Inkling 2 Mini（264 亿参数、约 20GB），用“循环 Transformer”让中间层共享权重多跑几遍，官方称软件工程和工具调用基准追平阿里 270 亿稠密旗舰，但事实记忆弱于更稠密对手。<a href="https://venturebeat.com/technology/thinking-machines-wows-with-inkling-2-mini-looped-transformer-model-that-runs-locally-on-laptops" target="_blank" rel="noopener">VentureBeat</a></p><p class="so"><b>这意味着</b>把更深的推理从“更大参数”换成“同一份权重多跑几遍”，给离线小模型留了一条追云端的路。</p></article></div>
+<div class="sec" id="briefs"><h2>快讯</h2><span>6 条</span></div><ul class="briefs"><li><strong>DeepMind 以授权协议招入 Hume AI 的 CEO 和约七名工程师，为 Gemini 增强语音情绪识别。</strong> <a href="https://wisevoter.com/world/us/2026/11/21/google-deepmind-hires-hume-ai-ceo-gemini-voice" target="_blank" rel="noopener">Wisevoter</a></li><li><strong>智谱下周先发约 7000 多亿参数的 GLM-5.4，3 万亿参数以上的 GLM-5.5 传闻要到 12 月。</strong> <a href="https://news.17173.com/content/11222026/203048876.shtml" target="_blank" rel="noopener">17173</a></li><li><strong>DeepSeek 持股平台杭州程砚增资至 34.39 亿、新增 31 家机构合伙人，梁文锋退出直接合伙人名单。</strong> <a href="https://news.qq.com/rain/a/20261121A0EIBR00" target="_blank" rel="noopener">腾讯新闻</a></li><li><strong>MiniMax 称用最新内部模型做自动化密码分析，发现多处未知算法缺陷、把多项理论攻击推进到实战。</strong> <a href="https://thepaper.cn/newsDetail_forward_34536334" target="_blank" rel="noopener">澎湃</a></li><li><strong>Dragos 用两百万条伪造请求测出推理供应链漏洞：至少三家被入侵、数百把 AWS 密钥被盗，OpenRouter 已下架三家、125 个端点。</strong> <a href="https://the-decoder.com/security-researchers-show-how-cheap-ai-inference-providers-steal-keys-and-snoop-on-users/" target="_blank" rel="noopener">The Decoder</a></li><li><strong>Perplexity 推出 Monitor API，按计划持续搜网、仅在相关变化时 webhook 告警。</strong> <a href="https://the-decoder.com/perplexitys-new-monitor-api-turns-web-search-from-a-one-off-query-into-a-nonstop-watchdog/" target="_blank" rel="noopener">The Decoder</a></li></ul>
+<div class="watch"><ul class=""><li><strong>腾讯（WorkBuddy、CodeBuddy、混元、元宝）</strong>：姚顺雨加入后混元发 Hy4 与 Hy4 flash，flash 单任务成本约旗舰 Hy4 的 1/20、API 输入约 0.5 元/输出约 2 元每百万 token；混元已接入 WorkBuddy、元宝、企业微信，WorkBuddy 日活超 1000 万。<a href="https://huxiu.com/article/4907457.html" target="_blank" rel="noopener">虎嗅</a></li></ul></div>
+</main>
+<footer class="colo"><p>程序采集线索 <b>311</b> 条（X 原帖 76、Hacker News 8、论文榜 0、官方博客与媒体 46、搜索 181） → 选出 <b>22</b> 件事 → 读了 <b>16</b> 篇原文全文和 <b>0</b> 个评论区。选题与写作：Claude Opus 4.8；采集、核对与排版：程序。<br>核对：27 个出处链接全部来自所读材料；正文里的数字 54/54 能在原文中找到。<br>X 最近一次抓取：2026-11-23，41 个账号，失败 0 个，入库 76 条。</p><details><summary>没选进这一期的热点，以及理由</summary><ul><li><b>Tesla FSD v15实时AI视频渲染</b>：自动驾驶感知，与前沿大模型关系弱</li><li><b>Anthropic IPO不寻常流程细节（四人团队、六个月竞业禁止）</b>：IPO本身近三期已充分报道，这是流程花絮，非格局变化</li><li><b>Signal限制截图防AI监控</b>：11-20已写过</li><li><b>网信办9-10月新增133款生成式AI备案</b>：11-20已写过同类备案进展</li><li><b>DeepMind请哲学家研究AI意识 / Noema意识神话长文</b>：思辨讨论，不是关于某个模型的新证据</li><li><b>Binding of Isaac因AI配乐被差评后撤除</b>：单个游戏小纠纷，不改变格局</li><li><b>UC系统与OpenAI全系统ChatGPT协议</b>：常规机构合作</li><li><b>联合国未能就自主武器规则达成一致</b>：谈判无实质结果</li></ul></details><p>仅供个人研究参考。</p></footer>
+</div>
+</body></html>

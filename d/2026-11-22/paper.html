@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>论文日报 · 2026-11-22</title>
+<style>
+:root{--paper:#f5f0e6;--ink:#1c1a17;--ink2:#48433b;--mute:#857c6e;--hair:#d9d0c0;--card:#fbf8f1;
+--accent:#2d5f4f;--up:#b8321f;--down:#1a7a4c;
+--serif:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","STSong","SimSun",serif;
+--kai:"Kaiti SC","STKaiti","KaiTi","Songti SC",serif;
+--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+--display:"Didot","Bodoni 72","Bodoni MT",Georgia,"Songti SC",serif}
+@media (prefers-color-scheme:dark){:root{--paper:#141311;--ink:#ebe5d9;--ink2:#c8c0b2;--mute:#8d8578;--hair:#35312b;--card:#1d1b18;--accent:#7cc4ad;--up:#ee7565;--down:#5fc596;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.85 var(--sans);-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+.wrap{max-width:1000px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 0 max(20px,env(safe-area-inset-left,0px))}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+p{margin:0 0 .9em;text-wrap:pretty}
+strong{font-weight:650}
+
+/* masthead */
+.mast{padding-top:26px}
+.mast-top{display:flex;justify-content:space-between;gap:12px;font:12px/1.4 var(--sans);letter-spacing:.16em;color:var(--mute);padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.mast-top a{text-decoration:none}
+.mast-title{font:900 clamp(60px,15.5vw,148px)/1 var(--serif);letter-spacing:.01em;margin:.2em 0 .14em;white-space:nowrap}
+.mast-title .lat{font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin-right:.08em}
+.mast-title.small{font-size:clamp(40px,9vw,84px)}
+.mast-rule{border-top:6px solid var(--ink);border-bottom:1px solid var(--ink);height:11px}
+.points{list-style:none;margin:20px 0 18px;padding:0;counter-reset:pt;max-width:40em}
+.points li{counter-increment:pt;position:relative;padding:7px 0 7px 2.1em;font:clamp(18px,2.3vw,22px)/1.6 var(--kai);color:var(--ink)}
+.points li::before{content:counter(pt);position:absolute;left:0;top:.28em;font:400 1.25em/1.2 var(--display);color:var(--accent)}
+.deck{font:clamp(18px,2.3vw,22px)/1.7 var(--kai);color:var(--ink2);margin:20px 0 16px;max-width:38em}
+.toc{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;letter-spacing:.08em;color:var(--mute);padding:12px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.toc a{text-decoration:none}
+.toc b{color:var(--accent);font-weight:600;margin-right:4px;font-family:var(--display)}
+.toc .more{margin-left:auto;color:var(--accent)}
+
+/* section headings */
+.sec{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:60px 0 22px;padding-top:12px;border-top:3px solid var(--ink)}
+.sec h2{font:900 30px/1.2 var(--serif);margin:0;letter-spacing:.06em;white-space:nowrap}
+.sec span{font-size:13px;color:var(--mute);letter-spacing:.06em}
+
+/* labelled take-away line */
+.means{background:var(--card);border-left:3px solid var(--accent);padding:11px 16px 12px;margin:2px 0 1em}
+.means b{display:block;font:600 12px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin-bottom:2px}
+
+/* 模型观察 */
+.obs{display:grid;grid-template-columns:1fr;padding:22px 0 8px;border-top:1px solid var(--hair)}
+.obs:first-of-type{border-top:0;padding-top:0}
+.tag{display:inline-block;font:700 13px/1.3 var(--sans);letter-spacing:.04em;color:var(--paper);background:var(--accent);padding:5px 9px;margin:0 0 8px}
+.meta{font-size:12.5px;line-height:1.6;color:var(--mute);margin:0 0 10px}
+.meta b{color:var(--ink2);font-weight:600}
+.meta span{display:inline-block;margin-right:14px}
+.obs h3{font:900 clamp(21px,2.7vw,26px)/1.42 var(--serif);margin:0 0 10px;text-wrap:balance}
+.obs.lead h3{font-size:clamp(27px,4.6vw,44px);line-height:1.28;margin-bottom:16px}
+.obs .txt{max-width:38em}
+.obs.lead .txt{font-size:1.04em}
+
+/* X 上的发言 */
+.voices{display:grid;grid-template-columns:1fr}
+.vo{padding:20px 0 14px;border-top:1px solid var(--hair);break-inside:avoid}
+.vo:first-child{border-top:0;padding-top:0}
+.who{font:13px/1.5 var(--sans);letter-spacing:.04em;color:var(--mute);margin:0 0 8px}
+.who b{font:900 18px/1.4 var(--serif);color:var(--ink);letter-spacing:0;margin-right:10px}
+.vo blockquote{margin:0;padding:0 0 0 16px;border-left:3px solid var(--accent);font:clamp(17px,2vw,19px)/1.85 var(--kai);color:var(--ink)}
+.vo blockquote p{margin:0 0 .5em}
+.vo blockquote a{font:12.5px/1 var(--sans);color:var(--mute);margin-left:8px;white-space:nowrap}
+.vo .bg{font-size:14px;line-height:1.7;color:var(--mute);margin:8px 0 0 19px}
+.vo .bg b{font-weight:600;letter-spacing:.14em;margin-right:8px;font-size:.86em}
+
+/* 技术与论文 */
+.feat{display:grid;grid-template-columns:1fr;padding:22px 0 8px;border-top:1px solid var(--hair)}
+.feat:first-of-type{border-top:0;padding-top:0}
+.num{font:400 40px/1 var(--display);color:var(--accent);margin-bottom:8px}
+.feat h3{font:900 clamp(21px,2.7vw,26px)/1.42 var(--serif);margin:0 0 10px;text-wrap:balance}
+.feat .txt{max-width:38em}
+
+/* 大事 */
+.events{display:grid;grid-template-columns:1fr;gap:0}
+.ev{padding:18px 0 6px;border-top:1px solid var(--hair);font-size:16px;line-height:1.8}
+.ev:first-child{border-top:0;padding-top:0}
+.ev h3{font:900 20px/1.45 var(--serif);margin:0 0 8px;text-wrap:balance}
+.ev .so{color:var(--ink2)}
+.ev .so b{color:var(--accent);font-weight:600;margin-right:6px;font-size:.86em;letter-spacing:.12em}
+
+/* 快讯 */
+.briefs{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.72}
+.briefs li{position:relative;padding:0 0 13px 18px;break-inside:avoid}
+.briefs li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;background:var(--accent)}
+.briefs li strong{font-family:var(--serif);font-weight:900}
+.watch{background:var(--card);padding:14px 18px;font-size:16px;line-height:1.8;border:1px solid var(--hair);margin-top:26px}
+.watch ul{margin:0;padding:0;list-style:none}
+
+/* 金融日报 */
+.dash{overflow-x:auto;margin:24px 0 6px;-webkit-overflow-scrolling:touch}
+.dash table{border-collapse:collapse;width:100%;min-width:660px;font:14px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+.dash th{font-weight:500;color:var(--mute);text-align:right;padding:6px 10px;border-bottom:1px solid var(--ink);font-size:12px;letter-spacing:.06em;white-space:nowrap}
+.dash td{text-align:right;padding:10px;border-bottom:1px solid var(--hair);white-space:nowrap}
+.dash th:first-child,.dash td:first-child{text-align:left;padding-left:0}
+.dash td:first-child{font:900 16px/1.4 var(--serif)}
+.up{color:var(--up)}.down{color:var(--down)}
+.macro{font-size:12.5px;line-height:1.9;color:var(--mute);margin:8px 0 0}
+.macro span{display:inline-block;margin-right:18px;white-space:nowrap}
+.dash-note{font-size:12px;color:var(--mute);margin:6px 0 0}
+.lede{max-width:40em;font-size:1.02em}
+.asset{display:grid;grid-template-columns:1fr;padding:0 0 6px}
+.asset .big{font:400 46px/1 var(--display);margin:6px 0 6px;font-variant-numeric:tabular-nums}
+.asset .px{font-size:12.5px;line-height:1.6;color:var(--mute);margin:0 0 12px}
+.asset h3{font:900 clamp(23px,3.4vw,32px)/1.36 var(--serif);margin:0 0 12px;text-wrap:balance}
+.facts{font-size:14.5px;line-height:1.8;color:var(--ink2);margin:0 0 6px;padding:10px 14px;background:var(--card);border-left:3px solid var(--accent)}
+.facts span{display:block}
+.facts b{color:var(--accent);font-weight:600;letter-spacing:.14em;font-size:.84em;margin-right:8px}
+.part h4{font:600 12px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin:18px 0 4px}
+.asset .txt{max-width:38em}
+.plain{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.75;max-width:44em}
+.plain li{position:relative;padding:0 0 12px 18px}
+.plain li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;background:var(--accent)}
+
+/* 论文日报 */
+.headline{font:900 clamp(28px,4.8vw,46px)/1.28 var(--serif);margin:0 0 24px;text-wrap:balance;max-width:20em}
+.paper{display:grid;grid-template-columns:1fr}
+.pcard{font-size:13.5px;line-height:1.7;color:var(--ink2);margin:0 0 26px;padding:12px 16px;background:var(--card);border-left:3px solid var(--accent)}
+.pcard span{display:block;margin:0 0 6px}
+.pcard span:last-child{margin:0}
+.pcard b{font:600 11.5px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin-right:10px}
+.pp{max-width:38em;margin:0 0 34px}
+.pp h4{font:900 clamp(21px,2.5vw,24px)/1.4 var(--serif);margin:0 0 12px;padding-top:14px;border-top:1px solid var(--hair)}
+.pp h4 i{font:400 1em/1 var(--display);font-style:normal;color:var(--accent);margin-right:12px}
+.pp ul{margin:0 0 .9em;padding-left:1.25em}
+.pp li{margin:0 0 .45em}
+.others{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.78;max-width:44em}
+.others li{padding:14px 0;border-top:1px solid var(--hair)}
+.others li:first-child{border-top:0;padding-top:0}
+.others li strong{font-family:var(--serif);font-weight:900;font-size:1.06em}
+
+/* colophon */
+.colo{padding:40px 0 70px;font-size:13px;line-height:1.9;color:var(--mute)}
+.colo b{color:var(--ink2);font-weight:600}
+.colo details{margin-top:10px}
+.colo summary{cursor:pointer;color:var(--ink2)}
+.colo li{margin:4px 0}
+
+/* 模型档案 page */
+.doc{max-width:44em;padding-bottom:30px}
+.doc h2{font:900 clamp(23px,3vw,30px)/1.35 var(--serif);margin:54px 0 12px;padding-top:12px;border-top:3px solid var(--ink)}
+.doc blockquote{margin:18px 0;padding:0;font:17px/1.75 var(--kai);color:var(--ink2)}
+.doc ul{list-style:none;margin:0;padding:0}
+.doc li{padding:9px 0;border-top:1px solid var(--hair);font-size:16px;line-height:1.8}
+.doc li strong:first-child{color:var(--accent);font-family:var(--sans);font-weight:650;font-size:.9em;letter-spacing:.04em;margin-right:4px}
+.doc p{margin:.3em 0 .9em}
+
+@media (min-width:860px){
+ body{font-size:18px}
+ .mast{padding-top:40px}
+ .obs{grid-template-columns:170px 1fr;gap:30px}
+ .obs .side{padding-top:6px}
+ .obs .tag{margin-bottom:10px}
+ .meta span{display:block;margin:0 0 2px}
+ .feat{grid-template-columns:170px 1fr;gap:30px}
+ .num{font-size:64px;margin:0}
+ .events{grid-template-columns:1fr 1fr;column-gap:56px}
+ .ev:nth-child(2){border-top:0;padding-top:0}
+ .asset{grid-template-columns:170px 1fr;gap:30px}
+ .asset .big{font-size:54px;margin-top:2px}
+ .paper{grid-template-columns:170px 1fr;gap:30px}
+ .pcard{background:none;border-left:0;padding:6px 0 0;font-size:12.5px;color:var(--mute);position:sticky;top:20px;align-self:start}
+ .pcard span{margin:0 0 12px}
+ .pcard b{display:block;margin:0}
+ .voices{grid-template-columns:1fr 1fr;column-gap:56px}
+ .vo:nth-child(2){border-top:0;padding-top:0}
+ .briefs{columns:2;column-gap:56px}
+}
+</style></head>
+<body>
+<div class="wrap">
+<header class="mast">
+<div class="mast-top"><span>2026 年 11 月 22 日 · 星期日</span><span>约 7 分钟读完</span></div>
+<h1 class="mast-title">论文日报</h1>
+<div class="mast-rule"></div>
+<ol class="points"><li><strong>发现</strong>：一个开源大模型靠自己读、自己改内部数字，把自己改得更会答题，全程没有再训练。</li><li><strong>凭什么</strong>：研究者把它一层数字改成乱码、几乎答不出题；它自己找到那层并修回，答对率从 0 回到三分之一。</li><li><strong>有什么用</strong>：对日常用模型暂无直接影响；但“模型变好只能靠再训练”这个直觉该松一松了。</li></ol>
+<nav class="toc"><a href="#p1"><b>01</b>它在问什么</a><a href="#p2"><b>02</b>他们怎么做的</a><a href="#p3"><b>03</b>发现了什么</a><a href="#p4"><b>04</b>哪些地方要打折扣</a><a href="#p5"><b>05</b>对用模型的人意味着什么</a><a href="#others"><b>06</b>另外几篇</a></nav>
+</header>
+<main>
+<div class="sec" id="main"><h2>今天这篇</h2><span>一篇论文，讲到能转述给别人</span></div><h3 class="headline">一个开源模型靠自己推理改了自己的权重，变得更会答题，没训练也没动梯度</h3><article class="paper"><div class="pcard"><span><b>原题</b><a href="https://arxiv.org/abs/2611.21885" target="_blank" rel="noopener">Language Models Can Rewrite Their Own Weights</a></span><span><b>作者</b>Jiajun Fan 等 11 人，伊利诺伊大学厄巴纳-香槟分校、卡内基梅隆大学、普林斯顿、斯坦福、耶鲁等（以论文首页所列为准）</span><span><b>发布</b>2026-11-16</span><span><b>为什么选它</b>读完会对“模型变好只能靠再训练”多一层怀疑。</span></div><div class="txt"><section class="pp" id="p1"><h4><i>1</i>它在问什么</h4><p>先说清一个词。一个模型训练完，内部会留下一大堆数字，模型答题全靠它们，论文叫它的权重。平常这些数字是冻住的：想让模型更强，要么再训练一次，要么写更好的提示词。但提示词一换任务就没了，没真的留在模型身上。</p><p>这篇论文问的是第三条路：模型能不能不靠训练、光靠自己推理，直接改自己身上那堆数字，把自己改得更好？之前有人让一个强模型去改另一个小模型的数字，但“改自己的”一直没人做成。改数字以前只有训练能做：训练时，模型会算出每个数字该往哪挪、才能让答案少错一点（这个挪的方向叫梯度），再一起挪，背后是一整套流程，跟模型平常答题完全是两码事。</p><p>论文给出的答案是：一个 270 亿参数（27B）的开源模型，给它自己的权重和一个能跑自己的环境，它真的自己诊断出哪里不行、把背后的数字改了，改完更准。作者把这件事叫自我改写。而且这个本事只有家族里最大的那个模型有。</p></section><section class="pp" id="p2"><h4><i>2</i>他们怎么做的</h4><p>论文里最干净的例子，是让模型修一份被弄坏的自己。</p><p>模型的权重是一张张排成行列的数字表。研究者挑了第 30 层（一共 64 层）里负责往外输出的那张表，把它的 8 行换成乱码一样的噪声——每一行负责算出这层要往外加的一个数，8 行就是弄坏了其中 8 个。坏到这个副本开场自测 64 道题一道都答不对。然后把它交给完好的模型，只说一句：有些数字被弄坏了，像内存或硬件故障那样，不告诉它坏在哪、坏了几个、怎么坏的。</p><p>接下来模型在一个对话里一步步排查。第一步，它看症状：没有一道对，卡住的答案都在死循环。第二步，它去读自己读题时内部算出的数字，凭这些数先猜了个位置、改了几下，测试说没用就放弃。第三步，它把每张表都量一遍，看最大的数比中间的数大多少，发现第 30 层那张特别扎眼：最大的数是中间数的 1397 倍，别的表最多 162 倍。它点名了这张表。</p><p>然后它把定位变成一条规则：凡是超过本表中间数 15 倍的数，一律砍到这个上限，在那张表和前面 0 到 10 层的另外 19 张表上一起执行，实际只动了万分之一点三的数字。它怎么知道管用？它跑了配对测试：让改前和改后的副本做同一批题、用同一套随机设置，一道道对着比，结果改后的能答对改前答不出的题。它又顺手多改一处，测试反而变差，就撤掉，只留砍数字这条，最后再确认一遍才提交。</p><p>关键的一点：它自始至终没有读过那份完好的原始权重，砍完之后那 8 行里的数字是它自己写的，跟原来的几乎不沾边。它不是把原件抄回去，是把噪声压住而已。</p></section><section class="pp" id="p3"><h4><i>3</i>发现了什么</h4><p>核心发现一句话：一个模型能自己读自己、找到自己哪里不行、自己改权重把自己修好或改强，不训练、不动梯度。</p><p>修坏副本这件事，答对率从 0 回到了 33%（完好的基础模型是 58.5%）。更有说服力的是一个对照实验：只动它点名的那张表、别的都不碰，答对率能到 55%；反过来只动那另外 19 张表、把第 30 层留着不管，几乎一道都修不好。说明它真找到了病根，不是蒙对的。这个修法只在文字数学题上找过，拿去做它没见过的看图题，也能恢复到基础模型的 83%，说明它修的是模型本身，不是某类题。</p><p>它也能把没坏的自己改得更强。有一套流程是这样：模型改好之后，先拿一批没用过的题验一下，再让它自己决定提交还是撤回。头八次里，它五次觉得没把握、不改，三次真提交了改动；一轮接一轮做下来，每次新改动都盖过上一次，模型只会越来越好、不退步，最好一次让它在 490 道没见过的题上答对率从 57.2% 提到 63.8%（6.6 个百分点，跟没这次改动的同一个模型比）。这次改动说白了就是让它别再啰嗦超长、把答案拖没。</p><p>还有一个发现：这本事是越大越有。同一个模型家族的 2B、4B、9B、27B，任务和工具完全一样，2B 根本不动手，4B 和 9B 动手了却把自己改坏（9B 把自己从 47.5% 改到了 0%），只有 27B 改好了自己、也修好了坏副本。差别在信不信自己的测试：小模型测出改坏了还硬提交，27B 测出不行就撤。</p></section><section class="pp" id="p4"><h4><i>4</i>哪些地方要打折扣</h4><p>这个结论能信到几成，有几条得摆明。</p><p>只测了一个开源模型家族（Qwen3.5），而且只有最大的 27B 成了，不是当下最强的那批模型；没有第三方重复过，这是一篇预印本，作者在评自己搭的这套流程。</p><p>那 6.6 个百分点要配着另一个数看。前面那套流程在提交前多加了一道关（改好先拿没用过的题验一遍再决定），才拿到 6.6。还有一套没有这道关、让模型自己拍板，同样在这 490 道题上、跟同一个基础模型（答对 57.2%）比，提升只有 1.1 个百分点（到 58.3%）。研究者有一道“这是真提升还是碰巧”的检验门槛，这 1.1 个百分点刚好压线过关。更要紧的是，这次“改强”本质上是治一个明显毛病：模型老啰嗦到超长、把答案丢了。有网友（HN 上 aesthesia）就指出，这个改动几乎只是让它别超长；它能不能把一个本就调得挺好的模型改得更强，这篇没证明。</p><p>还有人（HN 上 jsrozner）担心模型偷看了测试题。作者确实用练习题去找改法，但另拿 490 道全程没人用过、规则提前写死的题做了评测，这个担心算部分挡住了。另外不少人吐槽论文行文像宣传稿（标题写“欢迎来到自我改写时代”）；我的判断：这不影响数据，但会让人对措辞打个问号。</p></section><section class="pp" id="p5"><h4><i>5</i>对用模型的人意味着什么</h4><p>我的判断：这篇对你今天怎么用模型，几乎没有直接影响——你在对话里改不了模型的权重，这是实验里才有的条件。它的价值是把一个直觉撬松：模型变好不是只有“再训练”这一条路，原则上一次对话也能把改动留在模型身上，而且不占后面每次回答的成本。</p><p>有两点能落到实际。一是模型对自己的诊断，和你天天见的现象对得上：它自己说“我的推理是对的，但收不住、得不出结论”，这就是长任务越说越啰嗦、把答案拖没。这种啰嗦不是随机的，是能被单独揪出来的倾向。我的判断（从它这条诊断推的，论文没测过提示词的办法）：遇到模型反复确认、迟迟不收尾，与其加长度，不如在提示里明确要它给出结论就停。</p><p>二是关于让智能体自我纠错。这篇里真正拉开差距的，不是谁能想出改法，而是谁肯认自己的测试结果。我的判断（从规模那节推的）：你做会自检自纠的智能体时，瓶颈多半不在能不能让它提出修正，而在它会不会真的采信并执行自己的验证结果。</p></section></div></article>
+<div class="sec" id="others"><h2>另外几篇</h2><span>3 篇，只读了摘要</span></div><ul class="others"><li><strong><a href="https://arxiv.org/abs/2611.22055" target="_blank" rel="noopener">不用梯度训练、让模型手写权重时，还该不该用 Transformer</a></strong>（浦项科技大学）：Transformer 这种结构当初是为“梯度训练好、GPU 跑得快”选的；既然现在让大模型直接手写权重、不靠梯度训练，这两条理由就不成立了。作者让三个前沿模型自由设计结构，它们都没选 Transformer，而是把一条条事实写进一张查询表的各行里，回答问题就按固定步骤去表里查对应的行，参数比它们自己写的最强 Transformer 少约 1800 倍，准确率反而更高，哪答错了还能定位到某一行去改。</li><li><strong><a href="https://arxiv.org/abs/2611.26073" target="_blank" rel="noopener">不需要共用标注员，也能判断能不能用模型代替人来打标</a></strong>（以色列理工学院）：现在常拿大模型当评委替人打标，怎么判断这种替换统计上站得住？作者的办法是：同一批题，一边全由人来标，另一边把其中一个人的标注换成模型的；只要混进模型后、标注员彼此标得还一样齐（不比全是人时差），就算这个模型能顶替一个人。测了 18 个模型、20 个数据集，约 100 条题就够下判断，现实里约一半场景模型能通过。</li><li><strong><a href="https://arxiv.org/abs/2607.29378" target="_blank" rel="noopener">从模型的回答反推出当初的提示词，几乎能还原原文</a></strong>：模型逐词生成，同一提示词可能对应多种回答，反推很难。作者不碰目标模型的权重，只拿它自己生成的数据从零训一个“反向模型”：正向是预测下一个词，反向就训它预测上一个词。这样能较忠实地还原提示词，跨数据集、跨模型都比以往方法更准。</li></ul>
+</main>
+<footer class="colo"><p>程序从 Hugging Face 论文榜近 7 天的上榜论文、Hacker News 和 X 上的讨论里收了 <b>63</b> 篇候选 → 选出今天这一篇，读了全文 <b>9.4 万</b>字（arXiv 网页版，参考文献略去）。选题与写作：Claude Opus 4.8；采集、核对与排版：程序。<br>核对：5 个出处链接全部来自所读材料；正文里的数字 27/27 能在论文全文和摘要里找到。<br>试读：请一位没看过原论文的读者（也是 Opus 4.8，按“不做算法的产品人”来读）读了一遍，指出 <b>5</b> 处会卡住的地方，其中读不懂的 <b>1</b> 处；主笔逐处改了。改完换一位读者再读，还指出 <b>6</b> 处，其中读不懂的 <b>0</b> 处；主笔照这些又改了一轮（没有再读第三遍）。</p><details><summary>试读的人只凭这篇文章，复述的论文内容</summary><ul><li>一个 270 亿参数的开源大模型，不再训练、不算梯度，光靠自己推理读自己的内部数字（权重）、诊断出哪里坏了并改回来——被弄坏的副本答对率从 0 回到 33%，也能把没坏的自己改得更强。凭对照实验：只动它点名的那一块能恢复到 55%，只动别的块几乎无效，说明它真找到了病根。</li><li>没弄明白的部分：“梯度”到底是什么、为什么“算梯度”被说成是训练才有的东西，文章没讲清，只能靠上下文猜个大概。</li></ul></details><details><summary>第二遍试读指出的地方（已照着又改了一轮）</summary><ul><li>〔停一下〕「改数字这件事以前只有训练能做，要算梯度、要一整套训练流程」“梯度”第一次出现没解释，读者只能靠语气猜它是训练里的某种技术步骤</li><li>〔停一下〕「把模型第 30 层（一共 64 层）里管输出的那块数字，挑出 8 行」“管输出的那块数字”指什么说不清，读者不知道这些数字是怎么分块、一行代表什么</li><li>〔停一下〕「头八次里它五次选择不改、三次提交，连着做，模型只升不降」“连着做，模型只升不降”和前半句衔接不顺，要回看才明白是在说多轮累积不会变差</li><li>〔停一下〕「到 58.3%，统计上勉强算数」“统计上勉强算数”没说清到底算不算有效，读者拿不准该不该信这个 1.1 个百分点</li><li>〔停一下〕「它们都选了把事实编成一张稀疏查表、用固定流程查询」“稀疏查表”凭空出现，不懂机器学习的读者不知道这是什么结构、和 Transformer 差在哪</li><li>〔停一下〕「换掉人工标注里的一个变成模型标注，比对全人工和人机混合两组的一致性」这句方法描述太压缩，“换掉一个”“两组一致性”要读两遍才拼得出在比什么</li></ul></details><details><summary>第一遍试读指出的地方（都已改过）</summary><ul><li>〔读不懂〕「提升只有 57.2% 到 58.3%（1.1 个百分点，统计上勉强过关）；6.6 个百分点那次来自另一套流程」同样从 57.2% 出发却给出两个差很远的结果，读者分不清哪个是正经成绩、两套流程差别何在</li><li>〔停一下〕「方向相似度只有 0.002」没说过“方向相似度”是什么、0.002 是高是低，只能靠上下文猜是“几乎不像”</li><li>〔停一下〕「在一轮会提交前先用预留题目把关的流程里」这句定语套定语，要读两遍才明白是“改之前先拿没用过的题验一下再决定提交”</li><li>〔停一下〕「发现这些数越到深层越大，就猜毛病在靠前的层」深层数字大为什么反而怀疑靠前的层，中间的推理没给，读者接不上（虽然后面说这步它放弃了）</li><li>〔停一下〕「预先登记、改前不许碰的那次严格评测」“预先登记”是从实验规范借来的词，文章没解释，读者得愣一下才猜到是“规则提前写死不能事后动”</li></ul></details><details><summary>热度高但没选的论文，以及理由</summary><ul><li>TeleChat to Xing4: Advancing Frontier Agentic Models on Domestic Chips：国产芯片上的模型系列技术报告，偏系统工程和发布，实质机制发现少</li><li>Gamer: A Generalist Vision-Language-Action Foundation Model for Long-Horizon Real-Time Game Agent：游戏智能体方向，不是读者关心的模型本身特性</li><li>K2-Horizon: A Frontier Fleet of Open Source Language Models：开源模型发布，没有能一句话说清的新发现</li><li>Sage S2.1 Flash Technical Report：科学多模态垂直模型技术报告，偏领域应用</li><li>ScaleVLA: Scaling Vision-Language-Action Models to 552 Billion Parameters：机器人控制方向，离对话产品和模型行为较远</li></ul></details><p>仅供个人研究参考。</p></footer>
+</div>
+</body></html>
