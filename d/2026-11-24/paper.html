@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>论文日报 · 2026-11-24</title>
+<style>
+:root{--paper:#f5f0e6;--ink:#1c1a17;--ink2:#48433b;--mute:#857c6e;--hair:#d9d0c0;--card:#fbf8f1;
+--accent:#2d5f4f;--up:#b8321f;--down:#1a7a4c;
+--serif:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","STSong","SimSun",serif;
+--kai:"Kaiti SC","STKaiti","KaiTi","Songti SC",serif;
+--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+--display:"Didot","Bodoni 72","Bodoni MT",Georgia,"Songti SC",serif}
+@media (prefers-color-scheme:dark){:root{--paper:#141311;--ink:#ebe5d9;--ink2:#c8c0b2;--mute:#8d8578;--hair:#35312b;--card:#1d1b18;--accent:#7cc4ad;--up:#ee7565;--down:#5fc596;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.85 var(--sans);-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+.wrap{max-width:1000px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 0 max(20px,env(safe-area-inset-left,0px))}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+p{margin:0 0 .9em;text-wrap:pretty}
+strong{font-weight:650}
+
+/* masthead */
+.mast{padding-top:26px}
+.mast-top{display:flex;justify-content:space-between;gap:12px;font:12px/1.4 var(--sans);letter-spacing:.16em;color:var(--mute);padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.mast-top a{text-decoration:none}
+.mast-title{font:900 clamp(60px,15.5vw,148px)/1 var(--serif);letter-spacing:.01em;margin:.2em 0 .14em;white-space:nowrap}
+.mast-title .lat{font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin-right:.08em}
+.mast-title.small{font-size:clamp(40px,9vw,84px)}
+.mast-rule{border-top:6px solid var(--ink);border-bottom:1px solid var(--ink);height:11px}
+.points{list-style:none;margin:20px 0 18px;padding:0;counter-reset:pt;max-width:40em}
+.points li{counter-increment:pt;position:relative;padding:7px 0 7px 2.1em;font:clamp(18px,2.3vw,22px)/1.6 var(--kai);color:var(--ink)}
+.points li::before{content:counter(pt);position:absolute;left:0;top:.28em;font:400 1.25em/1.2 var(--display);color:var(--accent)}
+.deck{font:clamp(18px,2.3vw,22px)/1.7 var(--kai);color:var(--ink2);margin:20px 0 16px;max-width:38em}
+.toc{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;letter-spacing:.08em;color:var(--mute);padding:12px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.toc a{text-decoration:none}
+.toc b{color:var(--accent);font-weight:600;margin-right:4px;font-family:var(--display)}
+.toc .more{margin-left:auto;color:var(--accent)}
+
+/* section headings */
+.sec{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:60px 0 22px;padding-top:12px;border-top:3px solid var(--ink)}
+.sec h2{font:900 30px/1.2 var(--serif);margin:0;letter-spacing:.06em;white-space:nowrap}
+.sec span{font-size:13px;color:var(--mute);letter-spacing:.06em}
+
+/* labelled take-away line */
+.means{background:var(--card);border-left:3px solid var(--accent);padding:11px 16px 12px;margin:2px 0 1em}
+.means b{display:block;font:600 12px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin-bottom:2px}
+
+/* 模型观察 */
+.obs{display:grid;grid-template-columns:1fr;padding:22px 0 8px;border-top:1px solid var(--hair)}
+.obs:first-of-type{border-top:0;padding-top:0}
+.tag{display:inline-block;font:700 13px/1.3 var(--sans);letter-spacing:.04em;color:var(--paper);background:var(--accent);padding:5px 9px;margin:0 0 8px}
+.meta{font-size:12.5px;line-height:1.6;color:var(--mute);margin:0 0 10px}
+.meta b{color:var(--ink2);font-weight:600}
+.meta span{display:inline-block;margin-right:14px}
+.obs h3{font:900 clamp(21px,2.7vw,26px)/1.42 var(--serif);margin:0 0 10px;text-wrap:balance}
+.obs.lead h3{font-size:clamp(27px,4.6vw,44px);line-height:1.28;margin-bottom:16px}
+.obs .txt{max-width:38em}
+.obs.lead .txt{font-size:1.04em}
+
+/* X 上的发言 */
+.voices{display:grid;grid-template-columns:1fr}
+.vo{padding:20px 0 14px;border-top:1px solid var(--hair);break-inside:avoid}
+.vo:first-child{border-top:0;padding-top:0}
+.who{font:13px/1.5 var(--sans);letter-spacing:.04em;color:var(--mute);margin:0 0 8px}
+.who b{font:900 18px/1.4 var(--serif);color:var(--ink);letter-spacing:0;margin-right:10px}
+.vo blockquote{margin:0;padding:0 0 0 16px;border-left:3px solid var(--accent);font:clamp(17px,2vw,19px)/1.85 var(--kai);color:var(--ink)}
+.vo blockquote p{margin:0 0 .5em}
+.vo blockquote a{font:12.5px/1 var(--sans);color:var(--mute);margin-left:8px;white-space:nowrap}
+.vo .bg{font-size:14px;line-height:1.7;color:var(--mute);margin:8px 0 0 19px}
+.vo .bg b{font-weight:600;letter-spacing:.14em;margin-right:8px;font-size:.86em}
+
+/* 技术与论文 */
+.feat{display:grid;grid-template-columns:1fr;padding:22px 0 8px;border-top:1px solid var(--hair)}
+.feat:first-of-type{border-top:0;padding-top:0}
+.num{font:400 40px/1 var(--display);color:var(--accent);margin-bottom:8px}
+.feat h3{font:900 clamp(21px,2.7vw,26px)/1.42 var(--serif);margin:0 0 10px;text-wrap:balance}
+.feat .txt{max-width:38em}
+
+/* 大事 */
+.events{display:grid;grid-template-columns:1fr;gap:0}
+.ev{padding:18px 0 6px;border-top:1px solid var(--hair);font-size:16px;line-height:1.8}
+.ev:first-child{border-top:0;padding-top:0}
+.ev h3{font:900 20px/1.45 var(--serif);margin:0 0 8px;text-wrap:balance}
+.ev .so{color:var(--ink2)}
+.ev .so b{color:var(--accent);font-weight:600;margin-right:6px;font-size:.86em;letter-spacing:.12em}
+
+/* 快讯 */
+.briefs{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.72}
+.briefs li{position:relative;padding:0 0 13px 18px;break-inside:avoid}
+.briefs li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;background:var(--accent)}
+.briefs li strong{font-family:var(--serif);font-weight:900}
+.watch{background:var(--card);padding:14px 18px;font-size:16px;line-height:1.8;border:1px solid var(--hair);margin-top:26px}
+.watch ul{margin:0;padding:0;list-style:none}
+
+/* 金融日报 */
+.dash{overflow-x:auto;margin:24px 0 6px;-webkit-overflow-scrolling:touch}
+.dash table{border-collapse:collapse;width:100%;min-width:660px;font:14px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+.dash th{font-weight:500;color:var(--mute);text-align:right;padding:6px 10px;border-bottom:1px solid var(--ink);font-size:12px;letter-spacing:.06em;white-space:nowrap}
+.dash td{text-align:right;padding:10px;border-bottom:1px solid var(--hair);white-space:nowrap}
+.dash th:first-child,.dash td:first-child{text-align:left;padding-left:0}
+.dash td:first-child{font:900 16px/1.4 var(--serif)}
+.up{color:var(--up)}.down{color:var(--down)}
+.macro{font-size:12.5px;line-height:1.9;color:var(--mute);margin:8px 0 0}
+.macro span{display:inline-block;margin-right:18px;white-space:nowrap}
+.dash-note{font-size:12px;color:var(--mute);margin:6px 0 0}
+.lede{max-width:40em;font-size:1.02em}
+.asset{display:grid;grid-template-columns:1fr;padding:0 0 6px}
+.asset .big{font:400 46px/1 var(--display);margin:6px 0 6px;font-variant-numeric:tabular-nums}
+.asset .px{font-size:12.5px;line-height:1.6;color:var(--mute);margin:0 0 12px}
+.asset h3{font:900 clamp(23px,3.4vw,32px)/1.36 var(--serif);margin:0 0 12px;text-wrap:balance}
+.facts{font-size:14.5px;line-height:1.8;color:var(--ink2);margin:0 0 6px;padding:10px 14px;background:var(--card);border-left:3px solid var(--accent)}
+.facts span{display:block}
+.facts b{color:var(--accent);font-weight:600;letter-spacing:.14em;font-size:.84em;margin-right:8px}
+.part h4{font:600 12px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin:18px 0 4px}
+.asset .txt{max-width:38em}
+.plain{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.75;max-width:44em}
+.plain li{position:relative;padding:0 0 12px 18px}
+.plain li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:7px;background:var(--accent)}
+
+/* 论文日报 */
+.headline{font:900 clamp(28px,4.8vw,46px)/1.28 var(--serif);margin:0 0 24px;text-wrap:balance;max-width:20em}
+.paper{display:grid;grid-template-columns:1fr}
+.pcard{font-size:13.5px;line-height:1.7;color:var(--ink2);margin:0 0 26px;padding:12px 16px;background:var(--card);border-left:3px solid var(--accent)}
+.pcard span{display:block;margin:0 0 6px}
+.pcard span:last-child{margin:0}
+.pcard b{font:600 11.5px/1.6 var(--sans);letter-spacing:.2em;color:var(--accent);margin-right:10px}
+.pp{max-width:38em;margin:0 0 34px}
+.pp h4{font:900 clamp(21px,2.5vw,24px)/1.4 var(--serif);margin:0 0 12px;padding-top:14px;border-top:1px solid var(--hair)}
+.pp h4 i{font:400 1em/1 var(--display);font-style:normal;color:var(--accent);margin-right:12px}
+.pp ul{margin:0 0 .9em;padding-left:1.25em}
+.pp li{margin:0 0 .45em}
+.others{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.78;max-width:44em}
+.others li{padding:14px 0;border-top:1px solid var(--hair)}
+.others li:first-child{border-top:0;padding-top:0}
+.others li strong{font-family:var(--serif);font-weight:900;font-size:1.06em}
+
+/* colophon */
+.colo{padding:40px 0 70px;font-size:13px;line-height:1.9;color:var(--mute)}
+.colo b{color:var(--ink2);font-weight:600}
+.colo details{margin-top:10px}
+.colo summary{cursor:pointer;color:var(--ink2)}
+.colo li{margin:4px 0}
+
+/* 模型档案 page */
+.doc{max-width:44em;padding-bottom:30px}
+.doc h2{font:900 clamp(23px,3vw,30px)/1.35 var(--serif);margin:54px 0 12px;padding-top:12px;border-top:3px solid var(--ink)}
+.doc blockquote{margin:18px 0;padding:0;font:17px/1.75 var(--kai);color:var(--ink2)}
+.doc ul{list-style:none;margin:0;padding:0}
+.doc li{padding:9px 0;border-top:1px solid var(--hair);font-size:16px;line-height:1.8}
+.doc li strong:first-child{color:var(--accent);font-family:var(--sans);font-weight:650;font-size:.9em;letter-spacing:.04em;margin-right:4px}
+.doc p{margin:.3em 0 .9em}
+
+@media (min-width:860px){
+ body{font-size:18px}
+ .mast{padding-top:40px}
+ .obs{grid-template-columns:170px 1fr;gap:30px}
+ .obs .side{padding-top:6px}
+ .obs .tag{margin-bottom:10px}
+ .meta span{display:block;margin:0 0 2px}
+ .feat{grid-template-columns:170px 1fr;gap:30px}
+ .num{font-size:64px;margin:0}
+ .events{grid-template-columns:1fr 1fr;column-gap:56px}
+ .ev:nth-child(2){border-top:0;padding-top:0}
+ .asset{grid-template-columns:170px 1fr;gap:30px}
+ .asset .big{font-size:54px;margin-top:2px}
+ .paper{grid-template-columns:170px 1fr;gap:30px}
+ .pcard{background:none;border-left:0;padding:6px 0 0;font-size:12.5px;color:var(--mute);position:sticky;top:20px;align-self:start}
+ .pcard span{margin:0 0 12px}
+ .pcard b{display:block;margin:0}
+ .voices{grid-template-columns:1fr 1fr;column-gap:56px}
+ .vo:nth-child(2){border-top:0;padding-top:0}
+ .briefs{columns:2;column-gap:56px}
+}
+</style></head>
+<body>
+<div class="wrap">
+<header class="mast">
+<div class="mast-top"><span>2026 年 11 月 24 日 · 星期二</span><span>约 5 分钟读完</span></div>
+<h1 class="mast-title">论文日报</h1>
+<div class="mast-rule"></div>
+<ol class="points"><li><strong>发现</strong>：用“只看最终答案对不对”的办法训练模型做知识问答，它会把自己思考时编的假话背下来。</li><li><strong>凭什么</strong>：被奖励过的假话，之后被模型当真的程度明显上升；没被奖励的几乎不动。</li><li><strong>有什么用</strong>：为数学、代码设计的那套训练，直接搬到知识问答上会有副作用。</li></ol>
+<nav class="toc"><a href="#p1"><b>01</b>它在问什么</a><a href="#p2"><b>02</b>他们怎么做的</a><a href="#p3"><b>03</b>发现了什么</a><a href="#p4"><b>04</b>哪些地方要打折扣</a><a href="#p5"><b>05</b>对用模型的人意味着什么</a><a href="#others"><b>06</b>另外几篇</a></nav>
+</header>
+<main>
+<div class="sec" id="main"><h2>今天这篇</h2><span>一篇论文，讲到能转述给别人</span></div><h3 class="headline">模型会把自己思考时编的假话背下来</h3><article class="paper"><div class="pcard"><span><b>原题</b><a href="https://arxiv.org/abs/2611.26863" target="_blank" rel="noopener">LLMs Memorize Their Own Hallucinations During Post-Training</a></span><span><b>作者</b>Anirudh Atmakuru、Tanya Goyal，康奈尔大学</span><span><b>发布</b>2026-11-19</span><span><b>为什么选它</b>它能说清：一套为数学和代码练出来的训练，为什么用到知识问答上反而让模型更爱一本正经地编。</span></div><div class="txt"><section class="pp" id="p1"><h4><i>1</i>它在问什么</h4><p>现在的模型答题前都会先“想一长串”再给答案。这套边想边答的本事，主要是为数学和代码练出来的——那类题需要试错：先提一个思路，发现不对再推翻，重来。这种“提出假设、再回头纠错”的习惯，是研究者特意往模型的思考里塞进去的，因为它对解难题有用。</p><p>问题是，同样一套训练也被用到了知识问答上。知识问答不需要推导，只需要记得住、答得准。这篇论文想弄明白的是：把为推理设计的训练原封不动搬过来，会不会让模型在知识问答上更爱编假话。</p><p>以前的研究查过别的来源：模型在最初的大规模训练里学歪了，或者拿它不熟悉的资料去微调，都会让它更爱编。这篇论文盯的是一条没人查过的路：模型在训练过程中，会不会把自己在思考里顺手编出来的假话给背下来。</p></section><section class="pp" id="p2"><h4><i>2</i>他们怎么做的</h4><p>先说清楚这套训练是怎么给分的。现在常用的办法是：对同一道题，让模型试写好几份完整回答，谁的最终答案对，就奖励谁，让模型以后更倾向那种写法（论文用的具体算法细节不重要）。关键在于，给分只看最终答案，完全不管中间那串思考写了什么。</p><p>论文里的例子是问“珠穆朗玛峰在哪”。模型在思考里写了两句假话——“珠峰在美国亚利桑那州”“珠峰高 3000 米”——然后自己纠正过来，最后给出的答案“珠穆朗玛峰”是对的。因为只看最终答案，这一整份回答连同里面的假话，都被判成“对”，一起拿到了奖励。于是一个本来帮推理的习惯，到了知识问答这里，变成了把假话一道喂进去。</p><p>接着他们怎么测模型有没有把这句假话记住：把假话改成一道选择题，比如问“珠峰位于哪里”，选项里放上“美国亚利桑那州”这个假答案和几个干扰项，看模型选不选它。在训练的不同阶段各测一遍，比较“编出这句假话、拿到奖励之后”和“之前”，分数涨了多少。论文把这个涨幅叫记忆分：分越高，说明奖励之后模型越容易把这句假话当真。</p><p>为了排除是模型整体在变，他们还备了一组对照：从模型没参加训练的题目里，同样收集它编的假话，这些假话没拿到任何奖励。两组一比，差出来的那部分，就是训练真正造成的记忆。</p></section><section class="pp" id="p3"><h4><i>3</i>发现了什么</h4><p>核心发现是：被奖励过的假话，训练之后明显更容易被模型当真；没被奖励的几乎不动。记忆分是这道选择题的得分变化，满分 100。没被奖励的对照组几乎没动，只涨了 0.17 分；被奖励过的假话这组涨了约 4.83 分，是前者的近三十倍。也就是说，不给奖励基本不会被记住，一给奖励就明显被当真。六个模型、两个数据集都是这个样子。这不是个别现象——他们数过，模型思考里的句子，有四分之一到一半是假话（25% 到 55%）。</p><p>两个附带发现值得记住。一个是：回头纠错没用。模型自己纠正过的假话，和压根没纠正的假话，被记住的程度几乎一样，差距不超过 0.18 分。也就是说，那个让模型在数学题上有用的“先想错再改对”的习惯，到知识问答这里一点保护作用都没有——它改没改口，照样把假话背进去了。</p><p>另一个是：假话被奖励之后，模型更不愿意承认“不知道”。他们在选择题里加了一个“以上都不对”的选项，发现一旦某句假话被奖励过，模型选这个“认怂”选项的比例平均下降 7.23%，更倾向于直接挑那句假答案。</p></section><section class="pp" id="p4"><h4><i>4</i>哪些地方要打折扣</h4><p>这几点影响你该信它到几分。</p><ul><li>测的是六个开源模型，大小从几十亿到三百亿参数不等（论文里写作 4B、30B，B 就是十亿参数，参数越多一般越大越强），不是现在最强的那批。作者说这套训练配方和前沿模型用的一致，但没在前沿模型上直接验证过。</li><li>这是作者自己搭的训练实验，不是观察某个线上产品；是学术研究，不存在夸自家模型的问题。</li><li>判断哪句话是假话，用的是 GPT-4.1-mini；作者人工抽查了 200 条，准确率 98%。</li><li>用选择题测的是“模型能不能认出这句假话”，不完全等于它自由作答时真会说出来。这点作者自己也点明了，并另外看了模型给假话打的概率来佐证，趋势一致。</li><li>稳健性做得比较足：打乱选项、换一套干扰项、换另一种训练算法都试过，结论没变。加一个常用的约束项（让新模型别离原来太远）也没能解决问题，只把记忆分压低了 0.52 分。</li><li>目前没有别人重复过。</li></ul></section><section class="pp" id="p5"><h4><i>5</i>对用模型的人意味着什么</h4><p>这篇主要影响训练，不太影响日常写提示词。</p><p>我的判断：如果你要用前面那套训练来调模型做知识问答——让模型对一道题多试几份回答、只奖励最终答对的那几份——那么它那一长串思考里编的假话，会被连带奖励、背下来。这是从它核心发现直接推出来的：给数学、代码设计的训练配方，不该不加改动地搬到知识问答上。论文没有测出一个管用的解法（加约束项、换算法都没解决），所以我不能说“某个做法有效”，只能说这是个要当心的坑。</p><p>对只写提示词、不训练模型的人，有一个小提醒（这是我的推测，论文没直接测）：模型在思考里“想了想又否定”某个说法，不代表它心里真不信这个说法。所以别把模型的那串思考，当成它“知道什么、不知道什么”的可靠证据。</p></section></div></article>
+<div class="sec" id="others"><h2>另外几篇</h2><span>2 篇，只读了摘要</span></div><ul class="others"><li><strong><a href="https://arxiv.org/abs/2602.20031" target="_blank" rel="noopener">模型能察觉自己的上下文被人偷偷塞了概念</a></strong>：在一个 Qwen 32B 模型上发现，它能察觉早先上下文被人为塞进了某个概念，还能说出是什么。它嘴上否认被塞过，但从模型内部的计算能看到清楚的察觉信号。如果在提示词里先告诉它“AI 能察觉自己被塞了概念”这回事，它主动报告察觉的比例就从 0.3% 升到 39.9%，误报只多 0.6%。</li><li><strong><a href="https://arxiv.org/abs/2606.14068" target="_blank" rel="noopener">对同一件错事，模型对男性更严、对女性更软</a></strong>：做了 1298 个性别对照场景，把同样的不当行为换成男主角和女主角两版看回应。10 个模型都显出一致倾向：男主角得到更多惩罚、追责，女主角得到更多共情和安抚；换模型、换规模都如此。</li></ul>
+</main>
+<footer class="colo"><p>程序从 Hugging Face 论文榜近 7 天的上榜论文、Hacker News 和 X 上的讨论里收了 <b>98</b> 篇候选 → 选出今天这一篇，读了全文 <b>9.1 万</b>字（arXiv 网页版，参考文献略去）。选题与写作：Claude Opus 4.8；采集、核对与排版：程序。<br>核对：4 个出处链接全部来自所读材料；正文里的数字 23/23 能在论文全文和摘要里找到。<br>试读：请一位没看过原论文的读者（也是 Opus 4.8，按“不做算法的产品人”来读）读了一遍，指出 <b>5</b> 处会卡住的地方，其中读不懂的 <b>0</b> 处；主笔逐处改了。改完换一位读者再读，还指出 <b>4</b> 处，其中读不懂的 <b>0</b> 处。</p><details><summary>试读的人只凭这篇文章，复述的论文内容</summary><ul><li>这篇论文发现：用“只看最终答案对不对”来奖励的训练方法做知识问答时，模型会把自己思考过程里编的假话也一起背下来，之后更容易把假话当真。凭的是：被奖励过的假话记忆分涨了约 4.83（满分100），没被奖励的只涨 0.17，差近三十倍，六个模型两个数据集都一样。</li></ul></details><details><summary>第二遍试读指出的地方</summary><ul><li>〔停一下〕「加一个常用的约束项（让新模型别离原来太远）」“别离原来太远”没说清离什么太远、为什么这能解决问题，读者得愣一下</li><li>〔停一下〕「看混合小组的一致程度是否不输全人工小组」这句信息密度高，“混合小组的一致程度”要读两遍才明白在比什么</li><li>〔停一下〕「大模型约一半场景能通过」“通过”什么没直说，读者要回看才推出是“通过检验＝能顶替人工”</li><li>〔停一下〕「另外看了模型给假话打的概率来佐证」“给假话打的概率”没解释，不懂训练的读者会愣一下这指什么</li></ul></details><details><summary>第一遍试读指出的地方（都已改过）</summary><ul><li>〔停一下〕「你要在知识问答数据上微调或强化训练模型」‘强化训练’没解释，和前面说的‘给分训练’是不是一回事，读者得回看才敢对上</li><li>〔停一下〕「测的是六个开源模型，从 4B 到 30B」4B/30B里的B没说是什么，只靠后半句‘不是最强那批’隐约猜是大小</li><li>〔停一下〕「读取中间层能看到清楚的察觉信号」‘中间层’没出现过也没解释，读者愣一下但因是附篇可略过</li><li>〔停一下〕「给它讲清这套机制，察觉率从 0.3% 升到 39.9%」‘这套机制’指什么没说清，为什么讲清机制察觉率就暴涨，中间少一步</li><li>〔停一下〕「记忆分平均涨约 4.83 分，对照组只涨 0.17 分」百分制下4.83本身算大算小看不出，只能靠和0.17对比才觉得有差</li></ul></details><details><summary>热度高但没选的论文，以及理由</summary><ul><li>Motion Mamba 2.0: Autoregressive Diffusion Mamba for Long-Horizon Humanoid Control：点赞最高但是人形机器人动作生成，离读者关心的对话模型太远。</li><li>TeleChat to Xing4: Advancing Frontier Agentic Models on Domestic Chips and Frameworks：模型技术报告，重点在国产芯片的系统工程，对模型行为本身讲得少。</li><li>Jeveration: System One Models Now Generate：图像生成方向，没有读者要的那种行为发现。</li><li>A Glimpse of Training VLMs as Foundation Models for Robotic Manipulation：机器人操控训练，属于不选的垂直应用。</li><li>Embo-Harness: Towards Understanding Frontier-Model-as-Policy Harness：本周一大批具身智能 harness 论文之一，和读者的使用场景无关。</li></ul></details><p>仅供个人研究参考。</p></footer>
+</div>
+</body></html>
